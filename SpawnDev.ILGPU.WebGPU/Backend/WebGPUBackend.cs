@@ -223,18 +223,18 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             if (_entryPoint.IndexType == IndexType.Index2D)
             {
                 _source.AppendLine("    let idx = index_y * 8u + index_x;");
-                _source.AppendLine($"    if (idx >= arrayLength(&param{start})) return;");
+                _source.AppendLine($"    if (idx >= arrayLength(&param{start})) {{ return; }}");
                 _source.AppendLine($"    param{start}[idx] = f32(index_x) + f32(index_y) * 100.0;");
             }
             else if (_entryPoint.IndexType == IndexType.Index3D)
             {
                 _source.AppendLine("    let idx = (index_z * 4u + index_y) * 4u + index_x;");
-                _source.AppendLine($"    if (idx >= arrayLength(&param{start})) return;");
+                _source.AppendLine($"    if (idx >= arrayLength(&param{start})) {{ return; }}");
                 _source.AppendLine($"    param{start}[idx] = f32(index_x) + f32(index_y) * 100.0 + f32(index_z) * 1000.0;");
             }
             else
             {
-                _source.AppendLine($"    if (index >= arrayLength(&param{start})) return;");
+                _source.AppendLine($"    if (index >= arrayLength(&param{start})) {{ return; }}");
                 
                 string expression = $"f32(index)";
                 if (_entryPoint.MethodInfo.Name == "FloatKernel")

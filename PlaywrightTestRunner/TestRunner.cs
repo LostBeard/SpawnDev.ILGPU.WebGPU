@@ -202,6 +202,7 @@ namespace PlaywrightTestRunner
 
                 //  check for error  class
                 var wasError = await currentRow.EvaluateAsync<bool>("el => el.classList.contains('test-error')");
+                Console.WriteLine($"Test: {methodName} - {stateMessage}");
                 if (wasError)
                 {
                     throw new Exception($"Failed - {typeName}.{methodName}\nTest-error: {stateMessage}");

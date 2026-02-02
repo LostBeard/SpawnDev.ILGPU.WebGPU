@@ -441,7 +441,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
                 {
                     for (int x = 0; x < extent.X; x++)
                     {
-                        var expected = x + y * 10.0f + z * 100.0f;
+                        var expected = x + y * 100.0f + z * 1000.0f;
                         var actual = result[z * extent.X * extent.Y + y * extent.X + x];
                         if (Math.Abs(actual - expected) > 0.0001f)
                             throw new Exception($"3D kernel failed at ({x},{y},{z}). Expected {expected}, got {actual}");
