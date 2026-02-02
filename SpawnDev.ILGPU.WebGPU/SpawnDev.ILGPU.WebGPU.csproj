@@ -11,7 +11,7 @@
 		<DebugType>Embedded</DebugType>
 		<Title>SpawnDev.ILGPU.WebGPU</Title>
 		<Authors>LostBeard</Authors>
-		<Description>WebGPU backend for ILGPU, enabling GPU compute in Blazor WebAssembly applications</Description>
+		<Description>WebGPU backend for ILGPU, enabling GPU compute in Blazor WebAssembly application.</Description>
 		<PackageProjectUrl>https://github.com/LostBeard/SpawnDev.ILGPU.WebGPU</PackageProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
