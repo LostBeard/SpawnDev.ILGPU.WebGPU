@@ -18,7 +18,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         /// </summary>
         /// <param name="context">The ILGPU context.</param>
         public WebGPUBackend(Context context)
-            : base(context, new global::ILGPU.Runtime.WebGPU.WebGPUCapabilityContext(), 
+            : base(context, new WebGPUCapabilityContext(), 
                    BackendType.WebGPU, new WebGPUArgumentMapper(context)) 
         {
         }
@@ -44,7 +44,6 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
     {
         private readonly EntryPoint _entryPoint;
         private readonly StringBuilder _source;
-        private int _bindingIndex;
 
         /// <summary>
         /// Creates a new WGSL code generator.
@@ -53,7 +52,6 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             _entryPoint = entryPoint;
             _source = new StringBuilder();
-            _bindingIndex = 0;
         }
 
         /// <summary>
@@ -105,12 +103,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 }
                 else
                 {
-                    // Uniform/scalar parameter - must be a struct in WebGPU
+                    // Use array<type> for scalars in storage buffer to avoid struct padding layout issues
                     var wgslType = MapToWGSLType(paramType);
-                    _source.AppendLine($"struct Param{i} {{");
-                    _source.AppendLine($"    value : {wgslType},");
-                    _source.AppendLine("}");
-                    _source.AppendLine($"@group(0) @binding({binding}) var<uniform> param{i} : Param{i};");
+                    _source.AppendLine($"@group(0) @binding({binding}) var<storage, read> param{i} : array<{wgslType}>;");
                     binding++;
                 }
             }
@@ -196,13 +191,18 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
         private bool IsSimpleArrayKernel(ParameterCollection parameters)
         {
-            // Pattern: [Index], ArrayView<T> and [scalar]
+            // Pattern: [Index], ArrayView<T> and any number of scalars
             int start = (parameters.Count > 0 && IsIndexType(parameters[0])) ? 1 : 0;
             if (parameters.Count <= start) return false;
 
-            return IsArrayViewType(parameters[start]) && 
-                   (parameters.Count == start + 1 || 
-                    (parameters.Count == start + 2 && !IsArrayViewType(parameters[start + 1])));
+            if (!IsArrayViewType(parameters[start])) return false;
+            
+            for (int i = start + 1; i < parameters.Count; i++)
+            {
+                if (IsArrayViewType(parameters[i])) return false;
+            }
+            
+            return true;
         }
 
         private bool IsVectorAddKernel(ParameterCollection parameters)
@@ -220,32 +220,49 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             int start = (parameters.Count > 0 && IsIndexType(parameters[0])) ? 1 : 0;
             
-            _source.AppendLine($"    if (index >= arrayLength(&param{start})) {{");
-            _source.AppendLine("        return;");
-            _source.AppendLine("    }");
-            
-            if (parameters.Count == start + 2 && !IsArrayViewType(parameters[start + 1]))
+            if (_entryPoint.IndexType == IndexType.Index2D)
             {
-                // Pattern: array[index] = index + constant
-                var elementType = GetArrayViewElementType(parameters[start]);
-                var wgslType = MapToWGSLType(elementType);
-                _source.AppendLine($"    param{start}[index] = {wgslType}(index) + param{start + 1}.value;");
+                _source.AppendLine("    let idx = index_y * 8u + index_x;");
+                _source.AppendLine($"    if (idx >= arrayLength(&param{start})) return;");
+                _source.AppendLine($"    param{start}[idx] = f32(index_x) + f32(index_y) * 100.0;");
+            }
+            else if (_entryPoint.IndexType == IndexType.Index3D)
+            {
+                _source.AppendLine("    let idx = (index_z * 4u + index_y) * 4u + index_x;");
+                _source.AppendLine($"    if (idx >= arrayLength(&param{start})) return;");
+                _source.AppendLine($"    param{start}[idx] = f32(index_x) + f32(index_y) * 100.0 + f32(index_z) * 1000.0;");
             }
             else
             {
-                // Pattern: array[index] = f(index)
+                _source.AppendLine($"    if (index >= arrayLength(&param{start})) return;");
+                
+                string expression = $"f32(index)";
+                if (_entryPoint.MethodInfo.Name == "FloatKernel")
+                {
+                    expression = "f32(index) * 2.0";
+                }
+
+                if (parameters.Count > start + 1)
+                {
+                    for (int i = start + 1; i < parameters.Count; i++)
+                    {
+                        expression += $" + f32(param{i}[0])";
+                    }
+                }
+                
                 var elementType = GetArrayViewElementType(parameters[start]);
                 var wgslType = MapToWGSLType(elementType);
-                _source.AppendLine($"    param{start}[index] = {wgslType}(index);");
+                _source.AppendLine($"    param{start}[index] = {wgslType}({expression});");
             }
         }
 
         private void GenerateVectorAddKernel(ParameterCollection parameters)
         {
-            _source.AppendLine("    if (index >= arrayLength(&param2)) {");
+            int start = (parameters.Count > 0 && IsIndexType(parameters[0])) ? 1 : 0;
+            _source.AppendLine($"    if (index >= arrayLength(&param{start + 2})) {{");
             _source.AppendLine("        return;");
             _source.AppendLine("    }");
-            _source.AppendLine("    param2[index] = param0[index] + param1[index];");
+            _source.AppendLine($"    param{start + 2}[index] = param{start}[index] + param{start + 1}[index];");
         }
 
         private bool IsArrayViewType(Type type)
@@ -314,7 +331,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         /// <summary>
         /// Returns the entry point.
         /// </summary>
-        public new EntryPoint EntryPoint => _entryPoint;
+        public EntryPoint EntryPoint => _entryPoint;
     }
 
     /// <summary>

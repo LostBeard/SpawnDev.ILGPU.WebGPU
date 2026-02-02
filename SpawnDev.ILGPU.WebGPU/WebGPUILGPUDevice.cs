@@ -90,7 +90,7 @@ namespace SpawnDev.ILGPU.WebGPU
             MaxConstantMemory = 65536; // WebGPU uniform buffer limit
             
             // Create basic capability context
-            Capabilities = new global::ILGPU.Runtime.WebGPU.WebGPUCapabilityContext();
+            Capabilities = new WebGPUCapabilityContext();
         }
 
         /// <summary>

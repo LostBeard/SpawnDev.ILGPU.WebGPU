@@ -251,55 +251,202 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
         [TestMethod]
         public async Task WebGPUKernelTest()
         {
-            // 1. Create Context with WebGPU devices registered asynchronously
             var builder = Context.Create();
             await builder.WebGPUAsync();
             using var context = builder.ToContext();
-
-            // 2. Get Device 
             var devices = context.GetWebGPUDevices();
-            if (devices.Count == 0)
-            {
-                throw new UnsupportedTestException("No WebGPU/ILGPU devices found via Context");
-            }
-            
+            if (devices.Count == 0) throw new UnsupportedTestException("No WebGPU devices found");
             var device = devices[0];
-            
-            // 3. Create Accelerator asynchronously
             using var accelerator = await device.CreateAcceleratorAsync(context);
                 
-            // 4. Data
             var data = new int[64];
             using var buffer = accelerator.Allocate1D(data);
 
-            // 5. Load Kernel
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>, int>(MyKernel);
-
-            // 6. Launch
             kernel((Index1D)buffer.Length, buffer.View, 33);
 
-            // 7. Verify
             accelerator.Synchronize();
             
-            // WebGPU requires async readback
-            // Convert to byte buffer for reading
+            var result = await ReadBufferAsync<int>(buffer);
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                var expected = i + 33;
+                if (result[i] != expected)
+                    throw new Exception($"Kernel execution failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        [TestMethod]
+        public async Task WebGPUVectorAddKernelTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var devices = context.GetWebGPUDevices();
+            if (devices.Count == 0) throw new UnsupportedTestException("No WebGPU devices found");
+            var device = devices[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int length = 64;
+            var a = Enumerable.Range(0, length).Select(i => (float)i).ToArray();
+            var b = Enumerable.Range(0, length).Select(i => (float)i * 2.0f).ToArray();
+            
+            using var bufA = accelerator.Allocate1D(a);
+            using var bufB = accelerator.Allocate1D(b);
+            using var bufC = accelerator.Allocate1D<float>(length);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>, ArrayView<float>, ArrayView<float>>(VectorAddKernel);
+            kernel((Index1D)length, bufA.View, bufB.View, bufC.View);
+
+            accelerator.Synchronize();
+
+            var result = await ReadBufferAsync<float>(bufC);
+
+            for (int i = 0; i < length; i++)
+            {
+                var expected = a[i] + b[i];
+                if (Math.Abs(result[i] - expected) > 0.0001f)
+                    throw new Exception($"Vector addition failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        [TestMethod]
+        public async Task WebGPUKernel2DTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var devices = context.GetWebGPUDevices();
+            if (devices.Count == 0) throw new UnsupportedTestException("No WebGPU devices found");
+            var device = devices[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            LongIndex2D extent = new LongIndex2D(8, 8);
+            using var buffer = accelerator.Allocate2DDenseX<float>(extent);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index2D, ArrayView2D<float, Stride2D.DenseX>>(Kernel2D);
+            kernel((Index2D)extent, buffer.View);
+
+            accelerator.Synchronize();
+
+            var result = await ReadBufferAsync<float>(buffer);
+
+            for (int y = 0; y < extent.Y; y++)
+            {
+                for (int x = 0; x < extent.X; x++)
+                {
+                    var expected = x + y * 100.0f;
+                    var actual = result[y * extent.X + x];
+                    if (Math.Abs(actual - expected) > 0.0001f)
+                        throw new Exception($"2D kernel failed at ({x},{y}). Expected {expected}, got {actual}");
+                }
+            }
+        }
+
+        [TestMethod]
+        public async Task WebGPUKernelFloatTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var devices = context.GetWebGPUDevices();
+            if (devices.Count == 0) throw new UnsupportedTestException("No WebGPU devices found");
+            var device = devices[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int length = 64;
+            using var buffer = accelerator.Allocate1D<float>(length);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>, float>(FloatKernel);
+            kernel((Index1D)length, buffer.View, 0.5f);
+
+            accelerator.Synchronize();
+
+            var result = await ReadBufferAsync<float>(buffer);
+
+            for (int i = 0; i < length; i++)
+            {
+                var expected = i * 2.0f + 0.5f;
+                if (Math.Abs(result[i] - expected) > 0.0001f)
+                    throw new Exception($"Float kernel failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        [TestMethod]
+        public async Task WebGPUMultiScalarKernelTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var devices = context.GetWebGPUDevices();
+            if (devices.Count == 0) throw new UnsupportedTestException("No WebGPU devices found");
+            var device = devices[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int length = 64;
+            using var buffer = accelerator.Allocate1D<int>(length);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>, int, int>(MultiScalarKernel);
+            kernel((Index1D)length, buffer.View, 10, 20);
+
+            accelerator.Synchronize();
+
+            var result = await ReadBufferAsync<int>(buffer);
+
+            for (int i = 0; i < length; i++)
+            {
+                var expected = i + 10 + 20;
+                if (result[i] != expected)
+                    throw new Exception($"Multi-scalar kernel failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        private async Task<T[]> ReadBufferAsync<T>(MemoryBuffer buffer) where T : unmanaged
+        {
             var iView = (IArrayView)buffer;
             var internalBuffer = iView.Buffer as WebGPUMemoryBuffer;
             if (internalBuffer == null) throw new Exception("Could not get WebGPUMemoryBuffer");
             
-            // Read from native buffer (returns byte[])
             var byteResults = await internalBuffer.NativeBuffer.CopyToHostAsync();
-            
-            // Convert byte[] to int[]
-            var result = new int[data.Length];
-            Buffer.BlockCopy(byteResults, 0, result, 0, byteResults.Length);
+            var result = new T[buffer.Length];
+            System.Buffer.BlockCopy(byteResults, 0, result, 0, byteResults.Length);
+            return result;
+        }
 
-            for (int i = 0; i < data.Length; i++)
+        [TestMethod]
+        public async Task WebGPUKernel3DTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var devices = context.GetWebGPUDevices();
+            if (devices.Count == 0) throw new UnsupportedTestException("No WebGPU devices found");
+            var device = devices[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            LongIndex3D extent = new LongIndex3D(4, 4, 4);
+            using var buffer = accelerator.Allocate3DDenseXY<float>(extent);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index3D, ArrayView3D<float, Stride3D.DenseXY>>(Kernel3D);
+            kernel((Index3D)extent, buffer.View);
+
+            accelerator.Synchronize();
+
+            var result = await ReadBufferAsync<float>(buffer);
+
+            for (int z = 0; z < extent.Z; z++)
             {
-                // The kernel adds index + constant
-                var expected = i + 33;
-                if (result[i] != expected)
-                    throw new Exception($"Kernel execution failed at {i}. Expected {expected}, got {result[i]}");
+                for (int y = 0; y < extent.Y; y++)
+                {
+                    for (int x = 0; x < extent.X; x++)
+                    {
+                        var expected = x + y * 10.0f + z * 100.0f;
+                        var actual = result[z * extent.X * extent.Y + y * extent.X + x];
+                        if (Math.Abs(actual - expected) > 0.0001f)
+                            throw new Exception($"3D kernel failed at ({x},{y},{z}). Expected {expected}, got {actual}");
+                    }
+                }
             }
         }
 
@@ -323,6 +470,37 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             int constant)              // A sample uniform constant
         {
             dataView[index] = index + constant;
+        }
+
+        static void FloatKernel(
+            Index1D index,
+            ArrayView<float> dataView,
+            float constant)
+        {
+            dataView[index] = index * 2.0f + constant;
+        }
+
+        static void MultiScalarKernel(
+            Index1D index,
+            ArrayView<int> dataView,
+            int c1,
+            int c2)
+        {
+            dataView[index] = index + c1 + c2;
+        }
+
+        static void Kernel2D(
+            Index2D index,
+            ArrayView2D<float, Stride2D.DenseX> dataView)
+        {
+            dataView[index] = index.X + index.Y * 100.0f;
+        }
+
+        static void Kernel3D(
+            Index3D index,
+            ArrayView3D<float, Stride3D.DenseXY> dataView)
+        {
+            dataView[index] = index.X + index.Y * 100.0f + index.Z * 1000.0f;
         }
 
         /// <summary>

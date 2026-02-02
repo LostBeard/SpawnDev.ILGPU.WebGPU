@@ -17,7 +17,7 @@ namespace SpawnDev.ILGPU.WebGPU
     {
         public WebGPUNativeAccelerator NativeAccelerator { get; private set; } = null!;
 
-        public WebGPUBackend Backend { get; private set; }
+        public WebGPUBackend Backend { get; private set; } = null!;
 
         public static readonly MethodInfo RunKernelMethod = typeof(WebGPUAccelerator).GetMethod(
             nameof(RunKernel), 
@@ -135,7 +135,7 @@ namespace SpawnDev.ILGPU.WebGPU
             
             try 
             {
-                int bindingIndex = 0;
+                int currentBindingIndex = 0;
                 for(int i=0; i<args.Length; i++)
                 {
                     var paramType = compiledKernel.EntryPoint.Parameters[i];
@@ -148,14 +148,21 @@ namespace SpawnDev.ILGPU.WebGPU
                     var arg = args[i];
                     GPUBufferBinding? resource = null;
                     
-                    if (arg is IContiguousArrayView arrayView) 
+                    if (arg is IArrayView arrayView) 
                     {
-                        var buffer = arrayView.Buffer as WebGPUMemoryBuffer;
+                        // All ArrayViewND types have a BaseView property of type ArrayView<T>
+                        // ArrayView<T> implements IContiguousArrayView
+                        var baseViewProp = arg.GetType().GetProperty("BaseView");
+                        var contiguous = (baseViewProp != null ? baseViewProp.GetValue(arg) : arg) as IContiguousArrayView;
+
+                        if (contiguous == null) throw new Exception($"Argument {i} ({arg.GetType()}) is not a contiguous WebGPU buffer");
+                        
+                        var buffer = contiguous.Buffer as WebGPUMemoryBuffer;
                         if (buffer == null) throw new Exception($"Argument {i} is not a WebGPU buffer");
                         
                         var nativeBuffer = buffer.NativeBuffer.NativeBuffer!;
-                        var offset = (ulong)((long)arrayView.IndexInBytes);
-                        var size = (ulong)((long)arrayView.LengthInBytes);
+                        var offset = (ulong)((long)contiguous.IndexInBytes);
+                        var size = (ulong)((long)contiguous.LengthInBytes);
                         
                         resource = new GPUBufferBinding 
                         {
@@ -172,33 +179,65 @@ namespace SpawnDev.ILGPU.WebGPU
                         
                         var bufferDesc = new GPUBufferDescriptor {
                             Size = (ulong)size,
-                            Usage = GPUBufferUsage.Uniform | GPUBufferUsage.CopyDst,
-                            MappedAtCreation = false
+                            Usage = GPUBufferUsage.Storage | GPUBufferUsage.CopyDst,
+                            MappedAtCreation = true
                         };
                         var uBuffer = device.CreateBuffer(bufferDesc);
                         allocatedBuffers.Add(uBuffer);
                         
-                        byte[] scalarData;
-                        if (arg is int iVal) scalarData = BitConverter.GetBytes(iVal);
-                        else if (arg is float fVal) scalarData = BitConverter.GetBytes(fVal);
-                        else if (arg is double dVal) scalarData = BitConverter.GetBytes(dVal);
-                        else if (arg is long lVal) scalarData = BitConverter.GetBytes(lVal);
-                        else if (arg is uint uiVal) scalarData = BitConverter.GetBytes(uiVal);
-                        else if (arg is ulong ulVal) scalarData = BitConverter.GetBytes(ulVal);
+                        using var mappedRange = uBuffer.GetMappedRange();
+                        
+                        if (arg is int iVal)
+                        {
+                            using var view = new Int32Array(mappedRange);
+                            view[0] = iVal;
+                        }
+                        else if (arg is float fVal)
+                        {
+                            using var view = new Float32Array(mappedRange);
+                            view[0] = fVal;
+                        }
+                        else if (arg is uint uiVal)
+                        {
+                            using var view = new Uint32Array(mappedRange);
+                            view[0] = uiVal;
+                        }
+                        else if (arg is long lVal)
+                        {
+                            using var view = new Int32Array(mappedRange);
+                            view[0] = (int)lVal;
+                        }
+                        else if (arg is ulong ulVal)
+                        {
+                            using var view = new Uint32Array(mappedRange);
+                            view[0] = (uint)ulVal;
+                        }
+                        else if (arg is double dVal)
+                        {
+                            using var view = new Float32Array(mappedRange);
+                            view[0] = (float)dVal;
+                        }
+                        else if (arg is byte bVal)
+                        {
+                            using var view = new Uint8Array(mappedRange);
+                            view[0] = bVal;
+                        }
                         else throw new NotSupportedException($"Unsupported scalar argument type: {arg.GetType()}");
                         
-                        nativeAccel.Queue!.WriteBuffer(uBuffer, (long)0, scalarData);
+                        uBuffer.Unmap();
                         
                         resource = new GPUBufferBinding {
-                            Buffer = uBuffer
+                            Buffer = uBuffer,
+                            Offset = 0,
+                            Size = 16
                         };
                     }
                     
                     entries.Add(new GPUBindGroupEntry {
-                        Binding = (uint)bindingIndex,
+                        Binding = (uint)currentBindingIndex,
                         Resource = resource!
                     });
-                    bindingIndex++;
+                    currentBindingIndex++;
                 }
                 
                 var bindGroupDesc = new GPUBindGroupDescriptor {
@@ -209,21 +248,44 @@ namespace SpawnDev.ILGPU.WebGPU
                 using var bindGroup = device.CreateBindGroup(bindGroupDesc);
                 
                 // 3. Dispatch
-                uint x=1, y=1, z=1;
-                if (dimension is Index1D d1) { x = (uint)d1.X; }
-                else if (dimension is Index2D d2) { x = (uint)d2.X; y = (uint)d2.Y; }
-                else if (dimension is Index3D d3) { x = (uint)d3.X; y = (uint)d3.Y; z = (uint)d3.Z; }
-                
+                uint workX = 1, workY = 1, workZ = 1;
+                if (dimension is Index1D i1) 
+                {
+                    workX = (uint)Math.Ceiling(i1.X / 64.0);
+                }
+                else if (dimension is Index2D i2)
+                {
+                    workX = (uint)Math.Ceiling(i2.X / 8.0);
+                    workY = (uint)Math.Ceiling(i2.Y / 8.0);
+                }
+                else if (dimension is Index3D i3)
+                {
+                    workX = (uint)Math.Ceiling(i3.X / 4.0);
+                    workY = (uint)Math.Ceiling(i3.Y / 4.0);
+                    workZ = (uint)Math.Ceiling(i3.Z / 4.0);
+                }
+                else if (dimension is LongIndex1D l1)
+                {
+                    workX = (uint)Math.Ceiling(l1.X / 64.0);
+                }
+                else if (dimension is LongIndex2D l2)
+                {
+                    workX = (uint)Math.Ceiling(l2.X / 8.0);
+                    workY = (uint)Math.Ceiling(l2.Y / 8.0);
+                }
+                else if (dimension is LongIndex3D l3)
+                {
+                    workX = (uint)Math.Ceiling(l3.X / 4.0);
+                    workY = (uint)Math.Ceiling(l3.Y / 4.0);
+                    workZ = (uint)Math.Ceiling(l3.Z / 4.0);
+                }
+
                 using var encoder = device.CreateCommandEncoder();
                 using var pass = encoder.BeginComputePass();
                 pass.SetPipeline(shader.Pipeline);
                 pass.SetBindGroup(0, bindGroup);
                 
-                // Hardcoded 64 workgroup size from WGSL generator
-                pass.DispatchWorkgroups(
-                    (uint)Math.Ceiling(x / 64.0), 
-                    y, 
-                    z); 
+                pass.DispatchWorkgroups(workX, workY, workZ);
                     
                 pass.End();
                 using var cmd = encoder.Finish();
