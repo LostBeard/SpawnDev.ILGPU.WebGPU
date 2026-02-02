@@ -1,0 +1,184 @@
+﻿@page "/"
+@using SpawnDev.ILGPU.WebGPU
+
+<PageTitle>WebGPU Demo</PageTitle>
+
+<h1>WebGPU Backend for ILGPU Demo</h1>
+
+<div class="card mb-3">
+    <div class="card-header">Status</div>
+    <div class="card-body">
+        <p><strong>Device:</strong> @(_deviceInfo ?? "Searching...")</p>
+        <p><strong>Test Status:</strong> <span class="@_statusClass">@_statusMessage</span></p>
+    </div>
+</div>
+
+<div class="mb-3">
+    <button class="btn btn-primary" @onclick="RunTest" disabled="@(!_isSupported || _isRunning)">Run Compute Test</button>
+</div>
+
+@if (_logs.Count > 0)
+{
+    <div class="card">
+        <div class="card-header">Logs</div>
+        <div class="card-body bg-light" style="max-height: 400px; overflow-y: auto;">
+            @foreach (var log in _logs)
+            {
+                <div class="text-monospace">@log</div>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    private string? _deviceInfo;
+    private string _statusMessage = "Ready";
+    private string _statusClass = "text-secondary";
+    private bool _isSupported;
+    private bool _isRunning;
+    private List<string> _logs = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _isSupported = WebGPUDevice.IsSupported;
+        if (!_isSupported)
+        {
+            _deviceInfo = "WebGPU is not supported in this browser.";
+            _statusMessage = "Not Supported";
+            _statusClass = "text-danger";
+        }
+        else
+        {
+            var device = await WebGPUDevice.GetDefaultDeviceAsync();
+            if (device != null)
+            {
+                _deviceInfo = $"{device.Name} ({device.Vendor})";
+            }
+            else
+            {
+                _deviceInfo = "WebGPU supported, but no adapter found.";
+            }
+        }
+    }
+
+    private void Log(string message)
+    {
+        _logs.Add($"[{DateTime.Now:HH:mm:ss.fff}] {message}");
+        StateHasChanged();
+    }
+
+    private async Task RunTest()
+    {
+        _isRunning = true;
+        _statusMessage = "Running...";
+        _statusClass = "text-warning";
+        _logs.Clear();
+        StateHasChanged();
+
+        try
+        {
+            Log("Requesting WebGPU device...");
+            var device = await WebGPUDevice.GetDefaultDeviceAsync();
+            if (device == null)
+            {
+                throw new Exception("No WebGPU device found.");
+            }
+
+            Log($"Created device: {device.Name}");
+
+            using var accelerator = await device.CreateAcceleratorAsync();
+            Log("Accelerator initialized.");
+
+            // Test vector addition: C = A + B
+            int length = 1024;
+            var dataA = new float[length];
+            var dataB = new float[length];
+            var expected = new float[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                dataA[i] = i;
+                dataB[i] = i * 2;
+                expected[i] = dataA[i] + dataB[i];
+            }
+
+            Log($"Allocating buffers for {length} elements...");
+            using var bufferA = accelerator.Allocate(dataA);
+            using var bufferB = accelerator.Allocate(dataB);
+            using var bufferC = accelerator.Allocate<float>(length);
+
+            Log("Compiling compute shader...");
+            // Simple vector addition kernel in WGSL
+            string wgsl = @"
+struct Params {
+    length : u32,
+}
+
+@group(0) @binding(0) var<storage, read> inputA : array<f32>;
+@group(0) @binding(1) var<storage, read> inputB : array<f32>;
+@group(0) @binding(2) var<storage, read_write> outputC : array<f32>;
+
+@compute @workgroup_size(64)
+fn main(@builtin(global_invocation_id) global_id : vec3<u32>) {
+    let i = global_id.x;
+    if (i >= arrayLength(&outputC)) {
+        return;
+    }
+    outputC[i] = inputA[i] + inputB[i];
+}
+";
+            using var shader = accelerator.CreateComputeShader(wgsl);
+            
+            Log("Binding buffers...");
+            // Note: Indices match @binding values
+            shader.SetBuffer(0, bufferA)
+                  .SetBuffer(1, bufferB)
+                  .SetBuffer(2, bufferC);
+
+            Log("Dispatching kernel...");
+            uint groupSize = 64;
+            uint numGroups = (uint)((length + groupSize - 1) / groupSize);
+            shader.Dispatch(numGroups);
+
+            Log("Downloading results...");
+            var result = await bufferC.CopyToHostAsync();
+
+            Log("Verifying results...");
+            bool passed = true;
+            for (int i = 0; i < length; i++)
+            {
+                if (Math.Abs(result[i] - expected[i]) > 0.0001f)
+                {
+                    Log($"Error at index {i}: expected {expected[i]}, got {result[i]}");
+                    passed = false;
+                    break;
+                }
+            }
+
+            if (passed)
+            {
+                Log("SUCCESS: Vector addition verified correctly!");
+                _statusMessage = "Passed";
+                _statusClass = "text-success";
+            }
+            else
+            {
+                Log("FAILED: Result verification mismatch.");
+                _statusMessage = "Failed";
+                _statusClass = "text-danger";
+            }
+        }
+        catch (Exception ex)
+        {
+            Log($"Exception: {ex.Message}");
+            Console.WriteLine(ex);
+            _statusMessage = "Error";
+            _statusClass = "text-danger";
+        }
+        finally
+        {
+            _isRunning = false;
+            StateHasChanged();
+        }
+    }
+}
