@@ -57,7 +57,7 @@ namespace SpawnDev.ILGPU.WebGPU
         /// <summary>
         /// Constructs a new WebGPU ILGPU device.
         /// </summary>
-        internal WebGPUILGPUDevice(WebGPUDevice device, int deviceIndex)
+        public WebGPUILGPUDevice(WebGPUDevice device, int deviceIndex)
         {
             nativeDevice = device ?? throw new ArgumentNullException(nameof(device));
 

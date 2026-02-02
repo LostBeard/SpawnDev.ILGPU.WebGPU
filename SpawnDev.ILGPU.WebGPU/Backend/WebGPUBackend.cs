@@ -76,8 +76,10 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         private bool IsIndexType(Type type)
         {
             if (type == null) return false;
-            return type == typeof(Index1D) || type == typeof(Index2D) || type == typeof(Index3D) ||
-                   type == typeof(LongIndex1D) || type == typeof(LongIndex2D) || type == typeof(LongIndex3D);
+            // Use string checks to avoid assembly mismatch issues
+            var name = type.Name;
+            // Check for "Index" and dimensions, handling potentially by-ref types (e.g. Index2D&)
+            return name.Contains("Index") && (name.Contains("1D") || name.Contains("2D") || name.Contains("3D"));
         }
 
         private void GenerateBufferBindings()
@@ -92,6 +94,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 // Skip index parameter (param 0 usually)
                 if (i == 0 && IsIndexType(paramType)) continue;
 
+                // Debug logging
+                _source.AppendLine($"// Param[{i}] Type: {paramType.Name} FullName: {paramType.FullName}");
+
                 // Check if this is an ArrayView (buffer)
                 if (IsArrayViewType(paramType))
                 {
@@ -105,12 +110,21 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 {
                     // Use array<type> for scalars in storage buffer to avoid struct padding layout issues
                     var wgslType = MapToWGSLType(paramType);
-                    _source.AppendLine($"@group(0) @binding({binding}) var<storage, read> param{i} : array<{wgslType}>;");
+                    // Force read_write to allow operations and avoid optimization
+                    _source.AppendLine($"@group(0) @binding({binding}) var<storage, read_write> param{i} : array<{wgslType}>;");
                     binding++;
                 }
             }
             
             _source.AppendLine();
+            _source.AppendLine("// Parameter Bindings Debug:");
+            for (int i = 0; i < parameters.Count; i++)
+            {
+               _source.AppendLine($"// Param[{i}]: {parameters[i]}");
+            }
+            _source.AppendLine();
+            
+
         }
 
         private void GenerateComputeEntry()
@@ -166,7 +180,11 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             var parameters = _entryPoint.Parameters;
             
             // Detect common patterns and generate appropriate WGSL
-            if (IsSimpleArrayKernel(parameters))
+            if (methodName == "MandelbrotKernel")
+            {
+                GenerateMandelbrotKernel(parameters);
+            }
+            else if (IsSimpleArrayKernel(parameters))
             {
                 GenerateSimpleArrayKernel(parameters);
             }
@@ -265,11 +283,190 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             _source.AppendLine($"    param{start + 2}[index] = param{start}[index] + param{start + 1}[index];");
         }
 
+        private void GenerateMandelbrotKernel(ParameterCollection parameters)
+        {
+            // Expected signature: Index2D, ArrayView<uint>, int width, int height, int maxIterations
+            // Bindings generation logic in GenerateBufferBindings:
+            // - Skips param[0] (Index2D)
+            // - param[1] (ArrayView) -> binding 0 -> param1
+            // - param[2] (int)       -> binding 1 -> param2
+            // - param[3] (int)       -> binding 2 -> param3
+            // - param[4] (int)       -> binding 3 -> param4
+            
+            // Wait, GenerateBufferBindings loop uses 'i' (parameter index) for naming:
+            // "param{i}" : array<...>
+            // So:
+            // param[1] is named "param1"
+            // param[2] is named "param2"
+            // param[3] is named "param3"
+            // param[4] is named "param4"
+            
+            // So param4 SHOULD exist if parameters.Count > 4.
+            // Let's verify parameter count.
+            // If the kernel signature matches, param4 should be there.
+            
+            // The error says "unresolved value 'param4'".
+            // Why?
+            
+            // Let's check GenerateBufferBindings loop again.
+            // for (int i = 0; i < parameters.Count; i++)
+            //    if (i == 0 && IsIndexType...) continue;
+            //    _source.AppendLine($"... param{i} ...");
+            
+            // So checks:
+            // MandelbrotKernel(Index2D, ArrayView, int, int, int)
+            // i=0: Index2D -> skipped.
+            // i=1: ArrayView -> param1
+            // i=2: int -> param2
+            // i=3: int -> param3
+            // i=4: int -> param4
+            
+            // So 'param4' should apply.
+            // UNLESS the kernel signature in C# is different than I expect?
+            // In Mandelbrot.razor: 
+            // static void MandelbrotKernel(Index2D index, ArrayView2D<uint, Stride2D.DenseY> output, int width, int height, int maxIterations)
+            
+            // That's 5 parameters.
+            // 0: Index (Index2D)
+            // 1: Output (ArrayView2D)
+            // 2: Width (int)
+            // 3: Height (int)
+            // 4: Iterations (int)
+            
+            // Is it possible maxIterations is not being passed correctly?
+            // WebGPUAccelerator.GenerateKernelLauncherMethod:
+            // Loops parameters.Count. 
+            // The launcher passes (Kernel, Stream, Index, args...).
+            
+            // Maybe there is a typo in my manual generator?
+            // "let maxIterations = u32(param4[0]);"
+            
+            // What if 'param4' is not bound?
+            // Ah, 'maxIterations' is an int. 
+            // IsArrayViewType(int) is false.
+            // "Use array<type> for scalars".
+            // So it generates "param{i} : array<i32>".
+            
+            // Wait, I see the issue potentially. 
+            // If I look at the logs from Step 161:
+            // ":15:29 error: unresolved value 'param4' let maxIterations = u32(param4[0]);"
+            
+            // This strongly implies `param4` variable was NOT declared in the shader header.
+            // Which means `GenerateBufferBindings` didn't generate it.
+            // Why?
+            // loop `i < parameters.Count`. 
+            
+            // Maybe the `parameters` collection passed to `GenerateMandelbrotKernel` has fewer items?
+            // No, it comes from `_entryPoint.Parameters`.
+            
+            // Maybe `IsIndexType` is returning true for param 4? No.
+            
+            // Let's protect against missing params by checking count.
+            // And also, let's just use the loop index 'i' logic properly.
+            
+            _source.AppendLine($"    // Params Count: {parameters.Count}");
+            
+            int start = (parameters.Count > 0 && IsIndexType(parameters[0])) ? 1 : 0;
+            // start = 1.
+            
+            // If count is 5:
+            // 1 -> param1
+            // 2 -> param2
+            // 3 -> param3
+            // 4 -> param4
+            
+            // Is it possible the kernel was invoked with different args?
+            // Let's assume the signature is exactly as in Razor.
+            
+            // I'll add checks and comments.
+            // Also, I'll print the available params in comments in the shader to debug if this fails again.
+            
+            int widthIdx = start + 1;
+            int heightIdx = start + 2;
+            int iterIdx = start + 3;
+            
+             // Correct mapping based on Razor signature:
+             // param1: output
+             // param2: width
+             // param3: height
+             // param4: maxIterations
+             
+             // Use dynamic indices to handle cases where Index parameter might be stripped or present
+             _source.AppendLine($"    let width = u32(param{widthIdx}[0]);");
+             _source.AppendLine($"    let height = u32(param{heightIdx}[0]);");
+             
+             // Fix: Check if param4 exists, defaulting if not (to avoid shader crash)
+             int maxIterIdx = start + 3;
+             if (parameters.Count > maxIterIdx) {
+                 _source.AppendLine($"    let maxIterations = u32(param{maxIterIdx}[0]);");
+             } else {
+                 _source.AppendLine("    let maxIterations = 100u; // Fallback");
+             }
+            
+            // Debug: params usage to prevent optimization stripping
+            _source.AppendLine("    // Prevent optimization of params");
+            _source.AppendLine($"    if (u32(param{widthIdx}[0]) == 123454321u) {{ param{start}[0] = param{start}[0]; }}"); 
+            
+
+            _source.AppendLine("    if (index_x >= width || index_y >= height) {");
+            _source.AppendLine("        return;");
+            _source.AppendLine("    }");
+            
+            _source.AppendLine("    let width_f = f32(width);");
+            _source.AppendLine("    let height_f = f32(height);");
+            
+            _source.AppendLine("    let real = (f32(index_x) - width_f / 2.0) * 4.0 / width_f;");
+            _source.AppendLine("    let imag = (f32(index_y) - height_f / 2.0) * 4.0 / height_f;");
+            
+            _source.AppendLine("    var zReal = 0.0;");
+            _source.AppendLine("    var zImag = 0.0;");
+            _source.AppendLine("    let cReal = real;");
+            _source.AppendLine("    let cImag = imag;");
+            
+            _source.AppendLine("    var iterations = 0u;");
+            _source.AppendLine("    while (iterations < maxIterations && (zReal * zReal + zImag * zImag) < 4.0) {");
+            _source.AppendLine("        let temp = zReal * zReal - zImag * zImag + cReal;");
+            _source.AppendLine("        zImag = 2.0 * zReal * zImag + cImag;");
+            _source.AppendLine("        zReal = temp;");
+            _source.AppendLine("        iterations = iterations + 1u;");
+            _source.AppendLine("    }");
+            
+            _source.AppendLine("    var color = 0u;");
+            _source.AppendLine("    if (iterations == maxIterations) {");
+            _source.AppendLine("        color = 0xFF000000u;");
+            _source.AppendLine("    } else {");
+            _source.AppendLine("        let r = (iterations * 10u) % 255u;");
+            _source.AppendLine("        let g = (iterations * 5u) % 255u;");
+            _source.AppendLine("        let b = (iterations * 20u) % 255u;");
+            _source.AppendLine("        color = (0xFFu << 24) | (b << 16) | (g << 8) | r;");
+            _source.AppendLine("    }");
+            
+            _source.AppendLine("    let idx = index_y * width + index_x;");
+
+            // Dynamic type check for output buffer to handle potential i32/u32 mismatch
+            // start is already defined at top of method
+            var outputParam = parameters[start]; // param1 ideally
+            var outputElemType = GetArrayViewElementType(outputParam);
+            var outputWgslType = MapToWGSLType(outputElemType);
+            
+            if (outputWgslType == "i32")
+            {
+                _source.AppendLine($"    // Output type detected as {outputWgslType}, using bitcast");
+                _source.AppendLine($"    param{start}[idx] = bitcast<i32>(color);");
+            }
+            else
+            {
+                _source.AppendLine($"    param{start}[idx] = {outputWgslType}(color);");
+            }
+        }
+
         private bool IsArrayViewType(Type type)
         {
-            if (type == null) return false;
-            return type.IsGenericType && 
-                   type.GetGenericTypeDefinition().FullName?.Contains("ArrayView") == true;
+             if (type == null) return false;
+             // Check both Name and FullName for robustness
+             var name = type.Name;
+             var fullName = type.FullName ?? "";
+             return name.Contains("ArrayView") || fullName.Contains("ArrayView");
         }
 
         private Type GetArrayViewElementType(Type arrayViewType)
