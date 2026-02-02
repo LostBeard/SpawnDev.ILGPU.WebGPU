@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="../ILGPU/Src/ILGPU/ILGPU.csproj" />
   <Project Path="PlaywrightTestRunner/PlaywrightTestRunner.csproj" />
   <Project Path="SpawnDev.ILGPU.WebGPU.Demo/SpawnDev.ILGPU.WebGPU.Demo.csproj" />
   <Project Path="SpawnDev.ILGPU.WebGPU/SpawnDev.ILGPU.WebGPU.csproj" />

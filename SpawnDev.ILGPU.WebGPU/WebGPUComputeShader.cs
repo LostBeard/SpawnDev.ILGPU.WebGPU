@@ -26,7 +26,7 @@ namespace SpawnDev.ILGPU.WebGPU
         /// <summary>
         /// Constructs a new compute shader from WGSL source.
         /// </summary>
-        internal WebGPUComputeShader(WebGPUAccelerator accelerator, string wgslSource, string entryPoint)
+        internal WebGPUComputeShader(WebGPUNativeAccelerator accelerator, string wgslSource, string entryPoint)
         {
             Accelerator = accelerator ?? throw new ArgumentNullException(nameof(accelerator));
             WGSLSource = wgslSource ?? throw new ArgumentNullException(nameof(wgslSource));
@@ -66,7 +66,7 @@ namespace SpawnDev.ILGPU.WebGPU
         /// <summary>
         /// Returns the parent accelerator.
         /// </summary>
-        public WebGPUAccelerator Accelerator { get; }
+        public WebGPUNativeAccelerator Accelerator { get; }
 
         /// <summary>
         /// Returns the WGSL source code.

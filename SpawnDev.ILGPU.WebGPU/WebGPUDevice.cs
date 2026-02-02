@@ -231,9 +231,9 @@ namespace SpawnDev.ILGPU.WebGPU
         /// <summary>
         /// Creates a new WebGPU accelerator from this device.
         /// </summary>
-        public async Task<WebGPUAccelerator> CreateAcceleratorAsync()
+        public async Task<WebGPUNativeAccelerator> CreateAcceleratorAsync()
         {
-            return await WebGPUAccelerator.CreateAsync(this);
+            return await WebGPUNativeAccelerator.CreateAsync(this);
         }
 
         /// <summary>

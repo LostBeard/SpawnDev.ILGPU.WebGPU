@@ -1,8 +1,8 @@
 # SpawnDev.ILGPU.WebGPU
-SpawnDev.ILGPU.WebGPU is a WebGPU backend for [ILGPU](https://github.com/m4rs-mt/ILGPU), enabling GPU compute in Blazor WebAssembly application.
+SpawnDev.ILGPU.WebGPU provides WebGPU support for [ILGPU](https://github.com/m4rs-mt/ILGPU), enabling GPU compute in Blazor WebAssembly applications.
 
 ## Features
-- GPU compute in Blazor WebAssembly application
+- GPU compute in Blazor WebAssembly applications
 - WebGPU backend for ILGPU
 - JIT (just-in-time) compiler for high-performance GPU programs written in .Net-based languages
 - Entirely written in C# without any native dependencies

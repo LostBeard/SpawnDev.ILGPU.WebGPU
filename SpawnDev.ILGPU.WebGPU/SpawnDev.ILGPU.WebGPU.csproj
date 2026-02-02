@@ -33,7 +33,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		
 		<PackageReference Include="SpawnDev.BlazorJS" Version="2.62.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\ILGPU\Src\ILGPU\ILGPU.csproj" />
 	</ItemGroup>
 
 </Project>

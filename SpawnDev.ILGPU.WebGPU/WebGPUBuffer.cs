@@ -23,7 +23,7 @@ namespace SpawnDev.ILGPU.WebGPU
         /// <summary>
         /// Constructs a new WebGPU buffer.
         /// </summary>
-        internal WebGPUBuffer(WebGPUAccelerator accelerator, long length)
+        internal WebGPUBuffer(WebGPUNativeAccelerator accelerator, long length)
         {
             Accelerator = accelerator ?? throw new ArgumentNullException(nameof(accelerator));
             Length = length;
@@ -52,7 +52,7 @@ namespace SpawnDev.ILGPU.WebGPU
         /// <summary>
         /// Returns the parent accelerator.
         /// </summary>
-        public WebGPUAccelerator Accelerator { get; }
+        public WebGPUNativeAccelerator Accelerator { get; }
 
         /// <summary>
         /// Returns the native GPU buffer.
