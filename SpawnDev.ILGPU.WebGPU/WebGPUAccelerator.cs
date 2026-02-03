@@ -10,23 +10,20 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Threading.Tasks;
+using Array = System.Array;
 
 namespace SpawnDev.ILGPU.WebGPU
 {
     public class WebGPUAccelerator : KernelAccelerator<WebGPUCompiledKernel, WebGPUKernel>
     {
         public WebGPUNativeAccelerator NativeAccelerator { get; private set; } = null!;
-
         public WebGPUBackend Backend { get; private set; } = null!;
 
         public static readonly MethodInfo RunKernelMethod = typeof(WebGPUAccelerator).GetMethod(
             nameof(RunKernel),
             BindingFlags.Public | BindingFlags.Static)!;
 
-        private WebGPUAccelerator(Context context, Device device)
-            : base(context, device)
-        {
-        }
+        private WebGPUAccelerator(Context context, Device device) : base(context, device) { }
 
         public static async Task<WebGPUAccelerator> CreateAsync(Context context, WebGPUILGPUDevice device)
         {
@@ -43,135 +40,115 @@ namespace SpawnDev.ILGPU.WebGPU
             return new WebGPUKernel(this, compiledKernel, null);
         }
 
-        protected override WebGPUKernel CreateKernel(
-            WebGPUCompiledKernel compiledKernel,
-            MethodInfo launcher)
+        protected override WebGPUKernel CreateKernel(WebGPUCompiledKernel compiledKernel, MethodInfo launcher)
         {
             return new WebGPUKernel(this, compiledKernel, launcher);
         }
 
-        protected override MethodInfo GenerateKernelLauncherMethod(
-            WebGPUCompiledKernel kernel,
-            int customGroupSize)
+        protected override MethodInfo GenerateKernelLauncherMethod(WebGPUCompiledKernel kernel, int customGroupSize)
         {
             var parameters = kernel.EntryPoint.Parameters;
             var indexType = kernel.EntryPoint.KernelIndexType;
+            var argTypes = new List<Type> { typeof(Kernel), typeof(AcceleratorStream), indexType };
+            for (int i = 0; i < parameters.Count; i++) argTypes.Add(parameters[i]);
 
-            var argTypes = new List<Type>();
-            argTypes.Add(typeof(Kernel));
-            argTypes.Add(typeof(AcceleratorStream));
-            argTypes.Add(indexType);
-            for (int i = 0; i < parameters.Count; i++)
-            {
-                argTypes.Add(parameters[i]);
-            }
-
-            var dynamicMethod = new DynamicMethod(
-                "WebGPULauncher",
-                typeof(void),
-                argTypes.ToArray(),
-                typeof(WebGPUAccelerator).Module);
-
+            var dynamicMethod = new DynamicMethod("WebGPULauncher", typeof(void), argTypes.ToArray(), typeof(WebGPUAccelerator).Module);
             var ilGenerator = dynamicMethod.GetILGenerator();
-            var emitter = new ILEmitter(ilGenerator);
+            var argsLocal = ilGenerator.DeclareLocal(typeof(object[]));
 
-            var argsLocal = emitter.DeclareLocal(typeof(object[]));
             ilGenerator.Emit(OpCodes.Ldc_I4, parameters.Count);
             ilGenerator.Emit(OpCodes.Newarr, typeof(object));
-            emitter.Emit(LocalOperation.Store, argsLocal);
+            ilGenerator.Emit(OpCodes.Stloc, argsLocal);
 
             for (int i = 0; i < parameters.Count; i++)
             {
-                emitter.Emit(LocalOperation.Load, argsLocal);
+                ilGenerator.Emit(OpCodes.Ldloc, argsLocal);
                 ilGenerator.Emit(OpCodes.Ldc_I4, i);
-                emitter.Emit(ArgumentOperation.Load, i + 3);
-
+                ilGenerator.Emit(OpCodes.Ldarg, i + 3);
                 var paramType = parameters[i];
-                if (paramType.IsValueType)
-                    ilGenerator.Emit(OpCodes.Box, paramType);
-
+                if (paramType.IsValueType) ilGenerator.Emit(OpCodes.Box, paramType);
                 ilGenerator.Emit(OpCodes.Stelem_Ref);
             }
 
-            emitter.Emit(ArgumentOperation.Load, 0);
-            emitter.Emit(ArgumentOperation.Load, 1);
-            emitter.Emit(ArgumentOperation.Load, 2);
+            ilGenerator.Emit(OpCodes.Ldarg_0);
+            ilGenerator.Emit(OpCodes.Ldarg_1);
+            ilGenerator.Emit(OpCodes.Ldarg_2);
+            if (indexType.IsValueType) ilGenerator.Emit(OpCodes.Box, indexType);
 
-            if (indexType.IsValueType)
-            {
-                ilGenerator.Emit(OpCodes.Box, indexType);
-            }
-
-            emitter.Emit(LocalOperation.Load, argsLocal);
+            ilGenerator.Emit(OpCodes.Ldloc, argsLocal);
             ilGenerator.EmitCall(OpCodes.Call, RunKernelMethod, null);
             ilGenerator.Emit(OpCodes.Ret);
 
             return dynamicMethod;
         }
 
-        // Helper to robustly extract Stride (Width) from ArrayView2D/3D using Brute Force Reflection
-        private static int ExtractStrideFromView(object view, Type viewType)
+        // Helper to robustly extract dimensions (X, Y) using Duck Typing
+        private static int[] ExtractDimensionsFromView(object view, Type viewType)
         {
             try
             {
-                // We use IgnoreCase and look for ANY field/property that returns Index2D/Index3D
-                var flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.IgnoreCase;
+                var flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
 
-                // Helper to extract X from an Index object
-                int GetX(object d)
+                int[] GetXY(object d)
                 {
+                    if (d == null) return Array.Empty<int>();
                     var t = d.GetType();
+                    int x = -1, y = -1;
+
                     var fX = t.GetField("X", flags);
-                    if (fX != null) return Convert.ToInt32(fX.GetValue(d));
-                    var pX = t.GetProperty("X", flags);
-                    if (pX != null) return Convert.ToInt32(pX.GetValue(d));
-                    return 0;
+                    if (fX != null) x = Convert.ToInt32(fX.GetValue(d));
+                    else
+                    {
+                        var pX = t.GetProperty("X", flags);
+                        if (pX != null) x = Convert.ToInt32(pX.GetValue(d));
+                    }
+
+                    var fY = t.GetField("Y", flags);
+                    if (fY != null) y = Convert.ToInt32(fY.GetValue(d));
+                    else
+                    {
+                        var pY = t.GetProperty("Y", flags);
+                        if (pY != null) y = Convert.ToInt32(pY.GetValue(d));
+                    }
+
+                    if (x >= 0 && y >= 0) return new int[] { x, y };
+                    return Array.Empty<int>();
                 }
 
-                // 1. Direct "Width" Property check (Fastest)
-                var directWidth = viewType.GetProperty("Width", flags);
-                if (directWidth != null)
-                {
-                    int val = Convert.ToInt32(directWidth.GetValue(view));
-                    if (val > 0) return val;
-                }
-
-                // 2. Iterate ALL Fields (Robust - catches backing fields)
                 foreach (var field in viewType.GetFields(flags))
                 {
-                    if (field.FieldType.Name.Contains("Index2D") || field.FieldType.Name.Contains("Index3D"))
+                    if (field.FieldType.IsPrimitive || field.FieldType.IsPointer) continue;
+                    try
                     {
-                        var dims = field.GetValue(view);
-                        if (dims != null)
-                        {
-                            int x = GetX(dims);
-                            if (x > 0) return x;
-                        }
+                        var val = field.GetValue(view);
+                        var res = GetXY(val);
+                        if (res.Length > 0 && res[0] > 0) return res;
                     }
+                    catch { }
                 }
 
-                // 3. Iterate ALL Properties (Robust)
                 foreach (var prop in viewType.GetProperties(flags))
                 {
                     if (prop.GetIndexParameters().Length > 0) continue;
-
-                    if (prop.PropertyType.Name.Contains("Index2D") || prop.PropertyType.Name.Contains("Index3D"))
+                    if (prop.PropertyType.IsPrimitive || prop.PropertyType.IsPointer) continue;
+                    try
                     {
-                        try
-                        {
-                            var dims = prop.GetValue(view);
-                            if (dims != null)
-                            {
-                                int x = GetX(dims);
-                                if (x > 0) return x;
-                            }
-                        }
-                        catch { }
+                        var val = prop.GetValue(view);
+                        var res = GetXY(val);
+                        if (res.Length > 0 && res[0] > 0) return res;
                     }
+                    catch { }
+                }
+
+                var directWidth = viewType.GetProperty("Width", flags);
+                if (directWidth != null)
+                {
+                    int x = Convert.ToInt32(directWidth.GetValue(view));
+                    if (x > 0) return new int[] { x, 0 };
                 }
             }
-            catch { /* Ignore errors during extraction */ }
-            return 0;
+            catch { }
+            return Array.Empty<int>();
         }
 
         public static void RunKernel(Kernel kernel, AcceleratorStream stream, object dimension, object[] args)
@@ -181,16 +158,20 @@ namespace SpawnDev.ILGPU.WebGPU
             var webGpuKernel = (WebGPUKernel)kernel;
             var compiledKernel = webGpuKernel.CompiledKernel;
 
+            // ---- DEBUG LOGGING: WGSL SOURCE ----
+            Console.WriteLine("\n[WebGPU-Debug] ---- GENERATED WGSL ----");
+            Console.WriteLine(compiledKernel.WGSLSource);
+            Console.WriteLine("[WebGPU-Debug] ------------------------\n");
+            // ------------------------------------
+
             var shader = nativeAccel.CreateComputeShader(compiledKernel.WGSLSource);
             var device = nativeAccel.NativeDevice!;
-            var entries = new List<GPUBindGroupEntry>();
-
-            // Debug log commented out for performance
-            // Console.WriteLine($"[WebGPU] RunKernel: Starting kernel dispatch with {args.Length} arguments");
 
             try
             {
                 int currentBindingIndex = 0;
+                var entries = new List<GPUBindGroupEntry>();
+
                 for (int i = 0; i < args.Length; i++)
                 {
                     var paramType = compiledKernel.EntryPoint.Parameters[i];
@@ -200,29 +181,23 @@ namespace SpawnDev.ILGPU.WebGPU
                         continue;
 
                     var arg = args[i];
-
                     IArrayView? arrayView = arg as IArrayView;
-                    int strideVal = 0;
+                    int[] dims = Array.Empty<int>();
 
                     if (arg != null)
                     {
                         var argType = arg.GetType();
-
-                        // Extract Stride if it is a MultiDim view
-                        if (argType.Name.Contains("ArrayView2D") || argType.Name.Contains("ArrayView3D"))
+                        if (argType.Name.Contains("ArrayView"))
                         {
-                            strideVal = ExtractStrideFromView(arg, argType);
+                            dims = ExtractDimensionsFromView(arg, argType);
                         }
 
                         if (arrayView == null)
                         {
-                            if (argType.Name.Contains("ArrayView2D") || argType.Name.Contains("ArrayView3D"))
+                            var baseViewProp = argType.GetProperty("BaseView");
+                            if (baseViewProp != null)
                             {
-                                var baseViewProp = argType.GetProperty("BaseView");
-                                if (baseViewProp != null)
-                                {
-                                    arrayView = baseViewProp.GetValue(arg) as IArrayView;
-                                }
+                                arrayView = baseViewProp.GetValue(arg) as IArrayView;
                             }
                         }
                     }
@@ -238,25 +213,23 @@ namespace SpawnDev.ILGPU.WebGPU
                             contiguous = (baseViewProp != null ? baseViewProp.GetValue(arrayView) : arrayView) as IContiguousArrayView;
                         }
 
-                        if (contiguous == null) throw new Exception($"Argument {i} ({arg.GetType()}) is not a contiguous WebGPU buffer");
+                        if (contiguous == null) throw new Exception($"Argument {i} is not a contiguous WebGPU buffer");
 
-                        var buffer = contiguous.Buffer as WebGPUMemoryBuffer;
-                        if (buffer == null) throw new Exception($"Argument {i} is not a WebGPU buffer (Buffer is null or wrong type)");
+                        var nativeBuffer = contiguous.Buffer as WebGPUMemoryBuffer;
+                        var gpuBuffer = nativeBuffer!.NativeBuffer.NativeBuffer!;
 
-                        var nativeBuffer = buffer.NativeBuffer.NativeBuffer!;
-                        var offset = (ulong)((long)contiguous.IndexInBytes);
-                        var size = (ulong)((long)contiguous.LengthInBytes);
+                        // DEBUG LOG
+                        Console.WriteLine($"[WebGPU-Debug] Arg {i}: Binding Buffer. Size={contiguous.LengthInBytes}, Offset={contiguous.IndexInBytes}");
 
                         resource = new GPUBufferBinding
                         {
-                            Buffer = nativeBuffer,
-                            Offset = offset,
-                            Size = size
+                            Buffer = gpuBuffer,
+                            Offset = (ulong)((long)contiguous.IndexInBytes),
+                            Size = (ulong)((long)contiguous.LengthInBytes)
                         };
                     }
                     else
                     {
-                        // Scalar Handling
                         var size = 256;
                         var bufferDesc = new GPUBufferDescriptor
                         {
@@ -266,6 +239,9 @@ namespace SpawnDev.ILGPU.WebGPU
                             MappedAtCreation = false
                         };
                         var uBuffer = device.CreateBuffer(bufferDesc);
+
+                        // DEBUG LOG
+                        Console.WriteLine($"[WebGPU-Debug] Arg {i}: Binding Scalar. Value={arg}");
 
                         if (arg is int iVal) device.Queue.WriteBuffer(uBuffer, 0, BitConverter.GetBytes(iVal));
                         else if (arg is float fVal) device.Queue.WriteBuffer(uBuffer, 0, BitConverter.GetBytes(fVal));
@@ -277,25 +253,16 @@ namespace SpawnDev.ILGPU.WebGPU
                         else if (arg is bool blVal) device.Queue.WriteBuffer(uBuffer, 0, BitConverter.GetBytes(blVal ? 1u : 0u));
                         else throw new NotSupportedException($"Unsupported scalar argument type: {arg.GetType()}");
 
-                        resource = new GPUBufferBinding
-                        {
-                            Buffer = uBuffer,
-                            Offset = 0,
-                            Size = (ulong)size
-                        };
+                        resource = new GPUBufferBinding { Buffer = uBuffer, Offset = 0, Size = (ulong)size };
                     }
 
-                    entries.Add(new GPUBindGroupEntry
-                    {
-                        Binding = (uint)currentBindingIndex,
-                        Resource = resource!
-                    });
+                    entries.Add(new GPUBindGroupEntry { Binding = (uint)currentBindingIndex, Resource = resource! });
                     currentBindingIndex++;
 
-                    // Argument Decomposition for ArrayView2D/3D
-                    string pTypeName = paramType.Name;
-                    if (pTypeName.Contains("ArrayView2D") || pTypeName.Contains("ArrayView3D"))
+                    if (dims.Length > 0)
                     {
+                        Console.WriteLine($"[WebGPU-Debug] Arg {i}: Binding Stride Buffer. Values=[{string.Join(", ", dims)}]");
+
                         var strideSize = 256;
                         var strideDesc = new GPUBufferDescriptor
                         {
@@ -306,20 +273,14 @@ namespace SpawnDev.ILGPU.WebGPU
                         };
                         var strideBuffer = device.CreateBuffer(strideDesc);
 
-                        // Console.WriteLine($"[WebGPU] Created Stride Buffer: Binding={currentBindingIndex}, Val={strideVal}");
+                        var strideData = new int[dims.Length];
+                        Array.Copy(dims, strideData, dims.Length);
+                        var byteData = new byte[dims.Length * 4];
+                        Buffer.BlockCopy(strideData, 0, byteData, 0, byteData.Length);
 
-                        device.Queue.WriteBuffer(strideBuffer, 0, BitConverter.GetBytes(strideVal));
+                        device.Queue.WriteBuffer(strideBuffer, 0, byteData);
 
-                        entries.Add(new GPUBindGroupEntry
-                        {
-                            Binding = (uint)currentBindingIndex,
-                            Resource = new GPUBufferBinding
-                            {
-                                Buffer = strideBuffer,
-                                Offset = 0,
-                                Size = (ulong)strideSize
-                            }
-                        });
+                        entries.Add(new GPUBindGroupEntry { Binding = (uint)currentBindingIndex, Resource = new GPUBufferBinding { Buffer = strideBuffer, Offset = 0, Size = (ulong)strideSize } });
                         currentBindingIndex++;
                     }
                 }
@@ -340,18 +301,16 @@ namespace SpawnDev.ILGPU.WebGPU
                 else if (dimension is LongIndex2D l2) { workX = (uint)Math.Ceiling(l2.X / 8.0); workY = (uint)Math.Ceiling(l2.Y / 8.0); }
                 else if (dimension is LongIndex3D l3) { workX = (uint)Math.Ceiling(l3.X / 4.0); workY = (uint)Math.Ceiling(l3.Y / 4.0); workZ = (uint)Math.Ceiling(l3.Z / 4.0); }
 
+                Console.WriteLine($"[WebGPU-Debug] Dispatching: ({workX}, {workY}, {workZ})");
+
                 using var encoder = device.CreateCommandEncoder();
                 using var pass = encoder.BeginComputePass();
                 pass.SetPipeline(shader.Pipeline);
                 pass.SetBindGroup(0, bindGroup);
-
-                // Console.WriteLine($"[WebGPU] Dispatching Kernel: ({workX}, {workY}, {workZ})");
                 pass.DispatchWorkgroups(workX, workY, workZ);
-
                 pass.End();
                 using var cmd = encoder.Finish();
                 nativeAccel.Queue!.Submit(new[] { cmd });
-                // Console.WriteLine("[WebGPU] Queue Submitted");
             }
             catch (Exception ex)
             {
@@ -360,84 +319,33 @@ namespace SpawnDev.ILGPU.WebGPU
             }
         }
 
-        protected override MemoryBuffer AllocateRawInternal(long length, int elementSize)
-        {
-            return new WebGPUMemoryBuffer(this, length, elementSize);
-        }
-
-        protected override AcceleratorStream CreateStreamInternal()
-        {
-            return new WebGPUStream(this);
-        }
-
-        protected override void SynchronizeInternal()
-        {
-            // WebGPU queue.onSubmittedWorkDone() could be here but blocking is not allowed.
-            // Console.WriteLine("[WebGPU] SynchronizeInternal (No-op non-blocking)");
-        }
-
+        protected override MemoryBuffer AllocateRawInternal(long length, int elementSize) => new WebGPUMemoryBuffer(this, length, elementSize);
+        protected override AcceleratorStream CreateStreamInternal() => new WebGPUStream(this);
+        protected override void SynchronizeInternal() { }
         protected override void OnBind() { }
         protected override void OnUnbind() { }
-
-        protected override void DisposeAccelerator_SyncRoot(bool disposing)
-        {
-            if (disposing) NativeAccelerator.Dispose();
-        }
-
-        public override TExtension CreateExtension<TExtension, TExtensionProvider>(TExtensionProvider provider)
-        {
-            return default;
-        }
-
-        protected override PageLockScope<T> CreatePageLockFromPinnedInternal<T>(IntPtr ptr, long numElements)
-        {
-            throw new NotSupportedException();
-        }
-
-        protected override int EstimateGroupSizeInternal(Kernel kernel, int dynamicSharedMemorySize, int maxGridSize, out int groupSize)
-        {
-            groupSize = 64;
-            return 64;
-        }
-
-        protected override int EstimateGroupSizeInternal(Kernel kernel, Func<int, int> computeSharedMemorySize, int maxGridSize, out int groupSize)
-        {
-            groupSize = 64;
-            return 64;
-        }
-
+        protected override void DisposeAccelerator_SyncRoot(bool disposing) { if (disposing) NativeAccelerator.Dispose(); }
+        public override TExtension CreateExtension<TExtension, TExtensionProvider>(TExtensionProvider provider) => default;
+        protected override PageLockScope<T> CreatePageLockFromPinnedInternal<T>(IntPtr ptr, long numElements) => throw new NotSupportedException();
+        protected override int EstimateGroupSizeInternal(Kernel kernel, int dynamicSharedMemorySize, int maxGridSize, out int groupSize) { groupSize = 64; return 64; }
+        protected override int EstimateGroupSizeInternal(Kernel kernel, Func<int, int> computeSharedMemorySize, int maxGridSize, out int groupSize) { groupSize = 64; return 64; }
         protected override int EstimateMaxActiveGroupsPerMultiprocessorInternal(Kernel kernel, int groupSize, int dynamicSharedMemorySize) => 1;
-
         protected override void EnablePeerAccessInternal(Accelerator other) { }
         protected override void DisablePeerAccessInternal(Accelerator other) { }
         protected override bool CanAccessPeerInternal(Accelerator other) => false;
-
         private class WebGPUStream : AcceleratorStream
         {
             public WebGPUStream(Accelerator acc) : base(acc) { }
-
             protected override void DisposeAcceleratorObject(bool disposing) { }
-
             public override void Synchronize() { }
-
-            protected override global::ILGPU.Runtime.ProfilingMarker AddProfilingMarkerInternal()
-            {
-                throw new NotSupportedException();
-            }
+            protected override global::ILGPU.Runtime.ProfilingMarker AddProfilingMarkerInternal() => throw new NotSupportedException();
         }
     }
 
     public class WebGPUKernel : Kernel
     {
-        public WebGPUKernel(Accelerator accelerator, CompiledKernel compiledKernel, MethodInfo launcher)
-            : base(accelerator, compiledKernel, launcher)
-        {
-        }
-
+        public WebGPUKernel(Accelerator accelerator, CompiledKernel compiledKernel, MethodInfo launcher) : base(accelerator, compiledKernel, launcher) { }
         public new WebGPUCompiledKernel CompiledKernel => (WebGPUCompiledKernel)base.CompiledKernel;
-
-        protected override void DisposeAcceleratorObject(bool disposing)
-        {
-        }
+        protected override void DisposeAcceleratorObject(bool disposing) { }
     }
 }

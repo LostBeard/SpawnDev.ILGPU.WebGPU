@@ -28,6 +28,24 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             EntryPoint = args.EntryPoint;
             DynamicSharedAllocations = args.DynamicSharedAllocations;
+
+            // Find the memory address (Alloca) where the Index Parameter is stored.
+            if (!EntryPoint.IsExplicitlyGrouped && method.Parameters.Count > 0)
+            {
+                var indexParam = method.Parameters[0];
+                foreach (var block in method.Blocks)
+                {
+                    foreach (var entry in block)
+                    {
+                        if (entry.Value is Store store && store.Value == indexParam)
+                        {
+                            _indexParameterAddress = store.Target;
+                            goto FoundIndexParam;
+                        }
+                    }
+                }
+            FoundIndexParam:;
+            }
         }
 
         #endregion
@@ -37,13 +55,12 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         public EntryPoint EntryPoint { get; }
         public AllocaKindInformation DynamicSharedAllocations { get; }
 
+        private Value? _indexParameterAddress;
+
         #endregion
 
         #region Methods
 
-        /// <summary>
-        /// Helper to unwrap Pointer/ByRef types to get the underlying StructureType.
-        /// </summary>
         private TypeNode UnwrapType(TypeNode type)
         {
             var current = type;
@@ -59,6 +76,17 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             return type;
         }
 
+        private bool IsViewStructure(TypeNode type)
+        {
+            if (type is ViewType) return true;
+            if (type is StructureType st)
+            {
+                if (st.ToString().Contains("View")) return true;
+                if (st.NumFields >= 2 && st.Fields[0] is PointerType) return true;
+            }
+            return false;
+        }
+
         public override void GenerateHeader(StringBuilder builder)
         {
             int bindingIdx = 0;
@@ -66,8 +94,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
             foreach (var param in Method.Parameters)
             {
-                if (param.Index < paramOffset)
-                    continue;
+                if (param.Index < paramOffset) continue;
 
                 var elementType = GetBufferElementType(param.ParameterType);
                 var wgslType = TypeGenerator[elementType];
@@ -76,19 +103,18 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 // 1. Primary Binding
                 var bindingDecl = $"@group(0) @binding({bindingIdx}) var<storage, {accessMode}> param{param.Index} : array<{wgslType}>;";
                 builder.AppendLine(bindingDecl);
-                Console.WriteLine($"[WGSL Binding] {bindingDecl}");
                 bindingIdx++;
 
-                // 2. Secondary Binding (Stride Injection)
+                // 2. Secondary Binding (Stride)
                 var rawType = UnwrapType(param.ParameterType);
-                if (rawType is StructureType structType &&
-                    structType.NumFields > 2 && // Ptr + Length + X + Y
-                    structType.Fields[0] is ViewType)
+                if (rawType is StructureType structType)
                 {
-                    var strideDecl = $"@group(0) @binding({bindingIdx}) var<storage, read> param{param.Index}_stride : array<i32>;";
-                    builder.AppendLine(strideDecl);
-                    Console.WriteLine($"[WGSL Binding] {strideDecl}");
-                    bindingIdx++;
+                    if (structType.NumFields > 2 && IsViewStructure(structType.Fields[0]))
+                    {
+                        var strideDecl = $"@group(0) @binding({bindingIdx}) var<storage, read> param{param.Index}_stride : array<i32>;";
+                        builder.AppendLine(strideDecl);
+                        bindingIdx++;
+                    }
                 }
             }
             builder.AppendLine();
@@ -97,31 +123,20 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         public override void GenerateCode()
         {
             string workgroupSize = GetWorkgroupSize();
-
             Builder.AppendLine($"@compute @workgroup_size({workgroupSize})");
-            Builder.Append("fn main(");
-            Builder.Append("@builtin(global_invocation_id) global_id : vec3<u32>");
-
+            Builder.Append("fn main(@builtin(global_invocation_id) global_id : vec3<u32>");
             if (EntryPoint.IsExplicitlyGrouped)
             {
                 Builder.Append(", @builtin(local_invocation_id) local_id : vec3<u32>");
                 Builder.Append(", @builtin(workgroup_id) workgroup_id : vec3<u32>");
                 Builder.Append(", @builtin(num_workgroups) num_workgroups : vec3<u32>");
             }
-
             Builder.AppendLine(") {");
             PushIndent();
-
             SetupIndexVariables();
             SetupParameterBindings();
             GenerateCodeInternal();
-
             PopIndent();
-
-            Console.WriteLine("================================ WGSL KERNEL CODE ================================");
-            Console.WriteLine(Builder.ToString());
-            Console.WriteLine("==================================================================================");
-
             Builder.AppendLine("}");
         }
 
@@ -160,23 +175,15 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         private void SetupIndexVariables()
         {
             if (EntryPoint.IsExplicitlyGrouped) return;
-
             if (Method.Parameters.Count > 0)
             {
                 var indexParam = Method.Parameters[0];
                 var indexVar = Allocate(indexParam);
-
                 switch (EntryPoint.IndexType)
                 {
-                    case IndexType.Index1D:
-                        AppendLine($"var {indexVar.Name} : i32 = i32(global_id.x);");
-                        break;
-                    case IndexType.Index2D:
-                        AppendLine($"var {indexVar.Name} : vec2<i32> = vec2<i32>(i32(global_id.x), i32(global_id.y));");
-                        break;
-                    case IndexType.Index3D:
-                        AppendLine($"var {indexVar.Name} : vec3<i32> = vec3<i32>(i32(global_id.x), i32(global_id.y), i32(global_id.z));");
-                        break;
+                    case IndexType.Index1D: AppendLine($"var {indexVar.Name} : i32 = i32(global_id.x);"); break;
+                    case IndexType.Index2D: AppendLine($"var {indexVar.Name} : vec2<i32> = vec2<i32>(i32(global_id.x), i32(global_id.y));"); break;
+                    case IndexType.Index3D: AppendLine($"var {indexVar.Name} : vec3<i32> = vec3<i32>(i32(global_id.x), i32(global_id.y), i32(global_id.z));"); break;
                 }
             }
         }
@@ -187,19 +194,11 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             foreach (var param in Method.Parameters)
             {
                 if (param.Index < paramOffset) continue;
-
                 var variable = Allocate(param);
                 var bufferType = GetBufferElementType(param.ParameterType);
                 bool isView = bufferType != param.ParameterType;
-
-                if (param.ParameterType.IsPrimitiveType || !isView)
-                {
-                    AppendLine($"var {variable.Name} = param{param.Index}[0];");
-                }
-                else
-                {
-                    AppendLine($"let {variable.Name} = &param{param.Index};");
-                }
+                if (param.ParameterType.IsPrimitiveType || !isView) AppendLine($"var {variable.Name} = param{param.Index}[0];");
+                else AppendLine($"let {variable.Name} = &param{param.Index};");
             }
         }
 
@@ -209,7 +208,6 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             var target = Load(value);
             var offset = Load(value.Offset);
-
             if (ResolveToParameter(value.Source) is global::ILGPU.IR.Values.Parameter param)
             {
                 int paramOffset = EntryPoint.IsExplicitlyGrouped ? 0 : 1;
@@ -221,14 +219,11 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     return;
                 }
             }
-
             var sourceVal = Load(value.Source);
             AppendIndent();
             Builder.Append($"let {target.Name} = ");
-            if (value.Source.Type.IsPointerType)
-                Builder.Append($"&(*{sourceVal})[{offset}];");
-            else
-                Builder.Append($"&{sourceVal}[{offset}];");
+            if (value.Source.Type.IsPointerType) Builder.Append($"&(*{sourceVal})[{offset}];");
+            else Builder.Append($"&{sourceVal}[{offset}];");
             Builder.AppendLine();
         }
 
@@ -255,22 +250,22 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 if (param.Index >= paramOffset)
                 {
                     bool isView = GetBufferElementType(param.ParameterType) != param.ParameterType;
-
                     if (isView)
                     {
                         var target = Load(value);
                         var rawType = UnwrapType(param.ParameterType);
-                        bool isMultiDim = rawType is StructureType structType &&
-                                          structType.NumFields > 2 &&
-                                          structType.Fields[0] is ViewType;
 
-                        // FIELD MAPPING
-                        // 0: Data Pointer
-                        // 1: Linear Length (IntLength)
-                        // 2: Width/Stride (Index2D.X)
-                        // 3: Height (Index2D.Y)
+                        bool isMultiDim = false;
+                        if (rawType is StructureType structType)
+                        {
+                            if (structType.NumFields > 2 && IsViewStructure(structType.Fields[0])) isMultiDim = true;
+                            else if (param.ParameterType.ToString().Contains("ArrayView")) isMultiDim = true;
+                        }
 
-                        if (value.FieldSpan.Index == 0) // Data Ptr
+                        bool isLong = param.ParameterType.ToString().Contains("Long");
+
+                        // 0: Ptr
+                        if (value.FieldSpan.Index == 0)
                         {
                             AppendLine($"let {target} = &param{param.Index};");
                             return;
@@ -278,22 +273,56 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
                         if (isMultiDim)
                         {
-                            var stride = $"param{param.Index}_stride[0]";
+                            var strideX = $"param{param.Index}_stride[0]";
+                            var strideY = $"param{param.Index}_stride[1]";
                             var totalLen = $"i32(arrayLength(&param{param.Index}))";
 
-                            if (value.FieldSpan.Index == 2) // INDEX 2 = STRIDE (Width)
+                            if (isLong)
                             {
-                                AppendLine($"let {target} = {stride};");
-                                return;
+                                // 64-BIT MAPPING: [Ptr, Len(L,H), W(L,H), H(L,H), D(L,H), StY(L,H), StZ(L,H)]
+                                switch (value.FieldSpan.Index)
+                                {
+                                    case 1: AppendLine($"let {target} = {totalLen};"); return; // Length Low
+                                    case 2: AppendLine($"let {target} = 0;"); return;         // Length High
+
+                                    case 3: AppendLine($"let {target} = {strideX};"); return; // Width Low
+                                    case 4: AppendLine($"let {target} = 0;"); return;         // Width High
+
+                                    case 5: AppendLine($"let {target} = {strideY};"); return; // Height Low
+                                    case 6: AppendLine($"let {target} = 0;"); return;         // Height High
+
+                                    case 7: // Depth Low
+                                        AppendLine($"let {target} = {totalLen} / ({strideX} * {strideY});");
+                                        return;
+                                    case 8: AppendLine($"let {target} = 0;"); return;         // Depth High
+
+                                    case 9: AppendLine($"let {target} = {strideX};"); return; // Y-Stride Low
+                                    case 10: AppendLine($"let {target} = 0;"); return;        // Y-Stride High
+
+                                    case 11: // Z-Stride Low
+                                        AppendLine($"let {target} = {strideX} * {strideY};");
+                                        return;
+                                    case 12: AppendLine($"let {target} = 0;"); return;        // Z-Stride High
+                                }
                             }
-                            else if (value.FieldSpan.Index == 3) // INDEX 3 = HEIGHT
+                            else
                             {
-                                AppendLine($"let {target} = {totalLen} / {stride};");
-                                return;
+                                // 32-BIT MAPPING: [Ptr, Length, Width, Height, Depth, StrideY, StrideZ]
+                                switch (value.FieldSpan.Index)
+                                {
+                                    case 0: AppendLine($"let {target} = {totalLen};"); return; // Length (Field 0 is TotalLen in 32-bit layout)
+                                    case 1: AppendLine($"let {target} = {strideX};"); return; // Width
+                                    case 2: AppendLine($"let {target} = {strideY};"); return; // Height
+                                    case 3: // Depth
+                                        AppendLine($"let {target} = {totalLen} / ({strideX} * {strideY});");
+                                        return;
+                                    case 4: AppendLine($"let {target} = {strideX};"); return; // Y-Stride
+                                    case 5: AppendLine($"let {target} = {strideX} * {strideY};"); return; // Z-Stride
+                                }
                             }
                         }
 
-                        // Fallback (Index 1 or others) -> Return Array Length
+                        // Fallback
                         AppendLine($"let {target} = i32(arrayLength(&param{param.Index}));");
                         return;
                     }
@@ -304,10 +333,15 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 {
                     var target = Load(value);
                     var source = Load(value.ObjectValue);
-
                     if (EntryPoint.IndexType == IndexType.Index2D)
                     {
                         string comp = value.FieldSpan.Index == 0 ? "x" : "y";
+                        AppendLine($"let {target} = {source}.{comp};");
+                        return;
+                    }
+                    else if (EntryPoint.IndexType == IndexType.Index3D)
+                    {
+                        string comp = value.FieldSpan.Index == 0 ? "x" : (value.FieldSpan.Index == 1 ? "y" : "z");
                         AppendLine($"let {target} = {source}.{comp};");
                         return;
                     }
@@ -319,7 +353,6 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     }
                 }
             }
-
             base.GenerateCode(value);
         }
 
@@ -332,7 +365,6 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 {
                     var target = Load(value);
                     var source = Load(value.Source);
-
                     if (EntryPoint.IndexType == IndexType.Index2D)
                     {
                         string comp = value.FieldSpan.Index == 0 ? "x" : "y";
@@ -349,6 +381,16 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             if (value is global::ILGPU.IR.Values.Parameter p) return p;
             if (value is GetField gf) return ResolveToParameter(gf.ObjectValue);
+
+            if (value is global::ILGPU.IR.Values.Load load) return ResolveToParameter(load.Source);
+            if (value is LoadElementAddress lea) return ResolveToParameter(lea.Source);
+            if (value is LoadFieldAddress lfa) return ResolveToParameter(lfa.Source);
+
+            if (_indexParameterAddress != null && value == _indexParameterAddress)
+            {
+                return Method.Parameters[0];
+            }
+
             return null;
         }
 

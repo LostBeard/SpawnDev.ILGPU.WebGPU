@@ -497,9 +497,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             dataView[index] = index.X + index.Y * 100.0f;
         }
 
-        static void Kernel3D(
-            Index3D index,
-            ArrayView3D<float, Stride3D.DenseXY> dataView)
+        static void Kernel3D(Index3D index, ArrayView3D<float, Stride3D.DenseXY> dataView)
         {
             dataView[index] = index.X + index.Y * 100.0f + index.Z * 1000.0f;
         }
