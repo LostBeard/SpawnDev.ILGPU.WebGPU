@@ -172,6 +172,16 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
              {
                  if (kvp.Key is StructureType structType)
                  {
+                     // Skip if mapped to a built-in WGSL type
+                     if (kvp.Value == "i32" || 
+                         kvp.Value == "u32" || 
+                         kvp.Value == "f32" || 
+                         kvp.Value == "bool" ||
+                         kvp.Value.StartsWith("vec") || 
+                         kvp.Value.StartsWith("mat") ||
+                         kvp.Value.StartsWith("ptr<"))
+                         continue;
+
                      builder.AppendLine($"struct {kvp.Value} {{");
                      int fieldIdx = 0;
                      foreach(var fieldType in structType.Fields)
