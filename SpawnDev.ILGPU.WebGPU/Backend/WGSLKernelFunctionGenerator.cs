@@ -5,15 +5,16 @@
 // File: WGSLKernelFunctionGenerator.cs
 // ---------------------------------------------------------------------------------------
 
+using global::ILGPU;
 using global::ILGPU.Backends.EntryPoints;
 using global::ILGPU.IR;
 using global::ILGPU.IR.Analyses;
 using global::ILGPU.IR.Types;
 using global::ILGPU.IR.Values;
-using global::ILGPU;
-using System.Text;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace SpawnDev.ILGPU.WebGPU.Backend
 {
@@ -22,7 +23,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         #region Instance
 
         private HashSet<int> _atomicParameters = new HashSet<int>();
-
+        private HashSet<Value> _hoistedPrimitives = new HashSet<Value>();
         public WGSLKernelFunctionGenerator(
             in GeneratorArgs args,
             Method method,
@@ -173,20 +174,48 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             string workgroupSize = GetWorkgroupSize();
             Builder.AppendLine($"@compute @workgroup_size({workgroupSize})");
             Builder.Append("fn main(@builtin(global_invocation_id) global_id : vec3<u32>");
-            // ... (rest of your entry point signature) ...
             Builder.AppendLine(") {");
             PushIndent();
 
-            // RESTORED FIX: Declare variables that span multiple blocks at function scope
+            // 1. Scan and declare hoisted variables
             HoistCrossBlockVariables();
 
+            // 2. Setup standard bindings
             SetupIndexVariables();
             SetupParameterBindings();
-            GenerateCodeInternal();
-            PopIndent();
-            Builder.AppendLine("}");
-        }
 
+            // 3. START THE STATE MACHINE
+            AppendLine("var current_block : i32 = 0;");
+            AppendLine("loop {");
+            PushIndent();
+
+            // THE MISSING LINE:
+            AppendLine("switch (current_block) {");
+            PushIndent();
+
+            // This calls your 'new' GenerateCodeInternal that emits the 'case X:' blocks
+            GenerateCodeInternal();
+
+            // THE CLOSING BOILERPLATE:
+            PopIndent();
+            AppendLine("default: { break; }"); // Should never happen
+            AppendLine("}"); // End Switch
+
+            AppendLine("if (current_block == -1) { break; }"); // Safety break
+
+            PopIndent();
+            AppendLine("}"); // End Loop
+
+            PopIndent();
+            Builder.AppendLine("}"); // End Function
+        }
+        private string GetPrefix(Value value)
+        {
+            // If the variable was hoisted to the top of main(), it's already a 'var'
+            // and we must use a direct assignment (no prefix).
+            // Otherwise, we use 'let ' to declare it locally.
+            return _hoistedPrimitives.Contains(value) ? "" : "let ";
+        }
         private string GetWorkgroupSize()
         {
             return EntryPoint.IndexType switch
@@ -230,35 +259,20 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 var indexVar = Allocate(indexParam);
                 _hoistedIndexFields.Clear();
 
-                // 1. Declare the main index variable
-                switch (EntryPoint.IndexType)
-                {
-                    case IndexType.Index1D: AppendLine($"var {indexVar.Name} : i32 = i32(global_id.x);"); break;
-                    case IndexType.Index2D: AppendLine($"var {indexVar.Name} : vec2<i32> = vec2<i32>(i32(global_id.x), i32(global_id.y));"); break;
-                    case IndexType.Index3D: AppendLine($"var {indexVar.Name} : vec3<i32> = vec3<i32>(i32(global_id.x), i32(global_id.y), i32(global_id.z));"); break;
-                }
+                AppendLine($"var {indexVar.Name} : vec2<i32> = vec2<i32>(i32(global_id.x), i32(global_id.y));");
 
-                // 2. Identify and hoist ONLY the X, Y, Z extraction fields
                 foreach (var use in indexParam.Uses)
                 {
                     if (use.Target is global::ILGPU.IR.Values.GetField gf)
                     {
                         var componentVar = Allocate(gf);
-                        _hoistedIndexFields.Add(gf); // Mark so we don't declare it again in GetField
+                        _hoistedIndexFields.Add(gf);
 
-                        string comp = "";
-                        if (EntryPoint.IndexType == IndexType.Index2D)
-                            comp = gf.FieldSpan.Index == 0 ? "x" : "y";
-                        else if (EntryPoint.IndexType == IndexType.Index3D)
-                            comp = gf.FieldSpan.Index == 0 ? "x" : (gf.FieldSpan.Index == 1 ? "y" : "z");
-                        else if (EntryPoint.IndexType == IndexType.Index1D && gf.FieldSpan.Index == 0)
-                        {
-                            AppendLine($"var {componentVar.Name} : i32 = {indexVar.Name};");
-                            continue;
-                        }
-
-                        if (!string.IsNullOrEmpty(comp))
-                            AppendLine($"var {componentVar.Name} : i32 = {indexVar.Name}.{comp};");
+                        // ILGPU Field 0 is the major index. To get (Y * Stride) + X:
+                        // Field 0 -> .y (Row)
+                        // Field 1 -> .x (Column)
+                        string comp = gf.FieldSpan.Index == 0 ? "y" : "x";
+                        AppendLine($"var {componentVar.Name} : i32 = {indexVar.Name}.{comp};");
                     }
                 }
             }
@@ -278,6 +292,10 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             {
                 foreach (var value in block)
                 {
+                    if (value.Value is PhiValue)
+                    {
+                        _hoistedPrimitives.Add(value.Value);
+                    }
                     foreach (var use in value.Value.Uses)
                     {
                         if (defBlocks.TryGetValue(use.Target, out var defBlock) && defBlock != block)
@@ -427,8 +445,18 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             var target = Load(loadVal);
             var source = Load(loadVal.Source);
-            Declare(target);
-            AppendLine($"{target} = *{source};");
+
+            // Check if we already declared this at the top
+            if (_hoistedPrimitives.Contains(loadVal))
+            {
+                AppendLine($"{target} = *{source};");
+            }
+            else
+            {
+                // Fallback to your stable declaration logic
+                Declare(target);
+                AppendLine($"{target} = *{source};");
+            }
         }
 
         public override void GenerateCode(global::ILGPU.IR.Values.Store storeVal)
@@ -437,14 +465,6 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             var val = Load(storeVal.Value);
             AppendLine($"*{address} = {val};");
         }
-        //public override void GenerateCode(global::ILGPU.IR.Values.GetField value)
-        //{
-            
-        //    base.GenerateCode(value);
-        //}
-
-
-
 
         public override void GenerateCode(BinaryArithmeticValue value)
         {
@@ -453,13 +473,129 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             var right = Load(value.Right);
             var op = GetArithmeticOp(value.Kind);
 
-            // Logic: If hoisted, it's a global 'var', so no 'let'. If not, use 'let'.
-            string prefix = _hoistedPrimitives.Contains(value) ? "" : "let ";
+            string prefix = GetPrefix(value);
 
             if (value.Kind == BinaryArithmeticKind.Shl || value.Kind == BinaryArithmeticKind.Shr)
                 AppendLine($"{prefix}{target} = {left} {op} u32({right});");
             else
                 AppendLine($"{prefix}{target} = {left} {op} {right};");
+        }
+
+        private int GetBlockIndex(BasicBlock block)
+        {
+            int index = 0;
+            foreach (var b in Method.Blocks)
+            {
+                if (b == block) return index;
+                index++;
+            }
+            return -1;
+        }
+
+        private void PushPhiValues(BasicBlock targetBlock, BasicBlock sourceBlock)
+        {
+            foreach (var value in targetBlock)
+            {
+                if (value.Value is PhiValue phi)
+                {
+                    var targetVar = Load(phi);
+                    // PhiValue in ILGPU implements a collection of (SourceBlock, Value) pairs
+                    for (int i = 0; i < phi.Count; i++)
+                    {
+                        if (phi.Sources[i] == sourceBlock)
+                        {
+                            var sourceVal = Load(phi[i]);
+                            AppendLine($"{targetVar} = {sourceVal};");
+                        }
+                    }
+                }
+            }
+        }
+        public override void GenerateCode(UnaryArithmeticValue value)
+        {
+            var target = Load(value);
+            var source = Load(value.Value);
+            string op = value.Kind switch
+            {
+                UnaryArithmeticKind.Neg => "-",
+                UnaryArithmeticKind.Not => "!",
+                _ => ""
+            };
+            string prefix = GetPrefix(value);
+            AppendLine($"{prefix}{target} = {op}({source});");
+        }
+        public override void GenerateCode(UnconditionalBranch branch)
+        {
+            // 1. Move Phi data (v_11 = v_19, etc.)
+            PushPhiValues(branch.Target, branch.BasicBlock);
+
+            // 2. Force the State Machine transition
+            var targetIndex = GetBlockIndex(branch.Target);
+            AppendIndent();
+            Builder.AppendLine($"current_block = {targetIndex};");
+            AppendIndent();
+            Builder.AppendLine("continue;");
+        }
+        protected new void GenerateCodeInternal()
+        {
+            foreach (var block in Method.Blocks)
+            {
+                AppendIndent();
+                Builder.AppendLine($"case {GetBlockIndex(block)}: {{");
+                PushIndent();
+
+                foreach (var value in block)
+                {
+                    if (value.Value is TerminatorValue) continue;
+                    // Force visit to use your overrides
+                    this.GenerateCodeFor(value.Value);
+                }
+
+                // Explicitly handle terminators to force current_block updates
+                if (block.Terminator is UnconditionalBranch ub) GenerateCode(ub);
+                else if (block.Terminator is IfBranch ib) GenerateCode(ib);
+                else if (block.Terminator is ReturnTerminator rt) GenerateCode(rt);
+                else this.GenerateCodeFor(block.Terminator);
+
+                PopIndent();
+                AppendIndent();
+                Builder.AppendLine("}");
+            }
+        }
+        public override void GenerateCode(IfBranch branch)
+        {
+            var condition = Load(branch.Condition);
+            var trueIndex = GetBlockIndex(branch.TrueTarget);
+            var falseIndex = GetBlockIndex(branch.FalseTarget);
+
+            AppendIndent();
+            Builder.AppendLine($"if ({condition}) {{");
+            PushIndent();
+            PushPhiValues(branch.TrueTarget, branch.BasicBlock);
+            AppendIndent();
+            Builder.AppendLine($"current_block = {trueIndex};");
+            PopIndent();
+
+            AppendIndent();
+            Builder.AppendLine("} else {");
+            PushIndent();
+            PushPhiValues(branch.FalseTarget, branch.BasicBlock);
+            AppendIndent();
+            Builder.AppendLine($"current_block = {falseIndex};");
+            PopIndent();
+
+            AppendIndent();
+            Builder.AppendLine("}");
+
+            AppendIndent();
+            Builder.AppendLine("continue;");
+        }
+        // 3. Handles 'return' to exit the kernel
+        public override void GenerateCode(ReturnTerminator returnTerminator)
+        {
+            // In WGSL compute shaders, we simply return to exit the main function
+            AppendIndent();
+            AppendLine("return;");
         }
 
         public override void GenerateCode(CompareValue value)
@@ -469,8 +605,17 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             var right = Load(value.Right);
             var op = GetCompareOp(value.Kind);
 
-            string prefix = _hoistedPrimitives.Contains(value) ? "" : "let ";
+            string prefix = GetPrefix(value);
             AppendLine($"{prefix}{target} = {left} {op} {right};");
+        }
+        public override void GenerateCode(ConvertValue value)
+        {
+            var target = Load(value);
+            var source = Load(value.Value);
+            var targetType = TypeGenerator[value.Type];
+
+            string prefix = GetPrefix(value);
+            AppendLine($"{prefix}{target} = {targetType}({source});");
         }
 
         public override void GenerateCode(global::ILGPU.IR.Values.GetField value)
@@ -514,13 +659,13 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                         }
 
                         // Metadata handling (Length and Strides)
-                        if (isMultiDim)
+                        if (isMultiDim && rawType is StructureType st1)
                         {
                             var width = $"param{param.Index}_stride[0]";
                             var height = $"param{param.Index}_stride[1]";
                             var totalLen = $"i32(arrayLength(&param{param.Index}))";
 
-                            if (is3DView)
+                             if (is3DView)
                             {
                                 switch (value.FieldSpan.Index)
                                 {
@@ -537,7 +682,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                                 {
                                     case 1: AppendLine($"let {target} = {width};"); return;     // Width
                                     case 2: AppendLine($"let {target} = {height};"); return;    // Height
-                                    case 3: AppendLine($"let {target} = {width};"); return;     // Stride (Dense)
+                                    case 3: AppendLine($"let {target} = {width};"); return;     // Stride (The Row Pitch)
                                 }
                             }
                             else if (is1DView)
@@ -615,39 +760,14 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             }
         }
 
+        public override void GenerateCode(SetField value)
+        {
+            var target = Load(value.ObjectValue);
+            var val = Load(value.Value);
+            // Directly update the field of the hoisted variable
+            AppendLine($"{target}.field_{value.FieldSpan.Index} = {val};");
+        }
 
-        //public override void GenerateCode(BinaryArithmeticValue value)
-        //{
-        //    var target = Load(value);
-        //    var left = Load(value.Left);
-        //    var right = Load(value.Right);
-        //    var op = GetArithmeticOp(value.Kind);
-
-        //    // If we hoisted this, it's already declared as a 'var' at the top.
-        //    // If not, we must declare it locally with 'let'.
-        //    string prefix = _hoistedPrimitives.Contains(value.Value) ? "" : "let ";
-
-        //    if (value.Kind == BinaryArithmeticKind.Shl || value.Kind == BinaryArithmeticKind.Shr)
-        //    {
-        //        AppendLine($"{prefix}{target} = {left} {op} u32({right});");
-        //    }
-        //    else
-        //    {
-        //        AppendLine($"{prefix}{target} = {left} {op} {right};");
-        //    }
-        //}
-
-        //public override void GenerateCode(CompareValue value)
-        //{
-        //    var target = Load(value);
-        //    var left = Load(value.Left);
-        //    var right = Load(value.Right);
-        //    var op = GetCompareOp(value.Kind);
-
-        //    // Check hoisting status
-        //    string prefix = _hoistedPrimitives.Contains(value.Value) ? "" : "let ";
-        //    AppendLine($"{prefix}{target} = {left} {op} {right};");
-        //}
         private static string GetArithmeticOp(BinaryArithmeticKind kind)
         {
             switch (kind)
@@ -699,6 +819,12 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             base.GenerateCode(value);
         }
 
+        public override void GenerateCode(PhiValue phiValue)
+        {
+            // Phi values are handled at the branch level in this state-machine model.
+            // We don't emit code here, but the values will be pulled by the branching logic.
+        }
+
         private global::ILGPU.IR.Values.Parameter? ResolveToParameter(global::ILGPU.IR.Value value)
         {
             if (value is global::ILGPU.IR.Values.Parameter p) return p;
@@ -726,12 +852,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         }
 
         #endregion
-
-        // ... existing imports ...
-
-
-            // RESTORED PROPERTY
-            private HashSet<Value> _hoistedPrimitives = new HashSet<Value>();
+            
 
         }
     }

@@ -212,10 +212,6 @@
         using var context = canvas.GetContext<CanvasRenderingContext2D>("2d");
         
         // This relies on SpawnDev.BlazorJS marshaling.
-        // For performance, we might want to use IJSInProcessRuntime or direct typed array access if possible.
-        // But simply:
-        
-        using var imageData = new ImageData((ulong)_width, (ulong)_height);
         
         // We need to copy pixels to imageData.data
         // One way: Get the byte view of pixels and copy.
