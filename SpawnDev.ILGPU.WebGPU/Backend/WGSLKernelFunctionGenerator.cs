@@ -20,7 +20,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
     internal sealed class WGSLKernelFunctionGenerator : WGSLCodeGenerator
     {
         #region Instance
-        
+
         private HashSet<int> _atomicParameters = new HashSet<int>();
 
         public WGSLKernelFunctionGenerator(
@@ -138,14 +138,14 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 {
                     wgslType = $"atomic<{wgslType}>";
                 }
-                
+
                 var bindingDecl = $"@group(0) @binding({bindingIdx}) var<storage, {accessMode}> param{param.Index} : array<{wgslType}>;";
                 builder.AppendLine(bindingDecl);
                 bindingIdx++;
 
                 var rawType = UnwrapType(param.ParameterType);
                 string typeName = param.ParameterType.ToString();
-                
+
                 bool isMultiDim = typeName.Contains("ArrayView") || rawType.ToString().Contains("ArrayView") || rawType is ViewType;
 
                 // Fallback to structure check if string check fails (for custom structs using views)
@@ -173,14 +173,13 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             string workgroupSize = GetWorkgroupSize();
             Builder.AppendLine($"@compute @workgroup_size({workgroupSize})");
             Builder.Append("fn main(@builtin(global_invocation_id) global_id : vec3<u32>");
-            if (EntryPoint.IsExplicitlyGrouped)
-            {
-                Builder.Append(", @builtin(local_invocation_id) local_id : vec3<u32>");
-                Builder.Append(", @builtin(workgroup_id) workgroup_id : vec3<u32>");
-                Builder.Append(", @builtin(num_workgroups) num_workgroups : vec3<u32>");
-            }
+            // ... (rest of your entry point signature) ...
             Builder.AppendLine(") {");
             PushIndent();
+
+            // RESTORED FIX: Declare variables that span multiple blocks at function scope
+            HoistCrossBlockVariables();
+
             SetupIndexVariables();
             SetupParameterBindings();
             GenerateCodeInternal();
@@ -219,6 +218,8 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             }
             return type;
         }
+        // Add this to your Properties region
+        private HashSet<Value> _hoistedIndexFields = new HashSet<Value>();
 
         private void SetupIndexVariables()
         {
@@ -227,14 +228,147 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             {
                 var indexParam = Method.Parameters[0];
                 var indexVar = Allocate(indexParam);
+                _hoistedIndexFields.Clear();
+
+                // 1. Declare the main index variable
                 switch (EntryPoint.IndexType)
                 {
                     case IndexType.Index1D: AppendLine($"var {indexVar.Name} : i32 = i32(global_id.x);"); break;
                     case IndexType.Index2D: AppendLine($"var {indexVar.Name} : vec2<i32> = vec2<i32>(i32(global_id.x), i32(global_id.y));"); break;
                     case IndexType.Index3D: AppendLine($"var {indexVar.Name} : vec3<i32> = vec3<i32>(i32(global_id.x), i32(global_id.y), i32(global_id.z));"); break;
                 }
+
+                // 2. Identify and hoist ONLY the X, Y, Z extraction fields
+                foreach (var use in indexParam.Uses)
+                {
+                    if (use.Target is global::ILGPU.IR.Values.GetField gf)
+                    {
+                        var componentVar = Allocate(gf);
+                        _hoistedIndexFields.Add(gf); // Mark so we don't declare it again in GetField
+
+                        string comp = "";
+                        if (EntryPoint.IndexType == IndexType.Index2D)
+                            comp = gf.FieldSpan.Index == 0 ? "x" : "y";
+                        else if (EntryPoint.IndexType == IndexType.Index3D)
+                            comp = gf.FieldSpan.Index == 0 ? "x" : (gf.FieldSpan.Index == 1 ? "y" : "z");
+                        else if (EntryPoint.IndexType == IndexType.Index1D && gf.FieldSpan.Index == 0)
+                        {
+                            AppendLine($"var {componentVar.Name} : i32 = {indexVar.Name};");
+                            continue;
+                        }
+
+                        if (!string.IsNullOrEmpty(comp))
+                            AppendLine($"var {componentVar.Name} : i32 = {indexVar.Name}.{comp};");
+                    }
+                }
             }
         }
+
+
+        private void HoistCrossBlockVariables()
+        {
+            var defBlocks = new Dictionary<Value, BasicBlock>();
+            _hoistedPrimitives.Clear(); // Initialize the restored set
+
+            foreach (var block in Method.Blocks)
+                foreach (var value in block)
+                    defBlocks[value.Value] = block;
+
+            foreach (var block in Method.Blocks)
+            {
+                foreach (var value in block)
+                {
+                    foreach (var use in value.Value.Uses)
+                    {
+                        if (defBlocks.TryGetValue(use.Target, out var defBlock) && defBlock != block)
+                        {
+                            if (!value.Value.Type.IsPointerType && !value.Value.Type.IsVoidType)
+                            {
+                                _hoistedPrimitives.Add(value.Value);
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach (var val in _hoistedPrimitives)
+            {
+                var variable = Allocate(val);
+                var wgslType = TypeGenerator[val.Type];
+                var basicType = val.Type.BasicValueType;
+
+                string init = " = 0";
+                if (basicType == BasicValueType.Int1) init = " = false";
+                else if (basicType == BasicValueType.Float16 || basicType == BasicValueType.Float32 || basicType == BasicValueType.Float64) init = " = 0.0";
+
+                AppendLine($"var {variable.Name} : {wgslType}{init};");
+            }
+        }
+
+        //private void HoistCrossBlockVariables()
+        //{
+        //    var defBlocks = new Dictionary<Value, BasicBlock>();
+        //    var crossBlockVars = new HashSet<Value>();
+
+        //    // Pass 1: Map where every value is defined
+        //    foreach (var block in Method.Blocks)
+        //    {
+        //        foreach (var value in block)
+        //        {
+        //            defBlocks[value.Value] = block;
+        //        }
+        //    }
+
+        //    // Pass 2: Find values used in a different block
+        //    foreach (var block in Method.Blocks)
+        //    {
+        //        foreach (var value in block)
+        //        {
+        //            foreach (var use in value.Value.Uses)
+        //            {
+        //                // Note: Using use.Target as you mentioned this works for your build
+        //                if (defBlocks.TryGetValue(use.Target, out var defBlock) && defBlock != block)
+        //                {
+        //                    // Only hoist primitives (WGSL var rules)
+        //                    if (!value.Value.Type.IsPointerType && !value.Value.Type.IsVoidType)
+        //                    {
+        //                        crossBlockVars.Add(value.Value);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    // Pass 3: Emit declarations at the top of main
+        //    foreach (var val in crossBlockVars)
+        //    {
+        //        var variable = Allocate(val);
+        //        var wgslType = TypeGenerator[val.Type];
+
+        //        var basicType = val.Type.BasicValueType;
+        //        string init = "";
+
+        //        // 1. Check for Booleans specifically (Int1)
+        //        if (basicType == BasicValueType.Int1)
+        //        {
+        //            init = " = false";
+        //        }
+        //        // 2. Check for Floats
+        //        else if (basicType == BasicValueType.Float16 ||
+        //                 basicType == BasicValueType.Float32 ||
+        //                 basicType == BasicValueType.Float64)
+        //        {
+        //            init = " = 0.0";
+        //        }
+        //        // 3. Everything else (Int8, Int16, Int32, Int64) is an integer
+        //        // This includes u32/u64 which ILGPU maps to Int32/Int64 basic types
+        //        else
+        //        {
+        //            init = " = 0";
+        //        }
+        //        AppendLine($"var {variable.Name} : {wgslType}{init};");
+        //    }
+        //}
 
         private void SetupParameterBindings()
         {
@@ -246,7 +380,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 var bufferType = GetBufferElementType(param.ParameterType);
                 bool isView = bufferType != param.ParameterType;
                 if (param.ParameterType.IsPrimitiveType || !isView) AppendLine($"var {variable.Name} = param{param.Index}[0];");
-                else 
+                else
                 {
                     AppendLine($"let {variable.Name} = &param{param.Index};");
 
@@ -254,10 +388,10 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     var rawType = UnwrapType(param.ParameterType);
                     string typeName = param.ParameterType.ToString();
                     bool isMultiDim = typeName.Contains("ArrayView") || rawType.ToString().Contains("ArrayView") || rawType is ViewType;
-                     if (!isMultiDim && rawType is global::ILGPU.IR.Types.StructureType structType)
+                    if (!isMultiDim && rawType is global::ILGPU.IR.Types.StructureType structType)
                     {
                         if (structType.NumFields > 2 && IsViewStructure(structType.Fields[0])) isMultiDim = true;
-                        if (structType.NumFields == 3) isMultiDim = true; 
+                        if (structType.NumFields == 3) isMultiDim = true;
                     }
                     if (isMultiDim) AppendLine($"let _stride_{param.Index} = param{param.Index}_stride[0];");
                 }
@@ -303,12 +437,50 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             var val = Load(storeVal.Value);
             AppendLine($"*{address} = {val};");
         }
+        //public override void GenerateCode(global::ILGPU.IR.Values.GetField value)
+        //{
+            
+        //    base.GenerateCode(value);
+        //}
+
+
+
+
+        public override void GenerateCode(BinaryArithmeticValue value)
+        {
+            var target = Load(value);
+            var left = Load(value.Left);
+            var right = Load(value.Right);
+            var op = GetArithmeticOp(value.Kind);
+
+            // Logic: If hoisted, it's a global 'var', so no 'let'. If not, use 'let'.
+            string prefix = _hoistedPrimitives.Contains(value) ? "" : "let ";
+
+            if (value.Kind == BinaryArithmeticKind.Shl || value.Kind == BinaryArithmeticKind.Shr)
+                AppendLine($"{prefix}{target} = {left} {op} u32({right});");
+            else
+                AppendLine($"{prefix}{target} = {left} {op} {right};");
+        }
+
+        public override void GenerateCode(CompareValue value)
+        {
+            var target = Load(value);
+            var left = Load(value.Left);
+            var right = Load(value.Right);
+            var op = GetCompareOp(value.Kind);
+
+            string prefix = _hoistedPrimitives.Contains(value) ? "" : "let ";
+            AppendLine($"{prefix}{target} = {left} {op} {right};");
+        }
 
         public override void GenerateCode(global::ILGPU.IR.Values.GetField value)
         {
-            // Only apply special view handling if the object value is actually a view/parameter
-            // and NOT a loaded value (like a struct from a buffer)
-            if (value.ObjectValue.ValueKind != ValueKind.Load && 
+            // 1. Safety check: If this is a kernel index component (X, Y, Z) 
+            // already hoisted in SetupIndexVariables, skip it.
+            if (_hoistedIndexFields.Contains(value)) return;
+
+            // 2. Identify if the object being accessed is a Parameter (likely an ArrayView)
+            if (value.ObjectValue.ValueKind != ValueKind.Load &&
                 ResolveToParameter(value.ObjectValue) is global::ILGPU.IR.Values.Parameter param)
             {
                 int paramOffset = EntryPoint.IsExplicitlyGrouped ? 0 : 1;
@@ -322,123 +494,190 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
                         // ROBUST TYPE DETECTION
                         string typeName = param.ParameterType.ToString();
-                        bool isLong = typeName.Contains("Long") || typeName.Contains("Int64"); 
                         bool isMultiDim = typeName.Contains("ArrayView") || rawType.ToString().Contains("ArrayView");
-                        bool is3DView = typeName.Contains("3D"); 
+                        bool is3DView = typeName.Contains("3D");
                         bool is2DView = typeName.Contains("2D");
-
                         bool is1DView = false;
+
                         if (rawType is global::ILGPU.IR.Types.StructureType st)
                         {
                             if (st.NumFields == 6) { is3DView = true; isMultiDim = true; }
-                            if (st.NumFields == 4) { is2DView = true; isMultiDim = true; }
-                            if (st.NumFields == 3) { is1DView = true; isMultiDim = true; }
+                            else if (st.NumFields == 4) { is2DView = true; isMultiDim = true; }
+                            else if (st.NumFields == 3) { is1DView = true; isMultiDim = true; }
                         }
-                        
-                        // ONLY treat as view access if the index maps to expected view fields
-                        // and the object value is likely the view structure itself
+
+                        // Field 0 is always the actual pointer to the data
                         if (value.FieldSpan.Index == 0)
                         {
                             AppendLine($"let {target} = &param{param.Index};");
                             return;
                         }
 
+                        // Metadata handling (Length and Strides)
                         if (isMultiDim)
                         {
                             var width = $"param{param.Index}_stride[0]";
                             var height = $"param{param.Index}_stride[1]";
-                            var depth = $"param{param.Index}_stride[2]"; 
                             var totalLen = $"i32(arrayLength(&param{param.Index}))";
-                            
-                            // Removed duplicate is2DView declaration
 
                             if (is3DView)
                             {
                                 switch (value.FieldSpan.Index)
                                 {
-                                    case 1: AppendLine($"let {target} = {width};"); return; // Width
-                                    case 2: AppendLine($"let {target} = {height};"); return; // Height
-                                    case 3: AppendLine($"let {target} = {depth};"); return; // Depth
-                                    case 4: AppendLine($"let {target} = {width};"); return; // StrideY (Dense)
-                                    case 5: AppendLine($"let {target} = {width} * {height};"); return; // StrideZ (Dense)
+                                    case 1: AppendLine($"let {target} = {width};"); return;     // Width
+                                    case 2: AppendLine($"let {target} = {height};"); return;    // Height
+                                    case 3: AppendLine($"let {target} = param{param.Index}_stride[2];"); return; // Depth
+                                    case 4: AppendLine($"let {target} = {width};"); return;     // StrideY
+                                    case 5: AppendLine($"let {target} = {width} * {height};"); return; // StrideZ
                                 }
                             }
                             else if (is2DView)
                             {
                                 switch (value.FieldSpan.Index)
                                 {
-                                    case 1: AppendLine($"let {target} = {width};"); return; // Width
-                                    case 2: AppendLine($"let {target} = {height};"); return; // Height
-                                    case 3: AppendLine($"let {target} = {width};"); return; // Stride (Dense)
+                                    case 1: AppendLine($"let {target} = {width};"); return;     // Width
+                                    case 2: AppendLine($"let {target} = {height};"); return;    // Height
+                                    case 3: AppendLine($"let {target} = {width};"); return;     // Stride (Dense)
                                 }
                             }
                             else if (is1DView)
                             {
-                                // Distinguish ArrayView (Base) vs ArrayView1D (Wrapper)
                                 var structType1D = (global::ILGPU.IR.Types.StructureType)rawType;
                                 bool isWrapper = structType1D.Fields[1] is global::ILGPU.IR.Types.StructureType;
 
                                 if (isWrapper)
                                 {
-                                    // ArrayView1D (Wrapper)
-                                    // Field 0: BaseView (Ptr) - Handled by offset 0 check
-                                    // Field 1: Extent (Struct) -> Stride[0] (Length)
-                                    // Field 2: Stride (Struct) -> 0 (Dense/Ignore)
                                     switch (value.FieldSpan.Index)
                                     {
-                                        case 1: AppendLine($"let {target} = {width};"); return; 
-                                        case 2: AppendLine($"let {target} = 0;"); return;
+                                        case 1: AppendLine($"let {target} = {width};"); return; // Length
+                                        case 2: AppendLine($"let {target} = 0;"); return;       // Stride
                                     }
                                 }
                                 else
                                 {
-                                    // ArrayView (Base)
-                                    // Field 0: Buffer (Ptr)
-                                    // Field 1: Index (Long) -> 0 (Handled by offset)
-                                    // Field 2: Length (Long) -> Stride[0] (Length)
                                     switch (value.FieldSpan.Index)
                                     {
-                                        case 1: AppendLine($"let {target} = 0;"); return;
-                                        case 2: AppendLine($"let {target} = {width};"); return;
+                                        case 1: AppendLine($"let {target} = 0;"); return;       // Index
+                                        case 2: AppendLine($"let {target} = {width};"); return; // Length
                                     }
                                 }
                             }
 
-                            // Fallback
-                            AppendLine($"let {target} = i32(arrayLength(&param{param.Index}));");
+                            // Fallback for length
+                            AppendLine($"let {target} = {totalLen};");
                             return;
                         }
                     }
                 }
 
-                // Handle Kernel Index Parameter
+                // 3. Special handling for Kernel Index Parameter (X, Y components)
                 if (param.Index < paramOffset)
                 {
                     var target = Load(value);
                     var source = Load(value.ObjectValue);
+                    string prefix = _hoistedPrimitives.Contains(value) ? "" : "let ";
+
                     if (EntryPoint.IndexType == IndexType.Index2D)
                     {
                         string comp = value.FieldSpan.Index == 0 ? "x" : "y";
-                        AppendLine($"let {target} = {source}.{comp};");
+                        AppendLine($"{prefix}{target} = {source}.{comp};");
                         return;
                     }
                     else if (EntryPoint.IndexType == IndexType.Index3D)
                     {
                         string comp = value.FieldSpan.Index == 0 ? "x" : (value.FieldSpan.Index == 1 ? "y" : "z");
-                        AppendLine($"let {target} = {source}.{comp};");
+                        AppendLine($"{prefix}{target} = {source}.{comp};");
                         return;
                     }
                     else if (EntryPoint.IndexType == IndexType.Index1D)
                     {
-                        if (value.FieldSpan.Index == 0) AppendLine($"let {target} = {source};");
-                        else AppendLine($"let {target} = 0;");
+                        if (value.FieldSpan.Index == 0) AppendLine($"{prefix}{target} = {source};");
+                        else AppendLine($"{prefix}{target} = 0;");
                         return;
                     }
                 }
             }
-            base.GenerateCode(value);
+
+            // 4. Standard Field Access (not a View or Kernel Index)
+            var standardTarget = Load(value);
+            var standardSource = Load(value.ObjectValue);
+
+            // Check hoisting for the final result
+            string finalPrefix = _hoistedPrimitives.Contains(value) ? "" : "let ";
+
+            if (value.Type.IsPointerType)
+            {
+                AppendLine($"{finalPrefix}{standardTarget} = &({standardSource}).field_{value.FieldSpan.Index};");
+            }
+            else
+            {
+                AppendLine($"{finalPrefix}{standardTarget} = {standardSource}.field_{value.FieldSpan.Index};");
+            }
         }
 
+
+        //public override void GenerateCode(BinaryArithmeticValue value)
+        //{
+        //    var target = Load(value);
+        //    var left = Load(value.Left);
+        //    var right = Load(value.Right);
+        //    var op = GetArithmeticOp(value.Kind);
+
+        //    // If we hoisted this, it's already declared as a 'var' at the top.
+        //    // If not, we must declare it locally with 'let'.
+        //    string prefix = _hoistedPrimitives.Contains(value.Value) ? "" : "let ";
+
+        //    if (value.Kind == BinaryArithmeticKind.Shl || value.Kind == BinaryArithmeticKind.Shr)
+        //    {
+        //        AppendLine($"{prefix}{target} = {left} {op} u32({right});");
+        //    }
+        //    else
+        //    {
+        //        AppendLine($"{prefix}{target} = {left} {op} {right};");
+        //    }
+        //}
+
+        //public override void GenerateCode(CompareValue value)
+        //{
+        //    var target = Load(value);
+        //    var left = Load(value.Left);
+        //    var right = Load(value.Right);
+        //    var op = GetCompareOp(value.Kind);
+
+        //    // Check hoisting status
+        //    string prefix = _hoistedPrimitives.Contains(value.Value) ? "" : "let ";
+        //    AppendLine($"{prefix}{target} = {left} {op} {right};");
+        //}
+        private static string GetArithmeticOp(BinaryArithmeticKind kind)
+        {
+            switch (kind)
+            {
+                case BinaryArithmeticKind.Add: return "+";
+                case BinaryArithmeticKind.Sub: return "-";
+                case BinaryArithmeticKind.Mul: return "*";
+                case BinaryArithmeticKind.Div: return "/";
+                case BinaryArithmeticKind.Rem: return "%";
+                case BinaryArithmeticKind.And: return "&";
+                case BinaryArithmeticKind.Or: return "|";
+                case BinaryArithmeticKind.Xor: return "^";
+                case BinaryArithmeticKind.Shl: return "<<";
+                case BinaryArithmeticKind.Shr: return ">>";
+                default: throw new NotSupportedException($"Binary op {kind} not supported.");
+            }
+        }
+        private static string GetCompareOp(CompareKind kind)
+        {
+            switch (kind)
+            {
+                case CompareKind.Equal: return "==";
+                case CompareKind.NotEqual: return "!=";
+                case CompareKind.LessThan: return "<";
+                case CompareKind.LessEqual: return "<=";
+                case CompareKind.GreaterThan: return ">";
+                case CompareKind.GreaterEqual: return ">=";
+                default: throw new NotSupportedException($"Compare op {kind} not supported.");
+            }
+        }
         public override void GenerateCode(LoadFieldAddress value)
         {
             if (ResolveToParameter(value.Source) is global::ILGPU.IR.Values.Parameter param)
@@ -487,5 +726,12 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         }
 
         #endregion
+
+        // ... existing imports ...
+
+
+            // RESTORED PROPERTY
+            private HashSet<Value> _hoistedPrimitives = new HashSet<Value>();
+
+        }
     }
-}

@@ -64,6 +64,77 @@
     private string _statusMessage = "Ready";
     private string _statusClass = "text-secondary";
 
+    private async Task RunILGPU()
+    {
+        _isRunning = true;
+        _statusMessage = "Running ILGPU...";
+        _statusClass = "text-warning";
+        StateHasChanged();
+
+        // Yield to let UI update
+        await Task.Delay(10);
+
+        try
+        {
+            var sw = Stopwatch.StartNew();
+
+            // 1. Get WebGPU Device
+            var webGpuDevice = await WebGPUDevice.GetDefaultDeviceAsync();
+            if (webGpuDevice == null) throw new Exception("No WebGPU device found");
+
+            // 2. Create ILGPU Context and Device
+            // Note: We create context cleanly only for this test
+            using var context = Context.Create(builder => builder.Default()); // Minimal context
+
+            // Manually register/create the device
+            var ilgpuDevice = new WebGPUILGPUDevice(webGpuDevice, 0);
+
+            // 3. Create Accelerator
+            using var accelerator = await ilgpuDevice.CreateAcceleratorAsync(context);
+
+            // 4. Load Kernel
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index2D, ArrayView2D<uint, Stride2D.DenseY>, int, int, int>(MandelbrotKernel);
+
+            // 5. Allocate Memory
+            using var buffer = accelerator.Allocate2DDenseY<uint>(new Index2D(_width, _height));
+
+            // 6. Launch Kernel
+            // Note: buffer.Intent -> buffer.View
+            kernel(buffer.IntExtent, buffer.View, _width, _height, 1000); // 1000 iterations
+
+            // 7. Synchronize
+            accelerator.Synchronize();
+
+            // 8. Copy Back
+            // Default CopyToHost is blocking and not supported on WebGPU backend.
+            // We access the underlying WebGPUMemoryBuffer and use async copy.
+            var webGpuMemBuffer = (WebGPUMemoryBuffer)((IArrayView)buffer).Buffer;
+            var bytes = await webGpuMemBuffer.NativeBuffer.CopyToHostAsync();
+
+            var result = new uint[_width * _height];
+            Buffer.BlockCopy(bytes, 0, result, 0, bytes.Length);
+
+            sw.Stop();
+            _ilgpuTime = $"{sw.ElapsedMilliseconds} ms";
+            _statusMessage = "ILGPU Completed";
+            _statusClass = "text-success";
+
+            // Draw result
+            await DrawToCanvas(result);
+        }
+        catch (Exception ex)
+        {
+            _statusMessage = $"Error: {ex.Message}";
+            _statusClass = "text-danger";
+            Console.WriteLine(ex);
+        }
+        finally
+        {
+            _isRunning = false;
+            StateHasChanged();
+        }
+    }
+
     // ILGPU Kernel
     // Note: Stride2D.DenseX means X is contiguous (stride 1). 
     // Usually ArrayView2D uses DenseX by default for 2D arrays so let's stick to standard behavior.
@@ -165,77 +236,6 @@
         using var imageDataFromBuffer = new ImageData(uint8ClampedArray, (ulong)_width, (ulong)_height);
         
         context.PutImageData(imageDataFromBuffer, 0, 0);
-    }
-
-    private async Task RunILGPU()
-    {
-        _isRunning = true;
-        _statusMessage = "Running ILGPU...";
-        _statusClass = "text-warning";
-        StateHasChanged();
-        
-        // Yield to let UI update
-        await Task.Delay(10); 
-
-        try
-        {
-            var sw = Stopwatch.StartNew();
-
-            // 1. Get WebGPU Device
-            var webGpuDevice = await WebGPUDevice.GetDefaultDeviceAsync();
-            if (webGpuDevice == null) throw new Exception("No WebGPU device found");
-
-            // 2. Create ILGPU Context and Device
-            // Note: We create context cleanly only for this test
-            using var context = Context.Create(builder => builder.Default()); // Minimal context
-            
-            // Manually register/create the device
-            var ilgpuDevice = new WebGPUILGPUDevice(webGpuDevice, 0);
-            
-            // 3. Create Accelerator
-             using var accelerator = await ilgpuDevice.CreateAcceleratorAsync(context);
-             
-             // 4. Load Kernel
-             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index2D, ArrayView2D<uint, Stride2D.DenseY>, int, int, int>(MandelbrotKernel);
-             
-             // 5. Allocate Memory
-             using var buffer = accelerator.Allocate2DDenseY<uint>(new Index2D(_width, _height));
-             
-             // 6. Launch Kernel
-             // Note: buffer.Intent -> buffer.View
-             kernel(buffer.IntExtent, buffer.View, _width, _height, 1000); // 1000 iterations
-             
-             // 7. Synchronize
-             accelerator.Synchronize();
-             
-             // 8. Copy Back
-             // Default CopyToHost is blocking and not supported on WebGPU backend.
-             // We access the underlying WebGPUMemoryBuffer and use async copy.
-            var webGpuMemBuffer = (WebGPUMemoryBuffer)((IArrayView)buffer).Buffer;
-             var bytes = await webGpuMemBuffer.NativeBuffer.CopyToHostAsync();
-             
-             var result = new uint[_width * _height];
-             Buffer.BlockCopy(bytes, 0, result, 0, bytes.Length);
-
-            sw.Stop();
-            _ilgpuTime = $"{sw.ElapsedMilliseconds} ms";
-            _statusMessage = "ILGPU Completed";
-            _statusClass = "text-success";
-            
-            // Draw result
-             await DrawToCanvas(result);
-        }
-        catch (Exception ex)
-        {
-            _statusMessage = $"Error: {ex.Message}";
-            _statusClass = "text-danger";
-            Console.WriteLine(ex);
-        }
-        finally
-        {
-            _isRunning = false;
-            StateHasChanged();
-        }
     }
 
     private async Task RunRawWebGPU()
