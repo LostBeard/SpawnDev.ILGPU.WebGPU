@@ -135,6 +135,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             WGSLCodeGenerator.GeneratorArgs data)
         {
             var wgslSource = builder.ToString();
+            Console.WriteLine("--- GENERATED WGSL ---");
+            Console.WriteLine(wgslSource);
+            Console.WriteLine("-----------------------");
             return new WebGPUCompiledKernel(Context, entryPoint, wgslSource);
         }
 

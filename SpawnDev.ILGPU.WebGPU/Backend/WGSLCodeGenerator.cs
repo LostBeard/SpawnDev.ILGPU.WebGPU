@@ -422,184 +422,184 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             switch (value)
             {
                 // Parameters
-                case Parameter p:
+                case global::ILGPU.IR.Values.Parameter p:
                     GenerateCode(p);
                     break;
 
                 // Arithmetic
-                case BinaryArithmeticValue v:
+                case global::ILGPU.IR.Values.BinaryArithmeticValue v:
                     GenerateCode(v);
                     break;
-                case UnaryArithmeticValue v:
+                case global::ILGPU.IR.Values.UnaryArithmeticValue v:
                     GenerateCode(v);
                     break;
-                case TernaryArithmeticValue v:
+                case global::ILGPU.IR.Values.TernaryArithmeticValue v:
                     GenerateCode(v);
                     break;
 
                 // Comparisons
-                case CompareValue v:
+                case global::ILGPU.IR.Values.CompareValue v:
                     GenerateCode(v);
                     break;
 
                 // Conversions
-                case ConvertValue v:
+                case global::ILGPU.IR.Values.ConvertValue v:
                     GenerateCode(v);
                     break;
 
                 // Memory Operations
-                case Load v:
+                case global::ILGPU.IR.Values.Load v:
                     GenerateCode(v);
                     break;
-                case Store v:
+                case global::ILGPU.IR.Values.Store v:
                     GenerateCode(v);
                     break;
-                case LoadElementAddress v:
+                case global::ILGPU.IR.Values.LoadElementAddress v:
                     GenerateCode(v);
                     break;
-                case LoadFieldAddress v:
+                case global::ILGPU.IR.Values.LoadFieldAddress v:
                     GenerateCode(v);
                     break;
-                case Alloca v:
+                case global::ILGPU.IR.Values.Alloca v:
                     GenerateCode(v);
                     break;
 
                 // Constants
-                case PrimitiveValue v:
+                case global::ILGPU.IR.Values.PrimitiveValue v:
                     GenerateCode(v);
                     break;
-                case NullValue v:
+                case global::ILGPU.IR.Values.NullValue v:
                     GenerateCode(v);
                     break;
-                case StringValue v:
+                case global::ILGPU.IR.Values.StringValue v:
                     GenerateCode(v);
                     break;
 
                 // Phi
-                case PhiValue v:
+                case global::ILGPU.IR.Values.PhiValue v:
                     GenerateCode(v);
                     break;
 
                 // Structures
-                case StructureValue v:
+                case global::ILGPU.IR.Values.StructureValue v:
                     GenerateCode(v);
                     break;
-                case GetField v:
+                case global::ILGPU.IR.Values.GetField v:
                     GenerateCode(v);
                     break;
-                case SetField v:
+                case global::ILGPU.IR.Values.SetField v:
                     GenerateCode(v);
                     break;
 
                 // Device Constants
-                case GridIndexValue v:
+                case global::ILGPU.IR.Values.GridIndexValue v:
                     GenerateCode(v);
                     break;
-                case GroupIndexValue v:
+                case global::ILGPU.IR.Values.GroupIndexValue v:
                     GenerateCode(v);
                     break;
-                case GridDimensionValue v:
+                case global::ILGPU.IR.Values.GridDimensionValue v:
                     GenerateCode(v);
                     break;
-                case GroupDimensionValue v:
+                case global::ILGPU.IR.Values.GroupDimensionValue v:
                     GenerateCode(v);
                     break;
-                case WarpSizeValue v:
+                case global::ILGPU.IR.Values.WarpSizeValue v:
                     GenerateCode(v);
                     break;
-                case LaneIdxValue v:
+                case global::ILGPU.IR.Values.LaneIdxValue v:
                     GenerateCode(v);
                     break;
 
                 // Control Flow
-                case ReturnTerminator v:
+                case global::ILGPU.IR.Values.ReturnTerminator v:
                     GenerateCode(v);
                     break;
-                case UnconditionalBranch v:
+                case global::ILGPU.IR.Values.UnconditionalBranch v:
                     GenerateCode(v);
                     break;
-                case IfBranch v:
+                case global::ILGPU.IR.Values.IfBranch v:
                     GenerateCode(v);
                     break;
-                case SwitchBranch v:
+                case global::ILGPU.IR.Values.SwitchBranch v:
                     GenerateCode(v);
                     break;
 
                 // Method Calls
-                case MethodCall v:
+                case global::ILGPU.IR.Values.MethodCall v:
                     GenerateCode(v);
                     break;
 
                 // Casts
-                case IntAsPointerCast v:
+                case global::ILGPU.IR.Values.IntAsPointerCast v:
                     GenerateCode(v);
                     break;
-                case PointerAsIntCast v:
+                case global::ILGPU.IR.Values.PointerAsIntCast v:
                     GenerateCode(v);
                     break;
-                case PointerCast v:
+                case global::ILGPU.IR.Values.PointerCast v:
                     GenerateCode(v);
                     break;
-                case AddressSpaceCast v:
+                case global::ILGPU.IR.Values.AddressSpaceCast v:
                     GenerateCode(v);
                     break;
-                case FloatAsIntCast v:
+                case global::ILGPU.IR.Values.FloatAsIntCast v:
                     GenerateCode(v);
                     break;
-                case IntAsFloatCast v:
+                case global::ILGPU.IR.Values.IntAsFloatCast v:
                     GenerateCode(v);
                     break;
 
                 // Atomics & Barriers
-                case GenericAtomic v:
+                case global::ILGPU.IR.Values.GenericAtomic v:
                     GenerateCode(v);
                     break;
-                case AtomicCAS v:
+                case global::ILGPU.IR.Values.AtomicCAS v:
                     GenerateCode(v);
                     break;
-                case MemoryBarrier v:
+                case global::ILGPU.IR.Values.MemoryBarrier v:
                     GenerateCode(v);
                     break;
                 case global::ILGPU.IR.Values.Barrier v:
                     GenerateCode(v);
                     break;
-                case PredicateBarrier v:
+                case global::ILGPU.IR.Values.PredicateBarrier v:
                     GenerateCode(v);
                     break;
 
                 // Warp Operations
-                case Broadcast v:
+                case global::ILGPU.IR.Values.Broadcast v:
                     GenerateCode(v);
                     break;
-                case WarpShuffle v:
+                case global::ILGPU.IR.Values.WarpShuffle v:
                     GenerateCode(v);
                     break;
-                case SubWarpShuffle v:
+                case global::ILGPU.IR.Values.SubWarpShuffle v:
                     GenerateCode(v);
                     break;
 
                 // Debug/IO
-                case DebugAssertOperation v:
+                case global::ILGPU.IR.Values.DebugAssertOperation v:
                     GenerateCode(v);
                     break;
-                case WriteToOutput v:
+                case global::ILGPU.IR.Values.WriteToOutput v:
                     GenerateCode(v);
                     break;
 
                 // Other
-                case Predicate v:
+                case global::ILGPU.IR.Values.Predicate v:
                     GenerateCode(v);
                     break;
-                case DynamicMemoryLengthValue v:
+                case global::ILGPU.IR.Values.DynamicMemoryLengthValue v:
                     GenerateCode(v);
                     break;
-                case AlignTo v:
+                case global::ILGPU.IR.Values.AlignTo v:
                     GenerateCode(v);
                     break;
-                case AsAligned v:
+                case global::ILGPU.IR.Values.AsAligned v:
                     GenerateCode(v);
                     break;
-                case LanguageEmitValue v:
+                case global::ILGPU.IR.Values.LanguageEmitValue v:
                     GenerateCode(v);
                     break;
 
@@ -754,21 +754,28 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         }
 
         // Memory Operations
-        public virtual void GenerateCode(Load load)
+        public virtual void GenerateCode(global::ILGPU.IR.Values.Load loadVal)
         {
-            var target = Load(load);
-            var source = Load(load.Source);
+            var target = Load(loadVal);
+            var source = Load(loadVal.Source);
             Declare(target);
 
-            var targetType = TypeGenerator[load.Type];
+            var targetType = TypeGenerator[loadVal.Type];
             string sourceType = targetType; // Default assumption
+            bool isAtomic = IsAtomicPointer(loadVal.Source);
 
-            if (load.Source.Type is PointerType ptrType)
+            if (loadVal.Source.Type is global::ILGPU.IR.Types.PointerType ptrType)
             {
-                sourceType = TypeGenerator[ptrType.ElementType];
+                var elemType = ptrType.ElementType;
+                sourceType = TypeGenerator[elemType];
             }
 
-            if (targetType != sourceType)
+            if (isAtomic)
+            {
+                 // Atomic Load
+                 AppendLine($"{target} = atomicLoad({source});");
+            }
+            else if (targetType != sourceType)
             {
                 // Type mismatch: force bitcast (assuming same size)
                 AppendLine($"{target} = bitcast<{targetType}>(*{source});");
@@ -779,11 +786,36 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             }
         }
 
-        public virtual void GenerateCode(Store store)
+        public virtual void GenerateCode(global::ILGPU.IR.Values.Store storeVal)
         {
-            var address = Load(store.Target);
-            var val = Load(store.Value);
-            AppendLine($"*{address} = {val};");
+            var address = Load(storeVal.Target);
+            var val = Load(storeVal.Value);
+
+            bool isAtomic = IsAtomicPointer(storeVal.Target);
+
+            if (isAtomic)
+            {
+                AppendLine($"atomicStore({address}, {val});");
+            }
+            else
+            {
+                AppendLine($"*{address} = {val};");
+            }
+        }
+
+        protected virtual bool IsAtomicPointer(Value ptr)
+        {
+            if (ptr.Type is global::ILGPU.IR.Types.PointerType ptrType)
+            {
+                var elemTypeStr = TypeGenerator[ptrType.ElementType];
+                if (elemTypeStr.Contains("atomic")) return true;
+                
+                // Heuristic for simplified types
+                var elemType = ptrType.ElementType;
+                if (elemType.ToString().Contains("Index1D") || elemType.ToString().Contains("LongIndex1D"))
+                    return true;
+            }
+            return false;
         }
 
         public virtual void GenerateCode(LoadElementAddress value)

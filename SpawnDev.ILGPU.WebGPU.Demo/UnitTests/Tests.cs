@@ -1,9 +1,11 @@
-﻿using SpawnDev.Blazor.UnitTesting;
+﻿using ILGPU = global::ILGPU;
+using SpawnDev.Blazor.UnitTesting;
 using System;
 using System.Linq;
+using System.Runtime.InteropServices;
+using SpawnDev.ILGPU.WebGPU.Backend;
 using ILGPU;
 using ILGPU.Runtime;
-using SpawnDev.ILGPU.WebGPU.Backend;
 
 namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
 {
@@ -410,7 +412,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             
             var byteResults = await internalBuffer.NativeBuffer.CopyToHostAsync();
             var result = new T[buffer.Length];
-            System.Buffer.BlockCopy(byteResults, 0, result, 0, byteResults.Length);
+            MemoryMarshal.Cast<byte, T>(byteResults).CopyTo(new Span<T>(result));
             return result;
         }
 
@@ -495,6 +497,163 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             ArrayView2D<float, Stride2D.DenseX> dataView)
         {
             dataView[index] = index.X + index.Y * 100.0f;
+        }
+
+        struct MyPoint
+        {
+            public float X;
+            public float Y;
+        }
+
+        static void StructKernel(Index1D index, ArrayView<MyPoint> data)
+        {
+            var p = data[index];
+            p.X += 1.0f;
+            p.Y *= 2.0f;
+            data[index] = p;
+        }
+
+        static void MathKernel(Index1D index, ArrayView<float> input, ArrayView<float> output)
+        {
+            float val = input[index];
+            // Check Sin, Cos, Sqrt, Abs
+            output[index] = MathF.Sin(val) + MathF.Cos(val) + MathF.Sqrt(MathF.Abs(val));
+        }
+
+        static void ControlFlowKernel(Index1D index, ArrayView<int> data)
+        {
+            int val = data[index];
+            int ret = 0;
+            if (val % 2 == 0)
+            {
+                for(int i=0; i<5; i++) ret += i; // 0+1+2+3+4 = 10
+            }
+            else
+            {
+                ret = -1;
+            }
+            data[index] = ret;
+        }
+
+        [TestMethod]
+        public async Task WebGPUStructKernelTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 10;
+            var data = new MyPoint[len];
+            for (int i = 0; i < len; i++) data[i] = new MyPoint { X = i, Y = i };
+
+            using var buf = accelerator.Allocate1D(data);
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<MyPoint>>(StructKernel);
+            kernel((Index1D)len, buf.View);
+            accelerator.Synchronize();
+
+            var result = await ReadBufferAsync<MyPoint>(buf);
+            for (int i = 0; i < len; i++)
+            {
+                if (result[i].X != i + 1.0f || result[i].Y != i * 2.0f)
+                    throw new Exception($"Struct kernel failed at {i}. Expected ({i + 1},{i * 2}), got ({result[i].X},{result[i].Y})");
+            }
+        }
+
+        [TestMethod]
+        public async Task WebGPUMathKernelTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 10;
+            var input = new float[len];
+            for (int i = 0; i < len; i++) input[i] = i - 5;
+
+            using var bufIn = accelerator.Allocate1D(input);
+            using var bufOut = accelerator.Allocate1D<float>(len);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>, ArrayView<float>>(MathKernel);
+            kernel((Index1D)len, bufIn.View, bufOut.View);
+            accelerator.Synchronize();
+
+            var result = await ReadBufferAsync<float>(bufOut);
+            for (int i = 0; i < len; i++)
+            {
+                float val = input[i];
+                float expected = MathF.Sin(val) + MathF.Cos(val) + MathF.Sqrt(MathF.Abs(val));
+                if (MathF.Abs(result[i] - expected) > 0.001f)
+                    throw new Exception($"Math kernel failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        [TestMethod]
+        public async Task WebGPUControlFlowTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 10;
+            var data = new int[len];
+            for (int i = 0; i < len; i++) data[i] = i;
+
+            using var buf = accelerator.Allocate1D(data);
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>>(ControlFlowKernel);
+            kernel((Index1D)len, buf.View);
+            accelerator.Synchronize();
+
+            var result = await ReadBufferAsync<int>(buf);
+            for (int i = 0; i < len; i++)
+            {
+                int expected = (i % 2 == 0) ? 10 : -1;
+                if (result[i] != expected)
+                    throw new Exception($"Control flow kernel failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        [TestMethod]
+        public async Task WebGPUAtomicKernelTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 64;
+            var data = new int[len];
+            var atomic = new Index1D[1]; // Accumulator using Index1D (supported by Atomic.Add)
+            
+            using var bufData = accelerator.Allocate1D(data);
+            using var bufAtomic = accelerator.Allocate1D(atomic);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>, ArrayView<Index1D>>(AtomicKernel);
+            kernel((Index1D)len, bufData.View, bufAtomic.View);
+            accelerator.Synchronize();
+
+            var resData = await ReadBufferAsync<int>(bufData);
+            var resAtomic = await ReadBufferAsync<Index1D>(bufAtomic);
+
+            // Verify Data
+            for(int i=0; i<len; i++) if(resData[i] != i+1) throw new Exception("Atomic Kernel: Data Write Failed");
+
+            // Verify Atomic Sum (Sum of 1..64)
+            int expectedSum = len * (len + 1) / 2; // n(n+1)/2 => 64*65/2 = 2080
+            if (resAtomic[0] != expectedSum)
+                throw new Exception($"Atomic Add failed. Expected {expectedSum}, got {resAtomic[0]}");
+        }
+
+        static void AtomicKernel(Index1D index, ArrayView<int> data, ArrayView<Index1D> atomicData)
+        {
+            data[index] = index + 1;
+            Atomic.Add(ref atomicData[0], (Index1D)(index + 1));
         }
 
         static void Kernel3D(Index3D index, ArrayView3D<float, Stride3D.DenseXY> dataView)

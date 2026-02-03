@@ -13,12 +13,15 @@ using global::ILGPU.IR.Values;
 using global::ILGPU;
 using System.Text;
 using System;
+using System.Collections.Generic;
 
 namespace SpawnDev.ILGPU.WebGPU.Backend
 {
     internal sealed class WGSLKernelFunctionGenerator : WGSLCodeGenerator
     {
         #region Instance
+        
+        private HashSet<int> _atomicParameters = new HashSet<int>();
 
         public WGSLKernelFunctionGenerator(
             in GeneratorArgs args,
@@ -28,6 +31,8 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             EntryPoint = args.EntryPoint;
             DynamicSharedAllocations = args.DynamicSharedAllocations;
+
+            ScanForAtomicUsage();
 
             if (!EntryPoint.IsExplicitlyGrouped && method.Parameters.Count > 0)
             {
@@ -44,6 +49,30 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     }
                 }
             FoundIndexParam:;
+            }
+        }
+
+        private void ScanForAtomicUsage()
+        {
+            foreach (var block in Method.Blocks)
+            {
+                foreach (var entry in block)
+                {
+                    if (entry.Value is global::ILGPU.IR.Values.GenericAtomic atomic)
+                    {
+                        if (ResolveToParameter(atomic.Target) is global::ILGPU.IR.Values.Parameter param)
+                        {
+                            _atomicParameters.Add(param.Index);
+                        }
+                    }
+                    else if (entry.Value is global::ILGPU.IR.Values.AtomicCAS cas)
+                    {
+                        if (ResolveToParameter(cas.Target) is global::ILGPU.IR.Values.Parameter param)
+                        {
+                            _atomicParameters.Add(param.Index);
+                        }
+                    }
+                }
             }
         }
 
@@ -65,7 +94,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             var current = type;
             while (current != null)
             {
-                if (current is PointerType ptr)
+                if (current is global::ILGPU.IR.Types.PointerType ptr)
                 {
                     current = ptr.ElementType;
                     continue;
@@ -88,6 +117,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
         public override void GenerateHeader(StringBuilder builder)
         {
+            // Emit struct definitions first
+            TypeGenerator.GenerateTypeDefinitions(builder);
+
             int bindingIdx = 0;
             int paramOffset = EntryPoint.IsExplicitlyGrouped ? 0 : 1;
 
@@ -99,6 +131,14 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 var wgslType = TypeGenerator[elementType];
                 string accessMode = "read_write";
 
+                // Debug info
+                builder.AppendLine($"// Param {param.Index}: {param.ParameterType} (Element: {elementType})");
+
+                if (_atomicParameters.Contains(param.Index))
+                {
+                    wgslType = $"atomic<{wgslType}>";
+                }
+                
                 var bindingDecl = $"@group(0) @binding({bindingIdx}) var<storage, {accessMode}> param{param.Index} : array<{wgslType}>;";
                 builder.AppendLine(bindingDecl);
                 bindingIdx++;
@@ -165,8 +205,8 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             while (current != null)
             {
                 if (current is ViewType viewType) return viewType.ElementType;
-                if (current is PointerType ptrType) return ptrType.ElementType;
-                if (current is StructureType structType)
+                if (current is global::ILGPU.IR.Types.PointerType ptrType) return ptrType.ElementType;
+                if (current is global::ILGPU.IR.Types.StructureType structType)
                 {
                     if (structType.NumFields > 0)
                     {
@@ -214,7 +254,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     var rawType = UnwrapType(param.ParameterType);
                     string typeName = param.ParameterType.ToString();
                     bool isMultiDim = typeName.Contains("ArrayView") || rawType.ToString().Contains("ArrayView") || rawType is ViewType;
-                     if (!isMultiDim && rawType is StructureType structType)
+                     if (!isMultiDim && rawType is global::ILGPU.IR.Types.StructureType structType)
                     {
                         if (structType.NumFields > 2 && IsViewStructure(structType.Fields[0])) isMultiDim = true;
                         if (structType.NumFields == 3) isMultiDim = true; 
@@ -249,24 +289,27 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             Builder.AppendLine();
         }
 
-        public override void GenerateCode(global::ILGPU.IR.Values.Load load)
+        public override void GenerateCode(global::ILGPU.IR.Values.Load loadVal)
         {
-            var target = Load(load);
-            var source = Load(load.Source);
+            var target = Load(loadVal);
+            var source = Load(loadVal.Source);
             Declare(target);
             AppendLine($"{target} = *{source};");
         }
 
-        public override void GenerateCode(Store store)
+        public override void GenerateCode(global::ILGPU.IR.Values.Store storeVal)
         {
-            var address = Load(store.Target);
-            var val = Load(store.Value);
+            var address = Load(storeVal.Target);
+            var val = Load(storeVal.Value);
             AppendLine($"*{address} = {val};");
         }
 
-        public override void GenerateCode(GetField value)
+        public override void GenerateCode(global::ILGPU.IR.Values.GetField value)
         {
-            if (ResolveToParameter(value.ObjectValue) is global::ILGPU.IR.Values.Parameter param)
+            // Only apply special view handling if the object value is actually a view/parameter
+            // and NOT a loaded value (like a struct from a buffer)
+            if (value.ObjectValue.ValueKind != ValueKind.Load && 
+                ResolveToParameter(value.ObjectValue) is global::ILGPU.IR.Values.Parameter param)
             {
                 int paramOffset = EntryPoint.IsExplicitlyGrouped ? 0 : 1;
                 if (param.Index >= paramOffset)
@@ -280,18 +323,20 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                         // ROBUST TYPE DETECTION
                         string typeName = param.ParameterType.ToString();
                         bool isLong = typeName.Contains("Long") || typeName.Contains("Int64"); 
-                        bool isMultiDim = typeName.Contains("ArrayView") || rawType.ToString().Contains("ArrayView"); // Restored
+                        bool isMultiDim = typeName.Contains("ArrayView") || rawType.ToString().Contains("ArrayView");
                         bool is3DView = typeName.Contains("3D"); 
                         bool is2DView = typeName.Contains("2D");
 
                         bool is1DView = false;
-                        if (rawType is StructureType st)
+                        if (rawType is global::ILGPU.IR.Types.StructureType st)
                         {
                             if (st.NumFields == 6) { is3DView = true; isMultiDim = true; }
                             if (st.NumFields == 4) { is2DView = true; isMultiDim = true; }
                             if (st.NumFields == 3) { is1DView = true; isMultiDim = true; }
                         }
                         
+                        // ONLY treat as view access if the index maps to expected view fields
+                        // and the object value is likely the view structure itself
                         if (value.FieldSpan.Index == 0)
                         {
                             AppendLine($"let {target} = &param{param.Index};");
@@ -330,8 +375,8 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                             else if (is1DView)
                             {
                                 // Distinguish ArrayView (Base) vs ArrayView1D (Wrapper)
-                                var structType1D = (StructureType)rawType;
-                                bool isWrapper = structType1D.Fields[1] is StructureType;
+                                var structType1D = (global::ILGPU.IR.Types.StructureType)rawType;
+                                bool isWrapper = structType1D.Fields[1] is global::ILGPU.IR.Types.StructureType;
 
                                 if (isWrapper)
                                 {
@@ -430,6 +475,15 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             }
 
             return null;
+        }
+
+        protected override bool IsAtomicPointer(Value ptr)
+        {
+            if (ResolveToParameter(ptr) is global::ILGPU.IR.Values.Parameter param)
+            {
+                return _atomicParameters.Contains(param.Index);
+            }
+            return base.IsAtomicPointer(ptr);
         }
 
         #endregion
