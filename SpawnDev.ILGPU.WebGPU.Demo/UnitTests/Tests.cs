@@ -470,6 +470,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             int constant)              // A sample uniform constant
         {
             dataView[index] = index + constant;
+            // dataView[index] = 123;
         }
 
         static void FloatKernel(

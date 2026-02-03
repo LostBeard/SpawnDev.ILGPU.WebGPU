@@ -114,7 +114,6 @@ namespace SpawnDev.ILGPU.WebGPU
             ilGenerator.EmitCall(OpCodes.Call, RunKernelMethod, null);
             ilGenerator.Emit(OpCodes.Ret);
             
-            // finish() not needed for DynamicMethod/ILGenerator
             return dynamicMethod;
         }
 
@@ -173,11 +172,12 @@ namespace SpawnDev.ILGPU.WebGPU
                     }
                     else 
                     {
-                        // Scalar - Create uniform buffer
+                        // Scalar - Create storage buffer (using Storage instead of Uniform to match generator var<storage>)
                         // Use 16 bytes for alignment/padding safety
                         var size = 16;
                         
                         var bufferDesc = new GPUBufferDescriptor {
+                            Label = $"ScalarArg_{i}",
                             Size = (ulong)size,
                             Usage = GPUBufferUsage.Storage | GPUBufferUsage.CopyDst,
                             MappedAtCreation = true
@@ -222,6 +222,11 @@ namespace SpawnDev.ILGPU.WebGPU
                             using var view = new Uint8Array(mappedRange);
                             view[0] = bVal;
                         }
+                        else if (arg is bool blVal)
+                        {
+                             using var view = new Uint32Array(mappedRange);
+                             view[0] = blVal ? 1u : 0u;
+                        }
                         else throw new NotSupportedException($"Unsupported scalar argument type: {arg.GetType()}");
                         
                         uBuffer.Unmap();
@@ -229,7 +234,7 @@ namespace SpawnDev.ILGPU.WebGPU
                         resource = new GPUBufferBinding {
                             Buffer = uBuffer,
                             Offset = 0,
-                            Size = 16
+                            Size = (ulong)size
                         };
                     }
                     
