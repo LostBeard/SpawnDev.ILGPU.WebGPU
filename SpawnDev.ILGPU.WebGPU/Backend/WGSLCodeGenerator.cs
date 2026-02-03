@@ -420,7 +420,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 return;
 
             // TRACE LOGGING
-            AppendLine($"// Visit: {value.GetType().Name}");
+            AppendLine($"// Visit: {value.GetType().Name} [DISPATCHED]");
 
             switch (value)
             {
@@ -438,7 +438,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     GenerateCode(v);
                     break;
                 case global::ILGPU.IR.Values.UnaryArithmeticValue v:
-                    GenerateCode(v);
+                    GenerateUnOp(v);
                     break;
                 case global::ILGPU.IR.Values.TernaryArithmeticValue v:
                     GenerateCode(v);
@@ -676,13 +676,14 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
         public virtual void GenerateCode(UnaryArithmeticValue value)
         {
-            throw new System.Exception("DEBUG CRASH: GenerateCode UNARY");
+            GenerateUnOp(value);
+        }
+
+        private void GenerateUnOp(UnaryArithmeticValue value)
+        {
             var target = Load(value);
             var operand = Load(value.Value);
             Declare(target);
-            
-            System.Console.WriteLine($"[SERVER] DEBUG UNARY KIND: {value.Kind}");
-            AppendLine($"// [WGSL] DEBUG UNARY KIND: {value.Kind}");
 
             string result = value.Kind switch
             {
@@ -715,7 +716,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             if (result == "DEBUG_MISSING")
             {
                 AppendLine($"// [WGSL] Unhandled UnaryArithmeticKind: {value.Kind}");
-                result = $"unhandled_unary({operand})"; // This will cause WGSL syntax error effectively, or likely function not found
+                result = $"unhandled_unary({operand})"; 
             }
 
             AppendLine($"{target} = {result};");
