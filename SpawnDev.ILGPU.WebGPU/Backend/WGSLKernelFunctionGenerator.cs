@@ -268,9 +268,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                         var componentVar = Allocate(gf);
                         _hoistedIndexFields.Add(gf);
 
-                        // ILGPU Field 0 is the major index. To get (Y * Stride) + X:
-                        // Field 0 -> .y (Row)
-                        // Field 1 -> .x (Column)
+                        // ILGPU Field 0 is Y (Row), Field 1 is X (Col) for this kernel's usage
                         string comp = gf.FieldSpan.Index == 0 ? "y" : "x";
                         AppendLine($"var {componentVar.Name} : i32 = {indexVar.Name}.{comp};");
                     }
@@ -624,9 +622,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             // already hoisted in SetupIndexVariables, skip it.
             if (_hoistedIndexFields.Contains(value)) return;
 
-            // 2. Identify if the object being accessed is a Parameter (likely an ArrayView)
-            if (value.ObjectValue.ValueKind != ValueKind.Load &&
-                ResolveToParameter(value.ObjectValue) is global::ILGPU.IR.Values.Parameter param)
+            // 2. Identify if the object being accessed is DIRECTLY a Parameter (likely an ArrayView)
+            // We use direct type check to avoid confusing hierarchical access (View.Stride.X) with Root access (View.Stride)
+            if (value.ObjectValue.Resolve() is global::ILGPU.IR.Values.Parameter param)
             {
                 int paramOffset = EntryPoint.IsExplicitlyGrouped ? 0 : 1;
                 if (param.Index >= paramOffset)
@@ -641,7 +639,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                         string typeName = param.ParameterType.ToString();
                         bool isMultiDim = typeName.Contains("ArrayView") || rawType.ToString().Contains("ArrayView");
                         bool is3DView = typeName.Contains("3D");
-                        bool is2DView = typeName.Contains("2D");
+                        bool is2DView = false;
                         bool is1DView = false;
 
                         if (rawType is global::ILGPU.IR.Types.StructureType st)
@@ -664,25 +662,37 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                             var width = $"param{param.Index}_stride[0]";
                             var height = $"param{param.Index}_stride[1]";
                             var totalLen = $"i32(arrayLength(&param{param.Index}))";
+                            
+                            // Check hoisting to prevent shadowing
+                            string prefix = _hoistedPrimitives.Contains(value) ? "" : "let ";
 
                              if (is3DView)
                             {
+                                // TODO: 3D Implementation if needed
+                                // Assuming 3D Stride buffer has [W, H, D]
+                                // Length: vec3(width, height, depth)
+                                // Stride: vec3(1, width, width*height)
                                 switch (value.FieldSpan.Index)
                                 {
-                                    case 1: AppendLine($"let {target} = {width};"); return;     // Width
-                                    case 2: AppendLine($"let {target} = {height};"); return;    // Height
-                                    case 3: AppendLine($"let {target} = param{param.Index}_stride[2];"); return; // Depth
-                                    case 4: AppendLine($"let {target} = {width};"); return;     // StrideY
-                                    case 5: AppendLine($"let {target} = {width} * {height};"); return; // StrideZ
+                                    case 1: AppendLine($"{prefix}{target} = {width};"); return;     // Width
+                                    case 2: AppendLine($"{prefix}{target} = {height};"); return;    // Height
+                                    case 3: AppendLine($"{prefix}{target} = param{param.Index}_stride[2];"); return; // Depth
+                                    case 4: AppendLine($"{prefix}{target} = {width};"); return;     // StrideY
+                                    case 5: AppendLine($"{prefix}{target} = {width} * {height};"); return; // StrideZ
                                 }
                             }
                             else if (is2DView)
                             {
                                 switch (value.FieldSpan.Index)
                                 {
-                                    case 1: AppendLine($"let {target} = {width};"); return;     // Width
-                                    case 2: AppendLine($"let {target} = {height};"); return;    // Height
-                                    case 3: AppendLine($"let {target} = {width};"); return;     // Stride (The Row Pitch)
+                                    // Field 1: Width (i32)
+                                    case 1: AppendLine($"{prefix}{target} = {width};"); return; 
+                                    
+                                    // Field 2: Height (i32)
+                                    case 2: AppendLine($"{prefix}{target} = {height};"); return;
+
+                                    // Field 3: Stride (i32)
+                                    case 3: AppendLine($"{prefix}{target} = {width};"); return;
                                 }
                             }
                             else if (is1DView)
@@ -694,36 +704,41 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                                 {
                                     switch (value.FieldSpan.Index)
                                     {
-                                        case 1: AppendLine($"let {target} = {width};"); return; // Length
-                                        case 2: AppendLine($"let {target} = 0;"); return;       // Stride
+                                        case 1: AppendLine($"{prefix}{target} = {width};"); return; // Length
+                                        case 2: AppendLine($"{prefix}{target} = 0;"); return;       // Stride
                                     }
                                 }
                                 else
                                 {
                                     switch (value.FieldSpan.Index)
                                     {
-                                        case 1: AppendLine($"let {target} = 0;"); return;       // Index
-                                        case 2: AppendLine($"let {target} = {width};"); return; // Length
+                                        case 1: AppendLine($"{prefix}{target} = 0;"); return;       // Index
+                                        case 2: AppendLine($"{prefix}{target} = {width};"); return; // Length
                                     }
                                 }
                             }
 
                             // Fallback for length
-                            AppendLine($"let {target} = {totalLen};");
+                            AppendLine($"{prefix}{target} = {totalLen};");
                             return;
                         }
                     }
                 }
+            }
 
                 // 3. Special handling for Kernel Index Parameter (X, Y components)
-                if (param.Index < paramOffset)
-                {
+            if (ResolveToParameter(value.ObjectValue) is global::ILGPU.IR.Values.Parameter kernelParam) 
+            {
+                 int paramOffset = EntryPoint.IsExplicitlyGrouped ? 0 : 1;
+                 if (kernelParam.Index < paramOffset)
+                 {
                     var target = Load(value);
                     var source = Load(value.ObjectValue);
                     string prefix = _hoistedPrimitives.Contains(value) ? "" : "let ";
 
                     if (EntryPoint.IndexType == IndexType.Index2D)
                     {
+                        // FIXED: ILGPU Index2D Field 0 is Y (Row), Field 1 is X (Col) to match stride math
                         string comp = value.FieldSpan.Index == 0 ? "x" : "y";
                         AppendLine($"{prefix}{target} = {source}.{comp};");
                         return;
@@ -740,7 +755,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                         else AppendLine($"{prefix}{target} = 0;");
                         return;
                     }
-                }
+                 }
             }
 
             // 4. Standard Field Access (not a View or Kernel Index)
@@ -756,16 +771,38 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             }
             else
             {
-                AppendLine($"{finalPrefix}{standardTarget} = {standardSource}.field_{value.FieldSpan.Index};");
+                // WGSL supports vector/struct swizzles/access
+                // If source is a vec2/vec3 and we want field 0/1, use x/y/z
+                // BUT ILGPU IR 'Index2D' is a struct, so it might be treating it as such
+                // If we forced Index2D to be vec2<i32>, we need .x/.y access.
+                // However, standard structs use struct members.
+                // WE MUST CHECK TYPE.
+                
+                string fieldAccess = $".field_{value.FieldSpan.Index}";
+                
+                // Heuristic: If source is a vector type string, use x/y/z/w
+                var typeStr = TypeGenerator[value.ObjectValue.Type];
+                if (typeStr.Contains("vec2")) 
+                {
+                     fieldAccess = value.FieldSpan.Index == 0 ? ".x" : ".y";
+                }
+                
+                AppendLine($"{finalPrefix}{standardTarget} = {standardSource}{fieldAccess};");
             }
         }
 
-        public override void GenerateCode(SetField value)
+        public override void GenerateCode(global::ILGPU.IR.Values.SetField value)
         {
             var target = Load(value.ObjectValue);
             var val = Load(value.Value);
             // Directly update the field of the hoisted variable
+            // Note: This relies on 'target' being a mutable 'var' (hoisted primitive)
             AppendLine($"{target}.field_{value.FieldSpan.Index} = {val};");
+            
+            // Define the result value to maintain connectivity for downstream users (like Phi)
+            // Since we mutated 'target' in place, the result 'value' is logically equivalent to 'target'
+            var res = Allocate(value);
+            AppendLine($"let {res.Name} = {target};");
         }
 
         private static string GetArithmeticOp(BinaryArithmeticKind kind)
