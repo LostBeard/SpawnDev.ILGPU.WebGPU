@@ -259,18 +259,42 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 var indexVar = Allocate(indexParam);
                 _hoistedIndexFields.Clear();
 
-                AppendLine($"var {indexVar.Name} : vec2<i32> = vec2<i32>(i32(global_id.x), i32(global_id.y));");
-
-                foreach (var use in indexParam.Uses)
+                if (EntryPoint.IndexType == IndexType.Index1D)
                 {
-                    if (use.Target is global::ILGPU.IR.Values.GetField gf)
-                    {
-                        var componentVar = Allocate(gf);
-                        _hoistedIndexFields.Add(gf);
+                    AppendLine($"var {indexVar.Name} : i32 = i32(global_id.x);");
+                }
+                else if (EntryPoint.IndexType == IndexType.Index2D)
+                {
+                    AppendLine($"var {indexVar.Name} : vec2<i32> = vec2<i32>(i32(global_id.x), i32(global_id.y));");
 
-                        // ILGPU Field 0 is X (Col), Field 1 is Y (Row) - Standard Mapping
-                        string comp = gf.FieldSpan.Index == 0 ? "x" : "y";
-                        AppendLine($"var {componentVar.Name} : i32 = {indexVar.Name}.{comp};");
+                    foreach (var use in indexParam.Uses)
+                    {
+                        if (use.Target is global::ILGPU.IR.Values.GetField gf)
+                        {
+                            var componentVar = Allocate(gf);
+                            _hoistedIndexFields.Add(gf);
+
+                            // ILGPU Field 0 is X (Col), Field 1 is Y (Row) - Standard Mapping
+                            string comp = gf.FieldSpan.Index == 0 ? "x" : "y";
+                            AppendLine($"var {componentVar.Name} : i32 = {indexVar.Name}.{comp};");
+                        }
+                    }
+                }
+                else if (EntryPoint.IndexType == IndexType.Index3D)
+                {
+                    AppendLine($"var {indexVar.Name} : vec3<i32> = vec3<i32>(i32(global_id.x), i32(global_id.y), i32(global_id.z));");
+
+                    foreach (var use in indexParam.Uses)
+                    {
+                        if (use.Target is global::ILGPU.IR.Values.GetField gf)
+                        {
+                            var componentVar = Allocate(gf);
+                            _hoistedIndexFields.Add(gf);
+
+                            // ILGPU Field 0 is X, 1 is Y, 2 is Z
+                            string comp = gf.FieldSpan.Index == 0 ? "x" : (gf.FieldSpan.Index == 1 ? "y" : "z");
+                            AppendLine($"var {componentVar.Name} : i32 = {indexVar.Name}.{comp};");
+                        }
                     }
                 }
             }

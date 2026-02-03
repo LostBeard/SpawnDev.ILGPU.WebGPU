@@ -419,12 +419,19 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 !(value is MemoryBarrier))
                 return;
 
+            // TRACE LOGGING
+            AppendLine($"// Visit: {value.GetType().Name}");
+
             switch (value)
             {
                 // Parameters
                 case global::ILGPU.IR.Values.Parameter p:
                     GenerateCode(p);
                     break;
+                
+                case global::ILGPU.IR.Values.MethodCall v:
+                     GenerateCode(v);
+                     break;
 
                 // Arithmetic
                 case global::ILGPU.IR.Values.BinaryArithmeticValue v:
@@ -525,10 +532,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     GenerateCode(v);
                     break;
 
-                // Method Calls
-                case global::ILGPU.IR.Values.MethodCall v:
-                    GenerateCode(v);
-                    break;
+
 
                 // Casts
                 case global::ILGPU.IR.Values.IntAsPointerCast v:
@@ -672,34 +676,47 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
         public virtual void GenerateCode(UnaryArithmeticValue value)
         {
+            throw new System.Exception("DEBUG CRASH: GenerateCode UNARY");
             var target = Load(value);
             var operand = Load(value.Value);
             Declare(target);
+            
+            System.Console.WriteLine($"[SERVER] DEBUG UNARY KIND: {value.Kind}");
+            AppendLine($"// [WGSL] DEBUG UNARY KIND: {value.Kind}");
 
             string result = value.Kind switch
             {
                 UnaryArithmeticKind.Neg => $"-{operand}",
                 UnaryArithmeticKind.Not => $"!{operand}",
+                
+                // Math Intrinsics (Float)
                 UnaryArithmeticKind.Abs => $"abs({operand})",
-                UnaryArithmeticKind.RcpF => $"(1.0 / {operand})",
-                UnaryArithmeticKind.IsNaNF => $"isNan({operand})",
-                UnaryArithmeticKind.IsInfF => $"isInf({operand})",
-                UnaryArithmeticKind.SqrtF => $"sqrt({operand})",
-                UnaryArithmeticKind.RsqrtF => $"inverseSqrt({operand})",
                 UnaryArithmeticKind.SinF => $"sin({operand})",
                 UnaryArithmeticKind.CosF => $"cos({operand})",
                 UnaryArithmeticKind.TanF => $"tan({operand})",
                 UnaryArithmeticKind.AsinF => $"asin({operand})",
                 UnaryArithmeticKind.AcosF => $"acos({operand})",
                 UnaryArithmeticKind.AtanF => $"atan({operand})",
+                UnaryArithmeticKind.SinhF => $"sinh({operand})",
+                UnaryArithmeticKind.CoshF => $"cosh({operand})",
+                UnaryArithmeticKind.TanhF => $"tanh({operand})",
                 UnaryArithmeticKind.ExpF => $"exp({operand})",
                 UnaryArithmeticKind.Exp2F => $"exp2({operand})",
                 UnaryArithmeticKind.LogF => $"log({operand})",
                 UnaryArithmeticKind.Log2F => $"log2({operand})",
+                UnaryArithmeticKind.SqrtF => $"sqrt({operand})",
+                UnaryArithmeticKind.RsqrtF => $"inverseSqrt({operand})",
                 UnaryArithmeticKind.FloorF => $"floor({operand})",
                 UnaryArithmeticKind.CeilingF => $"ceil({operand})",
-                _ => operand.ToString()
+
+                _ => "DEBUG_MISSING"
             };
+
+            if (result == "DEBUG_MISSING")
+            {
+                AppendLine($"// [WGSL] Unhandled UnaryArithmeticKind: {value.Kind}");
+                result = $"unhandled_unary({operand})"; // This will cause WGSL syntax error effectively, or likely function not found
+            }
 
             AppendLine($"{target} = {result};");
         }
@@ -748,7 +765,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             var target = Load(value);
             var source = Load(value.Value);
-            var targetType = TypeGenerator[value.Type];  // Use value.Type not value.TargetType
+            var targetType = TypeGenerator[value.Type];
             Declare(target);
             AppendLine($"{target} = {targetType}({source});");
         }
@@ -761,7 +778,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             Declare(target);
 
             var targetType = TypeGenerator[loadVal.Type];
-            string sourceType = targetType; // Default assumption
+            string sourceType = targetType; 
             bool isAtomic = IsAtomicPointer(loadVal.Source);
 
             if (loadVal.Source.Type is global::ILGPU.IR.Types.PointerType ptrType)
@@ -772,12 +789,10 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
             if (isAtomic)
             {
-                 // Atomic Load
                  AppendLine($"{target} = atomicLoad({source});");
             }
             else if (targetType != sourceType)
             {
-                // Type mismatch: force bitcast (assuming same size)
                 AppendLine($"{target} = bitcast<{targetType}>(*{source});");
             }
             else
@@ -809,8 +824,6 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             {
                 var elemTypeStr = TypeGenerator[ptrType.ElementType];
                 if (elemTypeStr.Contains("atomic")) return true;
-                
-                // Heuristic for simplified types
                 var elemType = ptrType.ElementType;
                 if (elemType.ToString().Contains("Index1D") || elemType.ToString().Contains("LongIndex1D"))
                     return true;
@@ -823,7 +836,6 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             var target = Load(value);
             var source = Load(value.Source);
             var offset = Load(value.Offset);
-            // Use 'let' for pointers to handle storage classes correctly
             AppendIndent();
             Builder.Append("let ");
             Builder.Append(target.Name);
@@ -836,15 +848,12 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             var target = Load(value);
             var source = Load(value.Source);
-            // Use 'let' for pointers to handle inference and storage classes more easily
             AppendIndent();
             Builder.Append("let ");
             Builder.Append(target.Name);
             Builder.Append(" = ");
             
             string fieldName = $"field_{value.FieldSpan.Index}";
-            // Debug: Log the type
-            Console.WriteLine($"Debug LoadFieldAddress: Type = {value.Source.Type}");
             if (IsIndexType(value.Source.Type))
             {
                 fieldName = value.FieldSpan.Index switch {
@@ -878,13 +887,12 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 BasicValueType.Int16 => value.Int16Value.ToString(),
                 BasicValueType.Int32 => value.Int32Value.ToString(),
                 BasicValueType.Int64 => value.Int64Value.ToString(),
-                BasicValueType.Float16 => FormatFloat(value.Float32Value), // Promote
+                BasicValueType.Float16 => FormatFloat(value.Float32Value),
                 BasicValueType.Float32 => FormatFloat(value.Float32Value),
-                BasicValueType.Float64 => FormatFloat((float)value.Float64Value), // Promote down
+                BasicValueType.Float64 => FormatFloat((float)value.Float64Value),
                 _ => "0"
             };
 
-            // WGSL requires type constructor for non-bool
             if (value.BasicValueType != BasicValueType.Int1)
             {
                 AppendLine($"{target} = {type}({valStr});");
@@ -897,7 +905,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
         private string FormatFloat(float value)
         {
-            if (float.IsNaN(value)) return "0.0"; // WGSL doesn't have NaN literal
+            if (float.IsNaN(value)) return "0.0";
             if (float.IsPositiveInfinity(value)) return "3.402823e+38";
             if (float.IsNegativeInfinity(value)) return "-3.402823e+38";
             
@@ -916,14 +924,12 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
         public virtual void GenerateCode(StringValue value)
         {
-            // WGSL doesn't support strings
             AppendLine($"// String: {value.String}");
         }
 
         // Phi
         public virtual void GenerateCode(PhiValue value)
         {
-            // Phi variable declaration - assignment happens in branches
             var target = Load(value);
             Declare(target);
         }
@@ -933,7 +939,6 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             var target = Load(value);
             Declare(target);
-            // Initialize struct with field values
             var sb = new StringBuilder();
             sb.Append($"{target} = {target.Type}(");
             for (int i = 0; i < value.Count; i++)
@@ -952,8 +957,6 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             Declare(target);
             
             string fieldName = $"field_{value.FieldSpan.Index}";
-            // Debug
-            Console.WriteLine($"Debug GetField: Type = {value.ObjectValue.Type}");
             if (IsIndexType(value.ObjectValue.Type))
             {
                 fieldName = value.FieldSpan.Index switch {
@@ -989,9 +992,6 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             AppendLine($"{target}.{fieldName} = {fieldValue};");
         }
         
-        /// <summary>
-        /// Returns true if the type is an ILGPU index type.
-        /// </summary>
         protected bool IsIndexType(TypeNode type)
         {
             var typeName = type.ToString();
@@ -1146,9 +1146,6 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             AppendLine("continue;");
         }
 
-        /// <summary>
-        /// Emits phi value assignments when branching.
-        /// </summary>
         protected void EmitPhiAssignments(BasicBlock sourceBlock, BasicBlock targetBlock)
         {
             foreach (var valueEntry in targetBlock)
@@ -1169,8 +1166,51 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         // Method Calls
         public virtual void GenerateCode(MethodCall methodCall)
         {
-            AppendLine($"// Call: {methodCall.Target.Name}");
-            // TODO: Inline method calls or handle intrinsics
+            var target = Load(methodCall);
+            Declare(target);
+            
+            string name = methodCall.Target.Name;
+            // Map common intrinsics if they appear as method calls
+            string wgslFunc = name switch
+            {
+                "Sin" => "sin",
+                "Cos" => "cos",
+                "Tan" => "tan",
+                "Asin" => "asin",
+                "Acos" => "acos",
+                "Atan" => "atan",
+                "Sqrt" => "sqrt",
+                "Abs" => "abs",
+                "Pow" => "pow",
+                "Log" => "log",
+                "Exp" => "exp",
+                "Floor" => "floor",
+                "Ceiling" => "ceil",
+                "Min" => "min",
+                "Max" => "max",
+                _ => null
+            };
+
+            if (wgslFunc != null)
+            {
+                if (methodCall.Count == 1)
+                {
+                    var arg = Load(methodCall[0]);
+                    AppendLine($"{target} = {wgslFunc}({arg});");
+                    return;
+                }
+                else if (methodCall.Count == 2)
+                {
+                    var arg1 = Load(methodCall[0]);
+                    var arg2 = Load(methodCall[1]);
+                    AppendLine($"{target} = {wgslFunc}({arg1}, {arg2});");
+                    return;
+                }
+            }
+
+            AppendLine($"// Call: {methodCall.Target.Name} (Unmapped)");
+            // Probe Value 2
+            AppendLine($"{target} = 12345.0;"); 
         }
 
         // Casts
