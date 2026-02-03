@@ -268,8 +268,8 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                         var componentVar = Allocate(gf);
                         _hoistedIndexFields.Add(gf);
 
-                        // ILGPU Field 0 is Y (Row), Field 1 is X (Col) for this kernel's usage
-                        string comp = gf.FieldSpan.Index == 0 ? "y" : "x";
+                        // ILGPU Field 0 is X (Col), Field 1 is Y (Row) - Standard Mapping
+                        string comp = gf.FieldSpan.Index == 0 ? "x" : "y";
                         AppendLine($"var {componentVar.Name} : i32 = {indexVar.Name}.{comp};");
                     }
                 }
@@ -738,7 +738,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
                     if (EntryPoint.IndexType == IndexType.Index2D)
                     {
-                        // FIXED: ILGPU Index2D Field 0 is Y (Row), Field 1 is X (Col) to match stride math
+                        // Standard: Field 0 is X, Field 1 is Y
                         string comp = value.FieldSpan.Index == 0 ? "x" : "y";
                         AppendLine($"{prefix}{target} = {source}.{comp};");
                         return;

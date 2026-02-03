@@ -93,10 +93,10 @@
             using var accelerator = await ilgpuDevice.CreateAcceleratorAsync(context);
 
             // 4. Load Kernel
-            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index2D, ArrayView2D<uint, Stride2D.DenseY>, int, int, int>(MandelbrotKernel);
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index2D, ArrayView2D<uint, Stride2D.DenseX>, int, int, int>(MandelbrotKernel);
 
             // 5. Allocate Memory
-            using var buffer = accelerator.Allocate2DDenseY<uint>(new Index2D(_width, _height));
+            using var buffer = accelerator.Allocate2DDenseX<uint>(new Index2D(_width, _height));
 
             // 6. Launch Kernel
             // Note: buffer.Intent -> buffer.View
@@ -138,7 +138,7 @@
     // ILGPU Kernel
     // Note: Stride2D.DenseX means X is contiguous (stride 1). 
     // Usually ArrayView2D uses DenseX by default for 2D arrays so let's stick to standard behavior.
-    static void MandelbrotKernel(Index2D index, ArrayView2D<uint, Stride2D.DenseY> output, int width, int height, int maxIterations)
+    static void MandelbrotKernel(Index2D index, ArrayView2D<uint, Stride2D.DenseX> output, int width, int height, int maxIterations)
     {
         int x = index.X;
         int y = index.Y;
