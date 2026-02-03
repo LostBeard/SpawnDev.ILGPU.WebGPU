@@ -29,7 +29,6 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             EntryPoint = args.EntryPoint;
             DynamicSharedAllocations = args.DynamicSharedAllocations;
 
-            // Find the memory address (Alloca) where the Index Parameter is stored.
             if (!EntryPoint.IsExplicitlyGrouped && method.Parameters.Count > 0)
             {
                 var indexParam = method.Parameters[0];
@@ -100,21 +99,30 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 var wgslType = TypeGenerator[elementType];
                 string accessMode = "read_write";
 
-                // 1. Primary Binding
                 var bindingDecl = $"@group(0) @binding({bindingIdx}) var<storage, {accessMode}> param{param.Index} : array<{wgslType}>;";
                 builder.AppendLine(bindingDecl);
                 bindingIdx++;
 
-                // 2. Secondary Binding (Stride)
                 var rawType = UnwrapType(param.ParameterType);
-                if (rawType is StructureType structType)
+                string typeName = param.ParameterType.ToString();
+                
+                bool isMultiDim = typeName.Contains("ArrayView") || rawType.ToString().Contains("ArrayView") || rawType is ViewType;
+
+                // Fallback to structure check if string check fails (for custom structs using views)
+                if (!isMultiDim && rawType is StructureType structType)
                 {
                     if (structType.NumFields > 2 && IsViewStructure(structType.Fields[0]))
                     {
-                        var strideDecl = $"@group(0) @binding({bindingIdx}) var<storage, read> param{param.Index}_stride : array<i32>;";
-                        builder.AppendLine(strideDecl);
-                        bindingIdx++;
+                        isMultiDim = true;
                     }
+                    if (structType.NumFields == 3) isMultiDim = true; // 1D View
+                }
+
+                if (isMultiDim)
+                {
+                    var strideDecl = $"@group(0) @binding({bindingIdx}) var<storage, read> param{param.Index}_stride : array<i32>;";
+                    builder.AppendLine(strideDecl);
+                    bindingIdx++;
                 }
             }
             builder.AppendLine();
@@ -198,7 +206,21 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 var bufferType = GetBufferElementType(param.ParameterType);
                 bool isView = bufferType != param.ParameterType;
                 if (param.ParameterType.IsPrimitiveType || !isView) AppendLine($"var {variable.Name} = param{param.Index}[0];");
-                else AppendLine($"let {variable.Name} = &param{param.Index};");
+                else 
+                {
+                    AppendLine($"let {variable.Name} = &param{param.Index};");
+
+                    // Force usage of stride buffer to prevent optimization culling (Binding Mismatch)
+                    var rawType = UnwrapType(param.ParameterType);
+                    string typeName = param.ParameterType.ToString();
+                    bool isMultiDim = typeName.Contains("ArrayView") || rawType.ToString().Contains("ArrayView") || rawType is ViewType;
+                     if (!isMultiDim && rawType is StructureType structType)
+                    {
+                        if (structType.NumFields > 2 && IsViewStructure(structType.Fields[0])) isMultiDim = true;
+                        if (structType.NumFields == 3) isMultiDim = true; 
+                    }
+                    if (isMultiDim) AppendLine($"let _stride_{param.Index} = param{param.Index}_stride[0];");
+                }
             }
         }
 
@@ -255,16 +277,21 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                         var target = Load(value);
                         var rawType = UnwrapType(param.ParameterType);
 
-                        bool isMultiDim = false;
-                        if (rawType is StructureType structType)
+                        // ROBUST TYPE DETECTION
+                        string typeName = param.ParameterType.ToString();
+                        bool isLong = typeName.Contains("Long") || typeName.Contains("Int64"); 
+                        bool isMultiDim = typeName.Contains("ArrayView") || rawType.ToString().Contains("ArrayView"); // Restored
+                        bool is3DView = typeName.Contains("3D"); 
+                        bool is2DView = typeName.Contains("2D");
+
+                        bool is1DView = false;
+                        if (rawType is StructureType st)
                         {
-                            if (structType.NumFields > 2 && IsViewStructure(structType.Fields[0])) isMultiDim = true;
-                            else if (param.ParameterType.ToString().Contains("ArrayView")) isMultiDim = true;
+                            if (st.NumFields == 6) { is3DView = true; isMultiDim = true; }
+                            if (st.NumFields == 4) { is2DView = true; isMultiDim = true; }
+                            if (st.NumFields == 3) { is1DView = true; isMultiDim = true; }
                         }
-
-                        bool isLong = param.ParameterType.ToString().Contains("Long");
-
-                        // 0: Ptr
+                        
                         if (value.FieldSpan.Index == 0)
                         {
                             AppendLine($"let {target} = &param{param.Index};");
@@ -273,58 +300,69 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
                         if (isMultiDim)
                         {
-                            var strideX = $"param{param.Index}_stride[0]";
-                            var strideY = $"param{param.Index}_stride[1]";
+                            var width = $"param{param.Index}_stride[0]";
+                            var height = $"param{param.Index}_stride[1]";
+                            var depth = $"param{param.Index}_stride[2]"; 
                             var totalLen = $"i32(arrayLength(&param{param.Index}))";
+                            
+                            // Removed duplicate is2DView declaration
 
-                            if (isLong)
+                            if (is3DView)
                             {
-                                // 64-BIT MAPPING: [Ptr, Len(L,H), W(L,H), H(L,H), D(L,H), StY(L,H), StZ(L,H)]
                                 switch (value.FieldSpan.Index)
                                 {
-                                    case 1: AppendLine($"let {target} = {totalLen};"); return; // Length Low
-                                    case 2: AppendLine($"let {target} = 0;"); return;         // Length High
-
-                                    case 3: AppendLine($"let {target} = {strideX};"); return; // Width Low
-                                    case 4: AppendLine($"let {target} = 0;"); return;         // Width High
-
-                                    case 5: AppendLine($"let {target} = {strideY};"); return; // Height Low
-                                    case 6: AppendLine($"let {target} = 0;"); return;         // Height High
-
-                                    case 7: // Depth Low
-                                        AppendLine($"let {target} = {totalLen} / ({strideX} * {strideY});");
-                                        return;
-                                    case 8: AppendLine($"let {target} = 0;"); return;         // Depth High
-
-                                    case 9: AppendLine($"let {target} = {strideX};"); return; // Y-Stride Low
-                                    case 10: AppendLine($"let {target} = 0;"); return;        // Y-Stride High
-
-                                    case 11: // Z-Stride Low
-                                        AppendLine($"let {target} = {strideX} * {strideY};");
-                                        return;
-                                    case 12: AppendLine($"let {target} = 0;"); return;        // Z-Stride High
+                                    case 1: AppendLine($"let {target} = {width};"); return; // Width
+                                    case 2: AppendLine($"let {target} = {height};"); return; // Height
+                                    case 3: AppendLine($"let {target} = {depth};"); return; // Depth
+                                    case 4: AppendLine($"let {target} = {width};"); return; // StrideY (Dense)
+                                    case 5: AppendLine($"let {target} = {width} * {height};"); return; // StrideZ (Dense)
                                 }
                             }
-                            else
+                            else if (is2DView)
                             {
-                                // 32-BIT MAPPING: [Ptr, Length, Width, Height, Depth, StrideY, StrideZ]
                                 switch (value.FieldSpan.Index)
                                 {
-                                    case 0: AppendLine($"let {target} = {totalLen};"); return; // Length (Field 0 is TotalLen in 32-bit layout)
-                                    case 1: AppendLine($"let {target} = {strideX};"); return; // Width
-                                    case 2: AppendLine($"let {target} = {strideY};"); return; // Height
-                                    case 3: // Depth
-                                        AppendLine($"let {target} = {totalLen} / ({strideX} * {strideY});");
-                                        return;
-                                    case 4: AppendLine($"let {target} = {strideX};"); return; // Y-Stride
-                                    case 5: AppendLine($"let {target} = {strideX} * {strideY};"); return; // Z-Stride
+                                    case 1: AppendLine($"let {target} = {width};"); return; // Width
+                                    case 2: AppendLine($"let {target} = {height};"); return; // Height
+                                    case 3: AppendLine($"let {target} = {width};"); return; // Stride (Dense)
                                 }
                             }
+                            else if (is1DView)
+                            {
+                                // Distinguish ArrayView (Base) vs ArrayView1D (Wrapper)
+                                var structType1D = (StructureType)rawType;
+                                bool isWrapper = structType1D.Fields[1] is StructureType;
+
+                                if (isWrapper)
+                                {
+                                    // ArrayView1D (Wrapper)
+                                    // Field 0: BaseView (Ptr) - Handled by offset 0 check
+                                    // Field 1: Extent (Struct) -> Stride[0] (Length)
+                                    // Field 2: Stride (Struct) -> 0 (Dense/Ignore)
+                                    switch (value.FieldSpan.Index)
+                                    {
+                                        case 1: AppendLine($"let {target} = {width};"); return; 
+                                        case 2: AppendLine($"let {target} = 0;"); return;
+                                    }
+                                }
+                                else
+                                {
+                                    // ArrayView (Base)
+                                    // Field 0: Buffer (Ptr)
+                                    // Field 1: Index (Long) -> 0 (Handled by offset)
+                                    // Field 2: Length (Long) -> Stride[0] (Length)
+                                    switch (value.FieldSpan.Index)
+                                    {
+                                        case 1: AppendLine($"let {target} = 0;"); return;
+                                        case 2: AppendLine($"let {target} = {width};"); return;
+                                    }
+                                }
+                            }
+
+                            // Fallback
+                            AppendLine($"let {target} = i32(arrayLength(&param{param.Index}));");
+                            return;
                         }
-
-                        // Fallback
-                        AppendLine($"let {target} = i32(arrayLength(&param{param.Index}));");
-                        return;
                     }
                 }
 

@@ -82,19 +82,20 @@ namespace SpawnDev.ILGPU.WebGPU
             return dynamicMethod;
         }
 
-        // Helper to robustly extract dimensions (X, Y) using Duck Typing
+        // Helper to robustly extract dimensions (X, Y, Z) using Duck Typing
         private static int[] ExtractDimensionsFromView(object view, Type viewType)
         {
             try
             {
                 var flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
 
-                int[] GetXY(object d)
+                int[] GetXYZ(object d)
                 {
                     if (d == null) return Array.Empty<int>();
                     var t = d.GetType();
-                    int x = -1, y = -1;
+                    int x = -1, y = -1, z = -1;
 
+                    // Try to get X
                     var fX = t.GetField("X", flags);
                     if (fX != null) x = Convert.ToInt32(fX.GetValue(d));
                     else
@@ -103,6 +104,7 @@ namespace SpawnDev.ILGPU.WebGPU
                         if (pX != null) x = Convert.ToInt32(pX.GetValue(d));
                     }
 
+                    // Try to get Y
                     var fY = t.GetField("Y", flags);
                     if (fY != null) y = Convert.ToInt32(fY.GetValue(d));
                     else
@@ -111,7 +113,24 @@ namespace SpawnDev.ILGPU.WebGPU
                         if (pY != null) y = Convert.ToInt32(pY.GetValue(d));
                     }
 
-                    if (x >= 0 && y >= 0) return new int[] { x, y };
+                    // Try to get Z
+                    var fZ = t.GetField("Z", flags);
+                    if (fZ != null) z = Convert.ToInt32(fZ.GetValue(d));
+                    else
+                    {
+                        var pZ = t.GetProperty("Z", flags);
+                        if (pZ != null) z = Convert.ToInt32(pZ.GetValue(d));
+                    }
+
+                    if (x >= 0)
+                    {
+                        if (y >= 0)
+                        {
+                            if (z >= 0) return new int[] { x, y, z };
+                            return new int[] { x, y };
+                        }
+                        return new int[] { x };
+                    }
                     return Array.Empty<int>();
                 }
 
@@ -121,10 +140,32 @@ namespace SpawnDev.ILGPU.WebGPU
                     try
                     {
                         var val = field.GetValue(view);
-                        var res = GetXY(val);
+                        var res = GetXYZ(val);
                         if (res.Length > 0 && res[0] > 0) return res;
                     }
                     catch { }
+                }
+
+                // DIRECT PROPERTY CHECK (Fallback for 1D ArrayView/Base)
+                var pIntLength = viewType.GetProperty("IntLength", flags);
+                if (pIntLength != null) 
+                {
+                     try 
+                     {
+                        var val = (int)pIntLength.GetValue(view);
+                        return new int[] { val };
+                     } catch {}
+                }
+
+                // Fallback to Length (Long)
+                 var pLength = viewType.GetProperty("Length", flags);
+                if (pLength != null && (pLength.PropertyType == typeof(int) || pLength.PropertyType == typeof(long))) 
+                {
+                     try 
+                     {
+                        var val = Convert.ToInt32(pLength.GetValue(view));
+                        return new int[] { val };
+                     } catch {}
                 }
 
                 foreach (var prop in viewType.GetProperties(flags))
@@ -134,7 +175,7 @@ namespace SpawnDev.ILGPU.WebGPU
                     try
                     {
                         var val = prop.GetValue(view);
-                        var res = GetXY(val);
+                        var res = GetXYZ(val);
                         if (res.Length > 0 && res[0] > 0) return res;
                     }
                     catch { }
