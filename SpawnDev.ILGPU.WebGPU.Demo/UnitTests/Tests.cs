@@ -933,6 +933,62 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
 
 
 
+        [TestMethod]
+        public async Task WebGPUCSharpSharedMemoryTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 64;
+            var data = new int[len];
+            for(int i=0; i<len; i++) data[i] = i;
+
+            using var buffer = accelerator.Allocate1D(data);
+
+            // Important: Shared memory size must appear in the kernel signature if dynamic, 
+            // but here we allocate strictly inside the kernel using SharedMemory.Allocate
+            // Important: Shared memory requires explicit grouping in ILGPU.
+            // We use LoadStreamKernel instead of LoadAutoGroupedStreamKernel.
+            var kernel = accelerator.LoadStreamKernel<Index1D, ArrayView<int>>(CSharpSharedMemoryKernel);
+            
+            // Dispatch with 1 Group of 64 threads
+            kernel(new KernelConfig(1, 64), (Index1D)len, buffer.View);
+
+            accelerator.Synchronize();
+
+            var result = await ReadBufferAsync<int>(buffer);
+
+            // Verification: The kernel reverses the data using shared memory
+            for(int i=0; i<len; i++)
+            {
+                var expected = len - 1 - i;
+                if (result[i] != expected)
+                    throw new Exception($"CSharp Shared Memory failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        static void CSharpSharedMemoryKernel(Index1D index, ArrayView<int> data)
+        {
+            // Allocate shared memory for 64 elements
+            // In WGSL: var<workgroup> shared_mem : array<i32, 64>;
+            var sharedMem = SharedMemory.Allocate<int>(64);
+
+            // Load Global -> Shared
+            sharedMem[index] = data[index];
+
+            // Barrier
+            Group.Barrier();
+
+            // Reverse
+            int reversedIndex = 63 - index;
+            int val = sharedMem[reversedIndex];
+
+            // Store Shared -> Global
+            data[index] = val;
+        }
 
     }
 }
