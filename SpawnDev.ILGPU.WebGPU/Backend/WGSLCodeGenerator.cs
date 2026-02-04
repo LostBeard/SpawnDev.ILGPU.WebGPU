@@ -1185,21 +1185,22 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             // Map common intrinsics if they appear as method calls
             string? wgslFunc = name switch
             {
-                "Sin" => "sin",
-                "Cos" => "cos",
-                "Tan" => "tan",
-                "Asin" => "asin",
-                "Acos" => "acos",
-                "Atan" => "atan",
-                "Sqrt" => "sqrt",
-                "Abs" => "abs",
-                "Pow" => "pow",
-                "Log" => "log",
-                "Exp" => "exp",
-                "Floor" => "floor",
-                "Ceiling" => "ceil",
-                "Min" => "min",
-                "Max" => "max",
+                var n when n.Contains("Sin") => "sin",
+                var n when n.Contains("Cos") => "cos",
+                var n when n.Contains("Tan") => "tan",
+                var n when n.Contains("Asin") => "asin",
+                var n when n.Contains("Acos") => "acos",
+                var n when n.Contains("Atan") => "atan",
+                var n when n.Contains("Sqrt") => "sqrt",
+                var n when n.Contains("Abs") => "abs",
+                var n when n.Contains("Pow") => "pow",
+                var n when n.Contains("Log") => "log",
+                var n when n.Contains("Exp") => "exp",
+                var n when n.Contains("Floor") => "floor",
+                var n when n.Contains("Ceiling") => "ceil",
+                var n when n.Contains("Min") => "min",
+                var n when n.Contains("Max") => "max",
+                var n when n.Contains("FusedMultiplyAdd") => "fma",
                 _ => null
             };
 
