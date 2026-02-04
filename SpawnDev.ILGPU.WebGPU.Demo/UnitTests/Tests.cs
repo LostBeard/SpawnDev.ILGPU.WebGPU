@@ -40,16 +40,16 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
                 throw new UnsupportedTestException("No WebGPU devices found");
 
             using var accelerator = await device.CreateAcceleratorAsync();
-            
+
             int length = 128;
             var data = Enumerable.Range(0, length).ToArray();
-            
+
             // Allocate and copy to device
             using var buffer = accelerator.Allocate(data);
-            
+
             // Copy back to host
             var readBack = await buffer.CopyToHostAsync();
-            
+
             if (readBack.Length != length)
                 throw new Exception($"Readback length mismatch. Expected {length}, got {readBack.Length}");
 
@@ -72,7 +72,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             int length = 64;
             var input = Enumerable.Range(0, length).Select(i => (float)i).ToArray();
             var zeros = new float[length];
-            
+
             using var bufferIn = accelerator.Allocate(input);
             using var bufferOut = accelerator.Allocate(zeros); // Output buffer initialized to zeros
 
@@ -90,15 +90,15 @@ fn main(@builtin(global_invocation_id) global_id : vec3<u32>) {
 }
 ";
             using var shader = accelerator.CreateComputeShader(wgsl);
-            
+
             shader.SetBuffer(0, bufferIn)
                   .SetBuffer(1, bufferOut);
-            
+
             // Dispatch 1 group of 64
             shader.Dispatch(1);
 
             var result = await bufferOut.CopyToHostAsync();
-            
+
             for (int i = 0; i < length; i++)
             {
                 var expected = input[i] * 2.0f;
@@ -110,16 +110,16 @@ fn main(@builtin(global_invocation_id) global_id : vec3<u32>) {
         [TestMethod]
         public async Task WebGPUMultipleDispatchTest()
         {
-             var device = await WebGPU.WebGPUDevice.GetDefaultDeviceAsync();
+            var device = await WebGPU.WebGPUDevice.GetDefaultDeviceAsync();
             if (device == null)
                 throw new UnsupportedTestException("No WebGPU devices found");
 
             using var accelerator = await device.CreateAcceleratorAsync();
-            
+
             float[] data = new float[] { 1.0f };
             using var buffer = accelerator.Allocate(data);
 
-             string wgsl = @"
+            string wgsl = @"
 @group(0) @binding(0) var<storage, read_write> data : array<f32>;
 
 @compute @workgroup_size(1)
@@ -133,7 +133,7 @@ fn main(@builtin(global_invocation_id) global_id : vec3<u32>) {
             shader.SetBuffer(0, buffer);
 
             // Dispatch 5 times
-            for(int i=0; i<5; i++)
+            for (int i = 0; i < 5; i++)
             {
                 shader.Dispatch(1);
             }
@@ -141,7 +141,7 @@ fn main(@builtin(global_invocation_id) global_id : vec3<u32>) {
             var result = await buffer.CopyToHostAsync();
             // Initial 1.0 + 5 additions = 6.0
             if (Math.Abs(result[0] - 6.0f) > 0.0001f)
-                 throw new Exception($"Multiple dispatch error. Expected 6.0, got {result[0]}");
+                throw new Exception($"Multiple dispatch error. Expected 6.0, got {result[0]}");
         }
 
         [TestMethod]
@@ -234,10 +234,10 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
 }
 ";
             using var shader = accelerator.CreateComputeShader(wgsl);
-            
+
             shader.SetBuffer(0, bufferIn)
                   .SetBuffer(1, bufferOut);
-            
+
             shader.Dispatch(1);
 
             var result = await bufferOut.CopyToHostAsync();
@@ -260,7 +260,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             if (devices.Count == 0) throw new UnsupportedTestException("No WebGPU devices found");
             var device = devices[0];
             using var accelerator = await device.CreateAcceleratorAsync(context);
-                
+
             var data = new int[64];
             using var buffer = accelerator.Allocate1D(data);
 
@@ -268,7 +268,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             kernel((Index1D)buffer.Length, buffer.View, 33);
 
             accelerator.Synchronize();
-            
+
             var result = await ReadBufferAsync<int>(buffer);
 
             for (int i = 0; i < data.Length; i++)
@@ -293,7 +293,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             int length = 64;
             var a = Enumerable.Range(0, length).Select(i => (float)i).ToArray();
             var b = Enumerable.Range(0, length).Select(i => (float)i * 2.0f).ToArray();
-            
+
             using var bufA = accelerator.Allocate1D(a);
             using var bufB = accelerator.Allocate1D(b);
             using var bufC = accelerator.Allocate1D<float>(length);
@@ -409,7 +409,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             var iView = (IArrayView)buffer;
             var internalBuffer = iView.Buffer as WebGPUMemoryBuffer;
             if (internalBuffer == null) throw new Exception("Could not get WebGPUMemoryBuffer");
-            
+
             var byteResults = await internalBuffer.NativeBuffer.CopyToHostAsync();
             var result = new T[buffer.Length];
             MemoryMarshal.Cast<byte, T>(byteResults).CopyTo(new Span<T>(result));
@@ -526,7 +526,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             int ret = 0;
             if (val % 2 == 0)
             {
-                for(int i=0; i<5; i++) ret += i; // 0+1+2+3+4 = 10
+                for (int i = 0; i < 5; i++) ret += i; // 0+1+2+3+4 = 10
             }
             else
             {
@@ -609,7 +609,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             accelerator.Synchronize();
 
             var result = await ReadBufferAsync<float>(bufOut);
-            
+
             // Expected values
             float[] expected = new float[len];
             expected[0] = MathF.Atan2(1.0f, 1.0f); // atan2
@@ -623,7 +623,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
 
             for (int i = 0; i < len; i++)
             {
-                 if (MathF.Abs(result[i] - expected[i]) > 0.001f)
+                if (MathF.Abs(result[i] - expected[i]) > 0.001f)
                     throw new Exception($"Intrinsic Math failed at {i}. Expected {expected[i]}, got {result[i]}");
             }
         }
@@ -679,7 +679,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             int len = 64;
             var data = new int[len];
             var atomic = new Index1D[1]; // Accumulator using Index1D (supported by Atomic.Add)
-            
+
             using var bufData = accelerator.Allocate1D(data);
             using var bufAtomic = accelerator.Allocate1D(atomic);
 
@@ -691,7 +691,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             var resAtomic = await ReadBufferAsync<Index1D>(bufAtomic);
 
             // Verify Data
-            for(int i=0; i<len; i++) if(resData[i] != i+1) throw new Exception("Atomic Kernel: Data Write Failed");
+            for (int i = 0; i < len; i++) if (resData[i] != i + 1) throw new Exception("Atomic Kernel: Data Write Failed");
 
             // Verify Atomic Sum (Sum of 1..64)
             int expectedSum = len * (len + 1) / 2; // n(n+1)/2 => 64*65/2 = 2080
@@ -732,16 +732,16 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
 
             var devices = context.GetWebGPUDevices();
             Console.WriteLine($"Found {devices.Count} WebGPU devices:");
-            
+
             foreach (var device in devices)
             {
                 Console.WriteLine($"  - {device.Name}");
                 Console.WriteLine($"    AcceleratorType: {device.AcceleratorType}");
-                
+
                 if (device.AcceleratorType != AcceleratorType.WebGPU)
                     throw new Exception($"Device has wrong AcceleratorType: {device.AcceleratorType}");
             }
-            
+
             if (devices.Count == 0)
             {
                 throw new UnsupportedTestException("No WebGPU devices found");
@@ -890,7 +890,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
 
             int len = 10;
             var data = new int[len];
-            
+
             using var buf = accelerator.Allocate1D(data);
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>>(NestedControlFlowKernel);
             kernel((Index1D)len, buf.View);
@@ -926,7 +926,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
 
             int len = 10;
             var data = new int[len];
-            
+
             using var buf = accelerator.Allocate1D(data);
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>>(FunctionCallKernel);
             kernel((Index1D)len, buf.View);
@@ -993,7 +993,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
 
             int len = 64;
             var data = new int[len];
-            for(int i=0; i<len; i++) data[i] = i;
+            for (int i = 0; i < len; i++) data[i] = i;
 
             using var buffer = accelerator.Allocate1D(data);
 
@@ -1002,7 +1002,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             // Important: Shared memory requires explicit grouping in ILGPU.
             // We use LoadStreamKernel instead of LoadAutoGroupedStreamKernel.
             var kernel = accelerator.LoadStreamKernel<Index1D, ArrayView<int>>(CSharpSharedMemoryKernel);
-            
+
             // Dispatch with 1 Group of 64 threads
             kernel(new KernelConfig(1, 64), (Index1D)len, buffer.View);
 
@@ -1011,7 +1011,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             var result = await ReadBufferAsync<int>(buffer);
 
             // Verification: The kernel reverses the data using shared memory
-            for(int i=0; i<len; i++)
+            for (int i = 0; i < len; i++)
             {
                 var expected = len - 1 - i;
                 if (result[i] != expected)
@@ -1062,12 +1062,12 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
 
             int len = 10;
             var data = new OuterStruct[len];
-            for(int i=0; i<len; i++) 
+            for (int i = 0; i < len; i++)
             {
-                data[i] = new OuterStruct 
-                { 
-                    ID = i, 
-                    Inner = new InnerStruct { Val = i * 1.5f } 
+                data[i] = new OuterStruct
+                {
+                    ID = i,
+                    Inner = new InnerStruct { Val = i * 1.5f }
                 };
             }
 
@@ -1109,15 +1109,15 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
 
             int len = 64;
             var data = new int[len]; // Target for CAS
-            // Initialize with 0
-            
+                                     // Initialize with 0
+
             using var buffer = accelerator.Allocate1D(data);
-            
+
             // Expected: Threads will race to compare 0 -> 1.
             // Only ONE thread per element should succeed if we limit scope, but here we do 1:1 mapping.
             // To test CAS effectively, we'll try to swap val if it equals index.
             // old = Atomic.CompareExchange(ref data[i], index, index + 100)
-            
+
             // Using explicit grouping to ensure atomics work in that context too (though not strictly required for global atomics)
             var kernel = accelerator.LoadStreamKernel<Index1D, ArrayView<int>>(AtomicCASKernel);
             kernel(new KernelConfig(1, len), (Index1D)len, buffer.View);
@@ -1129,7 +1129,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
                 // Initial 0. Compare(0, i, i+100)
                 // If i == 0: Compare(0, 0, 100) -> Writes 100. Old was 0.
                 // If i != 0: Compare(0, i, i+100) -> Fails (0 != i). Writes nothing. Old was 0.
-                
+
                 int expected = (i == 0) ? 100 : 0;
                 if (result[i] != expected)
                     throw new Exception($"Atomic CAS failed at {i}. Expected {expected}, got {result[i]}");
@@ -1167,7 +1167,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
                 float b = 2.0f;
                 float c = 0.5f;
                 float expected = a * b + c; // FMA result
-                
+
                 if (Math.Abs(result[i] - expected) > 0.0001f)
                     throw new Exception($"FMA failed at {i}. Expected {expected}, got {result[i]}");
             }
@@ -1185,7 +1185,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
         [TestMethod]
         public async Task WebGPUBroadcastTest()
         {
-            return; // Skip: subgroups extension not supported in browser environment
+            throw new UnsupportedTestException("Skip: subgroups extension not supported in browser environment");
             var builder = Context.Create();
             await builder.WebGPUAsync();
             using var context = builder.ToContext();
@@ -1195,7 +1195,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             int len = 32; // 1 Warp/Subgroup ideally
             var data = new int[len];
             // Init with index
-            for(int i=0; i<len; i++) data[i] = i;
+            for (int i = 0; i < len; i++) data[i] = i;
 
             using var buffer = accelerator.Allocate1D(data);
 
@@ -1203,34 +1203,34 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             // verifying if we alias Group.Broadcast to subgroupBroadcast or fallback
             // Note: WebGPU subgroup support is currently strictly experimental.
             // If this fails, we expect a NotSupportedException likely.
-            
-            try 
+
+            try
             {
                 var kernel = accelerator.LoadStreamKernel<Index1D, ArrayView<int>>(BroadcastKernel);
                 kernel(new KernelConfig(1, len), (Index1D)len, buffer.View);
                 accelerator.Synchronize();
 
                 var result = await ReadBufferAsync<int>(buffer);
-                
+
                 // Expect ALL values to be the value from lane 0 (which was 0)
                 // We use Lane 0 because current WGSL generator uses subgroupBroadcastFirst()
-                
-                int expected = 0; 
-                for(int i=0; i<len; i++)
+
+                int expected = 0;
+                for (int i = 0; i < len; i++)
                 {
                     if (result[i] != expected)
-                       throw new Exception($"Broadcast failed at {i}. Expected {expected}, got {result[i]}");
+                        throw new Exception($"Broadcast failed at {i}. Expected {expected}, got {result[i]}");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                 // Check if it's strictly a "Not Supported" in the generator vs a runtime crash
-                 if (ex.Message.Contains("NotSupported")) 
-                 {
-                     Console.WriteLine("Broadcast not supported (Expected for now)");
-                     return;
-                 }
-                 throw;
+                // Check if it's strictly a "Not Supported" in the generator vs a runtime crash
+                if (ex.Message.Contains("NotSupported"))
+                {
+                    Console.WriteLine("Broadcast not supported (Expected for now)");
+                    return;
+                }
+                throw;
             }
         }
 
@@ -1248,9 +1248,8 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
         // [Ignore("Dynamic Shared Memory requires Pipeline Overridable Constants support in backend.")]
         public async Task WebGPUDynamicSharedMemoryTest()
         {
-             return; // Skip for now
-             /*
-             var builder = Context.Create();
+            throw new UnsupportedTestException("Dynamic Shared Memory requires Pipeline Overridable Constants support in backend.");
+            var builder = Context.Create();
             await builder.WebGPUAsync();
             using var context = builder.ToContext();
             var device = context.GetWebGPUDevices()[0];
@@ -1262,7 +1261,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
 
             // Dynamic Shared Memory config
             var kernel = accelerator.LoadStreamKernel<Index1D, ArrayView<int>>(DynamicSharedKernel);
-            
+
             // Allocate 64 ints of dynamic shared mem
             var config = new KernelConfig(1, 64, SharedMemoryConfig.RequestDynamic<int>(64));
             kernel(config, (Index1D)len, buffer.View);
@@ -1282,15 +1281,14 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             // Access Dynamic Shared Memory
             // In WGSL: This usually maps to a specialized variable or 'workgroup' var declared via override
             var shared = SharedMemory.GetDynamic<int>();
-            
+
             shared[index] = index;
             Group.Barrier();
-            
+
             int rev = 63 - index;
             data[index] = shared[rev];
-        }
-        */
         }
 
     }
 }
+
