@@ -3,12 +3,15 @@
 //                         Copyright (c) 2024 SpawnDev Project
 //
 // File: WGSLKernelFunctionGenerator.cs
+// Force Update
 // ---------------------------------------------------------------------------------------
 
 using global::ILGPU;
 using global::ILGPU.Backends.EntryPoints;
 using global::ILGPU.IR;
 using global::ILGPU.IR.Analyses;
+using global::ILGPU.IR.Analyses.ControlFlowDirection;
+using global::ILGPU.IR.Analyses.TraversalOrders;
 using global::ILGPU.IR.Types;
 using global::ILGPU.IR.Values;
 using System;
@@ -24,6 +27,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
         private HashSet<int> _atomicParameters = new HashSet<int>();
         private HashSet<Value> _hoistedPrimitives = new HashSet<Value>();
+        private CFG<ReversePostOrder, Forwards> _cfg;
+        private Dominators<Backwards> _postDominators;
+        private Loops<ReversePostOrder, Forwards> _loops;
         public WGSLKernelFunctionGenerator(
             in GeneratorArgs args,
             Method method,
@@ -32,6 +38,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             EntryPoint = args.EntryPoint;
             DynamicSharedAllocations = args.DynamicSharedAllocations;
+            _cfg = method.Blocks.CreateCFG();
+            _postDominators = _cfg.Blocks.CreatePostDominators();
+            _loops = _cfg.CreateLoops();
 
             ScanForAtomicUsage();
 
@@ -182,9 +191,19 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             string workgroupSize = GetWorkgroupSize();
             Builder.AppendLine($"@compute @workgroup_size({workgroupSize})");
-            Builder.Append("fn main(@builtin(global_invocation_id) global_id : vec3<u32>");
+            Builder.Append("fn main(@builtin(global_invocation_id) global_id : vec3<u32>, @builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_id) group_id : vec3<u32>, @builtin(num_workgroups) num_workgroups : vec3<u32>, @builtin(local_invocation_index) local_index : u32");
             Builder.AppendLine(") {");
             PushIndent();
+
+            // Declare workgroup_size constant for access by intrinsics
+            string wgDims = EntryPoint.IndexType switch
+            {
+                IndexType.Index1D => "64, 1, 1",
+                IndexType.Index2D => "8, 8, 1",
+                IndexType.Index3D => "4, 4, 4",
+                _ => "64, 1, 1"
+            };
+            AppendLine($"let workgroup_size = vec3<u32>({wgDims});");
 
             // 1. Scan and declare hoisted variables
             HoistCrossBlockVariables();
@@ -194,26 +213,42 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             SetupParameterBindings();
 
             // 3. START THE STATE MACHINE
-            AppendLine("var current_block : i32 = 0;");
-            AppendLine("loop {");
-            PushIndent();
+            // 3. START CONTROL FLOW
+            if (Method.Blocks.Count == 1)
+            {
+                GenerateCodeInternal();
+            }
+            else if (_loops.Count == 0) // No Loops -> Acyclic
+            {
+                // ACYCLIC KERNEL: Use Structured Control Flow (Nested IFs)
+                // This ensures uniformity for Barries.
+                // ACYCLIC KERNEL: Use Structured Control Flow (Nested IFs)
+                // This ensures uniformity for Barries.
+                // ACYCLIC KERNEL: Use Structured Control Flow (Nested IFs)
+                // This ensures uniformity for Barries.
+                var pd = global::ILGPU.IR.Analyses.Dominators.CreatePostDominators(Method.Blocks);
+                GenerateStructuredCode(Method.EntryBlock, null, pd);
+            }
+            else
+            {
+                AppendLine("var current_block : i32 = 0;");
+                AppendLine("loop {");
+                PushIndent();
 
-            // THE MISSING LINE:
-            AppendLine("switch (current_block) {");
-            PushIndent();
+                AppendLine("switch (current_block) {");
+                PushIndent();
 
-            // This calls your 'new' GenerateCodeInternal that emits the 'case X:' blocks
-            GenerateCodeInternal();
+                GenerateCodeInternal();
 
-            // THE CLOSING BOILERPLATE:
-            PopIndent();
-            AppendLine("default: { break; }"); // Should never happen
-            AppendLine("}"); // End Switch
+                PopIndent();
+                AppendLine("default: { break; }");
+                AppendLine("}"); // End Switch
 
-            AppendLine("if (current_block == -1) { break; }"); // Safety break
+                AppendLine("if (current_block == -1) { break; }");
 
-            PopIndent();
-            AppendLine("}"); // End Loop
+                PopIndent();
+                AppendLine("}"); // End Loop
+            }
 
             PopIndent();
             Builder.AppendLine("}"); // End Function
@@ -284,8 +319,8 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             // 1D Kernel
             if (EntryPoint.IndexType == IndexType.Index1D)
             {
-                // Map global_id.x to int32
-                AppendLine($"var {indexVar.Name} : i32 = i32(global_id.x);");
+                // Map to global linear index: local_index + group_id.x * workgroup_size.x
+                AppendLine($"var {indexVar.Name} : i32 = i32(local_index + group_id.x * workgroup_size.x);");
             }
             // 2D Kernel
             else if (EntryPoint.IndexType == IndexType.Index2D)
@@ -379,6 +414,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 else if (basicType == BasicValueType.Float16 || basicType == BasicValueType.Float32 || basicType == BasicValueType.Float64) init = " = 0.0";
 
                 AppendLine($"var {variable.Name} : {wgslType}{init};");
+                declaredVariables.Add(variable.Name);
             }
         }
 
@@ -661,6 +697,8 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             AppendLine($"*{address} = {val};");
         }
 
+
+
         public override void GenerateCode(BinaryArithmeticValue value)
         {
             var target = Load(value);
@@ -733,41 +771,144 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             AppendIndent();
             Builder.AppendLine("continue;");
         }
-        protected new void GenerateCodeInternal()
+        private new void GenerateCodeInternal()
         {
+            // Optimization for single-block (Linear)
+            if (Method.Blocks.Count == 1)
+            {
+                GenerateBlockCode(Method.Blocks.First());
+                return;
+            }
+
+            // Structured Control Flow (Acyclic Multi-block)
+            if (_loops.Count == 0)
+            {
+                _visitedBlocks.Clear();
+                GenerateStructuredCode(Method.EntryBlock, null);
+                return;
+            }
+
+            // Fallback: State Machine (Cyclic)
+            // Note: Barriers inside loops will likely fail validation or execution uniformity quirks
             foreach (var block in Method.Blocks)
             {
                 AppendIndent();
                 Builder.AppendLine($"case {GetBlockIndex(block)}: {{");
                 PushIndent();
 
-                foreach (var value in block)
-                {
-                    if (value.Value is TerminatorValue) continue;
-
-                    // FORCE CHECK FOR BARRIER
-                    if (value.Value is global::ILGPU.IR.Values.Barrier ||
-                        value.Value.GetType().Name.Contains("Barrier"))
-                    {
-                        AppendIndent();
-                        Builder.AppendLine("workgroupBarrier();");
-                        continue;
-                    }
-
-                    // Force visit to use your overrides
-                    this.GenerateCodeFor(value.Value);
-                }
-
-
-                // Explicitly handle terminators to force current_block updates
-                if (block.Terminator is UnconditionalBranch ub) GenerateCode(ub);
-                else if (block.Terminator is IfBranch ib) GenerateCode(ib);
-                else if (block.Terminator is ReturnTerminator rt) GenerateCode(rt);
-                else if (block.Terminator != null) this.GenerateCodeFor(block.Terminator);
+                GenerateBlockCode(block);
 
                 PopIndent();
                 AppendIndent();
                 Builder.AppendLine("}");
+            }
+        }
+
+        private HashSet<BasicBlock> _visitedBlocks = new HashSet<BasicBlock>();
+
+        private void GenerateBlockCode(BasicBlock block)
+        {
+             foreach (var value in block)
+            {
+                if (value.Value is TerminatorValue) continue;
+
+                this.GenerateCodeFor(value.Value);
+            }
+
+            // Handle terminator explicitly ONLY if we are in state machine or single block
+            // For structured code, the recursion handles branching logic, but we might need to emit 'return'
+            if (!(_loops.Count == 0 && Method.Blocks.Count > 1))
+            {
+                 // State Machine / Single Block
+                 if (block.Terminator is UnconditionalBranch ub) GenerateCode(ub);
+                else if (block.Terminator is IfBranch ib) GenerateCode(ib);
+                else if (block.Terminator is SwitchBranch sb) GenerateCode(sb); // Add Switch support
+                else if (block.Terminator is ReturnTerminator rt2) GenerateCode(rt2);
+                else if (block.Terminator != null) this.GenerateCodeFor(block.Terminator);
+            }
+        }
+
+        private void GenerateStructuredCode(BasicBlock current, BasicBlock? stop)
+        {
+            if (current == null || current == stop || _visitedBlocks.Contains(current)) return;
+            _visitedBlocks.Add(current);
+
+            // 1. Emit instructions (excluding terminator)
+            GenerateBlockCode(current);
+
+            // 2. Handle Control Flow
+            var terminator = current.Terminator;
+
+            if (terminator is UnconditionalBranch ub)
+            {
+                // Linear flow -> Recurse to target
+                PushPhiValues(ub.Target, current);
+                GenerateStructuredCode(ub.Target, stop);
+            }
+            else if (terminator is IfBranch ib)
+            {
+                // Divergence point
+                var trueTarget = ib.TrueTarget;
+                var falseTarget = ib.FalseTarget;
+                var merge = _postDominators.GetImmediateDominator(current);  
+
+                // Resolve Phi nodes for outgoing branches
+                PushPhiValues(trueTarget, current); // Assignments for True path
+                // Note: In structured IF, false path assignments might need careful placement if we don't declare vars ahead
+                // But hoisting handles declarations.
+
+                var cond = Load(ib.Condition);
+                AppendLine($"if ({cond}) {{");
+                PushIndent();
+                GenerateStructuredCode(trueTarget, merge);
+                PopIndent();
+                AppendLine("} else {");
+                PushIndent();
+                PushPhiValues(falseTarget, current);
+                GenerateStructuredCode(falseTarget, merge);
+                PopIndent();
+                AppendLine("}");
+
+                // Continue from merge point
+                if (merge != null && merge != stop)
+                {
+                    GenerateStructuredCode(merge, stop);
+                }
+            }
+            else if (terminator is SwitchBranch sb)
+            {
+                 // Switch support for structured flow
+                var selector = Load(sb.Condition);
+                AppendLine($"switch ({selector}) {{");
+                
+                 var merge = _postDominators.GetImmediateDominator(current);
+                 
+                for(int i = 0; i < sb.NumCasesWithoutDefault; i++)
+                {
+                    AppendLine($"case {i}: {{");
+                    PushIndent();
+                    PushPhiValues(sb.GetCaseTarget(i), current);
+                    GenerateStructuredCode(sb.GetCaseTarget(i), merge);
+                    AppendLine("break;");
+                    PopIndent();
+                    AppendLine("}");
+                }
+                
+                AppendLine("default: {");
+                PushIndent();
+                PushPhiValues(sb.DefaultBlock, current);
+                GenerateStructuredCode(sb.DefaultBlock, merge);
+                AppendLine("break;");
+                PopIndent();
+                AppendLine("}");
+                AppendLine("}");
+
+                if (merge != null && merge != stop)
+                     GenerateStructuredCode(merge, stop);
+            }
+            else if (terminator is ReturnTerminator rt)
+            {
+                // Already handled in GenerateBlockCode for the return statement itself
             }
         }
         public override void GenerateCode(IfBranch branch)
@@ -1096,27 +1237,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             base.GenerateCode(value);
         }
 
-        public override void GenerateCode(global::ILGPU.IR.Values.Barrier value)
-        {
-            AppendIndent();
-            Builder.AppendLine("workgroupBarrier();");
-        }
 
-        public override void GenerateCode(PredicateBarrier value)
-        {
-            // PredicateBarrier is used for Group.All/Any, but in WGSL we 
-            // must still hit the workgroupBarrier to sync memory visibility.
-            AppendIndent();
-            Builder.AppendLine("workgroupBarrier();");
-        }
 
-        public override void GenerateCode(MemoryBarrier value)
-        {
-            // Memory barriers in WGSL coordinate memory visibility.
-            // workgroupBarrier() includes the functionality of a memory barrier.
-            AppendIndent();
-            Builder.AppendLine("workgroupBarrier();");
-        }
+
 
         public override void GenerateCode(PhiValue phiValue)
         {
@@ -1151,6 +1274,89 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         }
 
         #endregion
+
+
+        private void GenerateBasicBlockCode(BasicBlock block)
+        {
+            foreach (var value in block)
+            {
+                // Skip Terminators (handled by Structured Logic)
+                if (value.Value is global::ILGPU.IR.Values.TerminatorValue) continue;
+                GenerateCodeFor(value.Value);
+            }
+        }
+
+        private void GenerateStructuredCode(BasicBlock block, BasicBlock? stopBlock, global::ILGPU.IR.Analyses.Dominators<global::ILGPU.IR.Analyses.ControlFlowDirection.Backwards> pd)
+        {
+            while (block != null && block != stopBlock)
+            {
+                // Emit Block Body
+                GenerateBasicBlockCode(block);
+
+                var terminator = block.Terminator;
+
+                if (terminator is global::ILGPU.IR.Values.IfBranch branch)
+                {
+                    var trueTarget = branch.TrueTarget;
+                    var falseTarget = branch.FalseTarget;
+
+                    // Compute Merge Node via Post Dominators
+                    BasicBlock? mergeNode = pd.GetImmediateDominator(block);
+                    if (mergeNode == block) mergeNode = null;
+
+                    // If simple If-Then (FalseTarget == MergeNode)
+                    // e.g. if (cond) { TrueBody } -> Merge
+                    if (falseTarget == mergeNode)
+                    {
+                        AppendLine($"if ({Load(branch.Condition)}) {{");
+                        PushIndent();
+                        GenerateStructuredCode(trueTarget, mergeNode, pd);
+                        PopIndent();
+                        AppendLine("}");
+                    }
+                    // If simple If-Then Inverted (TrueTarget == MergeNode)
+                    // e.g. if (cond) { Merge } else { FalseBody } -> if (!cond) { FalseBody }
+                    else if (trueTarget == mergeNode)
+                    {
+                        AppendLine($"if (!{Load(branch.Condition)}) {{");
+                        PushIndent();
+                        GenerateStructuredCode(falseTarget, mergeNode, pd);
+                        PopIndent();
+                        AppendLine("}");
+                    }
+                    else
+                    {
+                        // If-Else
+                        AppendLine($"if ({Load(branch.Condition)}) {{");
+                        PushIndent();
+                        GenerateStructuredCode(trueTarget, mergeNode, pd);
+                        PopIndent();
+                        AppendLine("} else {");
+                        PushIndent();
+                        GenerateStructuredCode(falseTarget, mergeNode, pd);
+                        PopIndent();
+                        AppendLine("}");
+                    }
+
+                    // Continue from Merge Node
+                    block = mergeNode;
+                }
+                else if (terminator is global::ILGPU.IR.Values.UnconditionalBranch uBranch)
+                {
+                    block = uBranch.Target;
+                }
+                else if (terminator is global::ILGPU.IR.Values.ReturnTerminator)
+                {
+                    AppendLine("return;");
+                    block = null;
+                }
+                else
+                {
+                    // Fallback or Switch (Not fully supported in limited logic, but should not crash)
+                    block = null;
+                }
+            }
+        }
             
 
         }

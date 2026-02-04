@@ -90,8 +90,8 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
         #region Instance
 
-        private int varCounter = 0;
-        private int labelCounter = 0;
+        protected int varCounter = 0;
+        protected int labelCounter = 0;
         private readonly Dictionary<Value, Variable> valueVariables = new();
         private readonly Dictionary<BasicBlock, string> blockLabels = new();
         
@@ -455,7 +455,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             if (value.Type.IsVoidType && 
                 !(value is TerminatorValue) && 
                 !(value is Store) &&
-                !(value is MemoryBarrier))
+                !(value is MemoryBarrier) &&
+                !(value is global::ILGPU.IR.Values.Barrier) &&
+                !(value is PredicateBarrier))
                 return;
 
             // Debug logging to trace instruction generation
@@ -575,6 +577,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 case global::ILGPU.IR.Values.LaneIdxValue v:
                     GenerateCode(v);
                     break;
+
 
                 // Control Flow
                 case global::ILGPU.IR.Values.ReturnTerminator v:
@@ -998,6 +1001,15 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             AppendLine($"{target} = {target.Type}(); // null");
         }
 
+        public virtual void GenerateCode(global::ILGPU.IR.Values.Barrier value)
+        {
+            if (value.Kind == global::ILGPU.IR.Values.BarrierKind.GroupLevel)
+            {
+                AppendLine("workgroupBarrier();");
+                AppendLine("storageBarrier();");
+            }
+        }
+
         public virtual void GenerateCode(StringValue value)
         {
             AppendLine($"// String: {value.String}");
@@ -1087,7 +1099,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 DeviceConstantDimension3D.Z => "z",
                 _ => "x"
             };
-            AppendLine($"{target} = global_id.{dim};");
+            AppendLine($"{target} = i32(group_id.{dim});");
         }
 
         public virtual void GenerateCode(GroupIndexValue value)
@@ -1101,7 +1113,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 DeviceConstantDimension3D.Z => "z",
                 _ => "x"
             };
-            AppendLine($"{target} = local_id.{dim};");
+            AppendLine($"{target} = i32(local_id.{dim});");
         }
 
         public virtual void GenerateCode(GridDimensionValue value)
@@ -1115,8 +1127,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 DeviceConstantDimension3D.Z => "z",
                 _ => "x"
             };
-            AppendLine($"{target} = num_workgroups.{dim} * workgroup_size.{dim};");
+            AppendLine($"{target} = i32(num_workgroups.{dim} * workgroup_size.{dim});");
         }
+
 
         public virtual void GenerateCode(GroupDimensionValue value)
         {
@@ -1129,7 +1142,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 DeviceConstantDimension3D.Z => "z",
                 _ => "x"
             };
-            AppendLine($"{target} = workgroup_size.{dim};");
+            AppendLine($"{target} = i32(workgroup_size.{dim});");
         }
 
         public virtual void GenerateCode(WarpSizeValue value)
@@ -1276,6 +1289,11 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 var n when n.Contains("SmoothStep") => "smoothstep",
                 var n when n.Contains("FusedMultiplyAdd") => "fma",
                 
+                var n when n.Contains("PopCount") => "countOneBits",
+                var n when n.Contains("TrailingZeroCount") => "countTrailingZeros",
+                var n when n.Contains("LeadingZeroCount") => "countLeadingZeros",
+                var n when n.Contains("Reverse") => "reverseBits",
+                
                 // Standard Math
                 var n when n.Contains("Sin") => "sin",
                 var n when n.Contains("Cos") => "cos",
@@ -1294,7 +1312,12 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 var n when n.Contains("Round") => "round",
                 var n when n.Contains("Truncate") => "trunc",
                 var n when n.Contains("Lerp") || n.Contains("Mix") => "mix",
+                var n when n.Contains("Select") => "select_custom",
                 
+                var n when n.Contains("Sinh") => "sinh",
+                var n when n.Contains("Cosh") => "cosh",
+                var n when n.Contains("Tanh") => "tanh",
+
                 _ => null
             };
 
@@ -1328,6 +1351,24 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     var arg1 = Load(methodCall[0]);
                     var arg2 = Load(methodCall[1]);
                     AppendLine($"{target} = {wgslFunc}({arg1}, {arg2});");
+                    return;
+                }
+                else if (methodCall.Count == 3)
+                {
+                    var arg1 = Load(methodCall[0]);
+                    var arg2 = Load(methodCall[1]);
+                    var arg3 = Load(methodCall[2]);
+
+                    // Select(cond, trueVal, falseVal) -> select(falseVal, trueVal, cond)
+                    if (wgslFunc == "select_custom")
+                    {
+                        AppendLine($"{target} = select({arg3}, {arg2}, {arg1});");
+                    }
+                    else
+                    {
+                        // FMA or Mix usually
+                        AppendLine($"{target} = {wgslFunc}({arg1}, {arg2}, {arg3});");
+                    }
                     return;
                 }
                 else if (methodCall.Count == 3)
@@ -1427,12 +1468,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             AppendLine($"{target} = atomicCompareExchangeWeak({ptr}, {cmp}, {val}).old_value;");
         }
 
-        public virtual void GenerateCode(MemoryBarrier value)
-        {
-            AppendLine("storageBarrier();");
-        }
 
-        public virtual void GenerateCode(global::ILGPU.IR.Values.Barrier value)
+
+        public virtual void GenerateCode(MemoryBarrier value)
         {
             AppendLine("workgroupBarrier();");
         }

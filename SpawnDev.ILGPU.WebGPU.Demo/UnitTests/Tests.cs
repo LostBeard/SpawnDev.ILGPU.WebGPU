@@ -1482,6 +1482,365 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             else output[index] = 0.0f;
         }
 
+
+
+        [TestMethod]
+        public async Task WebGPUBitManipulationIntrinsicsTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 4;
+            var input = new int[len];
+            input[0] = 0b0000_1111; // PopCount = 4
+            input[1] = 0b0000_0001; // TrailingZeros = 0
+            input[2] = 0b1000_0000; // LeadingZeros = 24 (assuming 32-bit). 
+                                    // 0x00000080 (128) -> leading zeros = 24. 
+            input[3] = 0;           // PopCount = 0
+
+            using var bufIn = accelerator.Allocate1D(input);
+            using var bufOut = accelerator.Allocate1D<int>(len);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>, ArrayView<int>>(BitManipulationKernel);
+            kernel((Index1D)len, bufIn.View, bufOut.View);
+            accelerator.Synchronize();
+
+            var result = await ReadBufferAsync<int>(bufOut);
+            
+            // Expected
+            // 0: PopCount(15) = 4
+            if (result[0] != 4) throw new Exception($"PopCount failed. Expected 4, got {result[0]}");
+            
+            // 1: CountTrailingZeros(1) = 0
+            if (result[1] != 0) throw new Exception($"CTZ failed. Expected 0, got {result[1]}");
+
+            // 2: CountLeadingZeros(128) = 24.
+            if (result[2] != 24) throw new Exception($"CLZ failed. Expected 24, got {result[2]}");
+        }
+
+        static void BitManipulationKernel(Index1D index, ArrayView<int> input, ArrayView<int> output)
+        {
+            int val = input[index];
+            if (index == 0) output[index] = System.Numerics.BitOperations.PopCount((uint)val);
+            else if (index == 1) output[index] = System.Numerics.BitOperations.TrailingZeroCount(val);
+            else if (index == 2) output[index] = System.Numerics.BitOperations.LeadingZeroCount((uint)val);
+            else if (index == 3) output[index] = System.Numerics.BitOperations.PopCount((uint)val); 
+        }
+
+        [TestMethod]
+        public async Task WebGPUHistogramTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int numItems = 1024;
+            int numBins = 16;
+            
+            // Generate data evenly distributed
+            var data = new int[numItems];
+            for (int i = 0; i < numItems; i++)
+            {
+                data[i] = i % numBins;
+            }
+
+            var bins = new int[numBins]; // Zeros
+
+            using var bufData = accelerator.Allocate1D(data);
+            using var bufBins = accelerator.Allocate1D(bins);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>, ArrayView<int>>(HistogramKernel);
+            kernel((Index1D)numItems, bufData.View, bufBins.View);
+            accelerator.Synchronize();
+
+            var result = await ReadBufferAsync<int>(bufBins);
+            
+            int expectedCount = numItems / numBins; // 1024/16 = 64
+            for (int i = 0; i < numBins; i++)
+            {
+                if (result[i] != expectedCount)
+                    throw new Exception($"Histogram failed at bin {i}. Expected {expectedCount}, got {result[i]}");
+            }
+        }
+
+        static void HistogramKernel(Index1D index, ArrayView<int> data, ArrayView<int> bins)
+        {
+            int binIdx = data[index];
+            Atomic.Add(ref bins[binIdx], 1);
+        }
+
+        [TestMethod]
+        public async Task WebGPUNestedLoopBreakTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int size = 16;
+            var output = new int[size];
+
+            using var bufOut = accelerator.Allocate1D(output);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>>(NestedLoopBreakKernel);
+            kernel((Index1D)size, bufOut.View);
+            accelerator.Synchronize();
+
+            var result = await ReadBufferAsync<int>(bufOut);
+
+            for (int i = 0; i < size; i++)
+            {
+                if (result[i] != 9)
+                    throw new Exception($"Nested Loop failed at {i}. Expected 9, got {result[i]}");
+            }
+        }
+
+        static void NestedLoopBreakKernel(Index1D index, ArrayView<int> output)
+        {
+            int acc = 0;
+            
+            // Loop 1: Break test
+            for (int j = 0; j < 10; j++)
+            {
+                if (j == 5) break; 
+                acc++;
+            }
+
+            // Loop 2: Continue test
+            for (int k = 0; k < 5; k++)
+            {
+                if (k == 2) continue;
+                acc++;
+            }
+            
+            output[index] = acc;
+        }
+
+
+
+        [TestMethod]
+        public async Task WebGPUHyperbolicMathTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 3;
+            var input = new float[len];
+            input[0] = 0.5f;
+            input[1] = 1.0f;
+            input[2] = -0.5f;
+
+            using var bufIn = accelerator.Allocate1D(input);
+            using var bufOut = accelerator.Allocate1D<float>(len);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>, ArrayView<float>>(HyperbolicKernel);
+            kernel((Index1D)len, bufIn.View, bufOut.View);
+            accelerator.Synchronize();
+
+            var result = await ReadBufferAsync<float>(bufOut);
+            
+            for (int i = 0; i < len; i++)
+            {
+                float val = input[i];
+                float expected = 0.5f;
+                if (i == 0) expected = MathF.Sinh(val);
+                else if (i == 1) expected = MathF.Cosh(val);
+                else if (i == 2) expected = MathF.Tanh(val);
+
+                if (Math.Abs(result[i] - expected) > 0.001f)
+                    throw new Exception($"Hyperbolic failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        static void HyperbolicKernel(Index1D index, ArrayView<float> input, ArrayView<float> output)
+        {
+            float val = input[index];
+            if (index == 0) output[index] = MathF.Sinh(val);
+            else if (index == 1) output[index] = MathF.Cosh(val);
+            else if (index == 2) output[index] = MathF.Tanh(val);
+        }
+
+        [TestMethod]
+        public async Task WebGPUSharedMemoryBarrierTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int groupSize = 64;
+            int numGroups = 2;
+            int totalSize = groupSize * numGroups;
+
+            var data = new int[totalSize]; // Output
+
+            using var buf = accelerator.Allocate1D(data);
+
+            var kernel = accelerator.LoadStreamKernel<Index1D, ArrayView<int>>(SharedMemoryBarrierKernel);
+            kernel(new KernelConfig(numGroups, groupSize), (Index1D)groupSize, buf.View);
+            accelerator.Synchronize();
+
+            var result = await ReadBufferAsync<int>(buf);
+
+            // Expected logic:
+            // Threads 0..31 write to shared[0..31].
+            // Barrier.
+            // Threads 32..63 read share[id - 32].
+            // Output should contain the pattern.
+            
+            // Only the second half of each workgroup writes to output.
+            // Global ID: 
+            // Group 0: 0..63. Writers: 0..31. Readers: 32..63. output[32..63] = shared[0..31] = (0..31) * 2.
+            
+            for (int g = 0; g < numGroups; g++)
+            {
+                int baseIdx = g * groupSize;
+                for (int i = 32; i < 64; i++)
+                {
+                    int globalIdx = baseIdx + i;
+                    int expected = (i - 32) * 2;
+                    if (result[globalIdx] != expected)
+                        throw new Exception($"Barrier failed at group {g}, thread {i}. Expected {expected}, got {result[globalIdx]}");
+                }
+            }
+        }
+
+        static void SharedMemoryBarrierKernel(Index1D index, ArrayView<int> output)
+        {
+            // Thread Index within Group
+            int tid = Group.IdxX;
+            var shared = SharedMemory.Allocate<int>(64);
+            
+            if (tid < 32)
+            {
+                shared[tid] = tid * 2;
+            }
+            
+            Group.Barrier();
+            
+            if (tid >= 32)
+            {
+                int val = shared[tid - 32];
+                // Write to global. 
+                // We need global index.
+                int gid = Grid.GlobalIndex.X;
+                output[gid] = val;
+            }
+        }
+
+        [TestMethod]
+        public async Task WebGPUSelectOperationTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 4;
+            var input = new int[len];
+            input[0] = 10;
+            input[1] = -10;
+            input[2] = 0;
+            input[3] = 5;
+
+            using var bufIn = accelerator.Allocate1D(input);
+            using var bufOut = accelerator.Allocate1D<int>(len);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>, ArrayView<int>>(SelectKernel);
+            kernel((Index1D)len, bufIn.View, bufOut.View);
+            accelerator.Synchronize();
+
+            var result = await ReadBufferAsync<int>(bufOut);
+            
+            for (int i = 0; i < len; i++)
+            {
+                int val = input[i];
+                // Logic: Select(val > 0, 1, -1)
+                int expected = (val > 0) ? 1 : -1;
+                
+                if (result[i] != expected)
+                    throw new Exception($"Select failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        static void SelectKernel(Index1D index, ArrayView<int> input, ArrayView<int> output)
+        {
+            int val = input[index];
+            // Condition, TrueVal, FalseVal
+            // ILGPU Select maps to ternary or Cjmp
+            // WGSL select(false, true, cond)
+            output[index] = (val > 0) ? 1 : -1;
+        }
+
+
+        [TestMethod]
+        public async Task WebGPULinearBarrierTest()
+    {
+        var builder = Context.Create();
+        await builder.WebGPUAsync();
+        using var context = builder.ToContext();
+        var device = context.GetWebGPUDevices()[0];
+        using var accelerator = await device.CreateAcceleratorAsync(context);
+
+        int groupSize = 64;
+        int numGroups = 2;
+        int totalSize = groupSize * numGroups;
+        var data = new int[totalSize];
+
+        using var buf = accelerator.Allocate1D(data);
+
+        var kernel = accelerator.LoadStreamKernel<Index1D, ArrayView<int>>(LinearBarrierKernel);
+        kernel(new KernelConfig(numGroups, groupSize), (Index1D)groupSize, buf.View);
+        accelerator.Synchronize();
+
+        var result = await ReadBufferAsync<int>(buf);
+
+        for (int i = 0; i < totalSize; i++)
+        {
+            int groupSizeVal = 64;
+            // Thread i wrote i.
+            // Thread i read (i+1)%64 (within group).
+            int localId = i % groupSizeVal;
+            int groupId = i / groupSizeVal;
+            int readFromLocal = (localId + 1) % groupSizeVal;
+            int readFromGlobal = groupId * groupSizeVal + readFromLocal;
+            
+            int expected = readFromGlobal; 
+            
+            if (result[i] != expected)
+                throw new Exception($"Linear Barrier failed. Group {groupId} Local {localId}. Expected {expected} (from local {readFromLocal}), got {result[i]}");
+        }
+    }
+
+    static void LinearBarrierKernel(Index1D index, ArrayView<int> output)
+    {
+        // Linear Flow: No Ifs before Barrier.
+        int tid = Group.IdxX; // Local
+        int gid = Grid.GlobalIndex.X; // Global
+
+        var shared = SharedMemory.Allocate<int>(64);
+        
+        shared[tid] = gid; // Write own Global ID to Shared[LocalID]
+        
+        Group.Barrier();
+        
+        // Read neighbor's value
+        int neighbor = (tid + 1) % 64;
+        int val = shared[neighbor];
+        
+        output[gid] = val;
+    }
     }
 }
 

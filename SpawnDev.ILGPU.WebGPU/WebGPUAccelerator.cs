@@ -335,7 +335,18 @@ namespace SpawnDev.ILGPU.WebGPU
                 using var bindGroup = device.CreateBindGroup(bindGroupDesc);
 
                 uint workX = 1, workY = 1, workZ = 1;
-                if (dimension is Index1D i1) workX = (uint)Math.Ceiling(i1.X / 64.0);
+
+                // Handle KernelConfig for explicit launches
+                if (dimension is KernelConfig config)
+                {
+                    // For explicit kernels, the GridDim IS the number of groups or related.
+                    // ILGPU KernelConfig: GridDim is the number of groups if explicit?
+                    // "The grid dimension specifies the number of blocks per grid."
+                    workX = (uint)config.GridDim.X;
+                    workY = (uint)config.GridDim.Y;
+                    workZ = (uint)config.GridDim.Z;
+                }
+                else if (dimension is Index1D i1) workX = (uint)Math.Ceiling(i1.X / 64.0);
                 else if (dimension is Index2D i2) { workX = (uint)Math.Ceiling(i2.X / 8.0); workY = (uint)Math.Ceiling(i2.Y / 8.0); }
                 else if (dimension is Index3D i3) { workX = (uint)Math.Ceiling(i3.X / 4.0); workY = (uint)Math.Ceiling(i3.Y / 4.0); workZ = (uint)Math.Ceiling(i3.Z / 4.0); }
                 else if (dimension is LongIndex1D l1) workX = (uint)Math.Ceiling(l1.X / 64.0);
