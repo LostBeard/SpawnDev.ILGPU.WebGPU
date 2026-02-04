@@ -931,5 +931,8 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             data[index] = MyAdd(index, 100);
         }
 
+
+
+
     }
 }

@@ -300,7 +300,7 @@ namespace SpawnDev.ILGPU.WebGPU
                     entries.Add(new GPUBindGroupEntry { Binding = (uint)currentBindingIndex, Resource = resource! });
                     currentBindingIndex++;
 
-                    if (dims.Length > 0)
+                    if (dims.Length > 1)
                     {
                         Console.WriteLine($"[WebGPU-Debug] Arg {i}: Binding Stride Buffer. Values=[{string.Join(", ", dims)}]");
 

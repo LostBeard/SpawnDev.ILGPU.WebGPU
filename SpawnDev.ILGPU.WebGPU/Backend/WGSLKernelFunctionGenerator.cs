@@ -86,6 +86,10 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
         private Value? _indexParameterAddress;
 
+        // Force offset 1 if we have a valid index type, ignoring IsExplicitlyGrouped
+        // This fixes cases where SharedMemory usage flags the kernel as explicit but it still has an Index parameter.
+        private int KernelParamOffset => EntryPoint.IndexType != IndexType.None ? 1 : 0;
+
         #endregion
 
         #region Methods
@@ -122,7 +126,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             TypeGenerator.GenerateTypeDefinitions(builder);
 
             int bindingIdx = 0;
-            int paramOffset = EntryPoint.IsExplicitlyGrouped ? 0 : 1;
+            int paramOffset = KernelParamOffset;
 
             foreach (var param in Method.Parameters)
             {
@@ -144,22 +148,11 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 builder.AppendLine(bindingDecl);
                 bindingIdx++;
 
-                var rawType = UnwrapType(param.ParameterType);
-                string typeName = param.ParameterType.ToString();
+                IsMultiDim(param.ParameterType, out var isMultiDim, out var isView, out var is1DView, out var is2DView, out var is3DView);
 
-                bool isMultiDim = typeName.Contains("ArrayView") || rawType.ToString().Contains("ArrayView") || rawType is ViewType;
-
-                // Fallback to structure check if string check fails (for custom structs using views)
-                if (!isMultiDim && rawType is StructureType structType)
-                {
-                    if (structType.NumFields > 2 && IsViewStructure(structType.Fields[0]))
-                    {
-                        isMultiDim = true;
-                    }
-                    if (structType.NumFields == 3) isMultiDim = true; // 1D View
-                }
-
-                if (isMultiDim)
+                // STRICT STRIDE LOGIC: Only emit stride buffer for 2D/3D Views.
+                // General Structs (even if they mimic views) should NOT have a stride buffer unless they ARE views.
+                if (isView && isMultiDim && (is2DView || is3DView))
                 {
                     var strideDecl = $"@group(0) @binding({bindingIdx}) var<storage, read> param{param.Index}_stride : array<i32>;";
                     builder.AppendLine(strideDecl);
@@ -252,70 +245,95 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 if (current is global::ILGPU.IR.Types.PointerType ptrType) return ptrType.ElementType;
                 if (current is global::ILGPU.IR.Types.StructureType structType)
                 {
-                    if (structType.NumFields > 0)
+                    // Refined Logic:
+                    // 1. If this is a Wrapper Struct (like ArrayView2D/3D), its first field is the underlying View.
+                    //    We MUST drill down to get the primitive element type (e.g., float).
+                    // 2. If this is a Data Struct (user-defined struct), it is the element type itself.
+                    //    We MUST return it as-is so we get 'array<MyStruct>'.
+                    
+                    if (structType.NumFields > 0 && (structType.Fields[0] is ViewType || structType.Fields[0].ToString().Contains("View")))
                     {
                         current = structType.Fields[0];
                         continue;
                     }
-                    break;
+
+                    return structType;
                 }
                 break;
             }
-            return type;
+            return current; // Return whatever we resolved to
         }
         // Add this to your Properties region
         private HashSet<Value> _hoistedIndexFields = new HashSet<Value>();
 
         private void SetupIndexVariables()
         {
-            if (EntryPoint.IsExplicitlyGrouped) return;
-            if (Method.Parameters.Count > 0)
+            // If the kernel is explicitly grouped (Shared Memory / Advanced), the user handles indices via Group.* intrinsics
+            // However, we still need to map the main Kernel Index parameter if it exists.
+            
+            if (Method.Parameters.Count == 0) return;
+            
+            var indexParam = Method.Parameters[0];
+            
+            // Only map if strictly implicit OR if we detected an IndexType
+            if (KernelParamOffset == 0) return;
+
+            var indexVar = Allocate(indexParam);
+            _hoistedIndexFields.Clear();
+
+            // 1D Kernel
+            if (EntryPoint.IndexType == IndexType.Index1D)
             {
-                var indexParam = Method.Parameters[0];
-                var indexVar = Allocate(indexParam);
-                _hoistedIndexFields.Clear();
+                // Map global_id.x to int32
+                AppendLine($"var {indexVar.Name} : i32 = i32(global_id.x);");
+            }
+            // 2D Kernel
+            else if (EntryPoint.IndexType == IndexType.Index2D)
+            {
+                // Map global_id.xy to vec2<i32>
+                AppendLine($"var {indexVar.Name} : vec2<i32> = vec2<i32>(i32(global_id.x), i32(global_id.y));");
 
-                if (EntryPoint.IndexType == IndexType.Index1D)
+                // Handle struct field access (index.X, index.Y) by pre-calculating them
+                // This prevents "GetField" later from trying to access a struct field on a vec2
+                foreach (var use in indexParam.Uses)
                 {
-                    AppendLine($"var {indexVar.Name} : i32 = i32(global_id.x);");
-                }
-                else if (EntryPoint.IndexType == IndexType.Index2D)
-                {
-                    AppendLine($"var {indexVar.Name} : vec2<i32> = vec2<i32>(i32(global_id.x), i32(global_id.y));");
-
-                    foreach (var use in indexParam.Uses)
+                    if (use.Target is global::ILGPU.IR.Values.GetField gf)
                     {
-                        if (use.Target is global::ILGPU.IR.Values.GetField gf)
-                        {
-                            var componentVar = Allocate(gf);
-                            _hoistedIndexFields.Add(gf);
+                        var componentVar = Allocate(gf);
+                        _hoistedIndexFields.Add(gf);
+                        declaredVariables.Add(componentVar.Name); // Ensure it's marked as declared
 
-                            // ILGPU Field 0 is X (Col), Field 1 is Y (Row) - Standard Mapping
-                            string comp = gf.FieldSpan.Index == 0 ? "x" : "y";
-                            AppendLine($"var {componentVar.Name} : i32 = {indexVar.Name}.{comp};");
-                        }
-                    }
-                }
-                else if (EntryPoint.IndexType == IndexType.Index3D)
-                {
-                    AppendLine($"var {indexVar.Name} : vec3<i32> = vec3<i32>(i32(global_id.x), i32(global_id.y), i32(global_id.z));");
-
-                    foreach (var use in indexParam.Uses)
-                    {
-                        if (use.Target is global::ILGPU.IR.Values.GetField gf)
-                        {
-                            var componentVar = Allocate(gf);
-                            _hoistedIndexFields.Add(gf);
-
-                            // ILGPU Field 0 is X, 1 is Y, 2 is Z
-                            string comp = gf.FieldSpan.Index == 0 ? "x" : (gf.FieldSpan.Index == 1 ? "y" : "z");
-                            AppendLine($"var {componentVar.Name} : i32 = {indexVar.Name}.{comp};");
-                        }
+                        string comp = gf.FieldSpan.Index == 0 ? "x" : "y";
+                        AppendLine($"var {componentVar.Name} : i32 = {indexVar.Name}.{comp};"); // Use vector component
                     }
                 }
             }
-        }
+            // 3D Kernel
+            else if (EntryPoint.IndexType == IndexType.Index3D)
+            {
+                // Map global_id.xyz to vec3<i32>
+                AppendLine($"var {indexVar.Name} : vec3<i32> = vec3<i32>(i32(global_id.x), i32(global_id.y), i32(global_id.z));");
 
+                foreach (var use in indexParam.Uses)
+                {
+                    if (use.Target is global::ILGPU.IR.Values.GetField gf)
+                    {
+                        var componentVar = Allocate(gf);
+                        _hoistedIndexFields.Add(gf);
+                        declaredVariables.Add(componentVar.Name);
+
+                        string comp = gf.FieldSpan.Index == 0 ? "x" : (gf.FieldSpan.Index == 1 ? "y" : "z");
+                        AppendLine($"var {componentVar.Name} : i32 = {indexVar.Name}.{comp};");
+                    }
+                }
+            }
+            else
+            {
+                // Fallback: Default to 1D if we skipped the param but didn't match specific types
+                // This protects against weird IndexType states
+                AppendLine($"var {indexVar.Name} : i32 = i32(global_id.x); // Fallback mapping");
+            }
+        }
 
         private void HoistCrossBlockVariables()
         {
@@ -330,6 +348,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             {
                 foreach (var value in block)
                 {
+                    // CRITICAL: Skip NewView to prevent hoisting pointer logic
+                    if (value.Value is global::ILGPU.IR.Values.NewView) continue;
+                    
                     if (value.Value is PhiValue)
                     {
                         _hoistedPrimitives.Add(value.Value);
@@ -426,34 +447,137 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         //    }
         //}
 
+        void IsMultiDim(TypeNode ParameterType, out bool isMultiDim, out bool isView, out bool is1DView, out bool is2DView, out bool is3DView)
+        {
+            is1DView = false;
+            is2DView = false;
+            is3DView = false;
+            isMultiDim = false;
+            isView = false;
+
+            string typeName = ParameterType.ToString();
+            
+            // 1. Direct String Check (works for C# types if available, but unreliable for IR strings)
+            bool isStringView = typeName.Contains("ArrayView");
+            
+            // 2. Structural Check on ParameterType (The Wrapper Struct)
+            if (ParameterType is global::ILGPU.IR.Types.StructureType st)
+            {
+                 // Check if it looks like an ArrayView wrapper (Field 0 is View)
+                 if (st.NumFields > 0 && (st.Fields[0] is ViewType || st.Fields[0].ToString().Contains("View")))
+                 {
+                     isView = true;
+                     
+                     if (st.NumFields == 6 || st.NumFields == 4) // 3D (6 fields usually), 2D (4 fields)
+                     {
+                         isMultiDim = true;
+                         if (st.NumFields == 6) is3DView = true;
+                         else is2DView = true;
+                     }
+                     else if (st.NumFields == 3)
+                     {
+                         is1DView = true;
+                         isMultiDim = false; // 1D doesn't need stride buffers, so we treat as "not multi dim" for stride purposes
+                     }
+                 }
+            }
+            
+            // 3. Fallback: Combine String check with Structural properties
+            if (!isView && isStringView)
+            {
+                isView = true;
+                if (typeName.Contains("2D") || typeName.Contains("3D")) isMultiDim = true;
+                if (typeName.Contains("3D")) is3DView = true;
+                else if (typeName.Contains("2D")) is2DView = true;
+                else if (typeName.Contains("1D")) is1DView = true;
+            }
+        }
+
         private void SetupParameterBindings()
         {
-            int paramOffset = EntryPoint.IsExplicitlyGrouped ? 0 : 1;
+            int paramOffset = KernelParamOffset;
             foreach (var param in Method.Parameters)
             {
                 if (param.Index < paramOffset) continue;
                 var variable = Allocate(param);
-                var bufferType = GetBufferElementType(param.ParameterType);
-                bool isView = bufferType != param.ParameterType;
-                if (param.ParameterType.IsPrimitiveType || !isView) AppendLine($"var {variable.Name} = param{param.Index}[0];");
+                
+                IsMultiDim(param.ParameterType, out var isMultiDim, out var isView, out var is1DView, out var is2DView, out var is3DView);
+
+                if (!isView) 
+                {
+                    // Check if it's an atomic parameter (even if not explicitly a ViewType in C# reflection terms)
+                    // Atomic operations in WGSL work on pointers to storage buffer elements.
+                    bool isAtomic = _atomicParameters.Contains(param.Index);
+                    
+                    // Check if it's a Structure (that might contain Views). 
+                    // If we try to 'load' a struct from a buffer that is array<f32>, it fails.
+                    // We should treat structs as pointers/references so GetField can handle them.
+                    bool isStruct = param.ParameterType is global::ILGPU.IR.Types.StructureType;
+
+                    if (isAtomic)
+                    {
+                        // Treat as pointer/reference
+                        AppendLine($"let {variable.Name} = &param{param.Index};");
+                    }
+                    else if (isStruct)
+                    {
+                        // Optimization:
+                        // If this is a View-Like struct (ArrayView2D/3D), we want to alias it as the Buffer Pointer (&param)
+                        // so that GetField can detect it as a Parameter and applying Field 0 logic.
+                        // If it is a PURE data struct, we alias as &param[0].
+                        
+                        if (isMultiDim)
+                        {
+                             AppendLine($"let {variable.Name} = &param{param.Index};");
+                        }
+                        else
+                        {
+                            // Structs are loaded as pointers to the first element of the array
+                            // param is array<MyStruct>, so &param is ptr<array<MyStruct>>.
+                            // We want ptr<MyStruct>, which is &param[0].
+                            AppendLine($"let {variable.Name} = &param{param.Index}[0];");
+                        }
+                    }
+                    else
+                    {
+                        // Scalar load
+                        AppendLine($"var {variable.Name} = param{param.Index}[0];");
+                    }
+                }
                 else
                 {
                     AppendLine($"let {variable.Name} = &param{param.Index};");
 
-                    // Force usage of stride buffer to prevent optimization culling (Binding Mismatch)
-                    var rawType = UnwrapType(param.ParameterType);
-                    string typeName = param.ParameterType.ToString();
-                    bool isMultiDim = typeName.Contains("ArrayView") || rawType.ToString().Contains("ArrayView") || rawType is ViewType;
-                    if (!isMultiDim && rawType is global::ILGPU.IR.Types.StructureType structType)
+                    // STRICT STRIDE INITIALIZATION: Only for 2D/3D Views
+                    if (isView && isMultiDim && (is2DView || is3DView)) 
                     {
-                        if (structType.NumFields > 2 && IsViewStructure(structType.Fields[0])) isMultiDim = true;
-                        if (structType.NumFields == 3) isMultiDim = true;
+                        AppendLine($"let {variable.Name}_stride = &param{param.Index}_stride;");
                     }
-                    if (isMultiDim) AppendLine($"let _stride_{param.Index} = param{param.Index}_stride[0];");
                 }
             }
         }
-
+        
+        public override void GenerateCode(global::ILGPU.IR.Values.NewView value)
+        {
+            var target = Load(value);
+            var source = Load(value.Pointer);
+            
+            // NewView result is strictly a pointer (reference) in WGSL
+            string refPrefix = "";
+            if (value.Pointer.Type is global::ILGPU.IR.Types.PointerType ptrType && 
+                ptrType.AddressSpace == MemoryAddressSpace.Shared)
+            {
+                refPrefix = "&";
+            }
+            
+            // We use 'let' to alias the pointer, ensuring we don't copy the array
+            // Optimization: If source is already a pointer (likely), we might not need &
+            // But for Shared Memory (var<workgroup> arr), it's treated as value, so we need &
+            
+            declaredVariables.Add(target.Name);
+            AppendLine($"let {target.Name} = {refPrefix}{source};");
+        }
+        
         public override void GenerateCode(Parameter parameter) { }
 
         public override void GenerateCode(LoadElementAddress value)
@@ -462,7 +586,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             var offset = Load(value.Offset);
             if (ResolveToParameter(value.Source) is global::ILGPU.IR.Values.Parameter param)
             {
-                int paramOffset = EntryPoint.IsExplicitlyGrouped ? 0 : 1;
+                int paramOffset = KernelParamOffset;
                 if (param.Index >= paramOffset)
                 {
                     AppendIndent();
@@ -471,11 +595,22 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     return;
                 }
             }
+            
             var sourceVal = Load(value.Source);
             AppendIndent();
             Builder.Append($"let {target.Name} = ");
-            if (value.Source.Type.IsPointerType) Builder.Append($"&(*{sourceVal})[{offset}];");
-            else Builder.Append($"&{sourceVal}[{offset}];");
+            
+            // POINTER DEREFERENCE LOGIC
+            // If the source comes from NewView, it's a pointer (let v_3 = &v_4).
+            // To access element at offset: (*ptr)[offset] -> &(*ptr)[offset] gives the address
+            if (value.Source is global::ILGPU.IR.Values.NewView || value.Source.Type.IsPointerType) 
+            {
+                Builder.Append($"&(*{sourceVal})[{offset}];");
+            }
+            else 
+            {
+                Builder.Append($"&{sourceVal}[{offset}];");
+            }
             Builder.AppendLine();
         }
 
@@ -483,6 +618,28 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             var target = Load(loadVal);
             var source = Load(loadVal.Source);
+
+            // Special handling for loading an ArrayView parameter (which is a struct).
+            // We cannot 'load' the struct from the buffer binding (which is array<T>).
+            // Instead, we treat the 'loaded' value as a pointer/alias to the binding.
+            
+            // CRITICAL FIX: Only alias if the source IS the parameter node itself.
+            // Do NOT alias if the source is a derived pointer (e.g. LoadElementAddress), 
+            // as that would prevent loading actual data values.
+            // Note: loadVal.Source is a ValueReference struct. To pattern match against Value types (classes),
+            // we must use .Resolve() to get the underlying Value object.
+            if (loadVal.Source.Resolve() is global::ILGPU.IR.Values.Parameter param && 
+                param.Type is global::ILGPU.IR.Types.ViewType)
+            {
+                // Verify index (skip implicit kernel index if any)
+                 int paramOffset = KernelParamOffset;
+                 if (param.Index >= paramOffset)
+                 {
+                    // Alias: let v_X = &paramY;
+                    AppendLine($"let {target} = &param{param.Index};");
+                    return;
+                 }
+            }
 
             // Check if we already declared this at the top
             if (_hoistedPrimitives.Contains(loadVal))
@@ -597,9 +754,20 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 foreach (var value in block)
                 {
                     if (value.Value is TerminatorValue) continue;
+
+                    // FORCE CHECK FOR BARRIER
+                    if (value.Value is global::ILGPU.IR.Values.Barrier ||
+                        value.Value.GetType().Name.Contains("Barrier"))
+                    {
+                        AppendIndent();
+                        Builder.AppendLine("workgroupBarrier();");
+                        continue;
+                    }
+
                     // Force visit to use your overrides
                     this.GenerateCodeFor(value.Value);
                 }
+
 
                 // Explicitly handle terminators to force current_block updates
                 if (block.Terminator is UnconditionalBranch ub) GenerateCode(ub);
@@ -656,7 +824,29 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             var op = GetCompareOp(value.Kind);
 
             string prefix = GetPrefix(value);
-            AppendLine($"{prefix}{target} = {left} {op} {right};");
+            
+            // Fix: Handle Vector vs Scalar comparison (e.g. vec2 >= i32)
+            string leftType = TypeGenerator[value.Left.Type];
+            string rightType = TypeGenerator[value.Right.Type];
+            
+            bool leftIsVec = leftType.StartsWith("vec");
+            bool rightIsVec = rightType.StartsWith("vec");
+            
+            if (leftIsVec && !rightIsVec)
+            {
+                 // vec op scalar -> all(vec op vec(scalar))
+                 // Use vector type of the vector operand to splat the scalar
+                 AppendLine($"{prefix}{target} = all({left} {op} {leftType}({right}));");
+            }
+            else if (!leftIsVec && rightIsVec)
+            {
+                 // scalar op vec -> all(vec(scalar) op vec)
+                 AppendLine($"{prefix}{target} = all({rightType}({left}) {op} {right});");
+            }
+            else
+            {
+                AppendLine($"{prefix}{target} = {left} {op} {right};");
+            }
         }
         public override void GenerateCode(ConvertValue value)
         {
@@ -665,7 +855,22 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             var targetType = TypeGenerator[value.Type];
 
             string prefix = GetPrefix(value);
-            AppendLine($"{prefix}{target} = {targetType}({source});");
+            
+            // Fix: Handle Vector to Scalar conversion (e.g. i32(vec2)) which WGSL forbids
+            var sourceType = TypeGenerator[value.Value.Type];
+
+            bool isVectorSource = sourceType.StartsWith("vec");
+            bool isScalarTarget = !targetType.StartsWith("vec") && !targetType.StartsWith("mat") && !targetType.StartsWith("array");
+
+            if (isVectorSource && isScalarTarget)
+            {
+                // Extract X component. 
+                AppendLine($"{prefix}{target} = {targetType}({source}.x);");
+            }
+            else
+            {
+                AppendLine($"{prefix}{target} = {targetType}({source});");
+            }
         }
 
         public override void GenerateCode(global::ILGPU.IR.Values.GetField value)
@@ -676,12 +881,12 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
             // 2. Identify if the object being accessed is DIRECTLY a Parameter (likely an ArrayView)
             // We use direct type check to avoid confusing hierarchical access (View.Stride.X) with Root access (View.Stride)
-            if (value.ObjectValue.Resolve() is global::ILGPU.IR.Values.Parameter param)
+            if (ResolveToParameter(value.ObjectValue) is global::ILGPU.IR.Values.Parameter param)
             {
-                int paramOffset = EntryPoint.IsExplicitlyGrouped ? 0 : 1;
+                int paramOffset = KernelParamOffset;
                 if (param.Index >= paramOffset)
                 {
-                    bool isView = GetBufferElementType(param.ParameterType) != param.ParameterType;
+                    IsMultiDim(param.ParameterType, out var isMultiDim, out var isView, out var is1DView, out var is2DView, out var is3DView);
                     if (isView)
                     {
                         var target = Load(value);
@@ -689,30 +894,21 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
                         // ROBUST TYPE DETECTION
                         string typeName = param.ParameterType.ToString();
-                        bool isMultiDim = typeName.Contains("ArrayView") || rawType.ToString().Contains("ArrayView");
-                        bool is3DView = typeName.Contains("3D");
-                        bool is2DView = false;
-                        bool is1DView = false;
 
                         if (rawType is global::ILGPU.IR.Types.StructureType st)
                         {
-                            if (st.NumFields == 6) { is3DView = true; isMultiDim = true; }
-                            else if (st.NumFields == 4) { is2DView = true; isMultiDim = true; }
-                            else if (st.NumFields == 3) { is1DView = true; isMultiDim = true; }
-                        }
+
 
                         // Field 0 is always the actual pointer to the data
                         if (value.FieldSpan.Index == 0)
                         {
-                            AppendLine($"let {target} = &param{param.Index};");
+                            AppendLine($"let {target} = &param{param.Index}[0];");
                             return;
                         }
 
                         // Metadata handling (Length and Strides)
                         if (isMultiDim && rawType is StructureType st1)
                         {
-                            var width = $"param{param.Index}_stride[0]";
-                            var height = $"param{param.Index}_stride[1]";
                             var totalLen = $"i32(arrayLength(&param{param.Index}))";
                             
                             // Check hoisting to prevent shadowing
@@ -720,68 +916,70 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
                              if (is3DView)
                             {
-                                // TODO: 3D Implementation if needed
-                                // Assuming 3D Stride buffer has [W, H, D]
-                                // Length: vec3(width, height, depth)
-                                // Stride: vec3(1, width, width*height)
-                                switch (value.FieldSpan.Index)
-                                {
-                                    case 1: AppendLine($"{prefix}{target} = {width};"); return;     // Width
-                                    case 2: AppendLine($"{prefix}{target} = {height};"); return;    // Height
-                                    case 3: AppendLine($"{prefix}{target} = param{param.Index}_stride[2];"); return; // Depth
-                                    case 4: AppendLine($"{prefix}{target} = {width};"); return;     // StrideY
-                                    case 5: AppendLine($"{prefix}{target} = {width} * {height};"); return; // StrideZ
-                                }
+                                var width = $"param{param.Index}_stride[0]";
+                                var height = $"param{param.Index}_stride[1]";
+                                var depth = $"param{param.Index}_stride[2]";
+
+                                // Flattened Access:
+                                // 1: Width
+                                // 2: Height
+                                // 3: Depth
+                                // 4: StrideY (Width)
+                                // 5: StrideZ (Width*Height)
+
+                                    switch (value.FieldSpan.Index)
+                                    {
+                                        case 1: AppendLine($"{prefix}{target} = {width};"); return;
+                                        case 2: AppendLine($"{prefix}{target} = {height};"); return;
+                                        case 3: AppendLine($"{prefix}{target} = {depth};"); return;
+                                        case 4: AppendLine($"{prefix}{target} = {width};"); return;
+                                        case 5: AppendLine($"{prefix}{target} = {width} * {height};"); return;
+                                    }
                             }
                             else if (is2DView)
                             {
+                                var width = $"param{param.Index}_stride[0]";
+                                var height = $"param{param.Index}_stride[1]";
+
+                                // Flattened Access:
+                                // 1: Width
+                                // 2: Height
+                                // 3: StrideY (Width)
+
                                 switch (value.FieldSpan.Index)
                                 {
-                                    // Field 1: Width (i32)
-                                    case 1: AppendLine($"{prefix}{target} = {width};"); return; 
-                                    
-                                    // Field 2: Height (i32)
+                                    case 1: AppendLine($"{prefix}{target} = {width};"); return;
                                     case 2: AppendLine($"{prefix}{target} = {height};"); return;
-
-                                    // Field 3: Stride (i32)
                                     case 3: AppendLine($"{prefix}{target} = {width};"); return;
                                 }
                             }
                             else if (is1DView)
                             {
-                                var structType1D = (global::ILGPU.IR.Types.StructureType)rawType;
-                                bool isWrapper = structType1D.Fields[1] is global::ILGPU.IR.Types.StructureType;
-
-                                if (isWrapper)
+                                // For 1D, we verify if mapped to standard structure
+                                // 1D ArrayView is (View, Index, Length) or (View, Length)?
+                                // If base View, it has (Buffer, Index, Length).
+                                // Usually accessed: Field 2 (Length).
+                                
+                                switch (value.FieldSpan.Index)
                                 {
-                                    switch (value.FieldSpan.Index)
-                                    {
-                                        case 1: AppendLine($"{prefix}{target} = {width};"); return; // Length
-                                        case 2: AppendLine($"{prefix}{target} = 0;"); return;       // Stride
-                                    }
-                                }
-                                else
-                                {
-                                    switch (value.FieldSpan.Index)
-                                    {
-                                        case 1: AppendLine($"{prefix}{target} = 0;"); return;       // Index
-                                        case 2: AppendLine($"{prefix}{target} = {width};"); return; // Length
-                                    }
+                                    case 1: AppendLine($"{prefix}{target} = 0;"); return;       // Index (Assume 0 for base view)
+                                    case 2: AppendLine($"{prefix}{target} = {totalLen};"); return; // Length
                                 }
                             }
 
-                            // Fallback for length
+                            // Fallback for unknown length access
                             AppendLine($"{prefix}{target} = {totalLen};");
                             return;
                         }
                     }
                 }
             }
+            }
 
                 // 3. Special handling for Kernel Index Parameter (X, Y components)
             if (ResolveToParameter(value.ObjectValue) is global::ILGPU.IR.Values.Parameter kernelParam) 
             {
-                 int paramOffset = EntryPoint.IsExplicitlyGrouped ? 0 : 1;
+                 int paramOffset = KernelParamOffset;
                  if (kernelParam.Index < paramOffset)
                  {
                     var target = Load(value);
@@ -891,7 +1089,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             if (ResolveToParameter(value.Source) is global::ILGPU.IR.Values.Parameter param)
             {
-                int paramOffset = EntryPoint.IsExplicitlyGrouped ? 0 : 1;
+                int paramOffset = KernelParamOffset;
                 if (param.Index < paramOffset)
                 {
                     var target = Load(value);
@@ -906,6 +1104,28 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 }
             }
             base.GenerateCode(value);
+        }
+
+        public override void GenerateCode(global::ILGPU.IR.Values.Barrier value)
+        {
+            AppendIndent();
+            Builder.AppendLine("workgroupBarrier();");
+        }
+
+        public override void GenerateCode(PredicateBarrier value)
+        {
+            // PredicateBarrier is used for Group.All/Any, but in WGSL we 
+            // must still hit the workgroupBarrier to sync memory visibility.
+            AppendIndent();
+            Builder.AppendLine("workgroupBarrier();");
+        }
+
+        public override void GenerateCode(MemoryBarrier value)
+        {
+            // Memory barriers in WGSL coordinate memory visibility.
+            // workgroupBarrier() includes the functionality of a memory barrier.
+            AppendIndent();
+            Builder.AppendLine("workgroupBarrier();");
         }
 
         public override void GenerateCode(PhiValue phiValue)
