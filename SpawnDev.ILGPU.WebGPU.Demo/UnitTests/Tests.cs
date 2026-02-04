@@ -990,5 +990,63 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             data[index] = val;
         }
 
+
+        struct InnerStruct
+        {
+            public float Val;
+        }
+
+        struct OuterStruct
+        {
+            public InnerStruct Inner;
+            public int ID;
+        }
+
+        [TestMethod]
+        public async Task WebGPUComplexStructTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 10;
+            var data = new OuterStruct[len];
+            for(int i=0; i<len; i++) 
+            {
+                data[i] = new OuterStruct 
+                { 
+                    ID = i, 
+                    Inner = new InnerStruct { Val = i * 1.5f } 
+                };
+            }
+
+            using var buffer = accelerator.Allocate1D(data);
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<OuterStruct>>(ComplexStructKernel);
+            kernel((Index1D)len, buffer.View);
+            accelerator.Synchronize();
+
+            var result = await ReadBufferAsync<OuterStruct>(buffer);
+
+            for (int i = 0; i < len; i++)
+            {
+                // Kernel logic: Inner.Val += 1.0f, ID *= 2
+                float expectedVal = i * 1.5f + 1.0f;
+                int expectedID = i * 2;
+
+                if (Math.Abs(result[i].Inner.Val - expectedVal) > 0.001f || result[i].ID != expectedID)
+                    throw new Exception($"Complex Struct failed at {i}. Expected ({expectedVal}, {expectedID}), got ({result[i].Inner.Val}, {result[i].ID})");
+            }
+        }
+
+        static void ComplexStructKernel(Index1D index, ArrayView<OuterStruct> data)
+        {
+            var item = data[index];
+            item.Inner.Val += 1.0f;
+            item.ID *= 2;
+            data[index] = item;
+        }
+
     }
 }
