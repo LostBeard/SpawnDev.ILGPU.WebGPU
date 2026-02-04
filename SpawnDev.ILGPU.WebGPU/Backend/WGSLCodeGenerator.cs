@@ -95,6 +95,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         private readonly Dictionary<Value, Variable> valueVariables = new();
         private readonly Dictionary<BasicBlock, string> blockLabels = new();
         
+        // Flag to tracking if we are generating code within the state machine loop
+        protected bool IsStateMachineActive { get; set; } = false;
+
         private StringBuilder prefixBuilder = new StringBuilder();
         private StringBuilder suffixBuilder = new StringBuilder();
 
@@ -334,18 +337,34 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             // Setup local allocations
             SetupAllocations(Allocas.LocalAllocations, MemoryAddressSpace.Local);
 
+            bool hasReturnValue = !Method.ReturnType.IsVoidType;
+            string returnType = hasReturnValue ? TypeGenerator[Method.ReturnType] : "void";
+
             // Simple case: single block, no control flow
             if (blocks.Count == 1)
             {
-            foreach (var valueEntry in blocks.First())
+                IsStateMachineActive = false;
+                foreach (var valueEntry in blocks.First())
                 {
                     GenerateCodeFor(valueEntry.Value);
                 }
                 return;
             }
 
-            // Multiple blocks: use loop/switch pattern for structured control flow
-            // WGSL doesn't have gotos, so we emulate with a state machine
+            // Multiple blocks: use loop/switch pattern
+            IsStateMachineActive = true;
+            
+            // Declare return variable if needed
+            if (hasReturnValue)
+            {
+                // Initialize to zero/default to avoid WGSL "variable used before assignment" errors
+                // though logic should ensure assignment before exit.
+                string zeroVal = returnType.StartsWith("bool") ? "false" : (returnType.StartsWith("f") ? "0.0" : "0");
+                if (returnType.StartsWith("vec")) zeroVal = $"{returnType}()"; // zero init vector
+
+                AppendLine($"var _ilgpu_return_val : {returnType} = {zeroVal};");
+            }
+
             AppendLine("var current_block : i32 = 0;");
             AppendLine("loop {");
             PushIndent();
@@ -370,10 +389,22 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
             AppendLine("default: { break; }");
             PopIndent();
-            AppendLine("}");
+            AppendLine("}"); // end switch
+            
             AppendLine("if (current_block == -1) { break; }");
+            
             PopIndent();
-            AppendLine("}");
+            AppendLine("}"); // end loop
+
+            // Emit final return
+            if (hasReturnValue)
+            {
+                AppendLine("return _ilgpu_return_val;");
+            }
+            else
+            {
+                AppendLine("return;");
+            }
         }
 
         /// <summary>
@@ -427,8 +458,17 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 !(value is MemoryBarrier))
                 return;
 
-            // TRACE LOGGING
-            AppendLine($"// Visit: {value.GetType().Name} [DISPATCHED]");
+            // Debug logging to trace instruction generation
+            Console.WriteLine($"[WGSL] Generating code for: {value.GetType().FullName} - {value}");
+
+            // Handle inaccessible Throw instruction (likely internal)
+            // Use Contains("Throw") to be safer
+            if (value.GetType().Name.Contains("Throw"))
+            {
+                Console.WriteLine($"[WGSL] HANDLING THROW: {value}");
+                GenerateThrow(value);
+                return;
+            }
 
             // Check for intrinsic implementation
             if (ImplementationProvider.TryGetCodeGenerator(value, out var intrinsicCodeGenerator))
@@ -572,6 +612,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     GenerateCode(v);
                     break;
 
+                
                 // Atomics & Barriers
                 case global::ILGPU.IR.Values.GenericAtomic v:
                     GenerateCode(v);
@@ -1107,17 +1148,30 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         // Control Flow
         public virtual void GenerateCode(ReturnTerminator value)
         {
-            if (value.IsVoidReturn)
+            if (IsStateMachineActive)
             {
-                AppendLine("current_block = -1; // return");
+                // In state machine: Assign to return var and break loop
+                if (!value.IsVoidReturn)
+                {
+                    var retVal = Load(value.ReturnValue);
+                    AppendLine($"_ilgpu_return_val = {retVal};");
+                }
+                
+                AppendLine("current_block = -1;");
                 AppendLine("break;");
             }
             else
             {
-                var retVal = Load(value.ReturnValue);
-                AppendLine($"// return {retVal}");
-                AppendLine("current_block = -1;");
-                AppendLine("break;");
+                // Direct return (Single block)
+                if (value.IsVoidReturn)
+                {
+                    AppendLine("return;");
+                }
+                else
+                {
+                    var retVal = Load(value.ReturnValue);
+                    AppendLine($"return {retVal};");
+                }
             }
         }
 
@@ -1444,6 +1498,24 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             // Raw WGSL emission - not commonly used
         }
 
+        public virtual void GenerateThrow(Value value)
+        {
+             // WebGPU does not support exceptions. 
+             // We emit a trap/unreachable, or just a comment if we assume it's unreachable in valid code.
+             AppendLine($"// [WGSL] Throw encountered: {value} (Ignored/Unreachable)");
+             
+             if (IsStateMachineActive)
+             {
+                 // Break out of the loop
+                 AppendLine("current_block = -1;");
+                 AppendLine("break;");
+             }
+             else
+             {
+                 AppendLine("return;");
+             }
+        }
+        
         #endregion
 
         #region Math Intrinsics

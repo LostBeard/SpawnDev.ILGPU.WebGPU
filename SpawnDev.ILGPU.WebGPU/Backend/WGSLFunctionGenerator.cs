@@ -89,16 +89,10 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             }
         }
 
-        /// <summary>
-        /// Generates a function declaration in WGSL code.
-        /// </summary>
         public override void GenerateHeader(StringBuilder builder)
         {
-            if (Method.HasFlags(MethodFlagsToSkip))
-                return;
-
-            GenerateHeaderStub(builder);
-            builder.AppendLine(";");
+            // WGSL does not support function prototypes/forward declarations.
+            // We rely on topological sort or just definition order (WGSL allows forward references).
         }
 
         /// <summary>

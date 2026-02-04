@@ -36,5 +36,22 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static float FusedMultiplyAdd(float x, float y, float z) => x * y + z;
+        // Unary (Int)
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static int Abs(int val) => val < 0 ? -val : val;
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static int Sign(int val) => val > 0 ? 1 : val < 0 ? -1 : 0;
+
+        // Binary (Int)
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static int Max(int val1, int val2) => val1 > val2 ? val1 : val2;
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static int Min(int val1, int val2) => val1 < val2 ? val1 : val2;
+
+        // Ternary (Int)
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static int Clamp(int value, int min, int max) => value < min ? min : value > max ? max : value;
     }
 }

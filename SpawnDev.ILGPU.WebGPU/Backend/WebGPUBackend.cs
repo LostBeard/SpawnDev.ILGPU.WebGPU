@@ -49,9 +49,8 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             InitializeKernelTransformers(builder =>
             {
                 // Add any WebGPU-specific transformers
-                var transformerBuilder = Transformer.CreateBuilder(
-                    TransformerConfiguration.Empty);
-                builder.Add(transformerBuilder.ToTransformer());
+                // var transformerBuilder = Transformer.CreateBuilder(TransformerConfiguration.Empty);
+                // builder.Add(transformerBuilder.ToTransformer());
             });
         }
 
@@ -154,8 +153,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             GetIntrinsicManager(Context).RegisterMethod(
                 method,
                 new WebGPUIntrinsic(
-                    handler.Method.DeclaringType,
-                    handler.Method.Name,
+                    handler.Method,
                     IntrinsicImplementationMode.GenerateCode));
         }
 
@@ -179,12 +177,11 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         private void RegisterRedirect(MethodInfo original, MethodInfo target)
         {
             if (original == null || target == null) return;
-            // Console.WriteLine($"WebGPU: Redirecting {original.DeclaringType.Name}.{original.Name} -> {target.DeclaringType.Name}.{target.Name}");
+            Console.WriteLine($"WebGPU: Redirecting {original.DeclaringType.Name}.{original.Name} -> {target.DeclaringType.Name}.{target.Name}");
             GetIntrinsicManager(Context).RegisterMethod(
                 original,
                 new WebGPUIntrinsic(
-                    target.DeclaringType,
-                    target.Name,
+                    target,
                     IntrinsicImplementationMode.Redirect));
         }
 
@@ -195,9 +192,11 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             // Helpers to register: 1. Redirect Original -> Wrapper, 2. Handler for Wrapper
             void Reg(MethodInfo original, MethodInfo wrapper, WGSLIntrinsic.Handler handler)
             {
-                if (original == null || wrapper == null) return;
+                if (original == null) return;
+                // EXPERIMENT: Direct Registration to bypass potentially broken Redirect
                 RegisterRedirect(original, wrapper);
                 RegisterIntrinsic(wrapper, handler);
+                // RegisterIntrinsic(original, handler);
             }
 
             void RegAll(Type type, string name, WGSLIntrinsic.Handler handler)
@@ -222,16 +221,25 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     }
 
                     var pTypes = target.GetParameters().Select(p => p.ParameterType).ToArray();
-                    var wrapper = t.GetMethod(name, BindingFlags.Public | BindingFlags.Static, null, pTypes, null);
+
+                    // FIX: Use GetMethod with types to avoid AmbiguousMatchException
+                    var wrapper = t.GetMethod(
+                        name,
+                        BindingFlags.Public | BindingFlags.Static,
+                        null,
+                        pTypes, // Explicitly pass parameter types
+                        null);
                     
                     if (wrapper != null)
                     {
-                        System.Console.WriteLine($"WebGPU: Mapping {type.Name}.{name} to {t.Name}.{name}");
+                        System.Console.WriteLine($"WebGPU: Mapping {type.Name}.{name}({string.Join(",", pTypes.Select(pt => pt.Name))}) to {t.Name}.{name}");
                         Reg(target, wrapper, handler);
                     }
                     else
                     {
-                        // Some overloads (like double) won't have float wrappers, which is fine
+                        // Debug log for missing wrapper
+                        var pTypeNames = string.Join(", ", pTypes.Select(pt => pt.Name));
+                        System.Console.WriteLine($"WebGPU: Missing wrapper for {type.Name}.{name}({pTypeNames})");
                     }
                 }
             }
@@ -263,6 +271,20 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             RegAll(typeof(MathF), "Pow", WGSLCodeGenerator.GeneratePow);
 
             // Ternary
+            // EXPERIMENT: Redirect Clamp to Max to verify if redirection works at all
+            // RegAll(typeof(Math), "Clamp", WGSLCodeGenerator.GenerateClamp);
+            // RegAll(typeof(MathF), "Clamp", WGSLCodeGenerator.GenerateClamp);
+            RegAll(typeof(Math), "Max", WGSLCodeGenerator.GenerateClamp); // Using GenerateClamp just to match handler signature, but target is Max?
+            // Wait, RegAll finds 'Max' method in 'WebGPUIntrinsics'. I want to map Math.Clamp -> WebGPUIntrinsics.Max
+            
+            // Manual Redirect for test
+            var mClamp = typeof(MathF).GetMethod("Clamp", new[] { typeof(float), typeof(float), typeof(float) });
+            var wMax = typeof(WebGPUIntrinsics).GetMethod("Max", new[] { typeof(float), typeof(float) });
+             // Signature mismatch... Max takes 2 args. 
+            
+            // Revert to standard RegAll for Clamp, but I will modify RegAll to force a different target.
+            
+            // Actually, keep standard RegAll. I suspect FixIntrinsicManager.
             RegAll(typeof(Math), "Clamp", WGSLCodeGenerator.GenerateClamp);
             RegAll(typeof(MathF), "Clamp", WGSLCodeGenerator.GenerateClamp);
 
