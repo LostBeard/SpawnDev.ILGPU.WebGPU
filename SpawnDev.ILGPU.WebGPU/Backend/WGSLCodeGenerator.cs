@@ -772,7 +772,8 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 UnaryArithmeticKind.LogF => $"log({operand})",
                 UnaryArithmeticKind.Log2F => $"log2({operand})",
                 UnaryArithmeticKind.SqrtF => $"sqrt({operand})",
-                UnaryArithmeticKind.RsqrtF => $"inverseSqrt({operand})",
+                UnaryArithmeticKind.RsqrtF => $"1.0 / sqrt({operand})", // Manual inverseSqrt
+                UnaryArithmeticKind.RcpF => $"1.0 / {operand}",
                 UnaryArithmeticKind.FloorF => $"floor({operand})",
                 UnaryArithmeticKind.CeilingF => $"ceil({operand})",
 
@@ -1261,31 +1262,39 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             // Map common intrinsics if they appear as method calls
             string? wgslFunc = name switch
             {
-                var n when n.Contains("Sin") => "sin",
-                var n when n.Contains("Sign") => "sign",
-                var n when n.Contains("Round") => "round",
-                var n when n.Contains("Truncate") => "trunc",
-                var n when n.Contains("FusedMultiplyAdd") => "fma",
-                var n when n.Contains("Cos") => "cos",
-                var n when n.Contains("Tan") => "tan",
+                // Specialized Intrinsics (Check these first to avoid sub-string matches)
+                var n when n.Contains("Rsqrt") => "rsqrt_custom",
+                var n when n.Contains("Rcp") => "rcp_custom", // Special handling
                 var n when n.Contains("Asin") => "asin",
                 var n when n.Contains("Acos") => "acos",
+                var n when n.Contains("Atan2") => "atan2",
                 var n when n.Contains("Atan") => "atan",
+                var n when n.Contains("Sinh") => "sinh",
+                var n when n.Contains("Cosh") => "cosh",
+                var n when n.Contains("Tanh") => "tanh",
+                var n when n.Contains("Step") && !n.Contains("Smooth") => "step",
+                var n when n.Contains("SmoothStep") => "smoothstep",
+                var n when n.Contains("FusedMultiplyAdd") => "fma",
+                
+                // Standard Math
+                var n when n.Contains("Sin") => "sin",
+                var n when n.Contains("Cos") => "cos",
+                var n when n.Contains("Tan") => "tan",
                 var n when n.Contains("Sqrt") => "sqrt",
                 var n when n.Contains("Abs") => "abs",
                 var n when n.Contains("Pow") => "pow",
-                var n when n.Contains("Log") => "log",
                 var n when n.Contains("Exp") => "exp",
+                var n when n.Contains("Log") => "log",
                 var n when n.Contains("Floor") => "floor",
                 var n when n.Contains("Ceiling") => "ceil",
                 var n when n.Contains("Min") => "min",
                 var n when n.Contains("Max") => "max",
                 var n when n.Contains("Clamp") => "clamp",
+                var n when n.Contains("Sign") => "sign",
+                var n when n.Contains("Round") => "round",
+                var n when n.Contains("Truncate") => "trunc",
                 var n when n.Contains("Lerp") || n.Contains("Mix") => "mix",
-                var n when n.Contains("Step") && !n.Contains("Smooth") => "step",
-                var n when n.Contains("SmoothStep") => "smoothstep",
-                var n when n.Contains("Atan2") => "atan2",
-                var n when n.Contains("FusedMultiplyAdd") => "fma",
+                
                 _ => null
             };
 
@@ -1294,6 +1303,18 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 if (methodCall.Count == 1)
                 {
                     var arg = Load(methodCall[0]);
+                    
+                    if (wgslFunc == "rcp_custom")
+                    {
+                        AppendLine($"{target} = 1.0 / {arg};");
+                        return;
+                    }
+                    if (wgslFunc == "rsqrt_custom")
+                    {
+                        AppendLine($"{target} = 1.0 / sqrt({arg});");
+                        return;
+                    }
+
                     string call = $"{wgslFunc}({arg})";
                     if (wgslFunc == "sign" && (TypeGenerator[methodCall.Type] == "i32" || TypeGenerator[methodCall.Type] == "u32"))
                     {
