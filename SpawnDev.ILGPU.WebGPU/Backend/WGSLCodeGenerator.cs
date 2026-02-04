@@ -69,7 +69,10 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         /// <summary>
         /// Represents a variable in WGSL code.
         /// </summary>
-        protected class Variable
+        /// <summary>
+        /// Represents a variable in WGSL code.
+        /// </summary>
+        public class Variable
         {
             public Variable(string name, string type)
             {
@@ -130,6 +133,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         /// <summary>Builder for variable declarations.</summary>
         public StringBuilder VariableBuilder { get; } = new StringBuilder();
 
+        /// <summary>The current intrinsic provider for code-generation purposes.</summary>
+        public global::ILGPU.IR.Intrinsics.IntrinsicImplementationProvider<WGSLIntrinsic.Handler> ImplementationProvider => Backend.IntrinsicProvider;
+
         /// <summary>Current indentation level.</summary>
         protected int IndentLevel { get; set; } = 0;
 
@@ -186,7 +192,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         /// <summary>
         /// Gets the variable for a value, allocating if necessary.
         /// </summary>
-        protected Variable Load(Value value)
+        public Variable Load(Value value)
         {
             if (!valueVariables.TryGetValue(value, out var variable))
             {
@@ -194,6 +200,8 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             }
             return variable;
         }
+
+        public Variable LoadIntrinsicValue(Value value) => Load(value);
 
         /// <summary>
         /// Binds a value to a variable.
@@ -422,6 +430,13 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             // TRACE LOGGING
             AppendLine($"// Visit: {value.GetType().Name} [DISPATCHED]");
 
+            // Check for intrinsic implementation
+            if (ImplementationProvider.TryGetCodeGenerator(value, out var intrinsicCodeGenerator))
+            {
+                intrinsicCodeGenerator(Backend, this, value);
+                return;
+            }
+
             switch (value)
             {
                 // Parameters
@@ -639,7 +654,6 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 BinaryArithmeticKind.Sub => "-",
                 BinaryArithmeticKind.Mul => "*",
                 BinaryArithmeticKind.Div => "/",
-                BinaryArithmeticKind.Rem => "%",
                 BinaryArithmeticKind.And => "&",
                 BinaryArithmeticKind.Or => "|",
                 BinaryArithmeticKind.Xor => "^",
@@ -647,10 +661,18 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 BinaryArithmeticKind.Shr => ">>",
                 BinaryArithmeticKind.Min => "min",
                 BinaryArithmeticKind.Max => "max",
+                BinaryArithmeticKind.Rem when TypeGenerator[value.Left.Type].StartsWith("f") => "frem",
+                BinaryArithmeticKind.Rem => "%",
                 _ => "+"
             };
 
             Declare(target);
+
+            if (op == "frem")
+            {
+                AppendLine($"{target} = {left} - {right} * trunc({left} / {right});");
+                return;
+            }
 
             // Handle pointer arithmetic (e.g., &(*ptr)[offset])
             if (value.Kind == BinaryArithmeticKind.Add)
@@ -1186,6 +1208,10 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             string? wgslFunc = name switch
             {
                 var n when n.Contains("Sin") => "sin",
+                var n when n.Contains("Sign") => "sign",
+                var n when n.Contains("Round") => "round",
+                var n when n.Contains("Truncate") => "trunc",
+                var n when n.Contains("FusedMultiplyAdd") => "fma",
                 var n when n.Contains("Cos") => "cos",
                 var n when n.Contains("Tan") => "tan",
                 var n when n.Contains("Asin") => "asin",
@@ -1200,6 +1226,11 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 var n when n.Contains("Ceiling") => "ceil",
                 var n when n.Contains("Min") => "min",
                 var n when n.Contains("Max") => "max",
+                var n when n.Contains("Clamp") => "clamp",
+                var n when n.Contains("Lerp") || n.Contains("Mix") => "mix",
+                var n when n.Contains("Step") && !n.Contains("Smooth") => "step",
+                var n when n.Contains("SmoothStep") => "smoothstep",
+                var n when n.Contains("Atan2") => "atan2",
                 var n when n.Contains("FusedMultiplyAdd") => "fma",
                 _ => null
             };
@@ -1209,7 +1240,12 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 if (methodCall.Count == 1)
                 {
                     var arg = Load(methodCall[0]);
-                    AppendLine($"{target} = {wgslFunc}({arg});");
+                    string call = $"{wgslFunc}({arg})";
+                    if (wgslFunc == "sign" && (TypeGenerator[methodCall.Type] == "i32" || TypeGenerator[methodCall.Type] == "u32"))
+                    {
+                        call = $"i32({call})";
+                    }
+                    AppendLine($"{target} = {call};");
                     return;
                 }
                 else if (methodCall.Count == 2)
@@ -1406,6 +1442,133 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         public virtual void GenerateCode(LanguageEmitValue value)
         {
             // Raw WGSL emission - not commonly used
+        }
+
+        #endregion
+
+        #region Math Intrinsics
+
+        public static void GenerateAbs(WebGPUBackend backend, WGSLCodeGenerator codeGenerator, Value value)
+        {
+            if (value is MethodCall methodCall)
+            {
+                var target = codeGenerator.LoadIntrinsicValue(value);
+                var operand = codeGenerator.LoadIntrinsicValue(methodCall[0].Resolve());
+                codeGenerator.Declare(target);
+                codeGenerator.AppendLine($"{target} = abs({operand});");
+            }
+        }
+
+        public static void GenerateSign(WebGPUBackend backend, WGSLCodeGenerator codeGenerator, Value value)
+        {
+            if (value is MethodCall methodCall)
+            {
+                var target = codeGenerator.LoadIntrinsicValue(value);
+                var operand = codeGenerator.LoadIntrinsicValue(methodCall[0].Resolve());
+                codeGenerator.Declare(target);
+                string call = $"sign({operand})";
+                if (codeGenerator.TypeGenerator[value.Type] == "i32" || codeGenerator.TypeGenerator[value.Type] == "u32")
+                {
+                    call = $"i32({call})";
+                }
+                codeGenerator.AppendLine($"{target} = {call};");
+            }
+        }
+        
+        public static void GenerateRound(WebGPUBackend backend, WGSLCodeGenerator codeGenerator, Value value)
+        {
+            if (value is MethodCall methodCall)
+            {
+                var target = codeGenerator.LoadIntrinsicValue(value);
+                var operand = codeGenerator.LoadIntrinsicValue(methodCall[0].Resolve());
+                codeGenerator.Declare(target);
+                codeGenerator.AppendLine($"{target} = round({operand});");
+            }
+        }
+
+        public static void GenerateTruncate(WebGPUBackend backend, WGSLCodeGenerator codeGenerator, Value value)
+        {
+            if (value is MethodCall methodCall)
+            {
+                var target = codeGenerator.LoadIntrinsicValue(value);
+                var operand = codeGenerator.LoadIntrinsicValue(methodCall[0].Resolve());
+                codeGenerator.Declare(target);
+                codeGenerator.AppendLine($"{target} = trunc({operand});");
+            }
+        }
+
+        public static void GenerateAtan2(WebGPUBackend backend, WGSLCodeGenerator codeGenerator, Value value)
+        {
+            if (value is MethodCall methodCall)
+            {
+                var target = codeGenerator.LoadIntrinsicValue(value);
+                var y = codeGenerator.LoadIntrinsicValue(methodCall[0].Resolve());
+                var x = codeGenerator.LoadIntrinsicValue(methodCall[1].Resolve());
+                codeGenerator.Declare(target);
+                codeGenerator.AppendLine($"{target} = atan2({y}, {x});");
+            }
+        }
+
+        public static void GenerateMax(WebGPUBackend backend, WGSLCodeGenerator codeGenerator, Value value)
+        {
+            if (value is MethodCall methodCall)
+            {
+                var target = codeGenerator.LoadIntrinsicValue(value);
+                var a = codeGenerator.LoadIntrinsicValue(methodCall[0].Resolve());
+                var b = codeGenerator.LoadIntrinsicValue(methodCall[1].Resolve());
+                codeGenerator.Declare(target);
+                codeGenerator.AppendLine($"{target} = max({a}, {b});");
+            }
+        }
+
+        public static void GenerateMin(WebGPUBackend backend, WGSLCodeGenerator codeGenerator, Value value)
+        {
+            if (value is MethodCall methodCall)
+            {
+                var target = codeGenerator.LoadIntrinsicValue(value);
+                var a = codeGenerator.LoadIntrinsicValue(methodCall[0].Resolve());
+                var b = codeGenerator.LoadIntrinsicValue(methodCall[1].Resolve());
+                codeGenerator.Declare(target);
+                codeGenerator.AppendLine($"{target} = min({a}, {b});");
+            }
+        }
+
+        public static void GeneratePow(WebGPUBackend backend, WGSLCodeGenerator codeGenerator, Value value)
+        {
+            if (value is MethodCall methodCall)
+            {
+                var target = codeGenerator.LoadIntrinsicValue(value);
+                var b = codeGenerator.LoadIntrinsicValue(methodCall[0].Resolve());
+                var e = codeGenerator.LoadIntrinsicValue(methodCall[1].Resolve());
+                codeGenerator.Declare(target);
+                codeGenerator.AppendLine($"{target} = pow({b}, {e});");
+            }
+        }
+
+        public static void GenerateClamp(WebGPUBackend backend, WGSLCodeGenerator codeGenerator, Value value)
+        {
+            if (value is MethodCall methodCall)
+            {
+                var target = codeGenerator.LoadIntrinsicValue(value);
+                var val = codeGenerator.LoadIntrinsicValue(methodCall[0].Resolve());
+                var min = codeGenerator.LoadIntrinsicValue(methodCall[1].Resolve());
+                var max = codeGenerator.LoadIntrinsicValue(methodCall[2].Resolve());
+                codeGenerator.Declare(target);
+                codeGenerator.AppendLine($"{target} = clamp({val}, {min}, {max});");
+            }
+        }
+        
+        public static void GenerateFusedMultiplyAdd(WebGPUBackend backend, WGSLCodeGenerator codeGenerator, Value value)
+        {
+            if (value is MethodCall methodCall)
+            {
+                var target = codeGenerator.LoadIntrinsicValue(value);
+                var x = codeGenerator.LoadIntrinsicValue(methodCall[0].Resolve());
+                var y = codeGenerator.LoadIntrinsicValue(methodCall[1].Resolve());
+                var z = codeGenerator.LoadIntrinsicValue(methodCall[2].Resolve());
+                codeGenerator.Declare(target);
+                codeGenerator.AppendLine($"{target} = fma({x}, {y}, {z});");
+            }
         }
 
         #endregion

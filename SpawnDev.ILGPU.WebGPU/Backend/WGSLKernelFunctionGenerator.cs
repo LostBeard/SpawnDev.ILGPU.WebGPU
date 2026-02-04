@@ -688,16 +688,6 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 AppendLine($"{prefix}{target} = {left} {op} {right};");
         }
 
-        private int GetBlockIndex(BasicBlock block)
-        {
-            int index = 0;
-            foreach (var b in Method.Blocks)
-            {
-                if (b == block) return index;
-                index++;
-            }
-            return -1;
-        }
 
         private void PushPhiValues(BasicBlock targetBlock, BasicBlock sourceBlock)
         {

@@ -592,6 +592,55 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
         }
 
         [TestMethod]
+        public async Task WebGPUIntrinsicMathTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 8;
+            var data = new float[len];
+            using var bufOut = accelerator.Allocate1D<float>(len);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>>(IntrinsicMathKernel);
+            kernel((Index1D)len, bufOut.View);
+            accelerator.Synchronize();
+
+            var result = await ReadBufferAsync<float>(bufOut);
+            
+            // Expected values
+            float[] expected = new float[len];
+            expected[0] = MathF.Atan2(1.0f, 1.0f); // atan2
+            expected[1] = MathF.FusedMultiplyAdd(2.0f, 3.0f, 4.0f); // fma
+            expected[2] = 5.5f % 2.0f; // rem (float)
+            expected[3] = MathF.Round(1.5f); // round
+            expected[4] = MathF.Truncate(1.9f); // trunc
+            expected[5] = Math.Clamp(10.0f, 0.0f, 5.0f); // clamp
+            expected[6] = MathF.Sign(-5.0f); // sign
+            expected[7] = 0.5f; // Step dummy
+
+            for (int i = 0; i < len; i++)
+            {
+                 if (MathF.Abs(result[i] - expected[i]) > 0.001f)
+                    throw new Exception($"Intrinsic Math failed at {i}. Expected {expected[i]}, got {result[i]}");
+            }
+        }
+
+        static void IntrinsicMathKernel(Index1D index, ArrayView<float> data)
+        {
+            if (index == 5) data[index] = SpawnDev.ILGPU.WebGPU.Backend.WebGPUIntrinsics.Clamp(10.0f, 0.0f, 5.0f);
+            else data[index] = 0.0f;
+        }
+
+        static float IntrinsicMathHelper(float val)
+        {
+            // Testing Step/Lerp via more specialized methods if available or just dummy
+            return val;
+        }
+
+        [TestMethod]
         public async Task WebGPUControlFlowTest()
         {
             var builder = Context.Create();

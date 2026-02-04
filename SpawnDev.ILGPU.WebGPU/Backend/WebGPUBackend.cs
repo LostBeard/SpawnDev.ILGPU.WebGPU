@@ -13,8 +13,10 @@ using global::ILGPU.Backends.EntryPoints;
 using global::ILGPU.IR;
 using global::ILGPU.IR.Analyses;
 using global::ILGPU.IR.Transformations;
-using global::ILGPU.Runtime;
+using global::ILGPU.IR.Intrinsics;
 using System.Text;
+using System.Reflection;
+using ILGPU.Runtime;
 
 namespace SpawnDev.ILGPU.WebGPU.Backend
 {
@@ -42,6 +44,8 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                   new WebGPUArgumentMapper(context))
         {
             InitIntrinsicProvider();
+            RegisterMathIntrinsics();
+
             InitializeKernelTransformers(builder =>
             {
                 // Add any WebGPU-specific transformers
@@ -50,6 +54,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 builder.Add(transformerBuilder.ToTransformer());
             });
         }
+
 
         #endregion
 
@@ -64,6 +69,206 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Gets the intrinsic manager via reflection as it is internal.
+        /// </summary>
+        private static IntrinsicImplementationManager GetIntrinsicManager(Context context)
+        {
+            var prop = typeof(Context).GetProperty("IntrinsicManager", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            if (prop == null) throw new InvalidOperationException("Could not find IntrinsicManager property on Context.");
+            var manager = (IntrinsicImplementationManager)prop.GetValue(context);
+            FixIntrinsicManager(manager);
+            return manager;
+        }
+
+        private static void FixIntrinsicManager(IntrinsicImplementationManager manager)
+        {
+            try
+            {
+                var mgrType = typeof(IntrinsicImplementationManager);
+                var containersField = mgrType.GetField("containers", BindingFlags.Instance | BindingFlags.NonPublic);
+                if (containersField == null) return;
+
+                var containers = (Array)containersField.GetValue(manager);
+                int webGpuIndex = (int)BackendType.WebGPU;
+
+                // Check if we need to resize or initialize
+                if (webGpuIndex >= containers.Length || containers.GetValue(webGpuIndex) == null)
+                {
+                    // We need to fix it.
+                    // Get BackendContainer type
+                    var containerType = mgrType.GetNestedType("BackendContainer", BindingFlags.NonPublic);
+                    var createMethod = containerType.GetMethod("Create", BindingFlags.Static | BindingFlags.Public);
+                    
+                    if (webGpuIndex >= containers.Length)
+                    {
+                        Console.WriteLine($"WebGPU: Resizing IntrinsicManager containers from {containers.Length} to {webGpuIndex + 1}");
+                        var newContainers = Array.CreateInstance(containerType, webGpuIndex + 1);
+                        Array.Copy(containers, newContainers, containers.Length);
+                        containers = newContainers;
+                        containersField.SetValue(manager, containers);
+                    }
+
+                    // Initialize the slot
+                    // Since it's a struct, it might be "not null" but default initialized (null matchers)
+                    // We can check if matchers field is null to confirm initialization is needed?
+                    // Actually, let's just create a new one and set it, to be safe.
+                    // But array of structs... setting the value boxes it.
+                    // Array.SetValue works for structs.
+                    
+                    var newContainer = createMethod.Invoke(null, null);
+                    containers.SetValue(newContainer, webGpuIndex);
+                    Console.WriteLine("WebGPU: Initialized BackendContainer for WebGPU.");
+                }
+                else
+                {
+                    // Check if matchers are initialized (it's a struct, so the array entry isn't null, but its fields might be)
+                     var containerType = mgrType.GetNestedType("BackendContainer", BindingFlags.NonPublic);
+                     var container = containers.GetValue(webGpuIndex);
+                     var matchersField = containerType.GetField("matchers", BindingFlags.Instance | BindingFlags.NonPublic);
+                     var matchers = matchersField.GetValue(container);
+                     if (matchers == null)
+                     {
+                         Console.WriteLine("WebGPU: BackendContainer found but uninitialized. Re-initializing.");
+                         var createMethod = containerType.GetMethod("Create", BindingFlags.Static | BindingFlags.Public);
+                         var newContainer = createMethod.Invoke(null, null);
+                         containers.SetValue(newContainer, webGpuIndex);
+                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"WebGPU: Error fixing IntrinsicManager: {ex}");
+            }
+        }
+
+        private void RegisterIntrinsic(MethodInfo method, WGSLIntrinsic.Handler handler)
+        {
+            if (method == null)
+            {
+                Console.WriteLine("WebGPU: Skipping invalid intrinsic method (null)");
+                return;
+            }
+            Console.WriteLine($"WebGPU: Registering Intrinsic: {method.DeclaringType.Name}.{method.Name}");
+            GetIntrinsicManager(Context).RegisterMethod(
+                method,
+                new WebGPUIntrinsic(
+                    handler.Method.DeclaringType,
+                    handler.Method.Name,
+                    IntrinsicImplementationMode.GenerateCode));
+        }
+
+        private void RegisterIntrinsic(Type type, string methodName, WGSLIntrinsic.Handler handler)
+        {
+            var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static)
+                .Where(m => m.Name == methodName);
+            
+            bool found = false;
+            foreach (var method in methods)
+            {
+                found = true;
+                RegisterIntrinsic(method, handler);
+            }
+            if (!found)
+            {
+                Console.WriteLine($"WebGPU: Intrinsic not found: {type.Name}.{methodName}");
+            }
+        }
+
+        private void RegisterRedirect(MethodInfo original, MethodInfo target)
+        {
+            if (original == null || target == null) return;
+            // Console.WriteLine($"WebGPU: Redirecting {original.DeclaringType.Name}.{original.Name} -> {target.DeclaringType.Name}.{target.Name}");
+            GetIntrinsicManager(Context).RegisterMethod(
+                original,
+                new WebGPUIntrinsic(
+                    target.DeclaringType,
+                    target.Name,
+                    IntrinsicImplementationMode.Redirect));
+        }
+
+        private void RegisterMathIntrinsics()
+        {
+            var t = typeof(WebGPUIntrinsics);
+
+            // Helpers to register: 1. Redirect Original -> Wrapper, 2. Handler for Wrapper
+            void Reg(MethodInfo original, MethodInfo wrapper, WGSLIntrinsic.Handler handler)
+            {
+                if (original == null || wrapper == null) return;
+                RegisterRedirect(original, wrapper);
+                RegisterIntrinsic(wrapper, handler);
+            }
+
+            void RegAll(Type type, string name, WGSLIntrinsic.Handler handler)
+            {
+                var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static)
+                    .Where(m => m.Name == name);
+                
+                foreach (var m in methods)
+                {
+                    MethodInfo target = m;
+                    if (m.IsGenericMethod)
+                    {
+                        var gArgs = m.GetGenericArguments();
+                        if (gArgs.Length == 1)
+                        {
+                            try { target = m.MakeGenericMethod(typeof(float)); } catch { continue; }
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+
+                    var pTypes = target.GetParameters().Select(p => p.ParameterType).ToArray();
+                    var wrapper = t.GetMethod(name, BindingFlags.Public | BindingFlags.Static, null, pTypes, null);
+                    
+                    if (wrapper != null)
+                    {
+                        System.Console.WriteLine($"WebGPU: Mapping {type.Name}.{name} to {t.Name}.{name}");
+                        Reg(target, wrapper, handler);
+                    }
+                    else
+                    {
+                        // Some overloads (like double) won't have float wrappers, which is fine
+                    }
+                }
+            }
+
+            // Unary
+            RegAll(typeof(Math), "Abs", WGSLCodeGenerator.GenerateAbs);
+            RegAll(typeof(MathF), "Abs", WGSLCodeGenerator.GenerateAbs);
+            
+            RegAll(typeof(Math), "Sign", WGSLCodeGenerator.GenerateSign);
+            RegAll(typeof(MathF), "Sign", WGSLCodeGenerator.GenerateSign);
+
+            RegAll(typeof(Math), "Round", WGSLCodeGenerator.GenerateRound);
+            RegAll(typeof(MathF), "Round", WGSLCodeGenerator.GenerateRound);
+
+            RegAll(typeof(Math), "Truncate", WGSLCodeGenerator.GenerateTruncate);
+            RegAll(typeof(MathF), "Truncate", WGSLCodeGenerator.GenerateTruncate);
+
+            // Binary
+            RegAll(typeof(Math), "Atan2", WGSLCodeGenerator.GenerateAtan2);
+            RegAll(typeof(MathF), "Atan2", WGSLCodeGenerator.GenerateAtan2);
+
+            RegAll(typeof(Math), "Max", WGSLCodeGenerator.GenerateMax);
+            RegAll(typeof(MathF), "Max", WGSLCodeGenerator.GenerateMax);
+
+            RegAll(typeof(Math), "Min", WGSLCodeGenerator.GenerateMin);
+            RegAll(typeof(MathF), "Min", WGSLCodeGenerator.GenerateMin);
+
+            RegAll(typeof(Math), "Pow", WGSLCodeGenerator.GeneratePow);
+            RegAll(typeof(MathF), "Pow", WGSLCodeGenerator.GeneratePow);
+
+            // Ternary
+            RegAll(typeof(Math), "Clamp", WGSLCodeGenerator.GenerateClamp);
+            RegAll(typeof(MathF), "Clamp", WGSLCodeGenerator.GenerateClamp);
+
+            RegAll(typeof(Math), "FusedMultiplyAdd", WGSLCodeGenerator.GenerateFusedMultiplyAdd);
+            RegAll(typeof(MathF), "FusedMultiplyAdd", WGSLCodeGenerator.GenerateFusedMultiplyAdd);
+        }
 
         /// <summary>
         /// Creates a new entry point.

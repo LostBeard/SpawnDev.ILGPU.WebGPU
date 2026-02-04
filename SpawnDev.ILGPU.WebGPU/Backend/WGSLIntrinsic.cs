@@ -27,4 +27,41 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             WGSLCodeGenerator codeGenerator,
             global::ILGPU.IR.Value value);
     }
+
+    /// <summary>
+    /// Represents a specific handler for user defined code-generation functionality
+    /// that is compatible with the <see cref="WebGPUBackend"/>.
+    /// </summary>
+    public sealed class WebGPUIntrinsic : global::ILGPU.IR.Intrinsics.IntrinsicImplementation
+    {
+        /// <summary>
+        /// Constructs a new WebGPU intrinsic.
+        /// </summary>
+        /// <param name="targetMethod">The associated target method.</param>
+        /// <param name="mode">The code-generation mode.</param>
+        public WebGPUIntrinsic(System.Reflection.MethodInfo targetMethod, global::ILGPU.IR.Intrinsics.IntrinsicImplementationMode mode)
+            : base(
+                  global::ILGPU.Backends.BackendType.WebGPU,
+                  targetMethod,
+                  mode)
+        { }
+
+        /// <summary>
+        /// Constructs a new WebGPU intrinsic.
+        /// </summary>
+        /// <param name="handlerType">The associated target handler type.</param>
+        /// <param name="methodName">The target method name (or null).</param>
+        /// <param name="mode">The code-generator mode.</param>
+        public WebGPUIntrinsic(System.Type handlerType, string methodName, global::ILGPU.IR.Intrinsics.IntrinsicImplementationMode mode)
+            : base(
+                  global::ILGPU.Backends.BackendType.WebGPU,
+                  handlerType,
+                  methodName,
+                  mode)
+        { }
+
+        /// <summary cref="global::ILGPU.IR.Intrinsics.IntrinsicImplementation.CanHandleBackend(global::ILGPU.Backends.Backend)"/>
+        protected override bool CanHandleBackend(global::ILGPU.Backends.Backend backend) =>
+            backend is WebGPUBackend;
+    }
 }
