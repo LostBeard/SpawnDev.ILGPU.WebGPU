@@ -156,6 +156,10 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                  name = GetBasicValueType(primitiveType.BasicValueType);
                  if (name == null) name = "u32"; // Actual fallback for unknown primitives
             }
+            else if (typeNode is ViewType viewType)
+            {
+                name = this[viewType.ElementType];
+            }
             else
             {
                 name = "u32"; // Fallback for unknown node types

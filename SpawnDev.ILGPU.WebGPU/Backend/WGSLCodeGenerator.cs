@@ -203,7 +203,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             valueVariables[value] = variable;
         }
 
-        private readonly HashSet<string> declaredVariables = new();
+        protected readonly HashSet<string> declaredVariables = new();
 
         /// <summary>
         /// Declares a variable in the current scope.
@@ -470,6 +470,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 case global::ILGPU.IR.Values.Alloca v:
                     GenerateCode(v);
                     break;
+                case global::ILGPU.IR.Values.NewView v:
+                    GenerateCode(v);
+                    break;
 
                 // Constants
                 case global::ILGPU.IR.Values.PrimitiveValue v:
@@ -688,7 +691,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             string result = value.Kind switch
             {
                 UnaryArithmeticKind.Neg => $"-{operand}",
-                UnaryArithmeticKind.Not => $"!{operand}",
+                UnaryArithmeticKind.Not => TypeGenerator[value.Value.Type] == "bool" ? $"!{operand}" : $"~{operand}",
                 
                 // Math Intrinsics (Float)
                 UnaryArithmeticKind.Abs => $"abs({operand})",
@@ -843,6 +846,14 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             Builder.Append(" = ");
             Builder.Append($"&{source}[{offset}];");
             Builder.AppendLine();
+        }
+
+        public virtual void GenerateCode(global::ILGPU.IR.Values.NewView value)
+        {
+            var target = Load(value);
+            var source = Load(value.Pointer);
+            Declare(target);
+            AppendLine($"{target} = {source}; // newView");
         }
 
         public virtual void GenerateCode(LoadFieldAddress value)
@@ -1172,7 +1183,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             
             string name = methodCall.Target.Name;
             // Map common intrinsics if they appear as method calls
-            string wgslFunc = name switch
+            string? wgslFunc = name switch
             {
                 "Sin" => "sin",
                 "Cos" => "cos",

@@ -166,6 +166,22 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     bindingIdx++;
                 }
             }
+            
+            builder.AppendLine();
+            
+            // Emit shared memory allocations
+            foreach (var alloca in Allocas.SharedAllocations)
+            {
+                var variable = Load(alloca.Alloca);
+                declaredVariables.Add(variable.Name);
+
+                var elementType = alloca.ElementType;
+                int entryCount = (int)alloca.ArraySize;
+                
+                var wgslType = TypeGenerator[elementType];
+                builder.AppendLine($"var<workgroup> {variable.Name} : array<{wgslType}, {entryCount}>;");
+            }
+
             builder.AppendLine();
         }
 
@@ -493,9 +509,21 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             var target = Load(value);
             var left = Load(value.Left);
             var right = Load(value.Right);
-            var op = GetArithmeticOp(value.Kind);
-
             string prefix = GetPrefix(value);
+
+            if (value.Kind == BinaryArithmeticKind.Min || value.Kind == BinaryArithmeticKind.Max || value.Kind == BinaryArithmeticKind.PowF)
+            {
+                string func = value.Kind switch {
+                    BinaryArithmeticKind.Min => "min",
+                    BinaryArithmeticKind.Max => "max",
+                    BinaryArithmeticKind.PowF => "pow",
+                    _ => "min"
+                };
+                AppendLine($"{prefix}{target} = {func}({left}, {right});");
+                return;
+            }
+
+            var op = GetArithmeticOp(value.Kind);
 
             if (value.Kind == BinaryArithmeticKind.Shl || value.Kind == BinaryArithmeticKind.Shr)
                 AppendLine($"{prefix}{target} = {left} {op} u32({right});");
@@ -577,7 +605,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 if (block.Terminator is UnconditionalBranch ub) GenerateCode(ub);
                 else if (block.Terminator is IfBranch ib) GenerateCode(ib);
                 else if (block.Terminator is ReturnTerminator rt) GenerateCode(rt);
-                else this.GenerateCodeFor(block.Terminator);
+                else if (block.Terminator != null) this.GenerateCodeFor(block.Terminator);
 
                 PopIndent();
                 AppendIndent();

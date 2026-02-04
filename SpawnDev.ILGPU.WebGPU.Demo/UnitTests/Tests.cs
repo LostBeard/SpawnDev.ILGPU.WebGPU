@@ -699,5 +699,237 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             }
         }
 
+        [TestMethod]
+        public async Task WebGPUAdvancedMathTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 10;
+            var input = new float[len];
+            for (int i = 0; i < len; i++) input[i] = (i + 1) * 0.5f;
+
+            using var bufIn = accelerator.Allocate1D(input);
+            using var bufOut = accelerator.Allocate1D<float>(len);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>, ArrayView<float>>(AdvancedMathKernel);
+            kernel((Index1D)len, bufIn.View, bufOut.View);
+            accelerator.Synchronize();
+
+            var result = await ReadBufferAsync<float>(bufOut);
+            for (int i = 0; i < len; i++)
+            {
+                float val = input[i];
+                // Tan + Exp + Log + Pow(2) + Min + Max
+                float expected = MathF.Tan(val) + MathF.Exp(val) + MathF.Log(MathF.Abs(val) + 1.0f) + MathF.Pow(val, 2.0f) + MathF.Min(val, 2.0f) + MathF.Max(val, 3.0f);
+                if (MathF.Abs(result[i] - expected) > 0.01f) // Relaxed tolerance
+                    throw new Exception($"Advanced Math failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        [TestMethod]
+        public async Task WebGPUBitwiseTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 10;
+            var data = new int[len];
+            for (int i = 0; i < len; i++) data[i] = i + 1; // 1..10
+
+            using var buf = accelerator.Allocate1D(data);
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>>(BitwiseKernel);
+            kernel((Index1D)len, buf.View);
+            accelerator.Synchronize();
+
+            var result = await ReadBufferAsync<int>(buf);
+            for (int i = 0; i < len; i++)
+            {
+                int val = i + 1;
+                // (<< 1) + (>> 1) + (& 1) + (| 1) + (^ 1) + (~val)
+                // Note: ~val matches C# ~ operator behavior
+                int expected = (val << 1) + (val >> 1) + (val & 1) + (val | 1) + (val ^ 1) + (~val);
+                if (result[i] != expected)
+                    throw new Exception($"Bitwise failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        static void AdvancedMathKernel(Index1D index, ArrayView<float> input, ArrayView<float> output)
+        {
+            float val = input[index];
+            output[index] = MathF.Tan(val) + MathF.Exp(val) + MathF.Log(MathF.Abs(val) + 1.0f) + MathF.Pow(val, 2.0f) + MathF.Min(val, 2.0f) + MathF.Max(val, 3.0f);
+        }
+
+        static void BitwiseKernel(Index1D index, ArrayView<int> data)
+        {
+            int val = data[index];
+            int res = (val << 1) + (val >> 1) + (val & 1) + (val | 1) + (val ^ 1) + (~val);
+            data[index] = res;
+        }
+
+        [TestMethod]
+        public async Task WebGPUConversionTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 10;
+            var input = new float[len];
+            for (int i = 0; i < len; i++) input[i] = i + 0.5f;
+
+            using var buf = accelerator.Allocate1D(input);
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>>(ConversionKernel);
+            kernel((Index1D)len, buf.View);
+            accelerator.Synchronize();
+
+            var result = await ReadBufferAsync<float>(buf);
+            for (int i = 0; i < len; i++)
+            {
+                // (int)(i + 0.5f) -> i
+                // (float)i -> i.0
+                float expected = (float)((int)(i + 0.5f));
+                if (result[i] != expected)
+                    throw new Exception($"Conversion failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        [TestMethod]
+        public async Task WebGPUSharedMemoryTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 64;
+            var data = new int[len];
+            for (int i = 0; i < len; i++) data[i] = i;
+
+            using var buf = accelerator.Allocate1D(data);
+            var kernel = accelerator.LoadStreamKernel<Index1D, ArrayView<int>>(SharedMemoryKernel);
+            kernel(new KernelConfig(len / 64, 64), (Index1D)len, buf.View);
+            accelerator.Synchronize();
+
+            var result = await ReadBufferAsync<int>(buf);
+            for (int i = 0; i < len; i++)
+            {
+                // Each thread reads neighbor (i+1)%64
+                int expected = (i + 1) % len;
+                if (result[i] != expected)
+                    throw new Exception($"Shared Memory failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        [TestMethod]
+        public async Task WebGPUNestedControlFlowTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 10;
+            var data = new int[len];
+            
+            using var buf = accelerator.Allocate1D(data);
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>>(NestedControlFlowKernel);
+            kernel((Index1D)len, buf.View);
+            accelerator.Synchronize();
+
+            var result = await ReadBufferAsync<int>(buf);
+            for (int i = 0; i < len; i++)
+            {
+                // Logic:
+                // sum = 0
+                // for j in 0..2:
+                //   for k in 0..2:
+                //     sum += k
+                //   if (j == 1) sum += 10
+                // Total:
+                // j=0: k=0,1,2 -> sum=3
+                // j=1: k=0,1,2 -> sum=6 -> 16
+                // j=2: k=0,1,2 -> sum=19
+                int expected = 19;
+                if (result[i] != expected)
+                    throw new Exception($"Nested Control Flow failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        [TestMethod]
+        public async Task WebGPUFunctionCallTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 10;
+            var data = new int[len];
+            
+            using var buf = accelerator.Allocate1D(data);
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>>(FunctionCallKernel);
+            kernel((Index1D)len, buf.View);
+            accelerator.Synchronize();
+
+            var result = await ReadBufferAsync<int>(buf);
+            for (int i = 0; i < len; i++)
+            {
+                // MyAdd(i, 100) -> i + 100
+                int expected = i + 100;
+                if (result[i] != expected)
+                    throw new Exception($"Function Call failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        static void ConversionKernel(Index1D index, ArrayView<float> data)
+        {
+            float val = data[index];
+            int intVal = (int)val;
+            float floatVal = (float)intVal;
+            data[index] = floatVal;
+        }
+
+        static void SharedMemoryKernel(Index1D index, ArrayView<int> data)
+        {
+            var shared = SharedMemory.Allocate<int>(64);
+            shared[index] = data[index];
+            Group.Barrier();
+            int neighbor = (index + 1) % 64;
+            data[index] = shared[neighbor];
+        }
+
+        static void NestedControlFlowKernel(Index1D index, ArrayView<int> data)
+        {
+            int sum = 0;
+            for (int j = 0; j < 3; j++)
+            {
+                for (int k = 0; k < 3; k++)
+                {
+                    sum += k;
+                }
+                if (j == 1) sum += 10;
+            }
+            data[index] = sum;
+        }
+
+        static int MyAdd(int a, int b) { return a + b; }
+
+        static void FunctionCallKernel(Index1D index, ArrayView<int> data)
+        {
+            data[index] = MyAdd(index, 100);
+        }
+
     }
 }
