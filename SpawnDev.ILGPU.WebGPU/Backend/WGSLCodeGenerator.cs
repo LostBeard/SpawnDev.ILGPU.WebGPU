@@ -1219,6 +1219,14 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     AppendLine($"{target} = {wgslFunc}({arg1}, {arg2});");
                     return;
                 }
+                else if (methodCall.Count == 3)
+                {
+                    var arg1 = Load(methodCall[0]);
+                    var arg2 = Load(methodCall[1]);
+                    var arg3 = Load(methodCall[2]);
+                    AppendLine($"{target} = {wgslFunc}({arg1}, {arg2}, {arg3});");
+                    return;
+                }
             }
 
             AppendLine($"// Call: {methodCall.Target.Name} (Unmapped)");
