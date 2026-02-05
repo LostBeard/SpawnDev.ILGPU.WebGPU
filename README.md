@@ -53,6 +53,9 @@ kernel((Index1D)length, bufA.View, bufB.View, bufC.View);
 // Wait for GPU to complete (async required in Blazor WASM)
 await accelerator.SynchronizeAsync();
 
+// Read back the results
+var results = await bufC.CopyToHostAsync();
+
 // Define the kernel
 static void VectorAddKernel(Index1D index, ArrayView<float> a, ArrayView<float> b, ArrayView<float> c)
 {
