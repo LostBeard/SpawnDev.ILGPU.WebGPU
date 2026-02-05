@@ -83,7 +83,19 @@ namespace ILGPU.Frontend.Intrinsic
 
             RegisterMathRemappings();
             RegisterBitConverterRemappings();
-            RegisterBitOperationsRemappings();
+            // BitOperations methods may not exist in all runtimes (e.g., Blazor WebAssembly)
+            try
+            {
+                RegisterBitOperationsRemappings();
+            }
+            catch (MissingMethodException)
+            {
+                // Silently ignore - BitOperations intrinsics won't be available
+            }
+            catch (TypeLoadException)
+            {
+                // Type may not exist in WASM runtime
+            }
             RegisterCopySignRemappings();
             RegisterInterlockedRemappings();
         }

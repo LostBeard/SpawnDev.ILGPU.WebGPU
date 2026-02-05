@@ -1,4 +1,4 @@
-﻿// ---------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------
 //                                        ILGPU
 //                           Copyright (c) 2023 ILGPU Project
 //                                    www.ilgpu.net
@@ -20,7 +20,6 @@
 // Source License. See LICENSE.txt for details.
 // ---------------------------------------------------------------------------------------
 
-
 // ---------------------------------------------------------------------------------------
 //                                        ILGPU
 //                           Copyright (c) 2023 ILGPU Project
@@ -31,7 +30,6 @@
 // This file is part of ILGPU and is distributed under the University of Illinois Open
 // Source License. See LICENSE.txt for details.
 // ---------------------------------------------------------------------------------------
-
 
 
 using System.Collections.Generic;

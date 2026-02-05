@@ -6,6 +6,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<!-- Disable IL trimming to preserve ILGPU kernel methods invoked via reflection -->
 		<PublishTrimmed>false</PublishTrimmed>
+		<CompressionEnabled>false</CompressionEnabled>
 	</PropertyGroup>
 
 	<ItemGroup>
