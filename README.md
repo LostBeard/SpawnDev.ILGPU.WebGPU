@@ -23,23 +23,40 @@ dotnet add package SpawnDev.ILGPU.WebGPU
 ## Quick Start
 
 ```csharp
+using ILGPU;
+using ILGPU.Runtime;
 using SpawnDev.ILGPU.WebGPU;
 
-// Initialize WebGPU context
-var context = Context.Create(builder => builder.WebGPU());
-var accelerator = context.GetPreferredDevice(preferCPU: false)
-    .CreateAccelerator(context);
+// Initialize ILGPU context with WebGPU backend
+var builder = Context.Create();
+await builder.WebGPUAsync();
+using var context = builder.ToContext();
 
-// Load and run a kernel
-var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>>(MyKernel);
+// Get WebGPU device and create accelerator
+var devices = context.GetWebGPUDevices();
+var device = devices[0];
+using var accelerator = await device.CreateAcceleratorAsync(context);
 
-using var buffer = accelerator.Allocate1D<float>(1024);
-kernel((int)buffer.Length, buffer.View);
-accelerator.Synchronize();
+// Allocate buffers
+int length = 64;
+var a = Enumerable.Range(0, length).Select(i => (float)i).ToArray();
+var b = Enumerable.Range(0, length).Select(i => (float)i * 2.0f).ToArray();
 
-static void MyKernel(Index1D index, ArrayView<float> data)
+using var bufA = accelerator.Allocate1D(a);
+using var bufB = accelerator.Allocate1D(b);
+using var bufC = accelerator.Allocate1D<float>(length);
+
+// Load and execute kernel
+var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>, ArrayView<float>, ArrayView<float>>(VectorAddKernel);
+kernel((Index1D)length, bufA.View, bufB.View, bufC.View);
+
+// Wait for GPU to complete (async required in Blazor WASM)
+await accelerator.SynchronizeAsync();
+
+// Define the kernel
+static void VectorAddKernel(Index1D index, ArrayView<float> a, ArrayView<float> b, ArrayView<float> c)
 {
-    data[index] = index;
+    c[index] = a[index] + b[index];
 }
 ```
 
@@ -87,6 +104,20 @@ WebGPU is required. Supported browsers:
 - Some advanced ILGPU features may not yet be supported
 - Subgroups extension not available in all browsers
 - Dynamic shared memory requires Pipeline Overridable Constants (not yet implemented)
+
+## Async Synchronization
+
+In Blazor WebAssembly, the main thread cannot block. Use `SynchronizeAsync()` instead of `Synchronize()`:
+
+```csharp
+// ❌ Don't use - non-blocking in Blazor WASM
+accelerator.Synchronize();
+
+// ✅ Use async version
+await accelerator.SynchronizeAsync();
+```
+
+The standard `Synchronize()` method will log a warning and return immediately without waiting.
 
 ## License
 

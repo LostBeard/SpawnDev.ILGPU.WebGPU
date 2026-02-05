@@ -1,184 +1,217 @@
 ﻿@page "/"
 @using SpawnDev.ILGPU.WebGPU
 
-<PageTitle>WebGPU Demo</PageTitle>
+<PageTitle>SpawnDev.ILGPU.WebGPU Demo</PageTitle>
 
-<h1>WebGPU Backend for ILGPU Demo</h1>
-
-<div class="card mb-3">
-    <div class="card-header">Status</div>
-    <div class="card-body">
-        <p><strong>Device:</strong> @(_deviceInfo ?? "Searching...")</p>
-        <p><strong>Test Status:</strong> <span class="@_statusClass">@_statusMessage</span></p>
-    </div>
-</div>
-
-<div class="mb-3">
-    <button class="btn btn-primary" @onclick="RunTest" disabled="@(!_isSupported || _isRunning)">Run Compute Test</button>
-</div>
-
-@if (_logs.Count > 0)
-{
-    <div class="card">
-        <div class="card-header">Logs</div>
-        <div class="card-body bg-light" style="max-height: 400px; overflow-y: auto;">
-            @foreach (var log in _logs)
-            {
-                <div class="text-monospace">@log</div>
-            }
+<div class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">
+            <span class="gradient-text">ILGPU + WebGPU</span>
+        </h1>
+        <p class="hero-subtitle">GPU-accelerated compute in the browser</p>
+        <p class="hero-description">
+            Run ILGPU kernels directly in your browser using WebGPU. 
+            Write GPU compute shaders in C# and compile them to WGSL automatically.
+        </p>
+        <div class="hero-buttons">
+            <a href="/tests" class="btn btn-primary btn-lg">
+                <span class="btn-icon">▶</span> Run Tests
+            </a>
+            <a href="/mandelbrot" class="btn btn-secondary btn-lg">
+                <span class="btn-icon">🎨</span> Mandelbrot Demo
+            </a>
         </div>
     </div>
-}
+</div>
 
-@code {
-    private string? _deviceInfo;
-    private string _statusMessage = "Ready";
-    private string _statusClass = "text-secondary";
-    private bool _isSupported;
-    private bool _isRunning;
-    private List<string> _logs = new();
+<div class="features-section">
+    <h2 class="section-title">Features</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>ILGPU Compatible</h3>
+            <p>Use familiar ILGPU APIs - ArrayView, Index1D/2D/3D, math intrinsics, and more.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔄</div>
+            <h3>WGSL Transpilation</h3>
+            <p>C# kernels are automatically compiled to WebGPU Shading Language (WGSL).</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🌐</div>
+            <h3>Blazor WebAssembly</h3>
+            <p>Seamless integration with Blazor WASM via SpawnDev.BlazorJS.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🧵</div>
+            <h3>Shared Memory & Atomics</h3>
+            <p>Supports workgroup shared memory, barriers, and atomic operations.</p>
+        </div>
+    </div>
+</div>
 
-    protected override async Task OnInitializedAsync()
-    {
-        _isSupported = WebGPUDevice.IsSupported;
-        if (!_isSupported)
-        {
-            _deviceInfo = "WebGPU is not supported in this browser.";
-            _statusMessage = "Not Supported";
-            _statusClass = "text-danger";
-        }
-        else
-        {
-            var device = await WebGPUDevice.GetDefaultDeviceAsync();
-            if (device != null)
-            {
-                _deviceInfo = $"{device.Name} ({device.Vendor})";
-            }
-            else
-            {
-                _deviceInfo = "WebGPU supported, but no adapter found.";
-            }
-        }
+<div class="code-section">
+    <h2 class="section-title">Quick Start</h2>
+    <pre class="code-block"><code>// Initialize ILGPU context with WebGPU backend
+var builder = Context.Create();
+await builder.WebGPUAsync();
+using var context = builder.ToContext();
+
+// Get WebGPU device and create accelerator
+var device = context.GetWebGPUDevices()[0];
+using var accelerator = await device.CreateAcceleratorAsync(context);
+
+// Load and execute kernel
+var kernel = accelerator.LoadAutoGroupedStreamKernel&lt;Index1D, ArrayView&lt;float&gt;&gt;(MyKernel);
+kernel((Index1D)length, buffer.View);
+await accelerator.SynchronizeAsync();</code></pre>
+</div>
+
+<style>
+    .hero-section {
+        text-align: center;
+        padding: 3rem 1rem;
+        margin-bottom: 2rem;
     }
 
-    private void Log(string message)
-    {
-        _logs.Add($"[{DateTime.Now:HH:mm:ss.fff}] {message}");
-        StateHasChanged();
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
     }
 
-    private async Task RunTest()
-    {
-        _isRunning = true;
-        _statusMessage = "Running...";
-        _statusClass = "text-warning";
-        _logs.Clear();
-        StateHasChanged();
-
-        try
-        {
-            Log("Requesting WebGPU device...");
-            var device = await WebGPUDevice.GetDefaultDeviceAsync();
-            if (device == null)
-            {
-                throw new Exception("No WebGPU device found.");
-            }
-
-            Log($"Created device: {device.Name}");
-
-            using var accelerator = await device.CreateAcceleratorAsync();
-            Log("Accelerator initialized.");
-
-            // Test vector addition: C = A + B
-            int length = 1024;
-            var dataA = new float[length];
-            var dataB = new float[length];
-            var expected = new float[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                dataA[i] = i;
-                dataB[i] = i * 2;
-                expected[i] = dataA[i] + dataB[i];
-            }
-
-            Log($"Allocating buffers for {length} elements...");
-            using var bufferA = accelerator.Allocate(dataA);
-            using var bufferB = accelerator.Allocate(dataB);
-            using var bufferC = accelerator.Allocate<float>(length);
-
-            Log("Compiling compute shader...");
-            // Simple vector addition kernel in WGSL
-            string wgsl = @"
-struct Params {
-    length : u32,
-}
-
-@group(0) @binding(0) var<storage, read> inputA : array<f32>;
-@group(0) @binding(1) var<storage, read> inputB : array<f32>;
-@group(0) @binding(2) var<storage, read_write> outputC : array<f32>;
-
-@compute @workgroup_size(64)
-fn main(@builtin(global_invocation_id) global_id : vec3<u32>) {
-    let i = global_id.x;
-    if (i >= arrayLength(&outputC)) {
-        return;
+    .gradient-text {
+        background: linear-gradient(135deg, #00d4ff 0%, #7c3aed 50%, #f472b6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
-    outputC[i] = inputA[i] + inputB[i];
-}
-";
-            using var shader = accelerator.CreateComputeShader(wgsl);
-            
-            Log("Binding buffers...");
-            // Note: Indices match @binding values
-            shader.SetBuffer(0, bufferA)
-                  .SetBuffer(1, bufferB)
-                  .SetBuffer(2, bufferC);
 
-            Log("Dispatching kernel...");
-            uint groupSize = 64;
-            uint numGroups = (uint)((length + groupSize - 1) / groupSize);
-            shader.Dispatch(numGroups);
-
-            Log("Downloading results...");
-            var result = await bufferC.CopyToHostAsync();
-
-            Log("Verifying results...");
-            bool passed = true;
-            for (int i = 0; i < length; i++)
-            {
-                if (Math.Abs(result[i] - expected[i]) > 0.0001f)
-                {
-                    Log($"Error at index {i}: expected {expected[i]}, got {result[i]}");
-                    passed = false;
-                    break;
-                }
-            }
-
-            if (passed)
-            {
-                Log("SUCCESS: Vector addition verified correctly!");
-                _statusMessage = "Passed";
-                _statusClass = "text-success";
-            }
-            else
-            {
-                Log("FAILED: Result verification mismatch.");
-                _statusMessage = "Failed";
-                _statusClass = "text-danger";
-            }
-        }
-        catch (Exception ex)
-        {
-            Log($"Exception: {ex.Message}");
-            Console.WriteLine(ex);
-            _statusMessage = "Error";
-            _statusClass = "text-danger";
-        }
-        finally
-        {
-            _isRunning = false;
-            StateHasChanged();
-        }
+    .hero-subtitle {
+        font-size: 1.5rem;
+        color: #94a3b8;
+        margin-bottom: 1rem;
     }
-}
+
+    .hero-description {
+        max-width: 600px;
+        margin: 0 auto 2rem auto;
+        color: #64748b;
+        line-height: 1.6;
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        color: white;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+    }
+
+    .btn-secondary {
+        background: rgba(255, 255, 255, 0.1);
+        color: #e2e8f0;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateY(-2px);
+    }
+
+    .btn-icon {
+        font-size: 1.1rem;
+    }
+
+    .section-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        color: #f1f5f9;
+    }
+
+    .features-section {
+        padding: 2rem 0;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .feature-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 1.5rem;
+        transition: all 0.2s ease;
+    }
+
+    .feature-card:hover {
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateY(-4px);
+        border-color: rgba(139, 92, 246, 0.3);
+    }
+
+    .feature-icon {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #f1f5f9;
+        margin-bottom: 0.5rem;
+    }
+
+    .feature-card p {
+        color: #94a3b8;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    .code-section {
+        padding: 2rem 0;
+    }
+
+    .code-block {
+        background: rgba(0, 0, 0, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 1.5rem;
+        overflow-x: auto;
+        font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+        font-size: 0.85rem;
+        line-height: 1.6;
+        color: #e2e8f0;
+    }
+
+    .code-block code {
+        color: #e2e8f0;
+    }
+</style>

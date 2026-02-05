@@ -61,196 +61,6 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
         }
 
         [TestMethod]
-        public async Task WebGPUComputeTest()
-        {
-            var device = await WebGPU.WebGPUDevice.GetDefaultDeviceAsync();
-            if (device == null)
-                throw new UnsupportedTestException("No WebGPU devices found");
-
-            using var accelerator = await device.CreateAcceleratorAsync();
-
-            int length = 64;
-            var input = Enumerable.Range(0, length).Select(i => (float)i).ToArray();
-            var zeros = new float[length];
-
-            using var bufferIn = accelerator.Allocate(input);
-            using var bufferOut = accelerator.Allocate(zeros); // Output buffer initialized to zeros
-
-            string wgsl = @"
-@group(0) @binding(0) var<storage, read> input : array<f32>;
-@group(0) @binding(1) var<storage, read_write> output : array<f32>;
-
-@compute @workgroup_size(64)
-fn main(@builtin(global_invocation_id) global_id : vec3<u32>) {
-    let i = global_id.x;
-    if (i >= arrayLength(&output)) {
-        return;
-    }
-    output[i] = input[i] * 2.0;
-}
-";
-            using var shader = accelerator.CreateComputeShader(wgsl);
-
-            shader.SetBuffer(0, bufferIn)
-                  .SetBuffer(1, bufferOut);
-
-            // Dispatch 1 group of 64
-            shader.Dispatch(1);
-
-            var result = await bufferOut.CopyToHostAsync();
-
-            for (int i = 0; i < length; i++)
-            {
-                var expected = input[i] * 2.0f;
-                if (Math.Abs(result[i] - expected) > 0.0001f)
-                    throw new Exception($"Compute error at {i}. Expected {expected}, got {result[i]}");
-            }
-        }
-
-        [TestMethod]
-        public async Task WebGPUMultipleDispatchTest()
-        {
-            var device = await WebGPU.WebGPUDevice.GetDefaultDeviceAsync();
-            if (device == null)
-                throw new UnsupportedTestException("No WebGPU devices found");
-
-            using var accelerator = await device.CreateAcceleratorAsync();
-
-            float[] data = new float[] { 1.0f };
-            using var buffer = accelerator.Allocate(data);
-
-            string wgsl = @"
-@group(0) @binding(0) var<storage, read_write> data : array<f32>;
-
-@compute @workgroup_size(1)
-fn main(@builtin(global_invocation_id) global_id : vec3<u32>) {
-    if (global_id.x == 0u) {
-        data[0] = data[0] + 1.0;
-    }
-}
-";
-            using var shader = accelerator.CreateComputeShader(wgsl);
-            shader.SetBuffer(0, buffer);
-
-            // Dispatch 5 times
-            for (int i = 0; i < 5; i++)
-            {
-                shader.Dispatch(1);
-            }
-
-            var result = await buffer.CopyToHostAsync();
-            // Initial 1.0 + 5 additions = 6.0
-            if (Math.Abs(result[0] - 6.0f) > 0.0001f)
-                throw new Exception($"Multiple dispatch error. Expected 6.0, got {result[0]}");
-        }
-
-        [TestMethod]
-        public async Task WebGPU2DDispatchTest()
-        {
-            var device = await WebGPU.WebGPUDevice.GetDefaultDeviceAsync();
-            if (device == null)
-                throw new UnsupportedTestException("No WebGPU devices found");
-
-            using var accelerator = await device.CreateAcceleratorAsync();
-
-            int width = 8;
-            int height = 8;
-            int length = width * height;
-            var output = new float[length];
-            using var bufferOut = accelerator.Allocate(output);
-
-            string wgsl = @"
-struct Params {
-    width : u32,
-}
-
-@group(0) @binding(0) var<storage, read_write> output : array<f32>;
-
-@compute @workgroup_size(1, 1)
-fn main(@builtin(global_invocation_id) global_id : vec3<u32>) {
-    let x = global_id.x;
-    let y = global_id.y;
-    let width = 8u; // Hardcoded for simplicity in this test
-    let index = y * width + x;
-    output[index] = f32(x) + f32(y) * 100.0;
-}
-";
-            using var shader = accelerator.CreateComputeShader(wgsl);
-            shader.SetBuffer(0, bufferOut);
-
-            // Dispatch 8x8
-            shader.Dispatch((uint)width, (uint)height);
-
-            var result = await bufferOut.CopyToHostAsync();
-
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    int index = y * width + x;
-                    float expected = x + y * 100.0f;
-                    if (Math.Abs(result[index] - expected) > 0.0001f)
-                        throw new Exception($"2D dispatch error at ({x},{y}). Expected {expected}, got {result[index]}");
-                }
-            }
-        }
-
-        [TestMethod]
-        public async Task WebGPUWorkgroupBarrierTest()
-        {
-            var device = await WebGPU.WebGPUDevice.GetDefaultDeviceAsync();
-            if (device == null)
-                throw new UnsupportedTestException("No WebGPU devices found");
-
-            using var accelerator = await device.CreateAcceleratorAsync();
-
-            int length = 64;
-            var input = Enumerable.Range(0, length).Select(i => (float)i).ToArray();
-            var zeros = new float[length];
-
-            using var bufferIn = accelerator.Allocate(input);
-            using var bufferOut = accelerator.Allocate(zeros);
-
-            // This shader reverses the array within the workgroup using shared memory
-            string wgsl = @"
-var<workgroup> shared_data : array<f32, 64>;
-
-@group(0) @binding(0) var<storage, read> input : array<f32>;
-@group(0) @binding(1) var<storage, read_write> output : array<f32>;
-
-@compute @workgroup_size(64)
-fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_id) workgroup_id : vec3<u32>) {
-    let i = local_id.x;
-    
-    // Load into shared memory
-    shared_data[i] = input[i];
-    
-    // Wait for all threads to load
-    workgroupBarrier();
-    
-    // Write out in reverse order
-    let reverse_i = 63u - i;
-    output[i] = shared_data[reverse_i];
-}
-";
-            using var shader = accelerator.CreateComputeShader(wgsl);
-
-            shader.SetBuffer(0, bufferIn)
-                  .SetBuffer(1, bufferOut);
-
-            shader.Dispatch(1);
-
-            var result = await bufferOut.CopyToHostAsync();
-
-            for (int i = 0; i < length; i++)
-            {
-                float expected = input[length - 1 - i];
-                if (Math.Abs(result[i] - expected) > 0.0001f)
-                    throw new Exception($"Barrier test error at {i}. Expected {expected}, got {result[i]}");
-            }
-        }
-
-        [TestMethod]
         public async Task WebGPUKernelTest()
         {
             var builder = Context.Create();
@@ -267,7 +77,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>, int>(MyKernel);
             kernel((Index1D)buffer.Length, buffer.View, 33);
 
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<int>(buffer);
 
@@ -301,7 +111,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>, ArrayView<float>, ArrayView<float>>(VectorAddKernel);
             kernel((Index1D)length, bufA.View, bufB.View, bufC.View);
 
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<float>(bufC);
 
@@ -330,7 +140,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index2D, ArrayView2D<float, Stride2D.DenseX>>(Kernel2D);
             kernel((Index2D)extent, buffer.View);
 
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<float>(buffer);
 
@@ -363,7 +173,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>, float>(FloatKernel);
             kernel((Index1D)length, buffer.View, 0.5f);
 
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<float>(buffer);
 
@@ -392,7 +202,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>, int, int>(MultiScalarKernel);
             kernel((Index1D)length, buffer.View, 10, 20);
 
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<int>(buffer);
 
@@ -433,7 +243,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index3D, ArrayView3D<float, Stride3D.DenseXY>>(Kernel3D);
             kernel((Index3D)extent, buffer.View);
 
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<float>(buffer);
 
@@ -551,7 +361,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             using var buf = accelerator.Allocate1D(data);
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<MyPoint>>(StructKernel);
             kernel((Index1D)len, buf.View);
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<MyPoint>(buf);
             for (int i = 0; i < len; i++)
@@ -579,7 +389,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
 
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>, ArrayView<float>>(MathKernel);
             kernel((Index1D)len, bufIn.View, bufOut.View);
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<float>(bufOut);
             for (int i = 0; i < len; i++)
@@ -624,7 +434,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             using var buffer = accelerator.Allocate1D<float>(len);
             var launch = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>>(IntrinsicMathKernel);
             launch(len, buffer.View);
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             // Expected values
             var expected = new float[len];
@@ -665,7 +475,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             using var buf = accelerator.Allocate1D(data);
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>>(ControlFlowKernel);
             kernel((Index1D)len, buf.View);
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<int>(buf);
             for (int i = 0; i < len; i++)
@@ -694,7 +504,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
 
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>, ArrayView<Index1D>>(AtomicKernel);
             kernel((Index1D)len, bufData.View, bufAtomic.View);
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var resData = await ReadBufferAsync<int>(bufData);
             var resAtomic = await ReadBufferAsync<Index1D>(bufAtomic);
@@ -775,7 +585,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
 
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>, ArrayView<float>>(AdvancedMathKernel);
             kernel((Index1D)len, bufIn.View, bufOut.View);
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<float>(bufOut);
             for (int i = 0; i < len; i++)
@@ -804,7 +614,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             using var buf = accelerator.Allocate1D(data);
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>>(BitwiseKernel);
             kernel((Index1D)len, buf.View);
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<int>(buf);
             for (int i = 0; i < len; i++)
@@ -847,7 +657,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             using var buf = accelerator.Allocate1D(input);
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>>(ConversionKernel);
             kernel((Index1D)len, buf.View);
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<float>(buf);
             for (int i = 0; i < len; i++)
@@ -876,7 +686,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             using var buf = accelerator.Allocate1D(data);
             var kernel = accelerator.LoadStreamKernel<Index1D, ArrayView<int>>(SharedMemoryKernel);
             kernel(new KernelConfig(len / 64, 64), (Index1D)len, buf.View);
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<int>(buf);
             for (int i = 0; i < len; i++)
@@ -903,7 +713,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             using var buf = accelerator.Allocate1D(data);
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>>(NestedControlFlowKernel);
             kernel((Index1D)len, buf.View);
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<int>(buf);
             for (int i = 0; i < len; i++)
@@ -939,7 +749,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             using var buf = accelerator.Allocate1D(data);
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>>(FunctionCallKernel);
             kernel((Index1D)len, buf.View);
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<int>(buf);
             for (int i = 0; i < len; i++)
@@ -1015,7 +825,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             // Dispatch with 1 Group of 64 threads
             kernel(new KernelConfig(1, 64), (Index1D)len, buffer.View);
 
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<int>(buffer);
 
@@ -1083,7 +893,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             using var buffer = accelerator.Allocate1D(data);
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<OuterStruct>>(ComplexStructKernel);
             kernel((Index1D)len, buffer.View);
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<OuterStruct>(buffer);
 
@@ -1130,7 +940,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             // Using explicit grouping to ensure atomics work in that context too (though not strictly required for global atomics)
             var kernel = accelerator.LoadStreamKernel<Index1D, ArrayView<int>>(AtomicCASKernel);
             kernel(new KernelConfig(1, len), (Index1D)len, buffer.View);
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<int>(buffer);
             for (int i = 0; i < len; i++)
@@ -1167,7 +977,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
 
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>>(FMAKernel);
             kernel((Index1D)len, buffer.View);
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<float>(buffer);
             for (int i = 0; i < len; i++)
@@ -1217,7 +1027,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             {
                 var kernel = accelerator.LoadStreamKernel<Index1D, ArrayView<int>>(BroadcastKernel);
                 kernel(new KernelConfig(1, len), (Index1D)len, buffer.View);
-                accelerator.Synchronize();
+                await accelerator.SynchronizeAsync();
 
                 var result = await ReadBufferAsync<int>(buffer);
 
@@ -1274,7 +1084,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             // Allocate 64 ints of dynamic shared mem
             var config = new KernelConfig(1, 64, SharedMemoryConfig.RequestDynamic<int>(64));
             kernel(config, (Index1D)len, buffer.View);
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<int>(buffer);
             for (int i = 0; i < len; i++)
@@ -1322,7 +1132,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
 
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>, ArrayView<int>>(IntMathKernel);
             kernel((Index1D)len, bufIn.View, bufOut.View);
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<int>(bufOut);
             for (int i = 0; i < len; i++)
@@ -1390,7 +1200,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index2D, ArrayView<float>, ArrayView<float>, ArrayView<float>, int>(MatrixMulKernel);
             // Launch 2D kernel
             kernel(new Index2D(size, size), bufA.View, bufB.View, bufC.View, size);
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<float>(bufC);
 
@@ -1453,7 +1263,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
 
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>, ArrayView<float>>(SpecializedIntrinsicsKernel);
             kernel((Index1D)len, bufIn.View, bufOut.View);
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<float>(bufOut);
 
@@ -1506,7 +1316,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
 
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>, ArrayView<int>>(BitManipulationKernel);
             kernel((Index1D)len, bufIn.View, bufOut.View);
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<int>(bufOut);
             
@@ -1556,7 +1366,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
 
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>, ArrayView<int>>(HistogramKernel);
             kernel((Index1D)numItems, bufData.View, bufBins.View);
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<int>(bufBins);
             
@@ -1590,7 +1400,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
 
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>>(NestedLoopBreakKernel);
             kernel((Index1D)size, bufOut.View);
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<int>(bufOut);
 
@@ -1644,7 +1454,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
 
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>, ArrayView<float>>(HyperbolicKernel);
             kernel((Index1D)len, bufIn.View, bufOut.View);
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<float>(bufOut);
             
@@ -1688,7 +1498,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
 
             var kernel = accelerator.LoadStreamKernel<Index1D, ArrayView<int>>(SharedMemoryBarrierKernel);
             kernel(new KernelConfig(numGroups, groupSize), (Index1D)groupSize, buf.View);
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<int>(buf);
 
@@ -1759,7 +1569,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
 
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>, ArrayView<int>>(SelectKernel);
             kernel((Index1D)len, bufIn.View, bufOut.View);
-            accelerator.Synchronize();
+            await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<int>(bufOut);
             
@@ -1802,7 +1612,7 @@ fn main(@builtin(local_invocation_id) local_id : vec3<u32>, @builtin(workgroup_i
 
         var kernel = accelerator.LoadStreamKernel<Index1D, ArrayView<int>>(LinearBarrierKernel);
         kernel(new KernelConfig(numGroups, groupSize), (Index1D)groupSize, buf.View);
-        accelerator.Synchronize();
+        await accelerator.SynchronizeAsync();
 
         var result = await ReadBufferAsync<int>(buf);
 
