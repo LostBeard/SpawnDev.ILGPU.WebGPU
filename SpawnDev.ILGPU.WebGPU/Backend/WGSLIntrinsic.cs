@@ -39,7 +39,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         /// <param name="mode">The code-generation mode.</param>
         public WebGPUIntrinsic(System.Reflection.MethodInfo targetMethod, global::ILGPU.IR.Intrinsics.IntrinsicImplementationMode mode)
             : base(
-                  global::ILGPU.Backends.BackendType.WebGPU,
+                  WebGPUBackend.BackendTypeWebGPU,
                   targetMethod,
                   mode)
         { }
@@ -52,7 +52,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         /// <param name="mode">The code-generator mode.</param>
         public WebGPUIntrinsic(System.Type handlerType, string methodName, global::ILGPU.IR.Intrinsics.IntrinsicImplementationMode mode)
             : base(
-                  global::ILGPU.Backends.BackendType.WebGPU,
+                  WebGPUBackend.BackendTypeWebGPU,
                   handlerType,
                   methodName,
                   mode)

@@ -4,14 +4,14 @@
 		<TargetFramework>net10.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Version>1.0.0-preview.0</Version>
+		<Version>1.0.0-preview.1</Version>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<EmbedAllSources>true</EmbedAllSources>
 		<DebugType>Embedded</DebugType>
 		<Title>SpawnDev.ILGPU.WebGPU</Title>
 		<Authors>LostBeard</Authors>
-		<Description>WebGPU backend for ILGPU, enabling GPU compute in Blazor WebAssembly application.</Description>
+		<Description>WebGPU backend for ILGPU, enabling GPU compute in Blazor WebAssembly applications.</Description>
 		<PackageProjectUrl>https://github.com/LostBeard/SpawnDev.ILGPU.WebGPU</PackageProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
@@ -38,7 +38,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\ILGPU\Src\ILGPU\ILGPU.csproj" />
+	  <ProjectReference Include="..\ILGPU\ILGPU.csproj" />
 	</ItemGroup>
 
 </Project>

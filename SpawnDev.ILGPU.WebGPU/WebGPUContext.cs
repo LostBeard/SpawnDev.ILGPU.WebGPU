@@ -1,13 +1,34 @@
 using global::ILGPU;
+using ILGPU.IR.Types;
+using ILGPU.Runtime;
+using System.Reflection;
 
 namespace SpawnDev.ILGPU.WebGPU
 {
-    /// <summary>
-    /// WebGPU context extensions.
-    /// </summary>
-    public static class WebGPUContextExtensions
+        /// <summary>
+        /// WebGPU context extensions.
+        /// </summary>
+        public static class WebGPUContextExtensions
     {
         #region Builder
+
+        //extension(Context.Builder builder)
+        //{
+        //    public DeviceRegistry DeviceRegistryExt
+        //    {
+        //        get
+        //        {
+        //            // Access the private DeviceRegistry property via reflection
+        //            var infof = typeof(Context.Builder).GetField("DeviceRegistry", System.Reflection.BindingFlags.NonPublic | BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+        //            var info = typeof(Context.Builder).GetProperty("DeviceRegistry", System.Reflection.BindingFlags.NonPublic | BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+        //            if (info == null)
+        //            {
+        //                throw new InvalidOperationException("Could not find deviceRegistry field in Context.Builder.");
+        //            }
+        //            return (DeviceRegistry)info.GetValue(builder);
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Asynchronously enables all detected WebGPU devices.
@@ -40,6 +61,23 @@ namespace SpawnDev.ILGPU.WebGPU
         #endregion
 
         #region Context
+
+        //extension(Context context)
+        //{
+        //    /// <summary>
+        //    /// Only needed to access internal TypeContext property
+        //    /// </summary>
+        //    public IRTypeContext TypeContextExt
+        //    {
+        //        get
+        //        {
+        //            var prop = typeof(Context).GetProperty("TypeContext", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+        //            if (prop == null) throw new InvalidOperationException("Could not find TypeContext property on Context.");
+        //            var typeContext = (IRTypeContext)prop.GetValue(context);
+        //            return typeContext;
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Gets the i-th registered WebGPU device.

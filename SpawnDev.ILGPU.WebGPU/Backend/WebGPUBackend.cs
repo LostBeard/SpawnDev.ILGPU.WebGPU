@@ -13,6 +13,7 @@ using global::ILGPU.Backends.EntryPoints;
 using global::ILGPU.IR;
 using global::ILGPU.IR.Analyses;
 using global::ILGPU.IR.Intrinsics;
+using ILGPU.IR.Types;
 using ILGPU.Runtime;
 using System.Reflection;
 using System.Text;
@@ -29,6 +30,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         WGSLCodeGenerator,
         StringBuilder>
     {
+
+        public const BackendType BackendTypeWebGPU = BackendType.WebGPU; // Ensure this matches ILGPU's BackendType enum for WebGPU (if defined)
+
         #region Instance
 
         /// <summary>
@@ -39,7 +43,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             : base(
                   context,
                   new WebGPUCapabilityContext(),
-                  BackendType.WebGPU,
+                  BackendTypeWebGPU,
                   new WebGPUArgumentMapper(context))
         {
             InitIntrinsicProvider();
@@ -89,7 +93,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 if (containersField == null) return;
 
                 var containers = (Array)containersField.GetValue(manager);
-                int webGpuIndex = (int)BackendType.WebGPU;
+                int webGpuIndex = (int)BackendTypeWebGPU;
 
                 // Check if we need to resize or initialize
                 if (webGpuIndex >= containers.Length || containers.GetValue(webGpuIndex) == null)
@@ -388,6 +392,19 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             WGSLSource = wgslSource;
         }
+
+        //public EntryPoint EntryPointExt
+        //{
+        //    get
+        //    {
+        //        // Expose EntryPoint as public
+        //        // (EntryPoint is protected in base class)
+        //        // This is a workaround since we cannot change the base class
+        //        // use reflection to get the value
+        //        var prop = typeof(CompiledKernel).GetProperty("EntryPoint", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+        //        return (EntryPoint)prop.GetValue(this);
+        //    }
+        //}
     }
 
     /// <summary>
