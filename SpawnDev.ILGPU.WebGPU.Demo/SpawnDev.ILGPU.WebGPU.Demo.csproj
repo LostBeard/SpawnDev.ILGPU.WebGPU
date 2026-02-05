@@ -7,6 +7,10 @@
 		<!-- Disable IL trimming to preserve ILGPU kernel methods invoked via reflection -->
 		<PublishTrimmed>false</PublishTrimmed>
 		<CompressionEnabled>false</CompressionEnabled>
+		<!-- Disable AOT compilation - ILGPU needs IL reflection to work -->
+		<RunAOTCompilation>false</RunAOTCompilation>
+		<!-- Ensure reflection metadata is preserved -->
+		<MetadataUpdaterSupport>true</MetadataUpdaterSupport>
 	</PropertyGroup>
 
 	<ItemGroup>
