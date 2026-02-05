@@ -6,6 +6,7 @@
 // ---------------------------------------------------------------------------------------
 
 using SpawnDev.BlazorJS.JSObjects;
+using SpawnDev.ILGPU.WebGPU.Backend;
 using System.Runtime.InteropServices;
 
 namespace SpawnDev.ILGPU.WebGPU
@@ -118,7 +119,7 @@ namespace SpawnDev.ILGPU.WebGPU
             var copyLength = length ?? Length - sourceOffset;
             var result = new T[copyLength];
 
-            Console.WriteLine($"[WebGPU] CopyToHostAsync: SourceOffset={sourceOffset}, Length={copyLength} elements");
+            WebGPUBackend.Log($"[WebGPU] CopyToHostAsync: SourceOffset={sourceOffset}, Length={copyLength} elements");
 
             var device = Accelerator.NativeDevice;
             if (device == null)
@@ -167,7 +168,7 @@ namespace SpawnDev.ILGPU.WebGPU
             }
             stagingBuffer.Unmap();
 
-            Console.WriteLine($"[WebGPU] CopyToHostAsync: Finished");
+            WebGPUBackend.Log($"[WebGPU] CopyToHostAsync: Finished");
 
             return result;
         }

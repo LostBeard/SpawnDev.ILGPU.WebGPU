@@ -459,13 +459,13 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 return;
 
             // Debug logging to trace instruction generation
-            Console.WriteLine($"[WGSL] Generating code for: {value.GetType().FullName} - {value}");
+            WebGPUBackend.Log($"[WGSL] Generating code for: {value.GetType().FullName} - {value}");
 
             // Handle inaccessible Throw instruction (likely internal)
             // Use Contains("Throw") to be safer
             if (value.GetType().Name.Contains("Throw"))
             {
-                Console.WriteLine($"[WGSL] HANDLING THROW: {value}");
+                WebGPUBackend.Log($"[WGSL] HANDLING THROW: {value}");
                 GenerateThrow(value);
                 return;
             }

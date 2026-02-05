@@ -197,9 +197,9 @@ namespace SpawnDev.ILGPU.WebGPU
             var compiledKernel = webGpuKernel.CompiledKernel;
 
             // ---- DEBUG LOGGING: WGSL SOURCE ----
-            Console.WriteLine("\n[WebGPU-Debug] ---- GENERATED WGSL ----");
-            Console.WriteLine(compiledKernel.WGSLSource);
-            Console.WriteLine("[WebGPU-Debug] ------------------------\n");
+            WebGPUBackend.Log("\n[WebGPU-Debug] ---- GENERATED WGSL ----");
+            WebGPUBackend.Log(compiledKernel.WGSLSource);
+            WebGPUBackend.Log("[WebGPU-Debug] ------------------------\n");
             // ------------------------------------
 
             var shader = nativeAccel.CreateComputeShader(compiledKernel.WGSLSource);
@@ -257,7 +257,7 @@ namespace SpawnDev.ILGPU.WebGPU
                         var gpuBuffer = nativeBuffer!.NativeBuffer.NativeBuffer!;
 
                         // DEBUG LOG
-                        Console.WriteLine($"[WebGPU-Debug] Arg {i}: Binding Buffer. Size={contiguous.LengthInBytes}, Offset={contiguous.IndexInBytes}");
+                        WebGPUBackend.Log($"[WebGPU-Debug] Arg {i}: Binding Buffer. Size={contiguous.LengthInBytes}, Offset={contiguous.IndexInBytes}");
 
                         resource = new GPUBufferBinding
                         {
@@ -279,7 +279,7 @@ namespace SpawnDev.ILGPU.WebGPU
                         var uBuffer = device.CreateBuffer(bufferDesc);
 
                         // DEBUG LOG
-                        Console.WriteLine($"[WebGPU-Debug] Arg {i}: Binding Scalar. Value={arg}");
+                        WebGPUBackend.Log($"[WebGPU-Debug] Arg {i}: Binding Scalar. Value={arg}");
 
                         if (arg is int iVal) device.Queue.WriteBuffer(uBuffer, 0, BitConverter.GetBytes(iVal));
                         else if (arg is float fVal) device.Queue.WriteBuffer(uBuffer, 0, BitConverter.GetBytes(fVal));
@@ -299,7 +299,7 @@ namespace SpawnDev.ILGPU.WebGPU
 
                     if (dims.Length > 1)
                     {
-                        Console.WriteLine($"[WebGPU-Debug] Arg {i}: Binding Stride Buffer. Values=[{string.Join(", ", dims)}]");
+                        WebGPUBackend.Log($"[WebGPU-Debug] Arg {i}: Binding Stride Buffer. Values=[{string.Join(", ", dims)}]");
 
                         var strideSize = 256;
                         var strideDesc = new GPUBufferDescriptor
@@ -350,7 +350,7 @@ namespace SpawnDev.ILGPU.WebGPU
                 else if (dimension is LongIndex2D l2) { workX = (uint)Math.Ceiling(l2.X / 8.0); workY = (uint)Math.Ceiling(l2.Y / 8.0); }
                 else if (dimension is LongIndex3D l3) { workX = (uint)Math.Ceiling(l3.X / 4.0); workY = (uint)Math.Ceiling(l3.Y / 4.0); workZ = (uint)Math.Ceiling(l3.Z / 4.0); }
 
-                Console.WriteLine($"[WebGPU-Debug] Dispatching: ({workX}, {workY}, {workZ})");
+                WebGPUBackend.Log($"[WebGPU-Debug] Dispatching: ({workX}, {workY}, {workZ})");
 
                 using var encoder = device.CreateCommandEncoder();
                 using var pass = encoder.BeginComputePass();
@@ -363,7 +363,7 @@ namespace SpawnDev.ILGPU.WebGPU
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[WebGPU] Error running kernel: {ex}");
+                WebGPUBackend.Log($"[WebGPU] Error running kernel: {ex}");
                 throw;
             }
         }
@@ -373,7 +373,7 @@ namespace SpawnDev.ILGPU.WebGPU
         protected override void SynchronizeInternal()
         {
             // WebGPU in Blazor WASM cannot block. Use SynchronizeAsync() instead.
-            Console.WriteLine("[WebGPU Warning] Synchronize() is non-blocking in Blazor WASM. Use 'await accelerator.SynchronizeAsync()' for async waiting.");
+            WebGPUBackend.Log("[WebGPU Warning] Synchronize() is non-blocking in Blazor WASM. Use 'await accelerator.SynchronizeAsync()' for async waiting.");
         }
         protected override void OnBind() { }
         protected override void OnUnbind() { }

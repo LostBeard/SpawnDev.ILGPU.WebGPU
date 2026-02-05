@@ -33,6 +33,20 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
         public const BackendType BackendTypeWebGPU = BackendType.WebGPU; // Ensure this matches ILGPU's BackendType enum for WebGPU (if defined)
 
+        /// <summary>
+        /// Controls whether verbose logging is enabled. Set to true to enable console output.
+        /// </summary>
+        public static bool VerboseLogging { get; set; } = false;
+
+        /// <summary>
+        /// Logs a message to the console if VerboseLogging is enabled.
+        /// </summary>
+        public static void Log(string message)
+        {
+            if (VerboseLogging)
+                WebGPUBackend.Log(message);
+        }
+
         #region Instance
 
         /// <summary>
@@ -105,7 +119,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
                     if (webGpuIndex >= containers.Length)
                     {
-                        Console.WriteLine($"WebGPU: Resizing IntrinsicManager containers from {containers.Length} to {webGpuIndex + 1}");
+                        WebGPUBackend.Log($"WebGPU: Resizing IntrinsicManager containers from {containers.Length} to {webGpuIndex + 1}");
                         var newContainers = Array.CreateInstance(containerType, webGpuIndex + 1);
                         Array.Copy(containers, newContainers, containers.Length);
                         containers = newContainers;
@@ -121,7 +135,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
                     var newContainer = createMethod.Invoke(null, null);
                     containers.SetValue(newContainer, webGpuIndex);
-                    Console.WriteLine("WebGPU: Initialized BackendContainer for WebGPU.");
+                    WebGPUBackend.Log("WebGPU: Initialized BackendContainer for WebGPU.");
                 }
                 else
                 {
@@ -132,7 +146,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     var matchers = matchersField.GetValue(container);
                     if (matchers == null)
                     {
-                        Console.WriteLine("WebGPU: BackendContainer found but uninitialized. Re-initializing.");
+                        WebGPUBackend.Log("WebGPU: BackendContainer found but uninitialized. Re-initializing.");
                         var createMethod = containerType.GetMethod("Create", BindingFlags.Static | BindingFlags.Public);
                         var newContainer = createMethod.Invoke(null, null);
                         containers.SetValue(newContainer, webGpuIndex);
@@ -141,7 +155,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"WebGPU: Error fixing IntrinsicManager: {ex}");
+                WebGPUBackend.Log($"WebGPU: Error fixing IntrinsicManager: {ex}");
             }
         }
 
@@ -149,10 +163,10 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             if (method == null)
             {
-                Console.WriteLine("WebGPU: Skipping invalid intrinsic method (null)");
+                WebGPUBackend.Log("WebGPU: Skipping invalid intrinsic method (null)");
                 return;
             }
-            Console.WriteLine($"WebGPU: Registering Intrinsic: {method.DeclaringType.Name}.{method.Name}");
+            WebGPUBackend.Log($"WebGPU: Registering Intrinsic: {method.DeclaringType.Name}.{method.Name}");
             GetIntrinsicManager(Context).RegisterMethod(
                 method,
                 new WebGPUIntrinsic(
@@ -173,14 +187,14 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             }
             if (!found)
             {
-                Console.WriteLine($"WebGPU: Intrinsic not found: {type.Name}.{methodName}");
+                WebGPUBackend.Log($"WebGPU: Intrinsic not found: {type.Name}.{methodName}");
             }
         }
 
         private void RegisterRedirect(MethodInfo original, MethodInfo target)
         {
             if (original == null || target == null) return;
-            Console.WriteLine($"WebGPU: Redirecting {original.DeclaringType.Name}.{original.Name} -> {target.DeclaringType.Name}.{target.Name}");
+            WebGPUBackend.Log($"WebGPU: Redirecting {original.DeclaringType.Name}.{original.Name} -> {target.DeclaringType.Name}.{target.Name}");
             GetIntrinsicManager(Context).RegisterMethod(
                 original,
                 new WebGPUIntrinsic(
@@ -235,14 +249,14 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
                     if (wrapper != null)
                     {
-                        System.Console.WriteLine($"WebGPU: Mapping {type.Name}.{name}({string.Join(",", pTypes.Select(pt => pt.Name))}) to {t.Name}.{name}");
+                        WebGPUBackend.Log($"WebGPU: Mapping {type.Name}.{name}({string.Join(",", pTypes.Select(pt => pt.Name))}) to {t.Name}.{name}");
                         Reg(target, wrapper, handler);
                     }
                     else
                     {
                         // Debug log for missing wrapper
                         var pTypeNames = string.Join(", ", pTypes.Select(pt => pt.Name));
-                        System.Console.WriteLine($"WebGPU: Missing wrapper for {type.Name}.{name}({pTypeNames})");
+                        WebGPUBackend.Log($"WebGPU: Missing wrapper for {type.Name}.{name}({pTypeNames})");
                     }
                 }
             }
@@ -308,16 +322,16 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 {
                     RegAll(xmathType, "Rsqrt", WGSLCodeGenerator.GenerateRsqrt);
                     RegAll(xmathType, "Rcp", WGSLCodeGenerator.GenerateRcp);
-                    Console.WriteLine("WebGPU: Registered XMath intrinsics (Rsqrt, Rcp)");
+                    WebGPUBackend.Log("WebGPU: Registered XMath intrinsics (Rsqrt, Rcp)");
                 }
                 else
                 {
-                    Console.WriteLine("WebGPU: XMath type not found - ILGPU.Algorithms may not be loaded");
+                    WebGPUBackend.Log("WebGPU: XMath type not found - ILGPU.Algorithms may not be loaded");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"WebGPU: Error registering XMath intrinsics: {ex.Message}");
+                WebGPUBackend.Log($"WebGPU: Error registering XMath intrinsics: {ex.Message}");
             }
         }
 
@@ -391,9 +405,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             WGSLCodeGenerator.GeneratorArgs data)
         {
             var wgslSource = builder.ToString();
-            Console.WriteLine("--- GENERATED WGSL ---");
-            Console.WriteLine(wgslSource);
-            Console.WriteLine("-----------------------");
+            WebGPUBackend.Log("--- GENERATED WGSL ---");
+            WebGPUBackend.Log(wgslSource);
+            WebGPUBackend.Log("-----------------------");
             return new WebGPUCompiledKernel(Context, entryPoint, wgslSource);
         }
 
