@@ -387,6 +387,19 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     {
                         _hoistedPrimitives.Add(value.Value);
                     }
+
+                    // FIX: Hoist UnaryArithmeticValue and BinaryArithmeticValue results
+                    // These are math intrinsics (Abs, Min, Max, etc.) that may be reused
+                    // across branches in structured control flow, causing scope issues
+                    if (value.Value is global::ILGPU.IR.Values.UnaryArithmeticValue ||
+                        value.Value is global::ILGPU.IR.Values.BinaryArithmeticValue)
+                    {
+                        if (!value.Value.Type.IsPointerType && !value.Value.Type.IsVoidType)
+                        {
+                            _hoistedPrimitives.Add(value.Value);
+                        }
+                    }
+
                     foreach (var use in value.Value.Uses)
                     {
                         if (defBlocks.TryGetValue(use.Target, out var defBlock) && defBlock != block)
@@ -748,14 +761,57 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             var target = Load(value);
             var source = Load(value.Value);
+            string prefix = GetPrefix(value);
+
+            // Handle math intrinsics that need function calls
+            string? funcCall = value.Kind switch
+            {
+                UnaryArithmeticKind.Abs => $"abs({source})",
+                UnaryArithmeticKind.SinF => $"sin({source})",
+                UnaryArithmeticKind.CosF => $"cos({source})",
+                UnaryArithmeticKind.TanF => $"tan({source})",
+                UnaryArithmeticKind.AsinF => $"asin({source})",
+                UnaryArithmeticKind.AcosF => $"acos({source})",
+                UnaryArithmeticKind.AtanF => $"atan({source})",
+                UnaryArithmeticKind.SinhF => $"sinh({source})",
+                UnaryArithmeticKind.CoshF => $"cosh({source})",
+                UnaryArithmeticKind.TanhF => $"tanh({source})",
+                UnaryArithmeticKind.ExpF => $"exp({source})",
+                UnaryArithmeticKind.Exp2F => $"exp2({source})",
+                UnaryArithmeticKind.LogF => $"log({source})",
+                UnaryArithmeticKind.Log2F => $"log2({source})",
+                UnaryArithmeticKind.SqrtF => $"sqrt({source})",
+                UnaryArithmeticKind.RsqrtF => $"1.0 / sqrt({source})",
+                UnaryArithmeticKind.RcpF => $"1.0 / {source}",
+                UnaryArithmeticKind.FloorF => $"floor({source})",
+                UnaryArithmeticKind.CeilingF => $"ceil({source})",
+                _ => null
+            };
+
+            if (funcCall != null)
+            {
+                AppendLine($"{prefix}{target} = {funcCall};");
+                return;
+            }
+
+            // Handle simple unary operators
             string op = value.Kind switch
             {
                 UnaryArithmeticKind.Neg => "-",
-                UnaryArithmeticKind.Not => "!",
+                UnaryArithmeticKind.Not => TypeGenerator[value.Value.Type] == "bool" ? "!" : "~",
                 _ => ""
             };
-            string prefix = GetPrefix(value);
-            AppendLine($"{prefix}{target} = {op}({source});");
+
+            if (!string.IsNullOrEmpty(op))
+            {
+                AppendLine($"{prefix}{target} = {op}({source});");
+            }
+            else
+            {
+                // Fallback for unsupported operations
+                AppendLine($"// [WGSL] Unhandled UnaryArithmeticKind: {value.Kind}");
+                AppendLine($"{prefix}{target} = {source};");
+            }
         }
         public override void GenerateCode(UnconditionalBranch branch)
         {

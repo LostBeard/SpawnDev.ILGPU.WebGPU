@@ -1703,6 +1703,35 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             }
         }
 
+        /// <summary>
+        /// Generates WGSL code for XMath.Rsqrt (reciprocal square root: 1/sqrt(x)).
+        /// </summary>
+        public static void GenerateRsqrt(WebGPUBackend backend, WGSLCodeGenerator codeGenerator, Value value)
+        {
+            if (value is MethodCall methodCall)
+            {
+                var target = codeGenerator.LoadIntrinsicValue(value);
+                var operand = codeGenerator.LoadIntrinsicValue(methodCall[0].Resolve());
+                codeGenerator.Declare(target);
+                // WGSL has inverseSqrt but we use 1.0/sqrt() for clarity
+                codeGenerator.AppendLine($"{target} = 1.0 / sqrt({operand});");
+            }
+        }
+
+        /// <summary>
+        /// Generates WGSL code for XMath.Rcp (reciprocal: 1/x).
+        /// </summary>
+        public static void GenerateRcp(WebGPUBackend backend, WGSLCodeGenerator codeGenerator, Value value)
+        {
+            if (value is MethodCall methodCall)
+            {
+                var target = codeGenerator.LoadIntrinsicValue(value);
+                var operand = codeGenerator.LoadIntrinsicValue(methodCall[0].Resolve());
+                codeGenerator.Declare(target);
+                codeGenerator.AppendLine($"{target} = 1.0 / {operand};");
+            }
+        }
+
         #endregion
     }
 }

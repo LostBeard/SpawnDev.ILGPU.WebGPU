@@ -53,5 +53,55 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         // Ternary (Int)
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static int Clamp(int value, int min, int max) => value < min ? min : value > max ? max : value;
+
+        // Rsqrt and Rcp for XMath compatibility
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static float Rsqrt(float val) => 1.0f / MathF.Sqrt(val);
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static double Rsqrt(double val) => 1.0 / Math.Sqrt(val);
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static float Rcp(float val) => 1.0f / val;
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static double Rcp(double val) => 1.0 / val;
+
+        // Additional integer types for IntrinsicMath compatibility
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static sbyte Abs(sbyte val) => val < 0 ? (sbyte)(-val) : val;
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static short Abs(short val) => val < 0 ? (short)(-val) : val;
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static long Abs(long val) => val < 0 ? -val : val;
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static double Abs(double val) => val < 0 ? -val : val;
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static sbyte Min(sbyte val1, sbyte val2) => val1 < val2 ? val1 : val2;
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static short Min(short val1, short val2) => val1 < val2 ? val1 : val2;
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static long Min(long val1, long val2) => val1 < val2 ? val1 : val2;
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static double Min(double val1, double val2) => val1 < val2 ? val1 : val2;
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static sbyte Max(sbyte val1, sbyte val2) => val1 > val2 ? val1 : val2;
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static short Max(short val1, short val2) => val1 > val2 ? val1 : val2;
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static long Max(long val1, long val2) => val1 > val2 ? val1 : val2;
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static double Max(double val1, double val2) => val1 > val2 ? val1 : val2;
     }
 }

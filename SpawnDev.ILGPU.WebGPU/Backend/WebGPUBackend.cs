@@ -293,6 +293,32 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
             RegAll(typeof(Math), "FusedMultiplyAdd", WGSLCodeGenerator.GenerateFusedMultiplyAdd);
             RegAll(typeof(MathF), "FusedMultiplyAdd", WGSLCodeGenerator.GenerateFusedMultiplyAdd);
+
+            // Register IntrinsicMath methods - these are the targets of RemappedIntrinsics
+            // Math.Abs(int) -> IntrinsicMath.Abs(int) during compilation, so we need handlers for IntrinsicMath
+            RegAll(typeof(IntrinsicMath), "Abs", WGSLCodeGenerator.GenerateAbs);
+            RegAll(typeof(IntrinsicMath), "Min", WGSLCodeGenerator.GenerateMin);
+            RegAll(typeof(IntrinsicMath), "Max", WGSLCodeGenerator.GenerateMax);
+
+            // Register XMath functions from ILGPU.Algorithms
+            try
+            {
+                var xmathType = Type.GetType("ILGPU.Algorithms.XMath, ILGPU.Algorithms");
+                if (xmathType != null)
+                {
+                    RegAll(xmathType, "Rsqrt", WGSLCodeGenerator.GenerateRsqrt);
+                    RegAll(xmathType, "Rcp", WGSLCodeGenerator.GenerateRcp);
+                    Console.WriteLine("WebGPU: Registered XMath intrinsics (Rsqrt, Rcp)");
+                }
+                else
+                {
+                    Console.WriteLine("WebGPU: XMath type not found - ILGPU.Algorithms may not be loaded");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"WebGPU: Error registering XMath intrinsics: {ex.Message}");
+            }
         }
 
         /// <summary>
