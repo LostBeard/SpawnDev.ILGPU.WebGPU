@@ -351,7 +351,7 @@
         using var uint32Array = new Uint32Array(pixels);
         using var uint8ClampedArray = new Uint8ClampedArray(uint32Array.Buffer);
         using var imageDataFromBuffer = new ImageData(uint8ClampedArray, (ulong)_width, (ulong)_height);
-        context.PutImageData(imageDataFromBuffer, 0, 0);
+        context!.PutImageData(imageDataFromBuffer, 0, 0);
     }
 
     private async Task InitializeRawWebGPU()
@@ -362,7 +362,7 @@
 
         var navigator = JS.Get<Navigator>("navigator");
         using var gpu = navigator.Gpu;
-        using var adapter = await gpu.RequestAdapter();
+        using var adapter = await gpu!.RequestAdapter();
         _webgpuDevice = await adapter.RequestDevice();
 
         var wgsl = @"
