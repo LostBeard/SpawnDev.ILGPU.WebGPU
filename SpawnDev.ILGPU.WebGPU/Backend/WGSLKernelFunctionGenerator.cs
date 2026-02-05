@@ -14,9 +14,6 @@ using global::ILGPU.IR.Analyses.ControlFlowDirection;
 using global::ILGPU.IR.Analyses.TraversalOrders;
 using global::ILGPU.IR.Types;
 using global::ILGPU.IR.Values;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace SpawnDev.ILGPU.WebGPU.Backend
@@ -168,9 +165,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     bindingIdx++;
                 }
             }
-            
+
             builder.AppendLine();
-            
+
             // Emit shared memory allocations
             foreach (var alloca in Allocas.SharedAllocations)
             {
@@ -179,7 +176,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
                 var elementType = alloca.ElementType;
                 int entryCount = (int)alloca.ArraySize;
-                
+
                 var wgslType = TypeGenerator[elementType];
                 builder.AppendLine($"var<workgroup> {variable.Name} : array<{wgslType}, {entryCount}>;");
             }
@@ -285,7 +282,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     //    We MUST drill down to get the primitive element type (e.g., float).
                     // 2. If this is a Data Struct (user-defined struct), it is the element type itself.
                     //    We MUST return it as-is so we get 'array<MyStruct>'.
-                    
+
                     if (structType.NumFields > 0 && (structType.Fields[0] is ViewType || structType.Fields[0].ToString().Contains("View")))
                     {
                         current = structType.Fields[0];
@@ -305,11 +302,11 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             // If the kernel is explicitly grouped (Shared Memory / Advanced), the user handles indices via Group.* intrinsics
             // However, we still need to map the main Kernel Index parameter if it exists.
-            
+
             if (Method.Parameters.Count == 0) return;
-            
+
             var indexParam = Method.Parameters[0];
-            
+
             // Only map if strictly implicit OR if we detected an IndexType
             if (KernelParamOffset == 0) return;
 
@@ -385,7 +382,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 {
                     // CRITICAL: Skip NewView to prevent hoisting pointer logic
                     if (value.Value is global::ILGPU.IR.Values.NewView) continue;
-                    
+
                     if (value.Value is PhiValue)
                     {
                         _hoistedPrimitives.Add(value.Value);
@@ -492,32 +489,32 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             isView = false;
 
             string typeName = ParameterType.ToString();
-            
+
             // 1. Direct String Check (works for C# types if available, but unreliable for IR strings)
             bool isStringView = typeName.Contains("ArrayView");
-            
+
             // 2. Structural Check on ParameterType (The Wrapper Struct)
             if (ParameterType is global::ILGPU.IR.Types.StructureType st)
             {
-                 // Check if it looks like an ArrayView wrapper (Field 0 is View)
-                 if (st.NumFields > 0 && (st.Fields[0] is ViewType || st.Fields[0].ToString().Contains("View")))
-                 {
-                     isView = true;
-                     
-                     if (st.NumFields == 6 || st.NumFields == 4) // 3D (6 fields usually), 2D (4 fields)
-                     {
-                         isMultiDim = true;
-                         if (st.NumFields == 6) is3DView = true;
-                         else is2DView = true;
-                     }
-                     else if (st.NumFields == 3)
-                     {
-                         is1DView = true;
-                         isMultiDim = false; // 1D doesn't need stride buffers, so we treat as "not multi dim" for stride purposes
-                     }
-                 }
+                // Check if it looks like an ArrayView wrapper (Field 0 is View)
+                if (st.NumFields > 0 && (st.Fields[0] is ViewType || st.Fields[0].ToString().Contains("View")))
+                {
+                    isView = true;
+
+                    if (st.NumFields == 6 || st.NumFields == 4) // 3D (6 fields usually), 2D (4 fields)
+                    {
+                        isMultiDim = true;
+                        if (st.NumFields == 6) is3DView = true;
+                        else is2DView = true;
+                    }
+                    else if (st.NumFields == 3)
+                    {
+                        is1DView = true;
+                        isMultiDim = false; // 1D doesn't need stride buffers, so we treat as "not multi dim" for stride purposes
+                    }
+                }
             }
-            
+
             // 3. Fallback: Combine String check with Structural properties
             if (!isView && isStringView)
             {
@@ -536,15 +533,15 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             {
                 if (param.Index < paramOffset) continue;
                 var variable = Allocate(param);
-                
+
                 IsMultiDim(param.ParameterType, out var isMultiDim, out var isView, out var is1DView, out var is2DView, out var is3DView);
 
-                if (!isView) 
+                if (!isView)
                 {
                     // Check if it's an atomic parameter (even if not explicitly a ViewType in C# reflection terms)
                     // Atomic operations in WGSL work on pointers to storage buffer elements.
                     bool isAtomic = _atomicParameters.Contains(param.Index);
-                    
+
                     // Check if it's a Structure (that might contain Views). 
                     // If we try to 'load' a struct from a buffer that is array<f32>, it fails.
                     // We should treat structs as pointers/references so GetField can handle them.
@@ -561,10 +558,10 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                         // If this is a View-Like struct (ArrayView2D/3D), we want to alias it as the Buffer Pointer (&param)
                         // so that GetField can detect it as a Parameter and applying Field 0 logic.
                         // If it is a PURE data struct, we alias as &param[0].
-                        
+
                         if (isMultiDim)
                         {
-                             AppendLine($"let {variable.Name} = &param{param.Index};");
+                            AppendLine($"let {variable.Name} = &param{param.Index};");
                         }
                         else
                         {
@@ -585,35 +582,35 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     AppendLine($"let {variable.Name} = &param{param.Index};");
 
                     // STRICT STRIDE INITIALIZATION: Only for 2D/3D Views
-                    if (isView && isMultiDim && (is2DView || is3DView)) 
+                    if (isView && isMultiDim && (is2DView || is3DView))
                     {
                         AppendLine($"let {variable.Name}_stride = &param{param.Index}_stride;");
                     }
                 }
             }
         }
-        
+
         public override void GenerateCode(global::ILGPU.IR.Values.NewView value)
         {
             var target = Load(value);
             var source = Load(value.Pointer);
-            
+
             // NewView result is strictly a pointer (reference) in WGSL
             string refPrefix = "";
-            if (value.Pointer.Type is global::ILGPU.IR.Types.PointerType ptrType && 
+            if (value.Pointer.Type is global::ILGPU.IR.Types.PointerType ptrType &&
                 ptrType.AddressSpace == MemoryAddressSpace.Shared)
             {
                 refPrefix = "&";
             }
-            
+
             // We use 'let' to alias the pointer, ensuring we don't copy the array
             // Optimization: If source is already a pointer (likely), we might not need &
             // But for Shared Memory (var<workgroup> arr), it's treated as value, so we need &
-            
+
             declaredVariables.Add(target.Name);
             AppendLine($"let {target.Name} = {refPrefix}{source};");
         }
-        
+
         public override void GenerateCode(Parameter parameter) { }
 
         public override void GenerateCode(LoadElementAddress value)
@@ -631,19 +628,19 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     return;
                 }
             }
-            
+
             var sourceVal = Load(value.Source);
             AppendIndent();
             Builder.Append($"let {target.Name} = ");
-            
+
             // POINTER DEREFERENCE LOGIC
             // If the source comes from NewView, it's a pointer (let v_3 = &v_4).
             // To access element at offset: (*ptr)[offset] -> &(*ptr)[offset] gives the address
-            if (value.Source is global::ILGPU.IR.Values.NewView || value.Source.Type.IsPointerType) 
+            if (value.Source is global::ILGPU.IR.Values.NewView || value.Source.Type.IsPointerType)
             {
                 Builder.Append($"&(*{sourceVal})[{offset}];");
             }
-            else 
+            else
             {
                 Builder.Append($"&{sourceVal}[{offset}];");
             }
@@ -658,23 +655,23 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             // Special handling for loading an ArrayView parameter (which is a struct).
             // We cannot 'load' the struct from the buffer binding (which is array<T>).
             // Instead, we treat the 'loaded' value as a pointer/alias to the binding.
-            
+
             // CRITICAL FIX: Only alias if the source IS the parameter node itself.
             // Do NOT alias if the source is a derived pointer (e.g. LoadElementAddress), 
             // as that would prevent loading actual data values.
             // Note: loadVal.Source is a ValueReference struct. To pattern match against Value types (classes),
             // we must use .Resolve() to get the underlying Value object.
-            if (loadVal.Source.Resolve() is global::ILGPU.IR.Values.Parameter param && 
+            if (loadVal.Source.Resolve() is global::ILGPU.IR.Values.Parameter param &&
                 param.Type is global::ILGPU.IR.Types.ViewType)
             {
                 // Verify index (skip implicit kernel index if any)
-                 int paramOffset = KernelParamOffset;
-                 if (param.Index >= paramOffset)
-                 {
+                int paramOffset = KernelParamOffset;
+                if (param.Index >= paramOffset)
+                {
                     // Alias: let v_X = &paramY;
                     AppendLine($"let {target} = &param{param.Index};");
                     return;
-                 }
+                }
             }
 
             // Check if we already declared this at the top
@@ -708,7 +705,8 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
             if (value.Kind == BinaryArithmeticKind.Min || value.Kind == BinaryArithmeticKind.Max || value.Kind == BinaryArithmeticKind.PowF)
             {
-                string func = value.Kind switch {
+                string func = value.Kind switch
+                {
                     BinaryArithmeticKind.Min => "min",
                     BinaryArithmeticKind.Max => "max",
                     BinaryArithmeticKind.PowF => "pow",
@@ -808,7 +806,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
         private void GenerateBlockCode(BasicBlock block)
         {
-             foreach (var value in block)
+            foreach (var value in block)
             {
                 if (value.Value is TerminatorValue) continue;
 
@@ -819,8 +817,8 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             // For structured code, the recursion handles branching logic, but we might need to emit 'return'
             if (!(_loops.Count == 0 && Method.Blocks.Count > 1))
             {
-                 // State Machine / Single Block
-                 if (block.Terminator is UnconditionalBranch ub) GenerateCode(ub);
+                // State Machine / Single Block
+                if (block.Terminator is UnconditionalBranch ub) GenerateCode(ub);
                 else if (block.Terminator is IfBranch ib) GenerateCode(ib);
                 else if (block.Terminator is SwitchBranch sb) GenerateCode(sb); // Add Switch support
                 else if (block.Terminator is ReturnTerminator rt2) GenerateCode(rt2);
@@ -850,7 +848,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 // Divergence point
                 var trueTarget = ib.TrueTarget;
                 var falseTarget = ib.FalseTarget;
-                var merge = _postDominators.GetImmediateDominator(current);  
+                var merge = _postDominators.GetImmediateDominator(current);
 
                 // Resolve Phi nodes for outgoing branches
                 PushPhiValues(trueTarget, current); // Assignments for True path
@@ -877,13 +875,13 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             }
             else if (terminator is SwitchBranch sb)
             {
-                 // Switch support for structured flow
+                // Switch support for structured flow
                 var selector = Load(sb.Condition);
                 AppendLine($"switch ({selector}) {{");
-                
-                 var merge = _postDominators.GetImmediateDominator(current);
-                 
-                for(int i = 0; i < sb.NumCasesWithoutDefault; i++)
+
+                var merge = _postDominators.GetImmediateDominator(current);
+
+                for (int i = 0; i < sb.NumCasesWithoutDefault; i++)
                 {
                     AppendLine($"case {i}: {{");
                     PushIndent();
@@ -893,7 +891,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     PopIndent();
                     AppendLine("}");
                 }
-                
+
                 AppendLine("default: {");
                 PushIndent();
                 PushPhiValues(sb.DefaultBlock, current);
@@ -904,7 +902,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 AppendLine("}");
 
                 if (merge != null && merge != stop)
-                     GenerateStructuredCode(merge, stop);
+                    GenerateStructuredCode(merge, stop);
             }
             else if (terminator is ReturnTerminator rt)
             {
@@ -955,24 +953,24 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             var op = GetCompareOp(value.Kind);
 
             string prefix = GetPrefix(value);
-            
+
             // Fix: Handle Vector vs Scalar comparison (e.g. vec2 >= i32)
             string leftType = TypeGenerator[value.Left.Type];
             string rightType = TypeGenerator[value.Right.Type];
-            
+
             bool leftIsVec = leftType.StartsWith("vec");
             bool rightIsVec = rightType.StartsWith("vec");
-            
+
             if (leftIsVec && !rightIsVec)
             {
-                 // vec op scalar -> all(vec op vec(scalar))
-                 // Use vector type of the vector operand to splat the scalar
-                 AppendLine($"{prefix}{target} = all({left} {op} {leftType}({right}));");
+                // vec op scalar -> all(vec op vec(scalar))
+                // Use vector type of the vector operand to splat the scalar
+                AppendLine($"{prefix}{target} = all({left} {op} {leftType}({right}));");
             }
             else if (!leftIsVec && rightIsVec)
             {
-                 // scalar op vec -> all(vec(scalar) op vec)
-                 AppendLine($"{prefix}{target} = all({rightType}({left}) {op} {right});");
+                // scalar op vec -> all(vec(scalar) op vec)
+                AppendLine($"{prefix}{target} = all({rightType}({left}) {op} {right});");
             }
             else
             {
@@ -986,7 +984,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             var targetType = TypeGenerator[value.Type];
 
             string prefix = GetPrefix(value);
-            
+
             // Fix: Handle Vector to Scalar conversion (e.g. i32(vec2)) which WGSL forbids
             var sourceType = TypeGenerator[value.Value.Type];
 
@@ -1030,33 +1028,33 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                         {
 
 
-                        // Field 0 is always the actual pointer to the data
-                        if (value.FieldSpan.Index == 0)
-                        {
-                            AppendLine($"let {target} = &param{param.Index}[0];");
-                            return;
-                        }
-
-                        // Metadata handling (Length and Strides)
-                        if (isMultiDim && rawType is StructureType st1)
-                        {
-                            var totalLen = $"i32(arrayLength(&param{param.Index}))";
-                            
-                            // Check hoisting to prevent shadowing
-                            string prefix = _hoistedPrimitives.Contains(value) ? "" : "let ";
-
-                             if (is3DView)
+                            // Field 0 is always the actual pointer to the data
+                            if (value.FieldSpan.Index == 0)
                             {
-                                var width = $"param{param.Index}_stride[0]";
-                                var height = $"param{param.Index}_stride[1]";
-                                var depth = $"param{param.Index}_stride[2]";
+                                AppendLine($"let {target} = &param{param.Index}[0];");
+                                return;
+                            }
 
-                                // Flattened Access:
-                                // 1: Width
-                                // 2: Height
-                                // 3: Depth
-                                // 4: StrideY (Width)
-                                // 5: StrideZ (Width*Height)
+                            // Metadata handling (Length and Strides)
+                            if (isMultiDim && rawType is StructureType st1)
+                            {
+                                var totalLen = $"i32(arrayLength(&param{param.Index}))";
+
+                                // Check hoisting to prevent shadowing
+                                string prefix = _hoistedPrimitives.Contains(value) ? "" : "let ";
+
+                                if (is3DView)
+                                {
+                                    var width = $"param{param.Index}_stride[0]";
+                                    var height = $"param{param.Index}_stride[1]";
+                                    var depth = $"param{param.Index}_stride[2]";
+
+                                    // Flattened Access:
+                                    // 1: Width
+                                    // 2: Height
+                                    // 3: Depth
+                                    // 4: StrideY (Width)
+                                    // 5: StrideZ (Width*Height)
 
                                     switch (value.FieldSpan.Index)
                                     {
@@ -1066,53 +1064,53 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                                         case 4: AppendLine($"{prefix}{target} = {width};"); return;
                                         case 5: AppendLine($"{prefix}{target} = {width} * {height};"); return;
                                     }
-                            }
-                            else if (is2DView)
-                            {
-                                var width = $"param{param.Index}_stride[0]";
-                                var height = $"param{param.Index}_stride[1]";
-
-                                // Flattened Access:
-                                // 1: Width
-                                // 2: Height
-                                // 3: StrideY (Width)
-
-                                switch (value.FieldSpan.Index)
-                                {
-                                    case 1: AppendLine($"{prefix}{target} = {width};"); return;
-                                    case 2: AppendLine($"{prefix}{target} = {height};"); return;
-                                    case 3: AppendLine($"{prefix}{target} = {width};"); return;
                                 }
-                            }
-                            else if (is1DView)
-                            {
-                                // For 1D, we verify if mapped to standard structure
-                                // 1D ArrayView is (View, Index, Length) or (View, Length)?
-                                // If base View, it has (Buffer, Index, Length).
-                                // Usually accessed: Field 2 (Length).
-                                
-                                switch (value.FieldSpan.Index)
+                                else if (is2DView)
                                 {
-                                    case 1: AppendLine($"{prefix}{target} = 0;"); return;       // Index (Assume 0 for base view)
-                                    case 2: AppendLine($"{prefix}{target} = {totalLen};"); return; // Length
-                                }
-                            }
+                                    var width = $"param{param.Index}_stride[0]";
+                                    var height = $"param{param.Index}_stride[1]";
 
-                            // Fallback for unknown length access
-                            AppendLine($"{prefix}{target} = {totalLen};");
-                            return;
+                                    // Flattened Access:
+                                    // 1: Width
+                                    // 2: Height
+                                    // 3: StrideY (Width)
+
+                                    switch (value.FieldSpan.Index)
+                                    {
+                                        case 1: AppendLine($"{prefix}{target} = {width};"); return;
+                                        case 2: AppendLine($"{prefix}{target} = {height};"); return;
+                                        case 3: AppendLine($"{prefix}{target} = {width};"); return;
+                                    }
+                                }
+                                else if (is1DView)
+                                {
+                                    // For 1D, we verify if mapped to standard structure
+                                    // 1D ArrayView is (View, Index, Length) or (View, Length)?
+                                    // If base View, it has (Buffer, Index, Length).
+                                    // Usually accessed: Field 2 (Length).
+
+                                    switch (value.FieldSpan.Index)
+                                    {
+                                        case 1: AppendLine($"{prefix}{target} = 0;"); return;       // Index (Assume 0 for base view)
+                                        case 2: AppendLine($"{prefix}{target} = {totalLen};"); return; // Length
+                                    }
+                                }
+
+                                // Fallback for unknown length access
+                                AppendLine($"{prefix}{target} = {totalLen};");
+                                return;
+                            }
                         }
                     }
                 }
             }
-            }
 
-                // 3. Special handling for Kernel Index Parameter (X, Y components)
-            if (ResolveToParameter(value.ObjectValue) is global::ILGPU.IR.Values.Parameter kernelParam) 
+            // 3. Special handling for Kernel Index Parameter (X, Y components)
+            if (ResolveToParameter(value.ObjectValue) is global::ILGPU.IR.Values.Parameter kernelParam)
             {
-                 int paramOffset = KernelParamOffset;
-                 if (kernelParam.Index < paramOffset)
-                 {
+                int paramOffset = KernelParamOffset;
+                if (kernelParam.Index < paramOffset)
+                {
                     var target = Load(value);
                     var source = Load(value.ObjectValue);
                     string prefix = _hoistedPrimitives.Contains(value) ? "" : "let ";
@@ -1136,7 +1134,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                         else AppendLine($"{prefix}{target} = 0;");
                         return;
                     }
-                 }
+                }
             }
 
             // 4. Standard Field Access (not a View or Kernel Index)
@@ -1158,16 +1156,16 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 // If we forced Index2D to be vec2<i32>, we need .x/.y access.
                 // However, standard structs use struct members.
                 // WE MUST CHECK TYPE.
-                
+
                 string fieldAccess = $".field_{value.FieldSpan.Index}";
-                
+
                 // Heuristic: If source is a vector type string, use x/y/z/w
                 var typeStr = TypeGenerator[value.ObjectValue.Type];
-                if (typeStr.Contains("vec2")) 
+                if (typeStr.Contains("vec2"))
                 {
-                     fieldAccess = value.FieldSpan.Index == 0 ? ".x" : ".y";
+                    fieldAccess = value.FieldSpan.Index == 0 ? ".x" : ".y";
                 }
-                
+
                 AppendLine($"{finalPrefix}{standardTarget} = {standardSource}{fieldAccess};");
             }
         }
@@ -1179,7 +1177,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             // Directly update the field of the hoisted variable
             // Note: This relies on 'target' being a mutable 'var' (hoisted primitive)
             AppendLine($"{target}.field_{value.FieldSpan.Index} = {val};");
-            
+
             // Define the result value to maintain connectivity for downstream users (like Phi)
             // Since we mutated 'target' in place, the result 'value' is logically equivalent to 'target'
             var res = Allocate(value);
@@ -1357,7 +1355,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 }
             }
         }
-            
 
-        }
+
     }
+}

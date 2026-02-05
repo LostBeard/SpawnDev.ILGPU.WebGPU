@@ -64,31 +64,31 @@ namespace SpawnDev.ILGPU.WebGPU
             // Set device properties from native WebGPU device
             Name = device.Name;
             WarpSize = 32; // WebGPU subgroup size is typically 32 (similar to CUDA warps)
-            
+
             // Map WebGPU workgroup limits to ILGPU concepts
             MaxGroupSize = new Index3D(
                 device.MaxComputeWorkgroupSizeX,
                 device.MaxComputeWorkgroupSizeY,
                 device.MaxComputeWorkgroupSizeZ);
-            
+
             MaxNumThreadsPerGroup = device.MaxComputeInvocationsPerWorkgroup;
-            
+
             // WebGPU doesn't expose multiprocessor count directly
             // Use a reasonable estimate based on workgroup capacity
             NumMultiprocessors = 16; // Conservative estimate
             MaxNumThreadsPerMultiprocessor = device.MaxComputeInvocationsPerWorkgroup;
-            
+
             // Grid size (dispatch) limits
             MaxGridSize = new Index3D(
                 device.MaxComputeWorkgroupsPerDimension,
                 device.MaxComputeWorkgroupsPerDimension,
                 device.MaxComputeWorkgroupsPerDimension);
-            
+
             // Memory limits
             MemorySize = device.MaxBufferSize;
             MaxSharedMemoryPerGroup = device.MaxComputeWorkgroupStorageSize;
             MaxConstantMemory = 65536; // WebGPU uniform buffer limit
-            
+
             // Create basic capability context
             Capabilities = new WebGPUCapabilityContext();
         }

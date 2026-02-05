@@ -1,15 +1,10 @@
 using global::ILGPU;
 using global::ILGPU.Backends;
-using global::ILGPU.Backends.EntryPoints;
-using global::ILGPU.Backends.IL;
 using global::ILGPU.Runtime;
 using SpawnDev.BlazorJS.JSObjects;
 using SpawnDev.ILGPU.WebGPU.Backend;
-using System;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Threading.Tasks;
 using Array = System.Array;
 
 namespace SpawnDev.ILGPU.WebGPU
@@ -148,24 +143,26 @@ namespace SpawnDev.ILGPU.WebGPU
 
                 // DIRECT PROPERTY CHECK (Fallback for 1D ArrayView/Base)
                 var pIntLength = viewType.GetProperty("IntLength", flags);
-                if (pIntLength != null) 
+                if (pIntLength != null)
                 {
-                     try 
-                     {
+                    try
+                    {
                         var val = (int)pIntLength.GetValue(view);
                         return new int[] { val };
-                     } catch {}
+                    }
+                    catch { }
                 }
 
                 // Fallback to Length (Long)
-                 var pLength = viewType.GetProperty("Length", flags);
-                if (pLength != null && (pLength.PropertyType == typeof(int) || pLength.PropertyType == typeof(long))) 
+                var pLength = viewType.GetProperty("Length", flags);
+                if (pLength != null && (pLength.PropertyType == typeof(int) || pLength.PropertyType == typeof(long)))
                 {
-                     try 
-                     {
+                    try
+                    {
                         var val = Convert.ToInt32(pLength.GetValue(view));
                         return new int[] { val };
-                     } catch {}
+                    }
+                    catch { }
                 }
 
                 foreach (var prop in viewType.GetProperties(flags))

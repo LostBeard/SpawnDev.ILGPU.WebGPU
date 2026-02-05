@@ -1,10 +1,8 @@
-using ILGPU;
 using global::ILGPU.IR;
 using global::ILGPU.IR.Types;
 using global::ILGPU.Util;
-using System.Collections.Generic;
+using ILGPU;
 using System.Text;
-using System.Threading;
 
 namespace SpawnDev.ILGPU.WebGPU.Backend
 {
@@ -87,10 +85,10 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 _ => null
             };
         }
-        
+
         public static string GetBasicValueType(ArithmeticBasicValueType type)
         {
-             return type switch
+            return type switch
             {
                 ArithmeticBasicValueType.UInt1 => "bool",
                 ArithmeticBasicValueType.Int8 => "i32",
@@ -124,7 +122,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 };
 
                 var elementType = this[pointerType.ElementType];
-                
+
                 if (storageClass == "storage")
                     name = $"ptr<{storageClass}, {elementType}, read_write>";
                 else
@@ -152,9 +150,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             }
             else if (typeNode is PrimitiveType primitiveType)
             {
-                 // Try to resolve primitive type logic again if missing from map
-                 name = GetBasicValueType(primitiveType.BasicValueType);
-                 if (name == null) name = "u32"; // Actual fallback for unknown primitives
+                // Try to resolve primitive type logic again if missing from map
+                name = GetBasicValueType(primitiveType.BasicValueType);
+                if (name == null) name = "u32"; // Actual fallback for unknown primitives
             }
             else if (typeNode is ViewType viewType)
             {
@@ -171,32 +169,32 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
         public void GenerateTypeDefinitions(StringBuilder builder)
         {
-             // Emit struct definitions
-             foreach(var kvp in mapping)
-             {
-                 if (kvp.Key is StructureType structType)
-                 {
-                     // Skip if mapped to a built-in WGSL type
-                     if (kvp.Value == "i32" || 
-                         kvp.Value == "u32" || 
-                         kvp.Value == "f32" || 
-                         kvp.Value == "bool" ||
-                         kvp.Value.StartsWith("vec") || 
-                         kvp.Value.StartsWith("mat") ||
-                         kvp.Value.StartsWith("ptr<"))
-                         continue;
+            // Emit struct definitions
+            foreach (var kvp in mapping)
+            {
+                if (kvp.Key is StructureType structType)
+                {
+                    // Skip if mapped to a built-in WGSL type
+                    if (kvp.Value == "i32" ||
+                        kvp.Value == "u32" ||
+                        kvp.Value == "f32" ||
+                        kvp.Value == "bool" ||
+                        kvp.Value.StartsWith("vec") ||
+                        kvp.Value.StartsWith("mat") ||
+                        kvp.Value.StartsWith("ptr<"))
+                        continue;
 
-                     builder.AppendLine($"struct {kvp.Value} {{");
-                     int fieldIdx = 0;
-                     foreach(var fieldType in structType.Fields)
-                     {
-                         builder.AppendLine($"    field_{fieldIdx} : {this[fieldType]},");
-                         fieldIdx++;
-                     }
-                     builder.AppendLine("};");
-                     builder.AppendLine();
-                 }
-             }
+                    builder.AppendLine($"struct {kvp.Value} {{");
+                    int fieldIdx = 0;
+                    foreach (var fieldType in structType.Fields)
+                    {
+                        builder.AppendLine($"    field_{fieldIdx} : {this[fieldType]},");
+                        fieldIdx++;
+                    }
+                    builder.AppendLine("};");
+                    builder.AppendLine();
+                }
+            }
         }
 
         #endregion

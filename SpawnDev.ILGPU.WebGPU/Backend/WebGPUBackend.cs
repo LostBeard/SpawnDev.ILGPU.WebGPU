@@ -12,11 +12,10 @@ using global::ILGPU.Backends;
 using global::ILGPU.Backends.EntryPoints;
 using global::ILGPU.IR;
 using global::ILGPU.IR.Analyses;
-using global::ILGPU.IR.Transformations;
 using global::ILGPU.IR.Intrinsics;
-using System.Text;
-using System.Reflection;
 using ILGPU.Runtime;
+using System.Reflection;
+using System.Text;
 
 namespace SpawnDev.ILGPU.WebGPU.Backend
 {
@@ -99,7 +98,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     // Get BackendContainer type
                     var containerType = mgrType.GetNestedType("BackendContainer", BindingFlags.NonPublic);
                     var createMethod = containerType.GetMethod("Create", BindingFlags.Static | BindingFlags.Public);
-                    
+
                     if (webGpuIndex >= containers.Length)
                     {
                         Console.WriteLine($"WebGPU: Resizing IntrinsicManager containers from {containers.Length} to {webGpuIndex + 1}");
@@ -115,7 +114,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     // Actually, let's just create a new one and set it, to be safe.
                     // But array of structs... setting the value boxes it.
                     // Array.SetValue works for structs.
-                    
+
                     var newContainer = createMethod.Invoke(null, null);
                     containers.SetValue(newContainer, webGpuIndex);
                     Console.WriteLine("WebGPU: Initialized BackendContainer for WebGPU.");
@@ -123,17 +122,17 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 else
                 {
                     // Check if matchers are initialized (it's a struct, so the array entry isn't null, but its fields might be)
-                     var containerType = mgrType.GetNestedType("BackendContainer", BindingFlags.NonPublic);
-                     var container = containers.GetValue(webGpuIndex);
-                     var matchersField = containerType.GetField("matchers", BindingFlags.Instance | BindingFlags.NonPublic);
-                     var matchers = matchersField.GetValue(container);
-                     if (matchers == null)
-                     {
-                         Console.WriteLine("WebGPU: BackendContainer found but uninitialized. Re-initializing.");
-                         var createMethod = containerType.GetMethod("Create", BindingFlags.Static | BindingFlags.Public);
-                         var newContainer = createMethod.Invoke(null, null);
-                         containers.SetValue(newContainer, webGpuIndex);
-                     }
+                    var containerType = mgrType.GetNestedType("BackendContainer", BindingFlags.NonPublic);
+                    var container = containers.GetValue(webGpuIndex);
+                    var matchersField = containerType.GetField("matchers", BindingFlags.Instance | BindingFlags.NonPublic);
+                    var matchers = matchersField.GetValue(container);
+                    if (matchers == null)
+                    {
+                        Console.WriteLine("WebGPU: BackendContainer found but uninitialized. Re-initializing.");
+                        var createMethod = containerType.GetMethod("Create", BindingFlags.Static | BindingFlags.Public);
+                        var newContainer = createMethod.Invoke(null, null);
+                        containers.SetValue(newContainer, webGpuIndex);
+                    }
                 }
             }
             catch (Exception ex)
@@ -161,7 +160,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static)
                 .Where(m => m.Name == methodName);
-            
+
             bool found = false;
             foreach (var method in methods)
             {
@@ -203,7 +202,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             {
                 var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static)
                     .Where(m => m.Name == name);
-                
+
                 foreach (var m in methods)
                 {
                     MethodInfo target = m;
@@ -229,7 +228,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                         null,
                         pTypes, // Explicitly pass parameter types
                         null);
-                    
+
                     if (wrapper != null)
                     {
                         System.Console.WriteLine($"WebGPU: Mapping {type.Name}.{name}({string.Join(",", pTypes.Select(pt => pt.Name))}) to {t.Name}.{name}");
@@ -247,7 +246,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             // Unary
             RegAll(typeof(Math), "Abs", WGSLCodeGenerator.GenerateAbs);
             RegAll(typeof(MathF), "Abs", WGSLCodeGenerator.GenerateAbs);
-            
+
             RegAll(typeof(Math), "Sign", WGSLCodeGenerator.GenerateSign);
             RegAll(typeof(MathF), "Sign", WGSLCodeGenerator.GenerateSign);
 
@@ -275,15 +274,15 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             // RegAll(typeof(Math), "Clamp", WGSLCodeGenerator.GenerateClamp);
             // RegAll(typeof(MathF), "Clamp", WGSLCodeGenerator.GenerateClamp);
             RegAll(typeof(Math), "Max", WGSLCodeGenerator.GenerateClamp); // Using GenerateClamp just to match handler signature, but target is Max?
-            // Wait, RegAll finds 'Max' method in 'WebGPUIntrinsics'. I want to map Math.Clamp -> WebGPUIntrinsics.Max
-            
+                                                                          // Wait, RegAll finds 'Max' method in 'WebGPUIntrinsics'. I want to map Math.Clamp -> WebGPUIntrinsics.Max
+
             // Manual Redirect for test
             var mClamp = typeof(MathF).GetMethod("Clamp", new[] { typeof(float), typeof(float), typeof(float) });
             var wMax = typeof(WebGPUIntrinsics).GetMethod("Max", new[] { typeof(float), typeof(float) });
-             // Signature mismatch... Max takes 2 args. 
-            
+            // Signature mismatch... Max takes 2 args. 
+
             // Revert to standard RegAll for Clamp, but I will modify RegAll to force a different target.
-            
+
             // Actually, keep standard RegAll. I suspect FixIntrinsicManager.
             RegAll(typeof(Math), "Clamp", WGSLCodeGenerator.GenerateClamp);
             RegAll(typeof(MathF), "Clamp", WGSLCodeGenerator.GenerateClamp);

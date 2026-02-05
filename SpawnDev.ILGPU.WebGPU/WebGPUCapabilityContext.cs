@@ -1,4 +1,3 @@
-using ILGPU.Backends;
 using ILGPU.Runtime;
 
 namespace SpawnDev.ILGPU.WebGPU
@@ -15,10 +14,10 @@ namespace SpawnDev.ILGPU.WebGPU
         {
             // WebGPU does not guarantee Float16 support yet (shader-f16)
             Float16 = false;
-            
+
             // WebGPU requires 'shader-float64' for double
             Float64 = false;
-            
+
             // WebGPU requires 'shader-int64' for long
             Int64 = false;
         }

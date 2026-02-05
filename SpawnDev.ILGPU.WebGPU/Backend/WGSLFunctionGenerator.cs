@@ -9,7 +9,6 @@
 
 using global::ILGPU.IR;
 using global::ILGPU.IR.Analyses;
-using global::ILGPU.IR.Values;
 using System.Text;
 
 namespace SpawnDev.ILGPU.WebGPU.Backend
@@ -54,18 +53,18 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             builder.Append("fn ");
             builder.Append(GetMethodName(Method));
             builder.Append("(");
-            
+
             // Emit parameters
             bool first = true;
             foreach (var param in Method.Parameters)
             {
                 if (!first) builder.Append(", ");
                 first = false;
-                
+
                 var paramType = TypeGenerator[param.ParameterType];
                 builder.Append($"p_{param.Id} : {paramType}");
             }
-            
+
             builder.Append(") -> ");
             builder.Append(TypeGenerator[Method.ReturnType]);
         }

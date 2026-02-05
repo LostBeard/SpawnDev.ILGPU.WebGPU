@@ -7,8 +7,6 @@
 // WGSL intrinsic handler delegate for WebGPU backend code generation.
 // ---------------------------------------------------------------------------------------
 
-using global::ILGPU.IR.Values;
-
 namespace SpawnDev.ILGPU.WebGPU.Backend
 {
     /// <summary>

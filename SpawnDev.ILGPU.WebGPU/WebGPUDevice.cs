@@ -51,7 +51,7 @@ namespace SpawnDev.ILGPU.WebGPU
             {
                 var navigator = BlazorJSRuntime.JS.Get<Navigator>("navigator");
                 var gpu = navigator.Gpu;
-                
+
                 if (gpu == null)
                     return devices.ToImmutable();
 
@@ -69,8 +69,8 @@ namespace SpawnDev.ILGPU.WebGPU
                     PowerPreference = "high-performance"
                 };
                 var highPerfAdapter = await gpu.RequestAdapter(highPerfOptions);
-                
-                if (highPerfAdapter != null && 
+
+                if (highPerfAdapter != null &&
                     adapter != null &&
                     highPerfAdapter.Info?.Device != adapter.Info?.Device)
                 {

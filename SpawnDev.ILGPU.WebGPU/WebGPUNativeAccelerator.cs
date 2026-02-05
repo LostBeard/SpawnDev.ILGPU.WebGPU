@@ -52,7 +52,7 @@ namespace SpawnDev.ILGPU.WebGPU
                 return;
 
             var adapter = Device.Adapter;
-            
+
             // Request device with required features
             _gpuDevice = await adapter.RequestDevice();
             if (_gpuDevice == null)
@@ -129,23 +129,23 @@ namespace SpawnDev.ILGPU.WebGPU
         public void Dispatch(WebGPUComputeShader shader, uint workgroupCountX, uint workgroupCountY = 1, uint workgroupCountZ = 1)
         {
             EnsureInitialized();
-            
+
             var encoder = _gpuDevice!.CreateCommandEncoder();
             var passEncoder = encoder.BeginComputePass();
-            
+
             passEncoder.SetPipeline(shader.Pipeline!);
-            
+
             if (shader.BindGroup != null)
             {
                 passEncoder.SetBindGroup(0, shader.BindGroup);
             }
-            
+
             passEncoder.DispatchWorkgroups(workgroupCountX, workgroupCountY, workgroupCountZ);
             passEncoder.End();
-            
+
             var commandBuffer = encoder.Finish();
             _queue!.Submit(new[] { commandBuffer });
-            
+
             // Clean up
             commandBuffer.Dispose();
             passEncoder.Dispose();
@@ -168,7 +168,7 @@ namespace SpawnDev.ILGPU.WebGPU
         {
             if (_disposed) return;
             _disposed = true;
-            
+
             _gpuDevice?.Destroy();
             _gpuDevice?.Dispose();
         }

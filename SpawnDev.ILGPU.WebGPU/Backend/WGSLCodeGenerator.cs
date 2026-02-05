@@ -14,8 +14,6 @@ using global::ILGPU.IR;
 using global::ILGPU.IR.Analyses;
 using global::ILGPU.IR.Types;
 using global::ILGPU.IR.Values;
-using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace SpawnDev.ILGPU.WebGPU.Backend
@@ -94,7 +92,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         protected int labelCounter = 0;
         private readonly Dictionary<Value, Variable> valueVariables = new();
         private readonly Dictionary<BasicBlock, string> blockLabels = new();
-        
+
         // Flag to tracking if we are generating code within the state machine loop
         protected bool IsStateMachineActive { get; set; } = false;
 
@@ -223,7 +221,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             if (declaredVariables.Contains(variable.Name)) return;
             declaredVariables.Add(variable.Name);
-            
+
             AppendIndent();
             Builder.Append("var ");
             Builder.Append(variable.Name);
@@ -333,7 +331,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         protected void GenerateCodeInternal()
         {
             var blocks = Method.Blocks;
-            
+
             // Setup local allocations
             SetupAllocations(Allocas.LocalAllocations, MemoryAddressSpace.Local);
 
@@ -353,7 +351,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
             // Multiple blocks: use loop/switch pattern
             IsStateMachineActive = true;
-            
+
             // Declare return variable if needed
             if (hasReturnValue)
             {
@@ -390,9 +388,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             AppendLine("default: { break; }");
             PopIndent();
             AppendLine("}"); // end switch
-            
+
             AppendLine("if (current_block == -1) { break; }");
-            
+
             PopIndent();
             AppendLine("}"); // end loop
 
@@ -430,7 +428,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             {
                 var variable = Allocate(allocaInfo.Alloca);
                 var elementType = TypeGenerator[allocaInfo.ElementType];
-                
+
                 if (allocaInfo.IsArray)
                 {
                     AppendLine($"var {variable.Name} : array<{elementType}, {allocaInfo.ArraySize}>;");
@@ -452,8 +450,8 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         protected void GenerateCodeFor(Value value)
         {
             // Skip void values and already-handled values
-            if (value.Type.IsVoidType && 
-                !(value is TerminatorValue) && 
+            if (value.Type.IsVoidType &&
+                !(value is TerminatorValue) &&
                 !(value is Store) &&
                 !(value is MemoryBarrier) &&
                 !(value is global::ILGPU.IR.Values.Barrier) &&
@@ -485,10 +483,10 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 case global::ILGPU.IR.Values.Parameter p:
                     GenerateCode(p);
                     break;
-                
+
                 case global::ILGPU.IR.Values.MethodCall v:
-                     GenerateCode(v);
-                     break;
+                    GenerateCode(v);
+                    break;
 
                 // Arithmetic
                 case global::ILGPU.IR.Values.BinaryArithmeticValue v:
@@ -615,7 +613,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     GenerateCode(v);
                     break;
 
-                
+
                 // Atomics & Barriers
                 case global::ILGPU.IR.Values.GenericAtomic v:
                     GenerateCode(v);
@@ -758,7 +756,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             {
                 UnaryArithmeticKind.Neg => $"-{operand}",
                 UnaryArithmeticKind.Not => TypeGenerator[value.Value.Type] == "bool" ? $"!{operand}" : $"~{operand}",
-                
+
                 // Math Intrinsics (Float)
                 UnaryArithmeticKind.Abs => $"abs({operand})",
                 UnaryArithmeticKind.SinF => $"sin({operand})",
@@ -786,7 +784,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             if (result == "DEBUG_MISSING")
             {
                 AppendLine($"// [WGSL] Unhandled UnaryArithmeticKind: {value.Kind}");
-                result = $"unhandled_unary({operand})"; 
+                result = $"unhandled_unary({operand})";
             }
 
             AppendLine($"{target} = {result};");
@@ -849,7 +847,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             Declare(target);
 
             var targetType = TypeGenerator[loadVal.Type];
-            string sourceType = targetType; 
+            string sourceType = targetType;
             bool isAtomic = IsAtomicPointer(loadVal.Source);
 
             if (loadVal.Source.Type is global::ILGPU.IR.Types.PointerType ptrType)
@@ -860,7 +858,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
             if (isAtomic)
             {
-                 AppendLine($"{target} = atomicLoad({source});");
+                AppendLine($"{target} = atomicLoad({source});");
             }
             else if (targetType != sourceType)
             {
@@ -931,18 +929,19 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             Builder.Append("let ");
             Builder.Append(target.Name);
             Builder.Append(" = ");
-            
+
             string fieldName = $"field_{value.FieldSpan.Index}";
             if (IsIndexType(value.Source.Type))
             {
-                fieldName = value.FieldSpan.Index switch {
+                fieldName = value.FieldSpan.Index switch
+                {
                     0 => "x",
                     1 => "y",
                     2 => "z",
                     _ => fieldName
                 };
             }
-            
+
             Builder.Append($"&(*{source}).{fieldName};");
             Builder.AppendLine();
         }
@@ -987,7 +986,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             if (float.IsNaN(value)) return "0.0";
             if (float.IsPositiveInfinity(value)) return "3.402823e+38";
             if (float.IsNegativeInfinity(value)) return "-3.402823e+38";
-            
+
             var str = value.ToString("G9");
             if (!str.Contains('.') && !str.Contains('e') && !str.Contains('E'))
                 str += ".0";
@@ -1043,18 +1042,19 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             var target = Load(value);
             var source = Load(value.ObjectValue);
             Declare(target);
-            
+
             string fieldName = $"field_{value.FieldSpan.Index}";
             if (IsIndexType(value.ObjectValue.Type))
             {
-                fieldName = value.FieldSpan.Index switch {
+                fieldName = value.FieldSpan.Index switch
+                {
                     0 => "x",
                     1 => "y",
                     2 => "z",
                     _ => fieldName
                 };
             }
-            
+
             AppendLine($"{target} = {source}.{fieldName};");
         }
 
@@ -1065,25 +1065,26 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             var fieldValue = Load(value.Value);
             Declare(target);
             AppendLine($"{target} = {source};");
-            
+
             string fieldName = $"field_{value.FieldSpan.Index}";
             if (IsIndexType(value.ObjectValue.Type))
             {
-                fieldName = value.FieldSpan.Index switch {
+                fieldName = value.FieldSpan.Index switch
+                {
                     0 => "x",
                     1 => "y",
                     2 => "z",
                     _ => fieldName
                 };
             }
-            
+
             AppendLine($"{target}.{fieldName} = {fieldValue};");
         }
-        
+
         protected bool IsIndexType(TypeNode type)
         {
             var typeName = type.ToString();
-            return typeName.Contains("Index") && 
+            return typeName.Contains("Index") &&
                    (typeName.Contains("1D") || typeName.Contains("2D") || typeName.Contains("3D"));
         }
 
@@ -1170,7 +1171,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     var retVal = Load(value.ReturnValue);
                     AppendLine($"_ilgpu_return_val = {retVal};");
                 }
-                
+
                 AppendLine("current_block = -1;");
                 AppendLine("break;");
             }
@@ -1222,7 +1223,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             var selector = Load(branch.Condition);
             AppendLine($"switch ({selector}) {{");
             PushIndent();
-            
+
             for (int i = 0; i < branch.NumCasesWithoutDefault; i++)
             {
                 var target = branch.GetCaseTarget(i);
@@ -1270,7 +1271,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             var target = Load(methodCall);
             Declare(target);
-            
+
             string name = methodCall.Target.Name;
             // Map common intrinsics if they appear as method calls
             string? wgslFunc = name switch
@@ -1288,12 +1289,12 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 var n when n.Contains("Step") && !n.Contains("Smooth") => "step",
                 var n when n.Contains("SmoothStep") => "smoothstep",
                 var n when n.Contains("FusedMultiplyAdd") => "fma",
-                
+
                 var n when n.Contains("PopCount") => "countOneBits",
                 var n when n.Contains("TrailingZeroCount") => "countTrailingZeros",
                 var n when n.Contains("LeadingZeroCount") => "countLeadingZeros",
                 var n when n.Contains("Reverse") => "reverseBits",
-                
+
                 // Standard Math
                 var n when n.Contains("Sin") => "sin",
                 var n when n.Contains("Cos") => "cos",
@@ -1313,7 +1314,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 var n when n.Contains("Truncate") => "trunc",
                 var n when n.Contains("Lerp") || n.Contains("Mix") => "mix",
                 var n when n.Contains("Select") => "select_custom",
-                
+
                 var n when n.Contains("Sinh") => "sinh",
                 var n when n.Contains("Cosh") => "cosh",
                 var n when n.Contains("Tanh") => "tanh",
@@ -1326,7 +1327,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 if (methodCall.Count == 1)
                 {
                     var arg = Load(methodCall[0]);
-                    
+
                     if (wgslFunc == "rcp_custom")
                     {
                         AppendLine($"{target} = 1.0 / {arg};");
@@ -1383,7 +1384,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
             AppendLine($"// Call: {methodCall.Target.Name} (Unmapped)");
             // Probe Value 2
-            AppendLine($"{target} = 12345.0;"); 
+            AppendLine($"{target} = 12345.0;");
         }
 
         // Casts
@@ -1559,22 +1560,22 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
         public virtual void GenerateThrow(Value value)
         {
-             // WebGPU does not support exceptions. 
-             // We emit a trap/unreachable, or just a comment if we assume it's unreachable in valid code.
-             AppendLine($"// [WGSL] Throw encountered: {value} (Ignored/Unreachable)");
-             
-             if (IsStateMachineActive)
-             {
-                 // Break out of the loop
-                 AppendLine("current_block = -1;");
-                 AppendLine("break;");
-             }
-             else
-             {
-                 AppendLine("return;");
-             }
+            // WebGPU does not support exceptions. 
+            // We emit a trap/unreachable, or just a comment if we assume it's unreachable in valid code.
+            AppendLine($"// [WGSL] Throw encountered: {value} (Ignored/Unreachable)");
+
+            if (IsStateMachineActive)
+            {
+                // Break out of the loop
+                AppendLine("current_block = -1;");
+                AppendLine("break;");
+            }
+            else
+            {
+                AppendLine("return;");
+            }
         }
-        
+
         #endregion
 
         #region Math Intrinsics
@@ -1605,7 +1606,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 codeGenerator.AppendLine($"{target} = {call};");
             }
         }
-        
+
         public static void GenerateRound(WebGPUBackend backend, WGSLCodeGenerator codeGenerator, Value value)
         {
             if (value is MethodCall methodCall)
@@ -1688,7 +1689,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 codeGenerator.AppendLine($"{target} = clamp({val}, {min}, {max});");
             }
         }
-        
+
         public static void GenerateFusedMultiplyAdd(WebGPUBackend backend, WGSLCodeGenerator codeGenerator, Value value)
         {
             if (value is MethodCall methodCall)

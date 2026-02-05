@@ -117,7 +117,7 @@ namespace SpawnDev.ILGPU.WebGPU
 
             var copyLength = length ?? Length - sourceOffset;
             var result = new T[copyLength];
-            
+
             Console.WriteLine($"[WebGPU] CopyToHostAsync: SourceOffset={sourceOffset}, Length={copyLength} elements");
 
             var device = Accelerator.NativeDevice;
@@ -166,7 +166,7 @@ namespace SpawnDev.ILGPU.WebGPU
                 }
             }
             stagingBuffer.Unmap();
-            
+
             Console.WriteLine($"[WebGPU] CopyToHostAsync: Finished");
 
             return result;

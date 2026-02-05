@@ -107,12 +107,12 @@ namespace SpawnDev.ILGPU.WebGPU
 
             // Remove any existing binding at this index
             _bindings.RemoveAll(b => b.Index == bindingIndex);
-            
+
             _bindings.Add(new WebGPUBufferBinding(bindingIndex, buffer.NativeBuffer));
-            
+
             // Rebuild bind group
             RebuildBindGroup();
-            
+
             return this;
         }
 
@@ -157,7 +157,7 @@ namespace SpawnDev.ILGPU.WebGPU
         {
             if (_disposed) return;
             _disposed = true;
-            
+
             _bindGroup?.Dispose();
             _pipeline?.Dispose();
             _shaderModule?.Dispose();
