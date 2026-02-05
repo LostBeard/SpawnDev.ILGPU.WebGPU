@@ -370,7 +370,11 @@ namespace SpawnDev.ILGPU.WebGPU
 
         protected override MemoryBuffer AllocateRawInternal(long length, int elementSize) => new WebGPUMemoryBuffer(this, length, elementSize);
         protected override AcceleratorStream CreateStreamInternal() => new WebGPUStream(this);
-        protected override void SynchronizeInternal() { }
+        protected override void SynchronizeInternal()
+        {
+            // WebGPU in Blazor WASM cannot block. Use SynchronizeAsync() instead.
+            Console.WriteLine("[WebGPU Warning] Synchronize() is non-blocking in Blazor WASM. Use 'await accelerator.SynchronizeAsync()' for async waiting.");
+        }
         protected override void OnBind() { }
         protected override void OnUnbind() { }
         protected override void DisposeAccelerator_SyncRoot(bool disposing) { if (disposing) NativeAccelerator.Dispose(); }
