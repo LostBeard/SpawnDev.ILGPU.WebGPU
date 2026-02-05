@@ -4,7 +4,8 @@
 
 **Run ILGPU kernels directly in the browser using WebGPU!**
 
-SpawnDev.ILGPU.WebGPU is a WebGPU backend for [ILGPU](https://github.com/m4rs-mt/ILGPU) that enables GPU-accelerated compute in Blazor WebAssembly applications. Write your GPU kernels once in C# and run them on any WebGPU-capable browser.
+Run [ILGPU](https://github.com/m4rs-mt/ILGPU) kernels directly in your browser using WebGPU. Write GPU compute shaders in C# and compile them to WGSL automatically.
+
 
 ## Features
 
