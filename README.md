@@ -2,10 +2,8 @@
 
 [![NuGet](https://img.shields.io/nuget/v/SpawnDev.ILGPU.WebGPU.svg)](https://www.nuget.org/packages/SpawnDev.ILGPU.WebGPU)
 
-**Run ILGPU kernels directly in the browser using WebGPU!**
-
-Run [ILGPU](https://github.com/m4rs-mt/ILGPU) kernels directly in your browser using WebGPU. Write GPU compute shaders in C# and compile them to WGSL automatically.
-
+**Run [ILGPU](https://github.com/m4rs-mt/ILGPU) kernels directly in the browser using WebGPU!**  
+Write GPU compute shaders in C# and compile them to WGSL automatically.
 
 ## Features
 
