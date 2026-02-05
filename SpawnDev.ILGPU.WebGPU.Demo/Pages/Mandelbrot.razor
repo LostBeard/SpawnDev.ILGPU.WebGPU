@@ -275,7 +275,8 @@
             var sw = Stopwatch.StartNew();
 
             _ilgpuKernel!(_ilgpuBuffer!.IntExtent, _ilgpuBuffer.View, _width, _height, _maxIterations, _centerX, _centerY, _zoom);
-            _ilgpuAccelerator.Synchronize();
+            
+            await _ilgpuAccelerator!.SynchronizeAsync();
 
             var webGpuMemBuffer = (WebGPUMemoryBuffer)((IArrayView)_ilgpuBuffer).Buffer;
             var bytes = await webGpuMemBuffer.NativeBuffer.CopyToHostAsync();
