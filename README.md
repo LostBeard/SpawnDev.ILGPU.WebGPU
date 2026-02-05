@@ -1,23 +1,99 @@
 # SpawnDev.ILGPU.WebGPU
-SpawnDev.ILGPU.WebGPU provides WebGPU support for [ILGPU](https://github.com/m4rs-mt/ILGPU), enabling GPU compute in Blazor WebAssembly applications.
+
+[![NuGet](https://img.shields.io/nuget/v/SpawnDev.ILGPU.WebGPU.svg)](https://www.nuget.org/packages/SpawnDev.ILGPU.WebGPU)
+
+**Run ILGPU kernels directly in the browser using WebGPU!**
+
+SpawnDev.ILGPU.WebGPU is a WebGPU backend for [ILGPU](https://github.com/m4rs-mt/ILGPU) that enables GPU-accelerated compute in Blazor WebAssembly applications. Write your GPU kernels once in C# and run them on any WebGPU-capable browser.
 
 ## Features
-- GPU compute in Blazor WebAssembly applications
-- WebGPU backend for ILGPU
-- JIT (just-in-time) compiler for high-performance GPU programs written in .Net-based languages
-- Entirely written in C# without any native dependencies
-- Offers the flexibility and the convenience of C++ AMP on the one hand and the high performance of Cuda programs on the other hand
-- Functions in the scope of kernels do not have to be annotated (default C# functions) and are allowed to work on value types
-- All kernels (including all hardware features like shared memory and atomics) can be executed and debugged on the CPU using the integrated multi-threaded CPU accelerator
 
-## SpawnDev.ILGPU.WebGPU.Demo
-- The demo application is located in the [SpawnDev.ILGPU.WebGPU.Demo](SpawnDev.ILGPU.WebGPU.Demo) directory.
-- The unit test app tests can be ran by starting the SpawnDev.ILGPU.WebGPU.Demo project and goiong to the '/tests' page.
-- The demo application showcases the capabilities of SpawnDev.ILGPU.WebGPU by running various GPU compute tasks in a Blazor WebAssembly environment.
-- The PlaywrightTestRunner can be used to run the unit tests in a headless browser environment.
+- **ILGPU-compatible** - Use familiar ILGPU APIs (`ArrayView`, `Index1D/2D/3D`, math intrinsics, etc.)
+- **WGSL transpilation** - C# kernels are automatically compiled to WebGPU Shading Language (WGSL)
+- **Blazor WebAssembly** - Seamless integration via [SpawnDev.BlazorJS](https://github.com/LostBeard/SpawnDev.BlazorJS)
+- **Shared memory & atomics** - Supports workgroup shared memory, barriers, and atomic operations
+- **No native dependencies** - Entirely written in C#
 
-## PlaywrightTestRunner
-- PlaywrightTestRunner is located in the [PlaywrightTestRunner](PlaywrightTestRunner) directory and allows running unit tests in a headless browser environment.
-- Build and run Playwright .Net unit tests using `_test.bat` or `_test.sh`.
-- Tests are run in a headless browser. To enable the browser to be visible, modify `PlaywrightTestRunner/GlobalSetup.cs` and uncomment the line `Environment.SetEnvironmentVariable("HEADED", "1");`.
+## Installation
 
+```bash
+dotnet add package SpawnDev.ILGPU.WebGPU
+```
+
+## Quick Start
+
+```csharp
+using SpawnDev.ILGPU.WebGPU;
+
+// Initialize WebGPU context
+var context = Context.Create(builder => builder.WebGPU());
+var accelerator = context.GetPreferredDevice(preferCPU: false)
+    .CreateAccelerator(context);
+
+// Load and run a kernel
+var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>>(MyKernel);
+
+using var buffer = accelerator.Allocate1D<float>(1024);
+kernel((int)buffer.Length, buffer.View);
+accelerator.Synchronize();
+
+static void MyKernel(Index1D index, ArrayView<float> data)
+{
+    data[index] = index;
+}
+```
+
+## Demo Application
+
+The demo application is located in [SpawnDev.ILGPU.WebGPU.Demo](SpawnDev.ILGPU.WebGPU.Demo) and showcases:
+- GPU compute tasks running in Blazor WebAssembly
+- Interactive Mandelbrot renderer
+- Comprehensive unit tests at `/tests`
+
+### Running the Demo
+
+```bash
+cd SpawnDev.ILGPU.WebGPU.Demo
+dotnet run
+```
+
+Navigate to `https://localhost:5181` in a WebGPU-capable browser (Chrome, Edge, or Firefox Nightly).
+
+## Testing
+
+### Browser Tests
+Start the demo app and navigate to `/tests` to run the unit test suite.
+
+### Automated Tests (Playwright)
+```bash
+# Windows
+_test.bat
+
+# Linux/macOS
+./_test.sh
+```
+
+The PlaywrightTestRunner runs tests in a headless browser. To view the browser during tests, uncomment `Environment.SetEnvironmentVariable("HEADED", "1");` in `PlaywrightTestRunner/GlobalSetup.cs`.
+
+## Browser Requirements
+
+WebGPU is required. Supported browsers:
+- Chrome 113+
+- Edge 113+
+- Firefox Nightly (with `dom.webgpu.enabled` flag)
+
+## Known Limitations
+
+- Some advanced ILGPU features may not yet be supported
+- Subgroups extension not available in all browsers
+- Dynamic shared memory requires Pipeline Overridable Constants (not yet implemented)
+
+## License
+
+This project is licensed under the same terms as ILGPU. See [LICENSE](LICENSE) for details.
+
+## Resources
+
+- [ILGPU Documentation](https://ilgpu.net/)
+- [WebGPU Specification](https://www.w3.org/TR/webgpu/)
+- [SpawnDev.BlazorJS](https://github.com/LostBeard/SpawnDev.BlazorJS)
