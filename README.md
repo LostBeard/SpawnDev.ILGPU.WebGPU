@@ -68,6 +68,7 @@ The demo application is located in [SpawnDev.ILGPU.WebGPU.Demo](SpawnDev.ILGPU.W
 - GPU compute tasks running in Blazor WebAssembly
 - Interactive Mandelbrot renderer
 - Comprehensive unit tests at `/tests`
+- View [Live Demo](https://lostbeard.github.io/SpawnDev.ILGPU.WebGPU/)
 
 ### Running the Demo
 
