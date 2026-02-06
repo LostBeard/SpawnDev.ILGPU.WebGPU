@@ -785,6 +785,13 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 UnaryArithmeticKind.RcpF => $"1.0 / {source}",
                 UnaryArithmeticKind.FloorF => $"floor({source})",
                 UnaryArithmeticKind.CeilingF => $"ceil({source})",
+                // IsNaN: NaN is the only value where x != x
+                UnaryArithmeticKind.IsNaNF => $"({source} != {source})",
+                // IsInf: infinity is unchanged by abs and equals itself
+                // Use abs(x) == abs(x) && abs(x) > 1e38 as a heuristic
+                // Or use (abs(x) * 0.0 != 0.0) - but that includes NaN
+                // Safest WGSL approach: (x != 0.0 && x == x * 2.0) - works for infinity
+                UnaryArithmeticKind.IsInfF => $"({source} != 0.0 && {source} == {source} * 2.0 && {source} == {source})",
                 _ => null
             };
 

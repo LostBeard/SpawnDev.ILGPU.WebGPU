@@ -2291,12 +2291,13 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             else if (index == 2)
             {
                 float nan = 0.0f / 0.0f; // NaN
-                output[index] = (nan == nan) ? 1 : 0; // NaN != NaN
+                output[index] = (nan == nan) ? 1 : 0; // NaN != NaN, so this should be 0
             }
             else
             {
                 float nan = 0.0f / 0.0f;
-                output[index] = float.IsNaN(nan) ? 1 : 0;
+                // Use nan != nan instead of float.IsNaN() to avoid Int1 type issues
+                output[index] = (nan != nan) ? 1 : 0; // NaN != NaN is true
             }
         }
 
