@@ -30,6 +30,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         StringBuilder>
     {
 
+        /// <summary>
+        /// The backend type constant for WebGPU.
+        /// </summary>
         public const BackendType BackendTypeWebGPU = BackendType.WebGPU; // Ensure this matches ILGPU's BackendType enum for WebGPU (if defined)
 
         /// <summary>

@@ -9,17 +9,37 @@ using Array = System.Array;
 
 namespace SpawnDev.ILGPU.WebGPU
 {
+    /// <summary>
+    /// WebGPU accelerator implementation for ILGPU.
+    /// Provides kernel compilation and execution capabilities using WebGPU compute shaders.
+    /// </summary>
     public class WebGPUAccelerator : KernelAccelerator<WebGPUCompiledKernel, WebGPUKernel>
     {
+        /// <summary>
+        /// Gets the native WebGPU accelerator for low-level GPU access.
+        /// </summary>
         public WebGPUNativeAccelerator NativeAccelerator { get; private set; } = null!;
+
+        /// <summary>
+        /// Gets the WebGPU backend used for kernel compilation.
+        /// </summary>
         public WebGPUBackend Backend { get; private set; } = null!;
 
+        /// <summary>
+        /// Method info for the static RunKernel method used by kernel launchers.
+        /// </summary>
         public static readonly MethodInfo RunKernelMethod = typeof(WebGPUAccelerator).GetMethod(
             nameof(RunKernel),
             BindingFlags.Public | BindingFlags.Static)!;
 
         private WebGPUAccelerator(Context context, Device device) : base(context, device) { }
 
+        /// <summary>
+        /// Creates a new WebGPU accelerator asynchronously.
+        /// </summary>
+        /// <param name="context">The ILGPU context.</param>
+        /// <param name="device">The WebGPU device to use.</param>
+        /// <returns>A task that represents the async creation of the accelerator.</returns>
         public static async Task<WebGPUAccelerator> CreateAsync(Context context, WebGPUILGPUDevice device)
         {
             var accelerator = new WebGPUAccelerator(context, device);
@@ -30,16 +50,19 @@ namespace SpawnDev.ILGPU.WebGPU
             return accelerator;
         }
 
+        /// <inheritdoc/>
         protected override WebGPUKernel CreateKernel(WebGPUCompiledKernel compiledKernel)
         {
             return new WebGPUKernel(this, compiledKernel, null);
         }
 
+        /// <inheritdoc/>
         protected override WebGPUKernel CreateKernel(WebGPUCompiledKernel compiledKernel, MethodInfo launcher)
         {
             return new WebGPUKernel(this, compiledKernel, launcher);
         }
 
+        /// <inheritdoc/>
         protected override MethodInfo GenerateKernelLauncherMethod(WebGPUCompiledKernel kernel, int customGroupSize)
         {
             var parameters = kernel.EntryPoint.Parameters;
@@ -189,6 +212,13 @@ namespace SpawnDev.ILGPU.WebGPU
             return Array.Empty<int>();
         }
 
+        /// <summary>
+        /// Executes a WebGPU kernel with the specified parameters.
+        /// </summary>
+        /// <param name="kernel">The kernel to execute.</param>
+        /// <param name="stream">The accelerator stream (not used in WebGPU).</param>
+        /// <param name="dimension">The launch dimensions.</param>
+        /// <param name="args">The kernel arguments.</param>
         public static void RunKernel(Kernel kernel, AcceleratorStream stream, object dimension, object[] args)
         {
             var webGpuAccel = (WebGPUAccelerator)kernel.Accelerator;
@@ -395,10 +425,25 @@ namespace SpawnDev.ILGPU.WebGPU
         }
     }
 
+    /// <summary>
+    /// Represents a compiled WebGPU kernel ready for execution.
+    /// </summary>
     public class WebGPUKernel : Kernel
     {
+        /// <summary>
+        /// Creates a new WebGPU kernel instance.
+        /// </summary>
+        /// <param name="accelerator">The parent accelerator.</param>
+        /// <param name="compiledKernel">The compiled kernel.</param>
+        /// <param name="launcher">The launcher method info.</param>
         public WebGPUKernel(Accelerator accelerator, CompiledKernel compiledKernel, MethodInfo launcher) : base(accelerator, compiledKernel, launcher) { }
+
+        /// <summary>
+        /// Gets the WebGPU-specific compiled kernel.
+        /// </summary>
         public new WebGPUCompiledKernel CompiledKernel => (WebGPUCompiledKernel)base.CompiledKernel;
+
+        /// <inheritdoc/>
         protected override void DisposeAcceleratorObject(bool disposing) { }
     }
 }

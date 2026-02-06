@@ -16,6 +16,9 @@ namespace SpawnDev.ILGPU.WebGPU
     [DeviceType(WebGPUILGPUDevice.WebGPUAcceleratorType)]
     public sealed class WebGPUILGPUDevice : Device
     {
+        /// <summary>
+        /// The accelerator type constant for WebGPU devices.
+        /// </summary>
         public const AcceleratorType WebGPUAcceleratorType = AcceleratorType.WebGPU;
         #region Static
 
