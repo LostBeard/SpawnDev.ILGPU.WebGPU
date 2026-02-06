@@ -1064,7 +1064,6 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
         }
 
         [TestMethod]
-        // [Ignore("Dynamic Shared Memory requires Pipeline Overridable Constants support in backend.")]
         public async Task WebGPUDynamicSharedMemoryTest()
         {
             throw new UnsupportedTestException("Skip: Dynamic Shared Memory requires Pipeline Overridable Constants support in backend.");

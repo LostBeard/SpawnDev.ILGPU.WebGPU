@@ -1,14 +1,11 @@
 using global::ILGPU;
-using ILGPU.IR.Types;
-using ILGPU.Runtime;
-using System.Reflection;
 
 namespace SpawnDev.ILGPU.WebGPU
 {
-        /// <summary>
-        /// WebGPU context extensions.
-        /// </summary>
-        public static class WebGPUContextExtensions
+    /// <summary>
+    /// WebGPU context extensions.
+    /// </summary>
+    public static class WebGPUContextExtensions
     {
         #region Builder
 
