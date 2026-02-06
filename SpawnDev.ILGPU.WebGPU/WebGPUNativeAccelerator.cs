@@ -2,7 +2,7 @@
 //                               SpawnDev.ILGPU.WebGPU
 //                 WebGPU Compute Library for Blazor WebAssembly
 //
-// File: WebGPUAccelerator.cs
+// File: WebGPUNativeAccelerator.cs
 // ---------------------------------------------------------------------------------------
 
 using SpawnDev.BlazorJS.JSObjects;

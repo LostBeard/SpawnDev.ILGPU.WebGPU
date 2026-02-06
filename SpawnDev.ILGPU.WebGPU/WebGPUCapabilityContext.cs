@@ -23,11 +23,6 @@ namespace SpawnDev.ILGPU.WebGPU
         }
 
         /// <summary>
-        /// Supports Float16 (double) data type.
-        /// </summary>
-        //public bool Float16 { get; internal set; }
-
-        /// <summary>
         /// Supports Float64 (double) data type.
         /// </summary>
         public bool Float64 { get; internal set; }

@@ -2863,14 +2863,22 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
 
         static void StencilKernel(Index1D index, ArrayView<float> input, ArrayView<float> output, int length)
         {
-            if (index == 0 || index == length - 1)
+            int i = (int)index;
+            int lastIndex = length - 1;
+            // Avoid || operator which causes Int1 comparison issues in published WASM builds
+            // Use nested conditions instead
+            if (i == 0)
             {
-                output[index] = input[index]; // Boundary: copy
+                output[i] = input[i]; // Boundary: copy
+            }
+            else if (i == lastIndex)
+            {
+                output[i] = input[i]; // Boundary: copy
             }
             else
             {
                 // 3-point average stencil
-                output[index] = (input[index - 1] + input[index] + input[index + 1]) / 3.0f;
+                output[i] = (input[i - 1] + input[i] + input[i + 1]) / 3.0f;
             }
         }
 

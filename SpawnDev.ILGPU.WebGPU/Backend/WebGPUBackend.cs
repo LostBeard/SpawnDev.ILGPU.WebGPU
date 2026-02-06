@@ -65,8 +65,6 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             InitializeKernelTransformers(builder =>
             {
                 // Add any WebGPU-specific transformers
-                // var transformerBuilder = Transformer.CreateBuilder(TransformerConfiguration.Empty);
-                // builder.Add(transformerBuilder.ToTransformer());
             });
         }
 
@@ -212,7 +210,6 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 // EXPERIMENT: Direct Registration to bypass potentially broken Redirect
                 RegisterRedirect(original, wrapper);
                 RegisterIntrinsic(wrapper, handler);
-                // RegisterIntrinsic(original, handler);
             }
 
             void RegAll(Type type, string name, WGSLIntrinsic.Handler handler)
@@ -287,9 +284,6 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             RegAll(typeof(MathF), "Pow", WGSLCodeGenerator.GeneratePow);
 
             // Ternary
-            // EXPERIMENT: Redirect Clamp to Max to verify if redirection works at all
-            // RegAll(typeof(Math), "Clamp", WGSLCodeGenerator.GenerateClamp);
-            // RegAll(typeof(MathF), "Clamp", WGSLCodeGenerator.GenerateClamp);
             RegAll(typeof(Math), "Max", WGSLCodeGenerator.GenerateClamp); // Using GenerateClamp just to match handler signature, but target is Max?
                                                                           // Wait, RegAll finds 'Max' method in 'WebGPUIntrinsics'. I want to map Math.Clamp -> WebGPUIntrinsics.Max
 
@@ -431,19 +425,6 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             WGSLSource = wgslSource;
         }
-
-        //public EntryPoint EntryPointExt
-        //{
-        //    get
-        //    {
-        //        // Expose EntryPoint as public
-        //        // (EntryPoint is protected in base class)
-        //        // This is a workaround since we cannot change the base class
-        //        // use reflection to get the value
-        //        var prop = typeof(CompiledKernel).GetProperty("EntryPoint", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-        //        return (EntryPoint)prop.GetValue(this);
-        //    }
-        //}
     }
 
     /// <summary>
