@@ -7,6 +7,7 @@
 
 using global::ILGPU;
 using global::ILGPU.Runtime;
+using SpawnDev.ILGPU.WebGPU.Backend;
 
 namespace SpawnDev.ILGPU.WebGPU
 {
@@ -122,7 +123,18 @@ namespace SpawnDev.ILGPU.WebGPU
         /// </summary>
         public override async Task<Accelerator> CreateAcceleratorAsync(Context context)
         {
-            return await WebGPUAccelerator.CreateAsync(context, this);
+            return await CreateAcceleratorAsync(context, null);
+        }
+
+        /// <summary>
+        /// Creates a new WebGPU accelerator asynchronously with the specified options.
+        /// </summary>
+        /// <param name="context">The ILGPU context.</param>
+        /// <param name="options">The backend configuration options (null for defaults).</param>
+        /// <returns>A task that represents the async creation of the WebGPU accelerator.</returns>
+        public async Task<WebGPUAccelerator> CreateAcceleratorAsync(Context context, WebGPUBackendOptions? options)
+        {
+            return await WebGPUAccelerator.CreateAsync(context, this, options);
         }
 
         #endregion

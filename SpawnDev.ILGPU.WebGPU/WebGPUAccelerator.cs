@@ -138,16 +138,26 @@ namespace SpawnDev.ILGPU.WebGPU
         private WebGPUAccelerator(Context context, Device device) : base(context, device) { }
 
         /// <summary>
-        /// Creates a new WebGPU accelerator asynchronously.
+        /// Creates a new WebGPU accelerator asynchronously with default options.
         /// </summary>
         /// <param name="context">The ILGPU context.</param>
         /// <param name="device">The WebGPU device to use.</param>
         /// <returns>A task that represents the async creation of the accelerator.</returns>
-        public static async Task<WebGPUAccelerator> CreateAsync(Context context, WebGPUILGPUDevice device)
+        public static Task<WebGPUAccelerator> CreateAsync(Context context, WebGPUILGPUDevice device)
+            => CreateAsync(context, device, null);
+
+        /// <summary>
+        /// Creates a new WebGPU accelerator asynchronously with the specified options.
+        /// </summary>
+        /// <param name="context">The ILGPU context.</param>
+        /// <param name="device">The WebGPU device to use.</param>
+        /// <param name="options">The backend configuration options (null for defaults).</param>
+        /// <returns>A task that represents the async creation of the accelerator.</returns>
+        public static async Task<WebGPUAccelerator> CreateAsync(Context context, WebGPUILGPUDevice device, WebGPUBackendOptions? options)
         {
             var accelerator = new WebGPUAccelerator(context, device);
             accelerator.NativeAccelerator = await device.NativeDevice.CreateAcceleratorAsync();
-            accelerator.Backend = new WebGPUBackend(context);
+            accelerator.Backend = new WebGPUBackend(context, options ?? WebGPUBackendOptions.Default);
             accelerator.Init(accelerator.Backend);
             accelerator.DefaultStream = accelerator.CreateStreamInternal();
             return accelerator;
@@ -418,7 +428,7 @@ namespace SpawnDev.ILGPU.WebGPU
                         else if (arg is ulong ulVal) device.Queue.WriteBuffer(uBuffer, 0, BitConverter.GetBytes((uint)ulVal));
                         else if (arg is double dVal)
                         {
-                            if (WebGPUBackend.EnableF64Emulation)
+                            if (webGpuAccel.Backend.Options.EnableF64Emulation)
                             {
                                 // CRITICAL: For f64 emulation, write full 64-bit IEEE-754 representation as 2 u32 values
                                 // The shader will read these as (lo, hi) and convert using f64_from_ieee754_bits

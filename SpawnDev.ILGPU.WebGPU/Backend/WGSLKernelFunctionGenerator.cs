@@ -136,12 +136,12 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             TypeGenerator.GenerateTypeDefinitions(builder);
 
             // Emit emulation library if needed
-            if (WebGPUBackend.EnableF64Emulation || WebGPUBackend.EnableI64Emulation)
+            if (Backend.Options.EnableF64Emulation || Backend.Options.EnableI64Emulation)
             {
                 builder.AppendLine("// ============ 64-bit Emulation Library ============");
                 builder.AppendLine(WGSLEmulationLibrary.GetEmulationLibrary(
-                    WebGPUBackend.EnableF64Emulation, 
-                    WebGPUBackend.EnableI64Emulation));
+                    Backend.Options.EnableF64Emulation, 
+                    Backend.Options.EnableI64Emulation));
             }
 
             int bindingIdx = 0;
@@ -160,13 +160,13 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
                 // Track if this is an emulated 64-bit buffer
                 bool isEmulated64Bit = false;
-                if (WebGPUBackend.EnableF64Emulation && wgslType == "f64")
+                if (Backend.Options.EnableF64Emulation && wgslType == "f64")
                 {
                     wgslType = "u32"; // Raw bits storage (2 u32 per f64)
                     isEmulated64Bit = true;
                     _emulatedF64Params.Add(param.Index);
                 }
-                else if (WebGPUBackend.EnableI64Emulation && (wgslType == "i64" || wgslType == "u64"))
+                else if (Backend.Options.EnableI64Emulation && (wgslType == "i64" || wgslType == "u64"))
                 {
                     wgslType = "u32"; // Raw bits storage (2 u32 per i64)
                     isEmulated64Bit = true;
@@ -414,11 +414,11 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 var elementType = GetBufferElementType(param.ParameterType);
                 var wgslType = TypeGenerator[elementType];
                 
-                if (WebGPUBackend.EnableF64Emulation && wgslType == "f64")
+                if (Backend.Options.EnableF64Emulation && wgslType == "f64")
                 {
                     _emulatedF64Params.Add(param.Index);
                 }
-                else if (WebGPUBackend.EnableI64Emulation && (wgslType == "i64" || wgslType == "u64"))
+                else if (Backend.Options.EnableI64Emulation && (wgslType == "i64" || wgslType == "u64"))
                 {
                     _emulatedI64Params.Add(param.Index);
                 }
@@ -483,7 +483,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 else if (basicType == BasicValueType.Float64)
                 {
                     // f64 is emulated as vec2<f32> when emulation is enabled
-                    if (WebGPUBackend.EnableF64Emulation)
+                    if (Backend.Options.EnableF64Emulation)
                         init = " = f64(0.0, 0.0)";
                     else
                         init = " = 0.0";
@@ -491,7 +491,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 else if (basicType == BasicValueType.Int64)
                 {
                     // i64 is emulated as vec2<u32> when emulation is enabled
-                    if (WebGPUBackend.EnableI64Emulation)
+                    if (Backend.Options.EnableI64Emulation)
                         init = " = i64(0u, 0u)";
                     else
                         init = " = 0";
@@ -802,8 +802,8 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             // Check if this is an emulated 64-bit operation
             var leftType = TypeGenerator[value.Left.Type];
             var rightType = TypeGenerator[value.Right.Type];
-            bool isEmulatedF64 = WebGPUBackend.EnableF64Emulation && (leftType == "f64" || rightType == "f64");
-            bool isEmulatedI64 = WebGPUBackend.EnableI64Emulation && (leftType == "i64" || leftType == "u64" || rightType == "i64" || rightType == "u64");
+            bool isEmulatedF64 = Backend.Options.EnableF64Emulation && (leftType == "f64" || rightType == "f64");
+            bool isEmulatedI64 = Backend.Options.EnableI64Emulation && (leftType == "i64" || leftType == "u64" || rightType == "i64" || rightType == "u64");
 
             if (isEmulatedF64)
             {
@@ -948,7 +948,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
             // Handle emulated i64/u64 negation
             var sourceType = TypeGenerator[value.Value.Type];
-            if (WebGPUBackend.EnableI64Emulation && (sourceType == "i64" || sourceType == "u64") && value.Kind == UnaryArithmeticKind.Neg)
+            if (Backend.Options.EnableI64Emulation && (sourceType == "i64" || sourceType == "u64") && value.Kind == UnaryArithmeticKind.Neg)
             {
                 AppendLine($"{prefix}{target} = i64_neg({source});");
                 return;
@@ -1175,8 +1175,8 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             string rightType = TypeGenerator[value.Right.Type];
 
             // Check for emulated 64-bit compare
-            bool isEmulatedF64 = WebGPUBackend.EnableF64Emulation && (leftType == "f64" || rightType == "f64");
-            bool isEmulatedI64 = WebGPUBackend.EnableI64Emulation && (leftType == "i64" || leftType == "u64" || rightType == "i64" || rightType == "u64");
+            bool isEmulatedF64 = Backend.Options.EnableF64Emulation && (leftType == "f64" || rightType == "f64");
+            bool isEmulatedI64 = Backend.Options.EnableI64Emulation && (leftType == "i64" || leftType == "u64" || rightType == "i64" || rightType == "u64");
 
             if (isEmulatedF64)
             {
@@ -1256,7 +1256,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             // CRITICAL FIX: When target is emulated f64 (vec2<f32>), we can't just do f64(i32)
             // because vec2<f32> doesn't accept i32 as a single argument.
             // We need to convert through f32 first: f64_from_f32(f32(source))
-            bool isEmulatedF64Target = WebGPUBackend.EnableF64Emulation && targetType == "f64";
+            bool isEmulatedF64Target = Backend.Options.EnableF64Emulation && targetType == "f64";
             
             if (isVectorSource && isScalarTarget)
             {

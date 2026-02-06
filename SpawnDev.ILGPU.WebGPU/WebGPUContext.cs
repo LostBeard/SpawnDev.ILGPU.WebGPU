@@ -1,4 +1,6 @@
 using global::ILGPU;
+using SpawnDev.ILGPU.WebGPU.Backend;
+using System.Threading.Tasks;
 
 namespace SpawnDev.ILGPU.WebGPU
 {
@@ -73,12 +75,28 @@ namespace SpawnDev.ILGPU.WebGPU
         /// WebGPU device, 1 to the second, etc.
         /// </param>
         /// <returns>A task that represents the async creation of the WebGPU accelerator.</returns>
-        public static async System.Threading.Tasks.Task<WebGPUAccelerator> CreateWebGPUAcceleratorAsync(
+        public static Task<WebGPUAccelerator> CreateWebGPUAcceleratorAsync(
             this Context context,
             int webGpuDeviceIndex)
+            => CreateWebGPUAcceleratorAsync(context, webGpuDeviceIndex, null);
+
+        /// <summary>
+        /// Creates a new WebGPU accelerator asynchronously with the specified options.
+        /// </summary>
+        /// <param name="context">The ILGPU context.</param>
+        /// <param name="webGpuDeviceIndex">
+        /// The relative device index for the WebGPU device. 0 here refers to the first
+        /// WebGPU device, 1 to the second, etc.
+        /// </param>
+        /// <param name="options">The backend configuration options (null for defaults).</param>
+        /// <returns>A task that represents the async creation of the WebGPU accelerator.</returns>
+        public static async Task<WebGPUAccelerator> CreateWebGPUAcceleratorAsync(
+            this Context context,
+            int webGpuDeviceIndex,
+            WebGPUBackendOptions? options)
         {
             var device = context.GetWebGPUDevice(webGpuDeviceIndex);
-            return await WebGPUAccelerator.CreateAsync(context, device);
+            return await device.CreateAcceleratorAsync(context, options);
         }
 
         #endregion

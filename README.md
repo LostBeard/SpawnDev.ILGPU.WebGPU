@@ -9,6 +9,7 @@ Write GPU compute shaders in C# and compile them to WGSL automatically.
 
 - **ILGPU-compatible** - Use familiar ILGPU APIs (`ArrayView`, `Index1D/2D/3D`, math intrinsics, etc.)
 - **WGSL transpilation** - C# kernels are automatically compiled to WebGPU Shading Language (WGSL)
+- **64-bit Emulation** - Support for `double` (f64) and `long` (i64) types via emulated WGSL logic
 - **Blazor WebAssembly** - Seamless integration via [SpawnDev.BlazorJS](https://github.com/LostBeard/SpawnDev.BlazorJS)
 - **Shared memory & atomics** - Supports workgroup shared memory, barriers, and atomic operations
 - **No native dependencies** - Entirely written in C#
@@ -97,7 +98,7 @@ The PlaywrightTestRunner runs tests in a headless browser. To view the browser d
 
 ## Test Coverage
 
-**75 tests** covering all core ILGPU features supported by WebGPU.
+**95 tests** covering all core ILGPU features supported by WebGPU.
 
 ### Coverage by Area
 
@@ -113,6 +114,7 @@ The PlaywrightTestRunner runs tests in a headless browser. To view the browser d
 | **Control Flow** | if/else, loops, nested, short-circuit | ✅ Complete |
 | **Structs** | Simple, nested, with arrays | ✅ Complete |
 | **Type Casting** | float↔int, uint, mixed precision | ✅ Complete |
+| **64-bit Emulation** | Support for `double` and `long` via Software Emulation | ✅ Complete |
 | **GPU Patterns** | Stencil, reduction, matrix multiply, lerp, smoothstep | ✅ Complete |
 | **Synchronization** | Barriers, atomic reduction | ✅ Complete |
 | **Special Values** | NaN, Infinity detection | ✅ Complete |
@@ -122,8 +124,6 @@ The PlaywrightTestRunner runs tests in a headless browser. To view the browser d
 
 | Feature | Reason |
 |---------|--------|
-| **f64 (double)** | WebGPU WGSL doesn't support f64 in most browsers |
-| **i64 (long)** | WebGPU WGSL doesn't support i64 |
 | **Subgroups/Warps** | Browser WebGPU extension not available |
 | **Dynamic Shared Memory** | Requires Pipeline Overridable Constants |
 
@@ -134,9 +134,42 @@ WebGPU is required. Supported browsers:
 - Edge 113+
 - Firefox Nightly (with `dom.webgpu.enabled` flag)
 
+## Configuration
+
+### 64-bit Emulation
+
+WebGPU hardware typically only supports 32-bit float and integer operations. SpawnDev.ILGPU.WebGPU provides software emulation for 64-bit types (`double`/f64 and `long`/i64) via the `WebGPUBackendOptions` configuration.
+
+**Configure when creating the accelerator:**
+
+```csharp
+using SpawnDev.ILGPU.WebGPU.Backend;
+
+// Create options with 64-bit emulation enabled
+var options = new WebGPUBackendOptions { EnableF64Emulation = true };
+
+// Pass options when creating the accelerator
+using var accelerator = await device.CreateAcceleratorAsync(context, options);
+```
+
+Or use the context extension method:
+
+```csharp
+var options = new WebGPUBackendOptions { EnableF64Emulation = true };
+using var accelerator = await context.CreateWebGPUAcceleratorAsync(0, options);
+```
+
+**Available Options:**
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `EnableF64Emulation` | `false` | Enable 64-bit float (`double`) emulation via `vec2<f32>` |
+| `EnableI64Emulation` | `false` | Enable 64-bit integer (`long`) emulation via `vec2<u32>` |
+
+> **Note:** Use `WebGPUBackendOptions` when creating an accelerator to configure 64-bit emulation per-instance.
+
 ## Known Limitations
 
-- Some advanced ILGPU features may not yet be supported
 - Subgroups extension not available in all browsers
 - Dynamic shared memory requires Pipeline Overridable Constants (not yet implemented)
 

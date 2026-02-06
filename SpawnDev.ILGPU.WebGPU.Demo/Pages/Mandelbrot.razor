@@ -180,8 +180,7 @@
                     if (!_currentKernelUsesF64)
                     {
                         // Need to reload kernel with f64 emulation enabled
-                        WebGPUBackend.EnableF64Emulation = true;
-                        await ReloadKernel();
+                        await ReloadKernel(enableF64: true);
                         _currentKernelUsesF64 = true;
                     }
                     await RenderWithILGPU();
@@ -192,8 +191,7 @@
                     if (_currentKernelUsesF64)
                     {
                         // Need to reload kernel with f64 emulation disabled
-                        WebGPUBackend.EnableF64Emulation = false;
-                        await ReloadKernel();
+                        await ReloadKernel(enableF64: false);
                         _currentKernelUsesF64 = false;
                     }
                     if (_useILGPU)
@@ -296,13 +294,13 @@
         _ilgpuBuffer = _ilgpuAccelerator.Allocate2DDenseX<uint>(new Index2D(_width, _height));
     }
 
-    private async Task ReloadKernel()
+    private async Task ReloadKernel(bool enableF64 = false)
     {
         // CRITICAL: ILGPU caches compiled kernels by method signature. 
-        // The emulation flags (EnableF64Emulation) are NOT part of the cache key.
-        // So we MUST dispose the old accelerator and create a new one to get a fresh cache.
+        // The emulation flags were NOT part of the cache key with static properties.
+        // Now we pass options to the accelerator constructor for proper instance-scoped configuration.
         
-        Console.WriteLine($"[Mandelbrot] Reloading kernel with EnableF64Emulation={WebGPUBackend.EnableF64Emulation}");
+        Console.WriteLine($"[Mandelbrot] Reloading kernel with EnableF64Emulation={enableF64}");
         
         // Enable verbose logging to see the generated WGSL
         var originalVerbose = WebGPUBackend.VerboseLogging;
@@ -324,17 +322,21 @@
             _ilgpuContext?.Dispose();
             _ilgpuContext = null;
             
-            // Recreate everything with fresh kernel cache
+            // Recreate everything with fresh kernel cache and options
             var webGpuDevice = await WebGPUDevice.GetDefaultDeviceAsync();
             if (webGpuDevice == null) throw new Exception("No WebGPU device found");
             
             _ilgpuContext = Context.Create(builder => builder.Default());
             var ilgpuDevice = new WebGPUILGPUDevice(webGpuDevice, 0);
-            _ilgpuAccelerator = await ilgpuDevice.CreateAcceleratorAsync(_ilgpuContext);
+            
+            // Use the new options-based API for 64-bit emulation
+            var options = new WebGPUBackendOptions { EnableF64Emulation = enableF64 };
+            _ilgpuAccelerator = await ilgpuDevice.CreateAcceleratorAsync(_ilgpuContext, options);
+            
             _ilgpuKernel = _ilgpuAccelerator.LoadAutoGroupedStreamKernel<Index2D, ArrayView2D<uint, Stride2D.DenseX>, int, int, int, double, double, double>(MandelbrotKernel);
             _ilgpuBuffer = _ilgpuAccelerator.Allocate2DDenseX<uint>(new Index2D(_width, _height));
             
-            Console.WriteLine($"[Mandelbrot] Kernel reloaded with fresh accelerator, f64 emulation: {WebGPUBackend.EnableF64Emulation}");
+            Console.WriteLine($"[Mandelbrot] Kernel reloaded with fresh accelerator, f64 emulation: {enableF64}");
         }
         finally
         {

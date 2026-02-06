@@ -62,20 +62,6 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         public static bool EnableBufferPooling { get; set; } = false;
 
         /// <summary>
-        /// Enables f64 (double) emulation using two f32 values (double-float technique).
-        /// When enabled, f64 operations use vec2&lt;f32&gt; with software emulation.
-        /// When disabled, f64 is promoted to f32 (default behavior, loses precision).
-        /// </summary>
-        public static bool EnableF64Emulation { get; set; } = false;
-
-        /// <summary>
-        /// Enables i64 (long) emulation using two u32 values (double-word technique).
-        /// When enabled, i64 operations use vec2&lt;u32&gt; with software emulation.
-        /// When disabled, i64 is promoted to i32 (default behavior, loses range).
-        /// </summary>
-        public static bool EnableI64Emulation { get; set; } = false;
-
-        /// <summary>
         /// Logs a message to the console if VerboseLogging is enabled.
         /// </summary>
         public static void Log(string message)
@@ -87,16 +73,33 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         #region Instance
 
         /// <summary>
-        /// Creates a new WebGPU backend.
+        /// The configuration options for this backend instance.
+        /// </summary>
+        public WebGPUBackendOptions Options { get; }
+
+        /// <summary>
+        /// Creates a new WebGPU backend with default options.
         /// </summary>
         /// <param name="context">The ILGPU context.</param>
         public WebGPUBackend(Context context)
+            : this(context, WebGPUBackendOptions.Default)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new WebGPU backend with the specified options.
+        /// </summary>
+        /// <param name="context">The ILGPU context.</param>
+        /// <param name="options">The backend configuration options.</param>
+        public WebGPUBackend(Context context, WebGPUBackendOptions options)
             : base(
                   context,
                   new WebGPUCapabilityContext(),
                   BackendTypeWebGPU,
                   new WebGPUArgumentMapper(context))
         {
+            Options = options ?? WebGPUBackendOptions.Default;
+            
             InitIntrinsicProvider();
             RegisterMathIntrinsics();
 
@@ -119,6 +122,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         /// </summary>
         public new WebGPUArgumentMapper ArgumentMapper =>
             base.ArgumentMapper as WebGPUArgumentMapper;
+
 
         #endregion
 
@@ -398,7 +402,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             builder.AppendLine("//");
             builder.AppendLine();
 
-            var typeGenerator = new WGSLTypeGenerator(Context.TypeContext);
+            var typeGenerator = new WGSLTypeGenerator(this, Context.TypeContext);
 
             data = new WGSLCodeGenerator.GeneratorArgs(
                 this,
