@@ -130,6 +130,7 @@
     private bool _isDragging = false;
     private double _lastMouseX;
     private double _lastMouseY;
+    private DateTime _lastDragTime = DateTime.MinValue;
 
     // Cached ILGPU resources
     private Context? _ilgpuContext;
@@ -172,6 +173,9 @@
                     continue;
                 }
 
+                // Skip heavy rendering while actively dragging for responsive panning
+                bool isActivelyDragging = _isDragging && (DateTime.UtcNow - _lastDragTime).TotalMilliseconds < 100;
+                
                 _frameCount++;
 
                 if (_use64BitMode)
@@ -183,7 +187,16 @@
                         await ReloadKernel(enableF64: true);
                         _currentKernelUsesF64 = true;
                     }
-                    await RenderWithILGPU();
+                    
+                    // During active drag, use faster 32-bit rendering temporarily
+                    if (isActivelyDragging && !_currentKernelUsesF64)
+                    {
+                        // Skip render during drag to keep panning responsive
+                    }
+                    else
+                    {
+                        await RenderWithILGPU();
+                    }
                 }
                 else
                 {
@@ -208,8 +221,8 @@
                 // Throttled UI update
                 ThrottledStateHasChanged();
 
-                // Small delay to allow UI updates
-                await Task.Delay(1);
+                // Use Task.Yield instead of Task.Delay for more responsive input processing
+                await Task.Yield();
             }
         }
         catch (Exception ex)
@@ -259,13 +272,18 @@
 
         double dx = e.OffsetX - _lastMouseX;
         double dy = e.OffsetY - _lastMouseY;
+        
+        // Skip tiny movements
+        if (Math.Abs(dx) < 0.5 && Math.Abs(dy) < 0.5) return;
 
+        // Direct coordinate update: convert pixel drag to coordinate delta
         double scale = 4.0 / _zoom;
         _centerX -= dx * scale / _width;
         _centerY -= dy * scale / _height;
 
         _lastMouseX = e.OffsetX;
         _lastMouseY = e.OffsetY;
+        _lastDragTime = DateTime.UtcNow;
     }
 
     private void OnMouseUp(MouseEventArgs e)
@@ -551,7 +569,7 @@ fn main(@builtin(global_invocation_id) global_id : vec3<u32>) {
         {
             var sw = Stopwatch.StartNew();
 
-            // Update uniforms
+            // Update uniforms (WebGPU uses f32, so limited precision at deep zoom)
             var paramsBytes = new byte[32];
             BitConverter.GetBytes((uint)_width).CopyTo(paramsBytes, 0);
             BitConverter.GetBytes((uint)_height).CopyTo(paramsBytes, 4);

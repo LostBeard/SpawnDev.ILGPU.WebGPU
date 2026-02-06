@@ -172,6 +172,7 @@ using var accelerator = await context.CreateWebGPUAcceleratorAsync(0, options);
 
 - Subgroups extension not available in all browsers
 - Dynamic shared memory requires Pipeline Overridable Constants (not yet implemented)
+- **Deep Zoom Panning**: At extreme zoom levels (beyond ~10^6), panning may feel sluggish due to floating-point precision limitations. This is inherent to 64-bit double arithmetic and affects all Mandelbrot viewers. Advanced implementations use perturbation theory or arbitrary precision arithmetic to overcome this.
 
 ## Async Synchronization
 
