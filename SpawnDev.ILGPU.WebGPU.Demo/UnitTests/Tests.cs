@@ -1,11 +1,8 @@
-﻿using ILGPU = global::ILGPU;
-using SpawnDev.Blazor.UnitTesting;
-using System;
-using System.Linq;
-using System.Runtime.InteropServices;
-using SpawnDev.ILGPU.WebGPU.Backend;
-using ILGPU;
+﻿using ILGPU;
 using ILGPU.Runtime;
+using SpawnDev.Blazor.UnitTesting;
+using SpawnDev.ILGPU.WebGPU.Backend;
+using System.Runtime.InteropServices;
 
 namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
 {
@@ -1221,7 +1218,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             // Naive Matrix Multiplication
             int row = index.Y;
             int col = index.X;
-            
+
             if (row >= size || col >= size) return;
 
             float sum = 0.0f;
@@ -1252,7 +1249,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             input[1] = 2.5f;  // Floor/Ceil -> 2, 3
             input[2] = -2.5f; // Floor/Ceil -> -3, -2
             input[3] = 0.0f;
-            input[4] = 10.0f; 
+            input[4] = 10.0f;
             input[5] = 0.5f;
             input[6] = 0.0f;
             input[7] = 0.0f;
@@ -1274,7 +1271,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
                 if (i == 0) expected = 1.0f / MathF.Sqrt(val); // Rsqrt
                 else if (i == 1 || i == 2) expected = MathF.Floor(val) + MathF.Ceiling(val);
                 else if (i == 4) expected = 1.0f / val; // Rcp (1/x)
-                
+
                 if (i == 3) continue; // Skip 0 check for now to avoid potential NaN matches if we want to be strict
 
                 if (Math.Abs(result[i] - expected) > 0.001f)
@@ -1318,11 +1315,11 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<int>(bufOut);
-            
+
             // Expected
             // 0: PopCount(15) = 4
             if (result[0] != 4) throw new Exception($"PopCount failed. Expected 4, got {result[0]}");
-            
+
             // 1: CountTrailingZeros(1) = 0
             if (result[1] != 0) throw new Exception($"CTZ failed. Expected 0, got {result[1]}");
 
@@ -1336,7 +1333,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             if (index == 0) output[index] = System.Numerics.BitOperations.PopCount((uint)val);
             else if (index == 1) output[index] = System.Numerics.BitOperations.TrailingZeroCount(val);
             else if (index == 2) output[index] = System.Numerics.BitOperations.LeadingZeroCount((uint)val);
-            else if (index == 3) output[index] = System.Numerics.BitOperations.PopCount((uint)val); 
+            else if (index == 3) output[index] = System.Numerics.BitOperations.PopCount((uint)val);
         }
 
         [TestMethod]
@@ -1350,7 +1347,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
 
             int numItems = 1024;
             int numBins = 16;
-            
+
             // Generate data evenly distributed
             var data = new int[numItems];
             for (int i = 0; i < numItems; i++)
@@ -1368,7 +1365,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<int>(bufBins);
-            
+
             int expectedCount = numItems / numBins; // 1024/16 = 64
             for (int i = 0; i < numBins; i++)
             {
@@ -1413,11 +1410,11 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
         static void NestedLoopBreakKernel(Index1D index, ArrayView<int> output)
         {
             int acc = 0;
-            
+
             // Loop 1: Break test
             for (int j = 0; j < 10; j++)
             {
-                if (j == 5) break; 
+                if (j == 5) break;
                 acc++;
             }
 
@@ -1427,7 +1424,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
                 if (k == 2) continue;
                 acc++;
             }
-            
+
             output[index] = acc;
         }
 
@@ -1456,7 +1453,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<float>(bufOut);
-            
+
             for (int i = 0; i < len; i++)
             {
                 float val = input[i];
@@ -1506,11 +1503,11 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             // Barrier.
             // Threads 32..63 read share[id - 32].
             // Output should contain the pattern.
-            
+
             // Only the second half of each workgroup writes to output.
             // Global ID: 
             // Group 0: 0..63. Writers: 0..31. Readers: 32..63. output[32..63] = shared[0..31] = (0..31) * 2.
-            
+
             for (int g = 0; g < numGroups; g++)
             {
                 int baseIdx = g * groupSize;
@@ -1529,14 +1526,14 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             // Thread Index within Group
             int tid = Group.IdxX;
             var shared = SharedMemory.Allocate<int>(64);
-            
+
             if (tid < 32)
             {
                 shared[tid] = tid * 2;
             }
-            
+
             Group.Barrier();
-            
+
             if (tid >= 32)
             {
                 int val = shared[tid - 32];
@@ -1571,13 +1568,13 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             await accelerator.SynchronizeAsync();
 
             var result = await ReadBufferAsync<int>(bufOut);
-            
+
             for (int i = 0; i < len; i++)
             {
                 int val = input[i];
                 // Logic: Select(val > 0, 1, -1)
                 int expected = (val > 0) ? 1 : -1;
-                
+
                 if (result[i] != expected)
                     throw new Exception($"Select failed at {i}. Expected {expected}, got {result[i]}");
             }
@@ -1595,61 +1592,61 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
 
         [TestMethod]
         public async Task WebGPULinearBarrierTest()
-    {
-        var builder = Context.Create();
-        await builder.WebGPUAsync();
-        using var context = builder.ToContext();
-        var device = context.GetWebGPUDevices()[0];
-        using var accelerator = await device.CreateAcceleratorAsync(context);
-
-        int groupSize = 64;
-        int numGroups = 2;
-        int totalSize = groupSize * numGroups;
-        var data = new int[totalSize];
-
-        using var buf = accelerator.Allocate1D(data);
-
-        var kernel = accelerator.LoadStreamKernel<Index1D, ArrayView<int>>(LinearBarrierKernel);
-        kernel(new KernelConfig(numGroups, groupSize), (Index1D)groupSize, buf.View);
-        await accelerator.SynchronizeAsync();
-
-        var result = await ReadBufferAsync<int>(buf);
-
-        for (int i = 0; i < totalSize; i++)
         {
-            int groupSizeVal = 64;
-            // Thread i wrote i.
-            // Thread i read (i+1)%64 (within group).
-            int localId = i % groupSizeVal;
-            int groupId = i / groupSizeVal;
-            int readFromLocal = (localId + 1) % groupSizeVal;
-            int readFromGlobal = groupId * groupSizeVal + readFromLocal;
-            
-            int expected = readFromGlobal; 
-            
-            if (result[i] != expected)
-                throw new Exception($"Linear Barrier failed. Group {groupId} Local {localId}. Expected {expected} (from local {readFromLocal}), got {result[i]}");
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int groupSize = 64;
+            int numGroups = 2;
+            int totalSize = groupSize * numGroups;
+            var data = new int[totalSize];
+
+            using var buf = accelerator.Allocate1D(data);
+
+            var kernel = accelerator.LoadStreamKernel<Index1D, ArrayView<int>>(LinearBarrierKernel);
+            kernel(new KernelConfig(numGroups, groupSize), (Index1D)groupSize, buf.View);
+            await accelerator.SynchronizeAsync();
+
+            var result = await ReadBufferAsync<int>(buf);
+
+            for (int i = 0; i < totalSize; i++)
+            {
+                int groupSizeVal = 64;
+                // Thread i wrote i.
+                // Thread i read (i+1)%64 (within group).
+                int localId = i % groupSizeVal;
+                int groupId = i / groupSizeVal;
+                int readFromLocal = (localId + 1) % groupSizeVal;
+                int readFromGlobal = groupId * groupSizeVal + readFromLocal;
+
+                int expected = readFromGlobal;
+
+                if (result[i] != expected)
+                    throw new Exception($"Linear Barrier failed. Group {groupId} Local {localId}. Expected {expected} (from local {readFromLocal}), got {result[i]}");
+            }
         }
-    }
 
-    static void LinearBarrierKernel(Index1D index, ArrayView<int> output)
-    {
-        // Linear Flow: No Ifs before Barrier.
-        int tid = Group.IdxX; // Local
-        int gid = Grid.GlobalIndex.X; // Global
+        static void LinearBarrierKernel(Index1D index, ArrayView<int> output)
+        {
+            // Linear Flow: No Ifs before Barrier.
+            int tid = Group.IdxX; // Local
+            int gid = Grid.GlobalIndex.X; // Global
 
-        var shared = SharedMemory.Allocate<int>(64);
-        
-        shared[tid] = gid; // Write own Global ID to Shared[LocalID]
-        
-        Group.Barrier();
-        
-        // Read neighbor's value
-        int neighbor = (tid + 1) % 64;
-        int val = shared[neighbor];
-        
-        output[gid] = val;
-    }
+            var shared = SharedMemory.Allocate<int>(64);
+
+            shared[tid] = gid; // Write own Global ID to Shared[LocalID]
+
+            Group.Barrier();
+
+            // Read neighbor's value
+            int neighbor = (tid + 1) % 64;
+            int val = shared[neighbor];
+
+            output[gid] = val;
+        }
 
         // ============= NEW TESTS FOR EXPANDED COVERAGE =============
 
@@ -1658,7 +1655,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
         {
             // f64 (double) support in WebGPU is experimental and not available in most browsers
             throw new UnsupportedTestException("f64 (double precision) not supported in browser WebGPU");
-            
+
             var builder = Context.Create();
             await builder.WebGPUAsync();
             using var context = builder.ToContext();
@@ -2530,7 +2527,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             int size = 4;
             var a = new float[size * size];
             var b = new float[size * size];
-            
+
             // Initialize: A = identity-ish, B = sequential
             for (int i = 0; i < size; i++)
             {
@@ -2641,10 +2638,10 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             // Chain: double -> add 10 -> double
             doubleKernel((Index1D)len, buf.View);
             await accelerator.SynchronizeAsync();
-            
+
             addTenKernel((Index1D)len, buf.View);
             await accelerator.SynchronizeAsync();
-            
+
             doubleKernel((Index1D)len, buf.View);
             await accelerator.SynchronizeAsync();
 
@@ -2729,7 +2726,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
 
             using var buf = accelerator.Allocate1D(data);
             using var bufOut = accelerator.Allocate1D<float>(len);
-            
+
             var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>, ArrayView<float>>(FloatSpecialOpsKernel);
             kernel((Index1D)len, buf.View, bufOut.View);
             await accelerator.SynchronizeAsync();
