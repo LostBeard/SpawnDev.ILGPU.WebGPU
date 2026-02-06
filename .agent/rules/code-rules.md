@@ -116,3 +116,64 @@ When asked to fix bugs in `WGSLCodeGenerator` or `WGSLKernelFunctionGenerator`:
 3. **Trace the Emit:** Do not just write the WGSL string. You must write the C# `StringBuilder` logic that *emits* that string.
 4. **Verify Scoping:** If adding a variable (especially shared memory), check if the generator is currently emitting inside `main()` or at module scope. Shared memory *must* bubble up to module scope.
 ```
+## 🚨 CRITICAL: WebGPU Accelerator Async Requirements
+
+### SynchronizeAsync vs Synchronize
+- **ALWAYS use `await accelerator.SynchronizeAsync()`** instead of `accelerator.Synchronize()` with the WebGPU backend.
+- The synchronous `Synchronize()` method will cause a deadlock in Blazor WASM because the single-threaded environment cannot block while waiting for GPU completion.
+- This applies to all code using `WebGPUAccelerator` in Blazor WASM.
+
+### Data Retrieval Pattern
+- Use `await buffer.CopyToHostAsync()` for reading GPU data back to host.
+- Never use synchronous data retrieval methods with WebGPU backend.
+
+## 🔧 Verbose Logging
+
+The WebGPU backend has extensive debug logging that is **disabled by default**.
+
+**To enable:**
+```csharp
+WebGPUBackend.VerboseLogging = true;
+```
+
+This controls all `Console.WriteLine` output from:
+- `WebGPUBackend.cs`
+- `WGSLCodeGenerator.cs`
+- `WebGPUAccelerator.cs`
+- `WebGPUBuffer.cs`
+
+## 📊 Precision Limitations
+
+### WGSL Float Precision (f32)
+- WGSL only supports `f32` (single precision float) for shader computations.
+- ILGPU kernel code using `double` is transpiled to use `f64` in WGSL (if supported) or falls back to `f32`.
+- **Deep zoom limitations:** For applications like Mandelbrot explorers, `f32` precision limits useful zoom to approximately 10^6x magnification.
+- ILGPU kernels using `double` in C# provide better precision for deep zooms.
+
+## 🎮 Demo Page Patterns
+
+### Resource Caching Pattern (Mandelbrot.razor)
+When creating interactive GPU demos:
+1. **Lazy initialization:** Create resources on first render, cache for reuse.
+2. **Disposal on switch:** If supporting multiple renderers, dispose old resources when switching.
+3. **IAsyncDisposable:** Implement for component cleanup on page exit.
+
+### Mouse Interaction Pattern
+For interactive canvas demos:
+- `@onwheel` + `@onwheel:preventDefault` for zoom
+- `@onmousedown`/`@onmousemove`/`@onmouseup` for pan/drag
+- `@ondblclick` for reset
+- `tabindex="0"` on canvas for keyboard focus
+
+### Kernel Delegate Caching
+When caching loaded kernels:
+```csharp
+// Correct delegate type (no AcceleratorStream for auto-grouped)
+private Action<Index2D, ArrayView2D<uint, Stride2D.DenseX>, int, double>? _kernel;
+
+// Load once
+_kernel = accelerator.LoadAutoGroupedStreamKernel<...>(KernelMethod);
+
+// Invoke (no stream argument needed)
+_kernel(buffer.IntExtent, buffer.View, param1, param2);
+```

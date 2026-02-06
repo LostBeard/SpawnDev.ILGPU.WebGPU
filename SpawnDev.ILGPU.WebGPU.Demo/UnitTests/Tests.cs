@@ -1651,6 +1651,291 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
         
         output[gid] = val;
     }
+
+        // ============= NEW TESTS FOR EXPANDED COVERAGE =============
+
+        [TestMethod]
+        public async Task WebGPUDoublePrecisionTest()
+        {
+            // f64 (double) support in WebGPU is experimental and not available in most browsers
+            throw new UnsupportedTestException("Skip: f64 (double precision) not supported in browser WebGPU");
+            
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 10;
+            var input = new double[len];
+            for (int i = 0; i < len; i++) input[i] = i * 1.1;
+
+            using var bufIn = accelerator.Allocate1D(input);
+            using var bufOut = accelerator.Allocate1D<double>(len);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<double>, ArrayView<double>>(DoublePrecisionKernel);
+            kernel((Index1D)len, bufIn.View, bufOut.View);
+            await accelerator.SynchronizeAsync();
+
+            var result = await ReadBufferAsync<double>(bufOut);
+            for (int i = 0; i < len; i++)
+            {
+                double val = input[i];
+                double expected = val * 2.0 + 1.0;
+                if (Math.Abs(result[i] - expected) > 0.0001)
+                    throw new Exception($"Double precision failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        static void DoublePrecisionKernel(Index1D index, ArrayView<double> input, ArrayView<double> output)
+        {
+            double val = input[index];
+            output[index] = val * 2.0 + 1.0;
+        }
+
+        [TestMethod]
+        public async Task WebGPUInverseTrigTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 3;
+            var input = new float[len];
+            input[0] = 0.5f;  // Asin
+            input[1] = 0.5f;  // Acos
+            input[2] = 1.0f;  // Atan
+
+            using var bufIn = accelerator.Allocate1D(input);
+            using var bufOut = accelerator.Allocate1D<float>(len);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>, ArrayView<float>>(InverseTrigKernel);
+            kernel((Index1D)len, bufIn.View, bufOut.View);
+            await accelerator.SynchronizeAsync();
+
+            var result = await ReadBufferAsync<float>(bufOut);
+
+            float[] expected = new float[len];
+            expected[0] = MathF.Asin(0.5f);
+            expected[1] = MathF.Acos(0.5f);
+            expected[2] = MathF.Atan(1.0f);
+
+            for (int i = 0; i < len; i++)
+            {
+                if (MathF.Abs(result[i] - expected[i]) > 0.001f)
+                    throw new Exception($"Inverse trig failed at {i}. Expected {expected[i]}, got {result[i]}");
+            }
+        }
+
+        static void InverseTrigKernel(Index1D index, ArrayView<float> input, ArrayView<float> output)
+        {
+            float val = input[index];
+            if (index == 0) output[index] = MathF.Asin(val);
+            else if (index == 1) output[index] = MathF.Acos(val);
+            else if (index == 2) output[index] = MathF.Atan(val);
+        }
+
+        [TestMethod]
+        public async Task WebGPULargeBufferTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 100000; // 100K elements
+            var data = new int[len];
+            for (int i = 0; i < len; i++) data[i] = i;
+
+            using var buf = accelerator.Allocate1D(data);
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>>(LargeBufferKernel);
+            kernel((Index1D)len, buf.View);
+            await accelerator.SynchronizeAsync();
+
+            var result = await ReadBufferAsync<int>(buf);
+
+            // Spot check a few values
+            int[] checkIndices = { 0, 100, 1000, 50000, 99999 };
+            foreach (int i in checkIndices)
+            {
+                int expected = i * 2;
+                if (result[i] != expected)
+                    throw new Exception($"Large buffer failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        static void LargeBufferKernel(Index1D index, ArrayView<int> data)
+        {
+            data[index] = data[index] * 2;
+        }
+
+        [TestMethod]
+        public async Task WebGPUSequentialKernelsTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 64;
+            var data = new int[len];
+            for (int i = 0; i < len; i++) data[i] = i;
+
+            using var buf = accelerator.Allocate1D(data);
+
+            // Run first kernel: x * 2
+            var kernel1 = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>>(SequentialKernel1);
+            kernel1((Index1D)len, buf.View);
+            await accelerator.SynchronizeAsync();
+
+            // Run second kernel: x + 10
+            var kernel2 = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>>(SequentialKernel2);
+            kernel2((Index1D)len, buf.View);
+            await accelerator.SynchronizeAsync();
+
+            var result = await ReadBufferAsync<int>(buf);
+            for (int i = 0; i < len; i++)
+            {
+                int expected = i * 2 + 10;
+                if (result[i] != expected)
+                    throw new Exception($"Sequential kernels failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        static void SequentialKernel1(Index1D index, ArrayView<int> data)
+        {
+            data[index] = data[index] * 2;
+        }
+
+        static void SequentialKernel2(Index1D index, ArrayView<int> data)
+        {
+            data[index] = data[index] + 10;
+        }
+
+        [TestMethod]
+        public async Task WebGPUUnsignedIntegerTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 4;
+            var data = new uint[len];
+            data[0] = 100;
+            data[1] = 7;
+            data[2] = uint.MaxValue;
+            data[3] = 0;
+
+            using var buf = accelerator.Allocate1D(data);
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<uint>>(UnsignedIntKernel);
+            kernel((Index1D)len, buf.View);
+            await accelerator.SynchronizeAsync();
+
+            var result = await ReadBufferAsync<uint>(buf);
+
+            uint[] expected = new uint[len];
+            expected[0] = 100 / 3;          // 33
+            expected[1] = 7 % 4;            // 3
+            expected[2] = unchecked(uint.MaxValue + 1); // Overflow to 0
+            expected[3] = 0 + 100;          // 100
+
+            for (int i = 0; i < len; i++)
+            {
+                if (result[i] != expected[i])
+                    throw new Exception($"Unsigned int failed at {i}. Expected {expected[i]}, got {result[i]}");
+            }
+        }
+
+        static void UnsignedIntKernel(Index1D index, ArrayView<uint> data)
+        {
+            uint val = data[index];
+            if (index == 0) data[index] = val / 3;
+            else if (index == 1) data[index] = val % 4;
+            else if (index == 2) data[index] = val + 1; // Wraps
+            else if (index == 3) data[index] = val + 100;
+        }
+
+        [TestMethod]
+        public async Task WebGPUAtomicMinMaxTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int numThreads = 64;
+            var minResult = new int[] { int.MaxValue };
+            var maxResult = new int[] { int.MinValue };
+
+            using var bufMin = accelerator.Allocate1D(minResult);
+            using var bufMax = accelerator.Allocate1D(maxResult);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>, ArrayView<int>>(AtomicMinMaxKernel);
+            kernel((Index1D)numThreads, bufMin.View, bufMax.View);
+            await accelerator.SynchronizeAsync();
+
+            var resultMin = await ReadBufferAsync<int>(bufMin);
+            var resultMax = await ReadBufferAsync<int>(bufMax);
+
+            // Threads write their index (0..63)
+            // Min should be 0, Max should be 63
+            if (resultMin[0] != 0)
+                throw new Exception($"Atomic Min failed. Expected 0, got {resultMin[0]}");
+            if (resultMax[0] != 63)
+                throw new Exception($"Atomic Max failed. Expected 63, got {resultMax[0]}");
+        }
+
+        static void AtomicMinMaxKernel(Index1D index, ArrayView<int> minData, ArrayView<int> maxData)
+        {
+            Atomic.Min(ref minData[0], (int)index);
+            Atomic.Max(ref maxData[0], (int)index);
+        }
+
+        [TestMethod]
+        public async Task WebGPUBufferReuseTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 32;
+            var data = new int[len];
+            for (int i = 0; i < len; i++) data[i] = i;
+
+            using var buf = accelerator.Allocate1D(data);
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>>(BufferReuseKernel);
+
+            // Run the same kernel 5 times on the same buffer
+            for (int round = 0; round < 5; round++)
+            {
+                kernel((Index1D)len, buf.View);
+                await accelerator.SynchronizeAsync();
+            }
+
+            var result = await ReadBufferAsync<int>(buf);
+            for (int i = 0; i < len; i++)
+            {
+                // Each iteration adds 1, so after 5 rounds: i + 5
+                int expected = i + 5;
+                if (result[i] != expected)
+                    throw new Exception($"Buffer reuse failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        static void BufferReuseKernel(Index1D index, ArrayView<int> data)
+        {
+            data[index] = data[index] + 1;
+        }
     }
 }
+
 
