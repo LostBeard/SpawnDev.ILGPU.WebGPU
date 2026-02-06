@@ -6286,10 +6286,10 @@ namespace ILGPU.Backends.Velocity.Scalar
         {
             switch (sourceLane)
             {
-                case 0:
-                    return value.Item1;
-                default:
-                    return value.Item2;
+            case 0:
+                return value.Item1;
+            default:
+                return value.Item2;
             }
         }
 

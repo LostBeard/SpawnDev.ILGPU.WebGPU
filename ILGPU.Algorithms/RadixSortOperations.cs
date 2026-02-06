@@ -31,6 +31,7 @@
 // Source License. See LICENSE.txt for details.
 // ---------------------------------------------------------------------------------------
 
+using System;
 using System.Runtime.CompilerServices;
 
 #pragma warning disable IDE0004 // Cast is redundant

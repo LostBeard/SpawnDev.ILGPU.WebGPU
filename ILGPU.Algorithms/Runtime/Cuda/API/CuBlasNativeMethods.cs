@@ -1834,7 +1834,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Context
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCreate_v2"
             )]
@@ -1843,7 +1843,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasCreate_v2(
              out IntPtr handle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCreate_v2"
             )]
@@ -1852,13 +1852,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasCreate_v2(
             [Out] out IntPtr handle);
 
-#endif
+        #endif
         public sealed override CuBlasStatus Create(
             [Out] out IntPtr handle) =>
             cublasCreate_v2(
                 out handle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetVersion_v2"
             )]
@@ -1868,7 +1868,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out int version);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetVersion_v2"
             )]
@@ -1878,7 +1878,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out int version);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetVersion(
             [In] IntPtr handle,
             [Out] out int version) =>
@@ -1886,7 +1886,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out version);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDestroy_v2"
             )]
@@ -1895,7 +1895,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasDestroy_v2(
              IntPtr handle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDestroy_v2"
             )]
@@ -1904,13 +1904,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasDestroy_v2(
             [In] IntPtr handle);
 
-#endif
+        #endif
         public sealed override CuBlasStatus Free(
             [In] IntPtr handle) =>
             cublasDestroy_v2(
                 handle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetStream_v2"
             )]
@@ -1920,7 +1920,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out IntPtr stream);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetStream_v2"
             )]
@@ -1930,7 +1930,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out IntPtr stream);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetStream(
             [In] IntPtr handle,
             [Out] out IntPtr stream) =>
@@ -1938,7 +1938,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out stream);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetStream_v2"
             )]
@@ -1948,7 +1948,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              IntPtr stream);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetStream_v2"
             )]
@@ -1958,7 +1958,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] IntPtr stream);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetStream(
             [In] IntPtr handle,
             [In] IntPtr stream) =>
@@ -1966,7 +1966,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 stream);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetPointerMode_v2"
             )]
@@ -1976,7 +1976,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out CuBlasPointerMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetPointerMode_v2"
             )]
@@ -1986,7 +1986,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out CuBlasPointerMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetPointerMode(
             [In] IntPtr handle,
             [Out] out CuBlasPointerMode mode) =>
@@ -1994,7 +1994,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetPointerMode_v2"
             )]
@@ -2004,7 +2004,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              CuBlasPointerMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetPointerMode_v2"
             )]
@@ -2014,7 +2014,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] CuBlasPointerMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetPointerMode(
             [In] IntPtr handle,
             [In] CuBlasPointerMode mode) =>
@@ -2022,7 +2022,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetAtomicsMode"
             )]
@@ -2032,7 +2032,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out CuBlasAtomicsMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetAtomicsMode"
             )]
@@ -2042,7 +2042,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out CuBlasAtomicsMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetAtomicsMode(
             [In] IntPtr handle,
             [Out] out CuBlasAtomicsMode mode) =>
@@ -2050,7 +2050,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetAtomicsMode"
             )]
@@ -2060,7 +2060,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              CuBlasAtomicsMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetAtomicsMode"
             )]
@@ -2070,7 +2070,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] CuBlasAtomicsMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetAtomicsMode(
             [In] IntPtr handle,
             [In] CuBlasAtomicsMode mode) =>
@@ -2078,7 +2078,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetMathMode"
             )]
@@ -2088,7 +2088,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out CuBlasMathMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetMathMode"
             )]
@@ -2098,7 +2098,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out CuBlasMathMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetMathMode(
             [In] IntPtr handle,
             [Out] out CuBlasMathMode mode) =>
@@ -2106,7 +2106,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetMathMode"
             )]
@@ -2116,7 +2116,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              CuBlasMathMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetMathMode"
             )]
@@ -2126,7 +2126,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] CuBlasMathMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetMathMode(
             [In] IntPtr handle,
             [In] CuBlasMathMode mode) =>
@@ -2138,7 +2138,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Level 1
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIsamax_v2"
             )]
@@ -2151,7 +2151,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIsamax_v2"
             )]
@@ -2164,7 +2164,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Isamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -2178,7 +2178,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIdamax_v2"
             )]
@@ -2191,7 +2191,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIdamax_v2"
             )]
@@ -2204,7 +2204,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Idamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -2218,7 +2218,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIcamax_v2"
             )]
@@ -2231,7 +2231,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIcamax_v2"
             )]
@@ -2244,7 +2244,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Icamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -2258,7 +2258,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIzamax_v2"
             )]
@@ -2271,7 +2271,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIzamax_v2"
             )]
@@ -2284,7 +2284,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Izamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -2298,7 +2298,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIsamin_v2"
             )]
@@ -2311,7 +2311,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIsamin_v2"
             )]
@@ -2324,7 +2324,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Isamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -2338,7 +2338,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIdamin_v2"
             )]
@@ -2351,7 +2351,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIdamin_v2"
             )]
@@ -2364,7 +2364,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Idamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -2378,7 +2378,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIcamin_v2"
             )]
@@ -2391,7 +2391,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIcamin_v2"
             )]
@@ -2404,7 +2404,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Icamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -2418,7 +2418,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIzamin_v2"
             )]
@@ -2431,7 +2431,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIzamin_v2"
             )]
@@ -2444,7 +2444,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Izamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -2458,7 +2458,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSasum_v2"
             )]
@@ -2471,7 +2471,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSasum_v2"
             )]
@@ -2484,7 +2484,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -2498,7 +2498,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDasum_v2"
             )]
@@ -2511,7 +2511,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDasum_v2"
             )]
@@ -2524,7 +2524,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -2538,7 +2538,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasScasum_v2"
             )]
@@ -2551,7 +2551,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasScasum_v2"
             )]
@@ -2564,7 +2564,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Scasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -2578,7 +2578,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDzasum_v2"
             )]
@@ -2591,7 +2591,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDzasum_v2"
             )]
@@ -2604,7 +2604,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dzasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -2618,7 +2618,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSnrm2_v2"
             )]
@@ -2631,7 +2631,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSnrm2_v2"
             )]
@@ -2644,7 +2644,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Snrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -2658,7 +2658,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDnrm2_v2"
             )]
@@ -2671,7 +2671,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDnrm2_v2"
             )]
@@ -2684,7 +2684,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dnrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -2698,7 +2698,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasScnrm2_v2"
             )]
@@ -2711,7 +2711,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasScnrm2_v2"
             )]
@@ -2724,7 +2724,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Scnrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -2738,7 +2738,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDznrm2_v2"
             )]
@@ -2751,7 +2751,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDznrm2_v2"
             )]
@@ -2764,7 +2764,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dznrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -2778,7 +2778,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSaxpy_v2"
             )]
@@ -2793,7 +2793,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSaxpy_v2"
             )]
@@ -2808,7 +2808,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Saxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -2826,7 +2826,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDaxpy_v2"
             )]
@@ -2841,7 +2841,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDaxpy_v2"
             )]
@@ -2856,7 +2856,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Daxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -2874,7 +2874,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCaxpy_v2"
             )]
@@ -2889,7 +2889,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCaxpy_v2"
             )]
@@ -2904,7 +2904,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Caxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -2922,7 +2922,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZaxpy_v2"
             )]
@@ -2937,7 +2937,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZaxpy_v2"
             )]
@@ -2952,7 +2952,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zaxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -2970,7 +2970,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSdot_v2"
             )]
@@ -2985,7 +2985,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSdot_v2"
             )]
@@ -3000,7 +3000,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sdot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -3018,7 +3018,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDdot_v2"
             )]
@@ -3033,7 +3033,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDdot_v2"
             )]
@@ -3048,7 +3048,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ddot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -3066,7 +3066,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCdotu_v2"
             )]
@@ -3081,7 +3081,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCdotu_v2"
             )]
@@ -3096,7 +3096,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cdotu_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -3114,7 +3114,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCdotc_v2"
             )]
@@ -3129,7 +3129,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCdotc_v2"
             )]
@@ -3144,7 +3144,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cdotc_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -3162,7 +3162,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSrotm_v2"
             )]
@@ -3177,7 +3177,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSrotm_v2"
             )]
@@ -3192,7 +3192,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Srotm_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -3210,7 +3210,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDrotm_v2"
             )]
@@ -3225,7 +3225,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDrotm_v2"
             )]
@@ -3240,7 +3240,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Drotm_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -3258,7 +3258,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSrot_v2"
             )]
@@ -3274,7 +3274,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSrot_v2"
             )]
@@ -3290,7 +3290,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Srot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -3310,7 +3310,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDrot_v2"
             )]
@@ -3326,7 +3326,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDrot_v2"
             )]
@@ -3342,7 +3342,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Drot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -3362,7 +3362,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsrot_v2"
             )]
@@ -3378,7 +3378,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsrot_v2"
             )]
@@ -3394,7 +3394,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csrot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -3414,7 +3414,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZdrot_v2"
             )]
@@ -3430,7 +3430,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZdrot_v2"
             )]
@@ -3446,7 +3446,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zdrot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -3466,7 +3466,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSrotg_v2"
             )]
@@ -3479,7 +3479,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSrotg_v2"
             )]
@@ -3492,7 +3492,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Srotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -3506,7 +3506,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDrotg_v2"
             )]
@@ -3519,7 +3519,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDrotg_v2"
             )]
@@ -3532,7 +3532,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Drotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -3546,7 +3546,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCrotg_v2"
             )]
@@ -3559,7 +3559,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCrotg_v2"
             )]
@@ -3572,7 +3572,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Crotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -3586,7 +3586,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZrotg_v2"
             )]
@@ -3599,7 +3599,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZrotg_v2"
             )]
@@ -3612,7 +3612,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zrotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -3626,7 +3626,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSscal_v2"
             )]
@@ -3639,7 +3639,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSscal_v2"
             )]
@@ -3652,7 +3652,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -3666,7 +3666,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDscal_v2"
             )]
@@ -3679,7 +3679,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDscal_v2"
             )]
@@ -3692,7 +3692,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -3706,7 +3706,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCscal_v2"
             )]
@@ -3719,7 +3719,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCscal_v2"
             )]
@@ -3732,7 +3732,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -3746,7 +3746,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZscal_v2"
             )]
@@ -3759,7 +3759,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZscal_v2"
             )]
@@ -3772,7 +3772,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -3786,7 +3786,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSswap_v2"
             )]
@@ -3800,7 +3800,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSswap_v2"
             )]
@@ -3814,7 +3814,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -3830,7 +3830,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDswap_v2"
             )]
@@ -3844,7 +3844,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDswap_v2"
             )]
@@ -3858,7 +3858,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -3874,7 +3874,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCswap_v2"
             )]
@@ -3888,7 +3888,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCswap_v2"
             )]
@@ -3902,7 +3902,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -3918,7 +3918,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZswap_v2"
             )]
@@ -3932,7 +3932,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZswap_v2"
             )]
@@ -3946,7 +3946,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -3966,7 +3966,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Level 2
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgbmv_v2"
             )]
@@ -3988,7 +3988,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgbmv_v2"
             )]
@@ -4010,7 +4010,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -4042,7 +4042,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgbmv_v2"
             )]
@@ -4064,7 +4064,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgbmv_v2"
             )]
@@ -4086,7 +4086,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -4118,7 +4118,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgbmv_v2"
             )]
@@ -4140,7 +4140,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgbmv_v2"
             )]
@@ -4162,7 +4162,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -4194,7 +4194,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgbmv_v2"
             )]
@@ -4216,7 +4216,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgbmv_v2"
             )]
@@ -4238,7 +4238,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -4270,7 +4270,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgemv_v2"
             )]
@@ -4290,7 +4290,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgemv_v2"
             )]
@@ -4310,7 +4310,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -4338,7 +4338,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgemv_v2"
             )]
@@ -4358,7 +4358,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgemv_v2"
             )]
@@ -4378,7 +4378,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -4406,7 +4406,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgemv_v2"
             )]
@@ -4426,7 +4426,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgemv_v2"
             )]
@@ -4446,7 +4446,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -4474,7 +4474,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgemv_v2"
             )]
@@ -4494,7 +4494,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgemv_v2"
             )]
@@ -4514,7 +4514,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -4542,7 +4542,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSger_v2"
             )]
@@ -4560,7 +4560,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSger_v2"
             )]
@@ -4578,7 +4578,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sger_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -4602,7 +4602,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDger_v2"
             )]
@@ -4620,7 +4620,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDger_v2"
             )]
@@ -4638,7 +4638,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dger_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -4662,7 +4662,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgeru_v2"
             )]
@@ -4680,7 +4680,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgeru_v2"
             )]
@@ -4698,7 +4698,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgeru_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -4722,7 +4722,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgeru_v2"
             )]
@@ -4740,7 +4740,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgeru_v2"
             )]
@@ -4758,7 +4758,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgeru_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -4782,7 +4782,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsbmv_v2"
             )]
@@ -4802,7 +4802,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsbmv_v2"
             )]
@@ -4822,7 +4822,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -4850,7 +4850,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsbmv_v2"
             )]
@@ -4870,7 +4870,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsbmv_v2"
             )]
@@ -4890,7 +4890,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -4918,7 +4918,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChbmv_v2"
             )]
@@ -4938,7 +4938,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChbmv_v2"
             )]
@@ -4958,7 +4958,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -4986,7 +4986,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhbmv_v2"
             )]
@@ -5006,7 +5006,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhbmv_v2"
             )]
@@ -5026,7 +5026,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -5054,7 +5054,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSspmv_v2"
             )]
@@ -5072,7 +5072,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSspmv_v2"
             )]
@@ -5090,7 +5090,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sspmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -5114,7 +5114,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDspmv_v2"
             )]
@@ -5132,7 +5132,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDspmv_v2"
             )]
@@ -5150,7 +5150,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dspmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -5174,7 +5174,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChpmv_v2"
             )]
@@ -5192,7 +5192,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChpmv_v2"
             )]
@@ -5210,7 +5210,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -5234,7 +5234,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhpmv_v2"
             )]
@@ -5252,7 +5252,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhpmv_v2"
             )]
@@ -5270,7 +5270,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -5294,7 +5294,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSspr_v2"
             )]
@@ -5309,7 +5309,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSspr_v2"
             )]
@@ -5324,7 +5324,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sspr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -5342,7 +5342,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDspr_v2"
             )]
@@ -5357,7 +5357,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDspr_v2"
             )]
@@ -5372,7 +5372,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dspr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -5390,7 +5390,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChpr_v2"
             )]
@@ -5405,7 +5405,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChpr_v2"
             )]
@@ -5420,7 +5420,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chpr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -5438,7 +5438,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhpr_v2"
             )]
@@ -5453,7 +5453,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhpr_v2"
             )]
@@ -5468,7 +5468,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhpr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -5486,7 +5486,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSspr2_v2"
             )]
@@ -5503,7 +5503,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSspr2_v2"
             )]
@@ -5520,7 +5520,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sspr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -5542,7 +5542,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDspr2_v2"
             )]
@@ -5559,7 +5559,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDspr2_v2"
             )]
@@ -5576,7 +5576,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dspr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -5598,7 +5598,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChpr2_v2"
             )]
@@ -5615,7 +5615,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChpr2_v2"
             )]
@@ -5632,7 +5632,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chpr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -5654,7 +5654,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhpr2_v2"
             )]
@@ -5671,7 +5671,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhpr2_v2"
             )]
@@ -5688,7 +5688,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhpr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -5710,7 +5710,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsymv_v2"
             )]
@@ -5729,7 +5729,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsymv_v2"
             )]
@@ -5748,7 +5748,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -5774,7 +5774,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsymv_v2"
             )]
@@ -5793,7 +5793,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsymv_v2"
             )]
@@ -5812,7 +5812,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -5838,7 +5838,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsymv_v2"
             )]
@@ -5857,7 +5857,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsymv_v2"
             )]
@@ -5876,7 +5876,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -5902,7 +5902,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsymv_v2"
             )]
@@ -5921,7 +5921,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsymv_v2"
             )]
@@ -5940,7 +5940,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -5966,7 +5966,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyr_v2"
             )]
@@ -5982,7 +5982,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyr_v2"
             )]
@@ -5998,7 +5998,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -6018,7 +6018,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyr_v2"
             )]
@@ -6034,7 +6034,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyr_v2"
             )]
@@ -6050,7 +6050,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -6070,7 +6070,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyr_v2"
             )]
@@ -6086,7 +6086,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyr_v2"
             )]
@@ -6102,7 +6102,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -6122,7 +6122,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyr_v2"
             )]
@@ -6138,7 +6138,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyr_v2"
             )]
@@ -6154,7 +6154,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -6174,7 +6174,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyr2_v2"
             )]
@@ -6192,7 +6192,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyr2_v2"
             )]
@@ -6210,7 +6210,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -6234,7 +6234,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyr2_v2"
             )]
@@ -6252,7 +6252,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyr2_v2"
             )]
@@ -6270,7 +6270,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -6294,7 +6294,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyr2_v2"
             )]
@@ -6312,7 +6312,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyr2_v2"
             )]
@@ -6330,7 +6330,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -6354,7 +6354,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyr2_v2"
             )]
@@ -6372,7 +6372,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyr2_v2"
             )]
@@ -6390,7 +6390,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -6414,7 +6414,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStbmv_v2"
             )]
@@ -6432,7 +6432,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStbmv_v2"
             )]
@@ -6450,7 +6450,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -6474,7 +6474,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtbmv_v2"
             )]
@@ -6492,7 +6492,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtbmv_v2"
             )]
@@ -6510,7 +6510,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -6534,7 +6534,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtbmv_v2"
             )]
@@ -6552,7 +6552,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtbmv_v2"
             )]
@@ -6570,7 +6570,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -6594,7 +6594,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtbmv_v2"
             )]
@@ -6612,7 +6612,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtbmv_v2"
             )]
@@ -6630,7 +6630,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -6654,7 +6654,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStbsv_v2"
             )]
@@ -6672,7 +6672,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStbsv_v2"
             )]
@@ -6690,7 +6690,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -6714,7 +6714,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtbsv_v2"
             )]
@@ -6732,7 +6732,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtbsv_v2"
             )]
@@ -6750,7 +6750,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -6774,7 +6774,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtbsv_v2"
             )]
@@ -6792,7 +6792,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtbsv_v2"
             )]
@@ -6810,7 +6810,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -6834,7 +6834,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtbsv_v2"
             )]
@@ -6852,7 +6852,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtbsv_v2"
             )]
@@ -6870,7 +6870,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -6894,7 +6894,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStpmv_v2"
             )]
@@ -6910,7 +6910,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStpmv_v2"
             )]
@@ -6926,7 +6926,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -6946,7 +6946,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtpmv_v2"
             )]
@@ -6962,7 +6962,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtpmv_v2"
             )]
@@ -6978,7 +6978,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -6998,7 +6998,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtpmv_v2"
             )]
@@ -7014,7 +7014,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtpmv_v2"
             )]
@@ -7030,7 +7030,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -7050,7 +7050,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtpmv_v2"
             )]
@@ -7066,7 +7066,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtpmv_v2"
             )]
@@ -7082,7 +7082,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -7102,7 +7102,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStpsv_v2"
             )]
@@ -7118,7 +7118,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStpsv_v2"
             )]
@@ -7134,7 +7134,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -7154,7 +7154,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtpsv_v2"
             )]
@@ -7170,7 +7170,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtpsv_v2"
             )]
@@ -7186,7 +7186,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -7206,7 +7206,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtpsv_v2"
             )]
@@ -7222,7 +7222,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtpsv_v2"
             )]
@@ -7238,7 +7238,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -7258,7 +7258,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtpsv_v2"
             )]
@@ -7274,7 +7274,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtpsv_v2"
             )]
@@ -7290,7 +7290,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -7310,7 +7310,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrmv_v2"
             )]
@@ -7327,7 +7327,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrmv_v2"
             )]
@@ -7344,7 +7344,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -7366,7 +7366,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrmv_v2"
             )]
@@ -7383,7 +7383,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrmv_v2"
             )]
@@ -7400,7 +7400,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -7422,7 +7422,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrmv_v2"
             )]
@@ -7439,7 +7439,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrmv_v2"
             )]
@@ -7456,7 +7456,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -7478,7 +7478,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrmv_v2"
             )]
@@ -7495,7 +7495,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrmv_v2"
             )]
@@ -7512,7 +7512,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -7534,7 +7534,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrsv_v2"
             )]
@@ -7551,7 +7551,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrsv_v2"
             )]
@@ -7568,7 +7568,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -7590,7 +7590,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrsv_v2"
             )]
@@ -7607,7 +7607,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrsv_v2"
             )]
@@ -7624,7 +7624,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -7646,7 +7646,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrsv_v2"
             )]
@@ -7663,7 +7663,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrsv_v2"
             )]
@@ -7680,7 +7680,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -7702,7 +7702,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrsv_v2"
             )]
@@ -7719,7 +7719,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrsv_v2"
             )]
@@ -7736,7 +7736,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -7762,7 +7762,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Level 3
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgemm_v2"
             )]
@@ -7784,7 +7784,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgemm_v2"
             )]
@@ -7806,7 +7806,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -7838,7 +7838,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgemm_v2"
             )]
@@ -7860,7 +7860,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgemm_v2"
             )]
@@ -7882,7 +7882,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -7914,7 +7914,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgemm_v2"
             )]
@@ -7936,7 +7936,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgemm_v2"
             )]
@@ -7958,7 +7958,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -7990,7 +7990,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgemm_v2"
             )]
@@ -8012,7 +8012,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgemm_v2"
             )]
@@ -8034,7 +8034,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -8066,7 +8066,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasHgemm"
             )]
@@ -8088,7 +8088,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasHgemm"
             )]
@@ -8110,7 +8110,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Hgemm(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -8142,7 +8142,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsymm_v2"
             )]
@@ -8163,7 +8163,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsymm_v2"
             )]
@@ -8184,7 +8184,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -8214,7 +8214,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsymm_v2"
             )]
@@ -8235,7 +8235,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsymm_v2"
             )]
@@ -8256,7 +8256,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -8286,7 +8286,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsymm_v2"
             )]
@@ -8307,7 +8307,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsymm_v2"
             )]
@@ -8328,7 +8328,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -8358,7 +8358,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsymm_v2"
             )]
@@ -8379,7 +8379,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsymm_v2"
             )]
@@ -8400,7 +8400,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -8430,7 +8430,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyrk_v2"
             )]
@@ -8449,7 +8449,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyrk_v2"
             )]
@@ -8468,7 +8468,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -8494,7 +8494,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyrk_v2"
             )]
@@ -8513,7 +8513,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyrk_v2"
             )]
@@ -8532,7 +8532,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -8558,7 +8558,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyrk_v2"
             )]
@@ -8577,7 +8577,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyrk_v2"
             )]
@@ -8596,7 +8596,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -8622,7 +8622,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyrk_v2"
             )]
@@ -8641,7 +8641,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyrk_v2"
             )]
@@ -8660,7 +8660,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -8686,7 +8686,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyr2k_v2"
             )]
@@ -8707,7 +8707,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyr2k_v2"
             )]
@@ -8728,7 +8728,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -8758,7 +8758,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyr2k_v2"
             )]
@@ -8779,7 +8779,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyr2k_v2"
             )]
@@ -8800,7 +8800,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -8830,7 +8830,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyr2k_v2"
             )]
@@ -8851,7 +8851,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyr2k_v2"
             )]
@@ -8872,7 +8872,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -8902,7 +8902,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyr2k_v2"
             )]
@@ -8923,7 +8923,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyr2k_v2"
             )]
@@ -8944,7 +8944,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -8974,7 +8974,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyrkx"
             )]
@@ -8995,7 +8995,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyrkx"
             )]
@@ -9016,7 +9016,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -9046,7 +9046,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyrkx"
             )]
@@ -9067,7 +9067,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyrkx"
             )]
@@ -9088,7 +9088,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -9118,7 +9118,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyrkx"
             )]
@@ -9139,7 +9139,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyrkx"
             )]
@@ -9160,7 +9160,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -9190,7 +9190,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyrkx"
             )]
@@ -9211,7 +9211,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyrkx"
             )]
@@ -9232,7 +9232,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -9262,7 +9262,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrmm_v2"
             )]
@@ -9284,7 +9284,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrmm_v2"
             )]
@@ -9306,7 +9306,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -9338,7 +9338,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrmm_v2"
             )]
@@ -9360,7 +9360,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrmm_v2"
             )]
@@ -9382,7 +9382,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -9414,7 +9414,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrmm_v2"
             )]
@@ -9436,7 +9436,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrmm_v2"
             )]
@@ -9458,7 +9458,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -9490,7 +9490,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrmm_v2"
             )]
@@ -9512,7 +9512,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrmm_v2"
             )]
@@ -9534,7 +9534,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -9566,7 +9566,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrsm_v2"
             )]
@@ -9586,7 +9586,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrsm_v2"
             )]
@@ -9606,7 +9606,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -9634,7 +9634,7 @@ namespace ILGPU.Runtime.Cuda.API
                 b,
                 ldb);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrsm_v2"
             )]
@@ -9654,7 +9654,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrsm_v2"
             )]
@@ -9674,7 +9674,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -9702,7 +9702,7 @@ namespace ILGPU.Runtime.Cuda.API
                 b,
                 ldb);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrsm_v2"
             )]
@@ -9722,7 +9722,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrsm_v2"
             )]
@@ -9742,7 +9742,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -9770,7 +9770,7 @@ namespace ILGPU.Runtime.Cuda.API
                 b,
                 ldb);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrsm_v2"
             )]
@@ -9790,7 +9790,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrsm_v2"
             )]
@@ -9810,7 +9810,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -9842,7 +9842,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Extensions
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgeam"
             )]
@@ -9863,7 +9863,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgeam"
             )]
@@ -9884,7 +9884,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -9914,7 +9914,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgeam"
             )]
@@ -9935,7 +9935,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgeam"
             )]
@@ -9956,7 +9956,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -9986,7 +9986,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgeam"
             )]
@@ -10007,7 +10007,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgeam"
             )]
@@ -10028,7 +10028,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -10058,7 +10058,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgeam"
             )]
@@ -10079,7 +10079,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgeam"
             )]
@@ -10100,7 +10100,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -10130,7 +10130,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSdgmm"
             )]
@@ -10148,7 +10148,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSdgmm"
             )]
@@ -10166,7 +10166,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sdgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -10190,7 +10190,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDdgmm"
             )]
@@ -10208,7 +10208,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDdgmm"
             )]
@@ -10226,7 +10226,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ddgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -10250,7 +10250,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCdgmm"
             )]
@@ -10268,7 +10268,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCdgmm"
             )]
@@ -10286,7 +10286,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cdgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -10310,7 +10310,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZdgmm"
             )]
@@ -10328,7 +10328,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZdgmm"
             )]
@@ -10346,7 +10346,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zdgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -10387,7 +10387,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Context
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCreate_v2"
             )]
@@ -10396,7 +10396,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasCreate_v2(
              out IntPtr handle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCreate_v2"
             )]
@@ -10405,13 +10405,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasCreate_v2(
             [Out] out IntPtr handle);
 
-#endif
+        #endif
         public sealed override CuBlasStatus Create(
             [Out] out IntPtr handle) =>
             cublasCreate_v2(
                 out handle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetVersion_v2"
             )]
@@ -10421,7 +10421,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out int version);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetVersion_v2"
             )]
@@ -10431,7 +10431,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out int version);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetVersion(
             [In] IntPtr handle,
             [Out] out int version) =>
@@ -10439,7 +10439,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out version);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDestroy_v2"
             )]
@@ -10448,7 +10448,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasDestroy_v2(
              IntPtr handle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDestroy_v2"
             )]
@@ -10457,13 +10457,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasDestroy_v2(
             [In] IntPtr handle);
 
-#endif
+        #endif
         public sealed override CuBlasStatus Free(
             [In] IntPtr handle) =>
             cublasDestroy_v2(
                 handle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetStream_v2"
             )]
@@ -10473,7 +10473,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out IntPtr stream);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetStream_v2"
             )]
@@ -10483,7 +10483,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out IntPtr stream);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetStream(
             [In] IntPtr handle,
             [Out] out IntPtr stream) =>
@@ -10491,7 +10491,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out stream);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetStream_v2"
             )]
@@ -10501,7 +10501,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              IntPtr stream);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetStream_v2"
             )]
@@ -10511,7 +10511,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] IntPtr stream);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetStream(
             [In] IntPtr handle,
             [In] IntPtr stream) =>
@@ -10519,7 +10519,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 stream);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetPointerMode_v2"
             )]
@@ -10529,7 +10529,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out CuBlasPointerMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetPointerMode_v2"
             )]
@@ -10539,7 +10539,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out CuBlasPointerMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetPointerMode(
             [In] IntPtr handle,
             [Out] out CuBlasPointerMode mode) =>
@@ -10547,7 +10547,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetPointerMode_v2"
             )]
@@ -10557,7 +10557,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              CuBlasPointerMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetPointerMode_v2"
             )]
@@ -10567,7 +10567,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] CuBlasPointerMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetPointerMode(
             [In] IntPtr handle,
             [In] CuBlasPointerMode mode) =>
@@ -10575,7 +10575,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetAtomicsMode"
             )]
@@ -10585,7 +10585,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out CuBlasAtomicsMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetAtomicsMode"
             )]
@@ -10595,7 +10595,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out CuBlasAtomicsMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetAtomicsMode(
             [In] IntPtr handle,
             [Out] out CuBlasAtomicsMode mode) =>
@@ -10603,7 +10603,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetAtomicsMode"
             )]
@@ -10613,7 +10613,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              CuBlasAtomicsMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetAtomicsMode"
             )]
@@ -10623,7 +10623,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] CuBlasAtomicsMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetAtomicsMode(
             [In] IntPtr handle,
             [In] CuBlasAtomicsMode mode) =>
@@ -10631,7 +10631,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetMathMode"
             )]
@@ -10641,7 +10641,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out CuBlasMathMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetMathMode"
             )]
@@ -10651,7 +10651,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out CuBlasMathMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetMathMode(
             [In] IntPtr handle,
             [Out] out CuBlasMathMode mode) =>
@@ -10659,7 +10659,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetMathMode"
             )]
@@ -10669,7 +10669,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              CuBlasMathMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetMathMode"
             )]
@@ -10679,7 +10679,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] CuBlasMathMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetMathMode(
             [In] IntPtr handle,
             [In] CuBlasMathMode mode) =>
@@ -10691,7 +10691,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Level 1
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIsamax_v2"
             )]
@@ -10704,7 +10704,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIsamax_v2"
             )]
@@ -10717,7 +10717,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Isamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -10731,7 +10731,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIdamax_v2"
             )]
@@ -10744,7 +10744,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIdamax_v2"
             )]
@@ -10757,7 +10757,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Idamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -10771,7 +10771,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIcamax_v2"
             )]
@@ -10784,7 +10784,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIcamax_v2"
             )]
@@ -10797,7 +10797,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Icamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -10811,7 +10811,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIzamax_v2"
             )]
@@ -10824,7 +10824,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIzamax_v2"
             )]
@@ -10837,7 +10837,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Izamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -10851,7 +10851,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIsamin_v2"
             )]
@@ -10864,7 +10864,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIsamin_v2"
             )]
@@ -10877,7 +10877,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Isamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -10891,7 +10891,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIdamin_v2"
             )]
@@ -10904,7 +10904,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIdamin_v2"
             )]
@@ -10917,7 +10917,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Idamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -10931,7 +10931,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIcamin_v2"
             )]
@@ -10944,7 +10944,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIcamin_v2"
             )]
@@ -10957,7 +10957,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Icamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -10971,7 +10971,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIzamin_v2"
             )]
@@ -10984,7 +10984,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIzamin_v2"
             )]
@@ -10997,7 +10997,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Izamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -11011,7 +11011,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSasum_v2"
             )]
@@ -11024,7 +11024,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSasum_v2"
             )]
@@ -11037,7 +11037,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -11051,7 +11051,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDasum_v2"
             )]
@@ -11064,7 +11064,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDasum_v2"
             )]
@@ -11077,7 +11077,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -11091,7 +11091,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasScasum_v2"
             )]
@@ -11104,7 +11104,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasScasum_v2"
             )]
@@ -11117,7 +11117,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Scasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -11131,7 +11131,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDzasum_v2"
             )]
@@ -11144,7 +11144,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDzasum_v2"
             )]
@@ -11157,7 +11157,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dzasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -11171,7 +11171,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSnrm2_v2"
             )]
@@ -11184,7 +11184,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSnrm2_v2"
             )]
@@ -11197,7 +11197,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Snrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -11211,7 +11211,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDnrm2_v2"
             )]
@@ -11224,7 +11224,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDnrm2_v2"
             )]
@@ -11237,7 +11237,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dnrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -11251,7 +11251,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasScnrm2_v2"
             )]
@@ -11264,7 +11264,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasScnrm2_v2"
             )]
@@ -11277,7 +11277,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Scnrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -11291,7 +11291,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDznrm2_v2"
             )]
@@ -11304,7 +11304,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDznrm2_v2"
             )]
@@ -11317,7 +11317,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dznrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -11331,7 +11331,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSaxpy_v2"
             )]
@@ -11346,7 +11346,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSaxpy_v2"
             )]
@@ -11361,7 +11361,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Saxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -11379,7 +11379,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDaxpy_v2"
             )]
@@ -11394,7 +11394,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDaxpy_v2"
             )]
@@ -11409,7 +11409,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Daxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -11427,7 +11427,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCaxpy_v2"
             )]
@@ -11442,7 +11442,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCaxpy_v2"
             )]
@@ -11457,7 +11457,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Caxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -11475,7 +11475,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZaxpy_v2"
             )]
@@ -11490,7 +11490,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZaxpy_v2"
             )]
@@ -11505,7 +11505,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zaxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -11523,7 +11523,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSdot_v2"
             )]
@@ -11538,7 +11538,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSdot_v2"
             )]
@@ -11553,7 +11553,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sdot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -11571,7 +11571,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDdot_v2"
             )]
@@ -11586,7 +11586,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDdot_v2"
             )]
@@ -11601,7 +11601,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ddot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -11619,7 +11619,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCdotu_v2"
             )]
@@ -11634,7 +11634,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCdotu_v2"
             )]
@@ -11649,7 +11649,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cdotu_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -11667,7 +11667,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCdotc_v2"
             )]
@@ -11682,7 +11682,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCdotc_v2"
             )]
@@ -11697,7 +11697,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cdotc_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -11715,7 +11715,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSrotm_v2"
             )]
@@ -11730,7 +11730,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSrotm_v2"
             )]
@@ -11745,7 +11745,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Srotm_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -11763,7 +11763,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDrotm_v2"
             )]
@@ -11778,7 +11778,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDrotm_v2"
             )]
@@ -11793,7 +11793,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Drotm_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -11811,7 +11811,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSrot_v2"
             )]
@@ -11827,7 +11827,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSrot_v2"
             )]
@@ -11843,7 +11843,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Srot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -11863,7 +11863,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDrot_v2"
             )]
@@ -11879,7 +11879,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDrot_v2"
             )]
@@ -11895,7 +11895,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Drot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -11915,7 +11915,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsrot_v2"
             )]
@@ -11931,7 +11931,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsrot_v2"
             )]
@@ -11947,7 +11947,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csrot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -11967,7 +11967,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZdrot_v2"
             )]
@@ -11983,7 +11983,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZdrot_v2"
             )]
@@ -11999,7 +11999,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zdrot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -12019,7 +12019,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSrotg_v2"
             )]
@@ -12032,7 +12032,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSrotg_v2"
             )]
@@ -12045,7 +12045,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Srotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -12059,7 +12059,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDrotg_v2"
             )]
@@ -12072,7 +12072,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDrotg_v2"
             )]
@@ -12085,7 +12085,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Drotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -12099,7 +12099,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCrotg_v2"
             )]
@@ -12112,7 +12112,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCrotg_v2"
             )]
@@ -12125,7 +12125,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Crotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -12139,7 +12139,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZrotg_v2"
             )]
@@ -12152,7 +12152,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZrotg_v2"
             )]
@@ -12165,7 +12165,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zrotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -12179,7 +12179,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSscal_v2"
             )]
@@ -12192,7 +12192,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSscal_v2"
             )]
@@ -12205,7 +12205,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -12219,7 +12219,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDscal_v2"
             )]
@@ -12232,7 +12232,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDscal_v2"
             )]
@@ -12245,7 +12245,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -12259,7 +12259,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCscal_v2"
             )]
@@ -12272,7 +12272,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCscal_v2"
             )]
@@ -12285,7 +12285,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -12299,7 +12299,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZscal_v2"
             )]
@@ -12312,7 +12312,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZscal_v2"
             )]
@@ -12325,7 +12325,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -12339,7 +12339,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSswap_v2"
             )]
@@ -12353,7 +12353,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSswap_v2"
             )]
@@ -12367,7 +12367,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -12383,7 +12383,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDswap_v2"
             )]
@@ -12397,7 +12397,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDswap_v2"
             )]
@@ -12411,7 +12411,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -12427,7 +12427,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCswap_v2"
             )]
@@ -12441,7 +12441,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCswap_v2"
             )]
@@ -12455,7 +12455,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -12471,7 +12471,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZswap_v2"
             )]
@@ -12485,7 +12485,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZswap_v2"
             )]
@@ -12499,7 +12499,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -12519,7 +12519,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Level 2
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgbmv_v2"
             )]
@@ -12541,7 +12541,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgbmv_v2"
             )]
@@ -12563,7 +12563,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -12595,7 +12595,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgbmv_v2"
             )]
@@ -12617,7 +12617,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgbmv_v2"
             )]
@@ -12639,7 +12639,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -12671,7 +12671,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgbmv_v2"
             )]
@@ -12693,7 +12693,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgbmv_v2"
             )]
@@ -12715,7 +12715,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -12747,7 +12747,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgbmv_v2"
             )]
@@ -12769,7 +12769,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgbmv_v2"
             )]
@@ -12791,7 +12791,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -12823,7 +12823,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgemv_v2"
             )]
@@ -12843,7 +12843,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgemv_v2"
             )]
@@ -12863,7 +12863,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -12891,7 +12891,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgemv_v2"
             )]
@@ -12911,7 +12911,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgemv_v2"
             )]
@@ -12931,7 +12931,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -12959,7 +12959,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgemv_v2"
             )]
@@ -12979,7 +12979,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgemv_v2"
             )]
@@ -12999,7 +12999,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -13027,7 +13027,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgemv_v2"
             )]
@@ -13047,7 +13047,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgemv_v2"
             )]
@@ -13067,7 +13067,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -13095,7 +13095,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSger_v2"
             )]
@@ -13113,7 +13113,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSger_v2"
             )]
@@ -13131,7 +13131,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sger_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -13155,7 +13155,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDger_v2"
             )]
@@ -13173,7 +13173,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDger_v2"
             )]
@@ -13191,7 +13191,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dger_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -13215,7 +13215,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgeru_v2"
             )]
@@ -13233,7 +13233,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgeru_v2"
             )]
@@ -13251,7 +13251,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgeru_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -13275,7 +13275,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgeru_v2"
             )]
@@ -13293,7 +13293,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgeru_v2"
             )]
@@ -13311,7 +13311,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgeru_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -13335,7 +13335,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsbmv_v2"
             )]
@@ -13355,7 +13355,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsbmv_v2"
             )]
@@ -13375,7 +13375,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -13403,7 +13403,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsbmv_v2"
             )]
@@ -13423,7 +13423,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsbmv_v2"
             )]
@@ -13443,7 +13443,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -13471,7 +13471,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChbmv_v2"
             )]
@@ -13491,7 +13491,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChbmv_v2"
             )]
@@ -13511,7 +13511,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -13539,7 +13539,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhbmv_v2"
             )]
@@ -13559,7 +13559,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhbmv_v2"
             )]
@@ -13579,7 +13579,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -13607,7 +13607,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSspmv_v2"
             )]
@@ -13625,7 +13625,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSspmv_v2"
             )]
@@ -13643,7 +13643,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sspmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -13667,7 +13667,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDspmv_v2"
             )]
@@ -13685,7 +13685,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDspmv_v2"
             )]
@@ -13703,7 +13703,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dspmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -13727,7 +13727,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChpmv_v2"
             )]
@@ -13745,7 +13745,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChpmv_v2"
             )]
@@ -13763,7 +13763,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -13787,7 +13787,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhpmv_v2"
             )]
@@ -13805,7 +13805,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhpmv_v2"
             )]
@@ -13823,7 +13823,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -13847,7 +13847,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSspr_v2"
             )]
@@ -13862,7 +13862,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSspr_v2"
             )]
@@ -13877,7 +13877,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sspr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -13895,7 +13895,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDspr_v2"
             )]
@@ -13910,7 +13910,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDspr_v2"
             )]
@@ -13925,7 +13925,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dspr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -13943,7 +13943,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChpr_v2"
             )]
@@ -13958,7 +13958,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChpr_v2"
             )]
@@ -13973,7 +13973,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chpr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -13991,7 +13991,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhpr_v2"
             )]
@@ -14006,7 +14006,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhpr_v2"
             )]
@@ -14021,7 +14021,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhpr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -14039,7 +14039,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSspr2_v2"
             )]
@@ -14056,7 +14056,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSspr2_v2"
             )]
@@ -14073,7 +14073,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sspr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -14095,7 +14095,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDspr2_v2"
             )]
@@ -14112,7 +14112,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDspr2_v2"
             )]
@@ -14129,7 +14129,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dspr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -14151,7 +14151,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChpr2_v2"
             )]
@@ -14168,7 +14168,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChpr2_v2"
             )]
@@ -14185,7 +14185,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chpr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -14207,7 +14207,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhpr2_v2"
             )]
@@ -14224,7 +14224,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhpr2_v2"
             )]
@@ -14241,7 +14241,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhpr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -14263,7 +14263,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsymv_v2"
             )]
@@ -14282,7 +14282,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsymv_v2"
             )]
@@ -14301,7 +14301,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -14327,7 +14327,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsymv_v2"
             )]
@@ -14346,7 +14346,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsymv_v2"
             )]
@@ -14365,7 +14365,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -14391,7 +14391,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsymv_v2"
             )]
@@ -14410,7 +14410,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsymv_v2"
             )]
@@ -14429,7 +14429,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -14455,7 +14455,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsymv_v2"
             )]
@@ -14474,7 +14474,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsymv_v2"
             )]
@@ -14493,7 +14493,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -14519,7 +14519,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyr_v2"
             )]
@@ -14535,7 +14535,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyr_v2"
             )]
@@ -14551,7 +14551,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -14571,7 +14571,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyr_v2"
             )]
@@ -14587,7 +14587,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyr_v2"
             )]
@@ -14603,7 +14603,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -14623,7 +14623,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyr_v2"
             )]
@@ -14639,7 +14639,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyr_v2"
             )]
@@ -14655,7 +14655,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -14675,7 +14675,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyr_v2"
             )]
@@ -14691,7 +14691,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyr_v2"
             )]
@@ -14707,7 +14707,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -14727,7 +14727,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyr2_v2"
             )]
@@ -14745,7 +14745,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyr2_v2"
             )]
@@ -14763,7 +14763,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -14787,7 +14787,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyr2_v2"
             )]
@@ -14805,7 +14805,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyr2_v2"
             )]
@@ -14823,7 +14823,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -14847,7 +14847,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyr2_v2"
             )]
@@ -14865,7 +14865,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyr2_v2"
             )]
@@ -14883,7 +14883,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -14907,7 +14907,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyr2_v2"
             )]
@@ -14925,7 +14925,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyr2_v2"
             )]
@@ -14943,7 +14943,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -14967,7 +14967,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStbmv_v2"
             )]
@@ -14985,7 +14985,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStbmv_v2"
             )]
@@ -15003,7 +15003,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -15027,7 +15027,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtbmv_v2"
             )]
@@ -15045,7 +15045,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtbmv_v2"
             )]
@@ -15063,7 +15063,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -15087,7 +15087,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtbmv_v2"
             )]
@@ -15105,7 +15105,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtbmv_v2"
             )]
@@ -15123,7 +15123,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -15147,7 +15147,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtbmv_v2"
             )]
@@ -15165,7 +15165,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtbmv_v2"
             )]
@@ -15183,7 +15183,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -15207,7 +15207,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStbsv_v2"
             )]
@@ -15225,7 +15225,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStbsv_v2"
             )]
@@ -15243,7 +15243,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -15267,7 +15267,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtbsv_v2"
             )]
@@ -15285,7 +15285,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtbsv_v2"
             )]
@@ -15303,7 +15303,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -15327,7 +15327,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtbsv_v2"
             )]
@@ -15345,7 +15345,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtbsv_v2"
             )]
@@ -15363,7 +15363,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -15387,7 +15387,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtbsv_v2"
             )]
@@ -15405,7 +15405,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtbsv_v2"
             )]
@@ -15423,7 +15423,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -15447,7 +15447,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStpmv_v2"
             )]
@@ -15463,7 +15463,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStpmv_v2"
             )]
@@ -15479,7 +15479,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -15499,7 +15499,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtpmv_v2"
             )]
@@ -15515,7 +15515,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtpmv_v2"
             )]
@@ -15531,7 +15531,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -15551,7 +15551,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtpmv_v2"
             )]
@@ -15567,7 +15567,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtpmv_v2"
             )]
@@ -15583,7 +15583,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -15603,7 +15603,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtpmv_v2"
             )]
@@ -15619,7 +15619,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtpmv_v2"
             )]
@@ -15635,7 +15635,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -15655,7 +15655,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStpsv_v2"
             )]
@@ -15671,7 +15671,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStpsv_v2"
             )]
@@ -15687,7 +15687,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -15707,7 +15707,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtpsv_v2"
             )]
@@ -15723,7 +15723,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtpsv_v2"
             )]
@@ -15739,7 +15739,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -15759,7 +15759,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtpsv_v2"
             )]
@@ -15775,7 +15775,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtpsv_v2"
             )]
@@ -15791,7 +15791,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -15811,7 +15811,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtpsv_v2"
             )]
@@ -15827,7 +15827,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtpsv_v2"
             )]
@@ -15843,7 +15843,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -15863,7 +15863,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrmv_v2"
             )]
@@ -15880,7 +15880,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrmv_v2"
             )]
@@ -15897,7 +15897,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -15919,7 +15919,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrmv_v2"
             )]
@@ -15936,7 +15936,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrmv_v2"
             )]
@@ -15953,7 +15953,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -15975,7 +15975,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrmv_v2"
             )]
@@ -15992,7 +15992,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrmv_v2"
             )]
@@ -16009,7 +16009,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -16031,7 +16031,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrmv_v2"
             )]
@@ -16048,7 +16048,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrmv_v2"
             )]
@@ -16065,7 +16065,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -16087,7 +16087,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrsv_v2"
             )]
@@ -16104,7 +16104,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrsv_v2"
             )]
@@ -16121,7 +16121,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -16143,7 +16143,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrsv_v2"
             )]
@@ -16160,7 +16160,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrsv_v2"
             )]
@@ -16177,7 +16177,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -16199,7 +16199,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrsv_v2"
             )]
@@ -16216,7 +16216,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrsv_v2"
             )]
@@ -16233,7 +16233,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -16255,7 +16255,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrsv_v2"
             )]
@@ -16272,7 +16272,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrsv_v2"
             )]
@@ -16289,7 +16289,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -16315,7 +16315,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Level 3
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgemm_v2"
             )]
@@ -16337,7 +16337,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgemm_v2"
             )]
@@ -16359,7 +16359,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -16391,7 +16391,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgemm_v2"
             )]
@@ -16413,7 +16413,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgemm_v2"
             )]
@@ -16435,7 +16435,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -16467,7 +16467,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgemm_v2"
             )]
@@ -16489,7 +16489,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgemm_v2"
             )]
@@ -16511,7 +16511,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -16543,7 +16543,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgemm_v2"
             )]
@@ -16565,7 +16565,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgemm_v2"
             )]
@@ -16587,7 +16587,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -16619,7 +16619,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasHgemm"
             )]
@@ -16641,7 +16641,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasHgemm"
             )]
@@ -16663,7 +16663,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Hgemm(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -16695,7 +16695,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsymm_v2"
             )]
@@ -16716,7 +16716,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsymm_v2"
             )]
@@ -16737,7 +16737,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -16767,7 +16767,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsymm_v2"
             )]
@@ -16788,7 +16788,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsymm_v2"
             )]
@@ -16809,7 +16809,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -16839,7 +16839,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsymm_v2"
             )]
@@ -16860,7 +16860,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsymm_v2"
             )]
@@ -16881,7 +16881,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -16911,7 +16911,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsymm_v2"
             )]
@@ -16932,7 +16932,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsymm_v2"
             )]
@@ -16953,7 +16953,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -16983,7 +16983,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyrk_v2"
             )]
@@ -17002,7 +17002,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyrk_v2"
             )]
@@ -17021,7 +17021,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -17047,7 +17047,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyrk_v2"
             )]
@@ -17066,7 +17066,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyrk_v2"
             )]
@@ -17085,7 +17085,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -17111,7 +17111,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyrk_v2"
             )]
@@ -17130,7 +17130,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyrk_v2"
             )]
@@ -17149,7 +17149,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -17175,7 +17175,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyrk_v2"
             )]
@@ -17194,7 +17194,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyrk_v2"
             )]
@@ -17213,7 +17213,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -17239,7 +17239,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyr2k_v2"
             )]
@@ -17260,7 +17260,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyr2k_v2"
             )]
@@ -17281,7 +17281,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -17311,7 +17311,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyr2k_v2"
             )]
@@ -17332,7 +17332,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyr2k_v2"
             )]
@@ -17353,7 +17353,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -17383,7 +17383,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyr2k_v2"
             )]
@@ -17404,7 +17404,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyr2k_v2"
             )]
@@ -17425,7 +17425,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -17455,7 +17455,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyr2k_v2"
             )]
@@ -17476,7 +17476,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyr2k_v2"
             )]
@@ -17497,7 +17497,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -17527,7 +17527,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyrkx"
             )]
@@ -17548,7 +17548,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyrkx"
             )]
@@ -17569,7 +17569,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -17599,7 +17599,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyrkx"
             )]
@@ -17620,7 +17620,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyrkx"
             )]
@@ -17641,7 +17641,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -17671,7 +17671,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyrkx"
             )]
@@ -17692,7 +17692,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyrkx"
             )]
@@ -17713,7 +17713,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -17743,7 +17743,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyrkx"
             )]
@@ -17764,7 +17764,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyrkx"
             )]
@@ -17785,7 +17785,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -17815,7 +17815,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrmm_v2"
             )]
@@ -17837,7 +17837,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrmm_v2"
             )]
@@ -17859,7 +17859,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -17891,7 +17891,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrmm_v2"
             )]
@@ -17913,7 +17913,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrmm_v2"
             )]
@@ -17935,7 +17935,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -17967,7 +17967,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrmm_v2"
             )]
@@ -17989,7 +17989,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrmm_v2"
             )]
@@ -18011,7 +18011,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -18043,7 +18043,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrmm_v2"
             )]
@@ -18065,7 +18065,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrmm_v2"
             )]
@@ -18087,7 +18087,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -18119,7 +18119,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrsm_v2"
             )]
@@ -18139,7 +18139,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrsm_v2"
             )]
@@ -18159,7 +18159,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -18187,7 +18187,7 @@ namespace ILGPU.Runtime.Cuda.API
                 b,
                 ldb);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrsm_v2"
             )]
@@ -18207,7 +18207,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrsm_v2"
             )]
@@ -18227,7 +18227,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -18255,7 +18255,7 @@ namespace ILGPU.Runtime.Cuda.API
                 b,
                 ldb);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrsm_v2"
             )]
@@ -18275,7 +18275,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrsm_v2"
             )]
@@ -18295,7 +18295,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -18323,7 +18323,7 @@ namespace ILGPU.Runtime.Cuda.API
                 b,
                 ldb);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrsm_v2"
             )]
@@ -18343,7 +18343,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrsm_v2"
             )]
@@ -18363,7 +18363,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -18395,7 +18395,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Extensions
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgeam"
             )]
@@ -18416,7 +18416,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgeam"
             )]
@@ -18437,7 +18437,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -18467,7 +18467,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgeam"
             )]
@@ -18488,7 +18488,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgeam"
             )]
@@ -18509,7 +18509,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -18539,7 +18539,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgeam"
             )]
@@ -18560,7 +18560,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgeam"
             )]
@@ -18581,7 +18581,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -18611,7 +18611,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgeam"
             )]
@@ -18632,7 +18632,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgeam"
             )]
@@ -18653,7 +18653,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -18683,7 +18683,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSdgmm"
             )]
@@ -18701,7 +18701,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSdgmm"
             )]
@@ -18719,7 +18719,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sdgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -18743,7 +18743,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDdgmm"
             )]
@@ -18761,7 +18761,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDdgmm"
             )]
@@ -18779,7 +18779,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ddgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -18803,7 +18803,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCdgmm"
             )]
@@ -18821,7 +18821,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCdgmm"
             )]
@@ -18839,7 +18839,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cdgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -18863,7 +18863,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZdgmm"
             )]
@@ -18881,7 +18881,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZdgmm"
             )]
@@ -18899,7 +18899,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zdgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -18940,7 +18940,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Context
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCreate_v2"
             )]
@@ -18949,7 +18949,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasCreate_v2(
              out IntPtr handle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCreate_v2"
             )]
@@ -18958,13 +18958,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasCreate_v2(
             [Out] out IntPtr handle);
 
-#endif
+        #endif
         public sealed override CuBlasStatus Create(
             [Out] out IntPtr handle) =>
             cublasCreate_v2(
                 out handle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetVersion_v2"
             )]
@@ -18974,7 +18974,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out int version);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetVersion_v2"
             )]
@@ -18984,7 +18984,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out int version);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetVersion(
             [In] IntPtr handle,
             [Out] out int version) =>
@@ -18992,7 +18992,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out version);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDestroy_v2"
             )]
@@ -19001,7 +19001,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasDestroy_v2(
              IntPtr handle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDestroy_v2"
             )]
@@ -19010,13 +19010,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasDestroy_v2(
             [In] IntPtr handle);
 
-#endif
+        #endif
         public sealed override CuBlasStatus Free(
             [In] IntPtr handle) =>
             cublasDestroy_v2(
                 handle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetStream_v2"
             )]
@@ -19026,7 +19026,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out IntPtr stream);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetStream_v2"
             )]
@@ -19036,7 +19036,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out IntPtr stream);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetStream(
             [In] IntPtr handle,
             [Out] out IntPtr stream) =>
@@ -19044,7 +19044,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out stream);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetStream_v2"
             )]
@@ -19054,7 +19054,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              IntPtr stream);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetStream_v2"
             )]
@@ -19064,7 +19064,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] IntPtr stream);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetStream(
             [In] IntPtr handle,
             [In] IntPtr stream) =>
@@ -19072,7 +19072,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 stream);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetPointerMode_v2"
             )]
@@ -19082,7 +19082,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out CuBlasPointerMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetPointerMode_v2"
             )]
@@ -19092,7 +19092,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out CuBlasPointerMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetPointerMode(
             [In] IntPtr handle,
             [Out] out CuBlasPointerMode mode) =>
@@ -19100,7 +19100,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetPointerMode_v2"
             )]
@@ -19110,7 +19110,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              CuBlasPointerMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetPointerMode_v2"
             )]
@@ -19120,7 +19120,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] CuBlasPointerMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetPointerMode(
             [In] IntPtr handle,
             [In] CuBlasPointerMode mode) =>
@@ -19128,7 +19128,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetAtomicsMode"
             )]
@@ -19138,7 +19138,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out CuBlasAtomicsMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetAtomicsMode"
             )]
@@ -19148,7 +19148,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out CuBlasAtomicsMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetAtomicsMode(
             [In] IntPtr handle,
             [Out] out CuBlasAtomicsMode mode) =>
@@ -19156,7 +19156,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetAtomicsMode"
             )]
@@ -19166,7 +19166,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              CuBlasAtomicsMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetAtomicsMode"
             )]
@@ -19176,7 +19176,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] CuBlasAtomicsMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetAtomicsMode(
             [In] IntPtr handle,
             [In] CuBlasAtomicsMode mode) =>
@@ -19184,7 +19184,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetMathMode"
             )]
@@ -19194,7 +19194,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out CuBlasMathMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetMathMode"
             )]
@@ -19204,7 +19204,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out CuBlasMathMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetMathMode(
             [In] IntPtr handle,
             [Out] out CuBlasMathMode mode) =>
@@ -19212,7 +19212,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetMathMode"
             )]
@@ -19222,7 +19222,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              CuBlasMathMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetMathMode"
             )]
@@ -19232,7 +19232,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] CuBlasMathMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetMathMode(
             [In] IntPtr handle,
             [In] CuBlasMathMode mode) =>
@@ -19244,7 +19244,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Level 1
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIsamax_v2"
             )]
@@ -19257,7 +19257,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIsamax_v2"
             )]
@@ -19270,7 +19270,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Isamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -19284,7 +19284,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIdamax_v2"
             )]
@@ -19297,7 +19297,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIdamax_v2"
             )]
@@ -19310,7 +19310,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Idamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -19324,7 +19324,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIcamax_v2"
             )]
@@ -19337,7 +19337,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIcamax_v2"
             )]
@@ -19350,7 +19350,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Icamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -19364,7 +19364,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIzamax_v2"
             )]
@@ -19377,7 +19377,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIzamax_v2"
             )]
@@ -19390,7 +19390,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Izamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -19404,7 +19404,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIsamin_v2"
             )]
@@ -19417,7 +19417,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIsamin_v2"
             )]
@@ -19430,7 +19430,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Isamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -19444,7 +19444,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIdamin_v2"
             )]
@@ -19457,7 +19457,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIdamin_v2"
             )]
@@ -19470,7 +19470,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Idamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -19484,7 +19484,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIcamin_v2"
             )]
@@ -19497,7 +19497,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIcamin_v2"
             )]
@@ -19510,7 +19510,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Icamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -19524,7 +19524,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIzamin_v2"
             )]
@@ -19537,7 +19537,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIzamin_v2"
             )]
@@ -19550,7 +19550,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Izamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -19564,7 +19564,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSasum_v2"
             )]
@@ -19577,7 +19577,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSasum_v2"
             )]
@@ -19590,7 +19590,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -19604,7 +19604,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDasum_v2"
             )]
@@ -19617,7 +19617,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDasum_v2"
             )]
@@ -19630,7 +19630,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -19644,7 +19644,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasScasum_v2"
             )]
@@ -19657,7 +19657,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasScasum_v2"
             )]
@@ -19670,7 +19670,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Scasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -19684,7 +19684,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDzasum_v2"
             )]
@@ -19697,7 +19697,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDzasum_v2"
             )]
@@ -19710,7 +19710,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dzasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -19724,7 +19724,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSnrm2_v2"
             )]
@@ -19737,7 +19737,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSnrm2_v2"
             )]
@@ -19750,7 +19750,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Snrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -19764,7 +19764,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDnrm2_v2"
             )]
@@ -19777,7 +19777,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDnrm2_v2"
             )]
@@ -19790,7 +19790,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dnrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -19804,7 +19804,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasScnrm2_v2"
             )]
@@ -19817,7 +19817,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasScnrm2_v2"
             )]
@@ -19830,7 +19830,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Scnrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -19844,7 +19844,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDznrm2_v2"
             )]
@@ -19857,7 +19857,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDznrm2_v2"
             )]
@@ -19870,7 +19870,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dznrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -19884,7 +19884,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSaxpy_v2"
             )]
@@ -19899,7 +19899,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSaxpy_v2"
             )]
@@ -19914,7 +19914,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Saxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -19932,7 +19932,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDaxpy_v2"
             )]
@@ -19947,7 +19947,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDaxpy_v2"
             )]
@@ -19962,7 +19962,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Daxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -19980,7 +19980,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCaxpy_v2"
             )]
@@ -19995,7 +19995,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCaxpy_v2"
             )]
@@ -20010,7 +20010,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Caxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -20028,7 +20028,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZaxpy_v2"
             )]
@@ -20043,7 +20043,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZaxpy_v2"
             )]
@@ -20058,7 +20058,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zaxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -20076,7 +20076,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSdot_v2"
             )]
@@ -20091,7 +20091,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSdot_v2"
             )]
@@ -20106,7 +20106,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sdot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -20124,7 +20124,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDdot_v2"
             )]
@@ -20139,7 +20139,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDdot_v2"
             )]
@@ -20154,7 +20154,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ddot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -20172,7 +20172,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCdotu_v2"
             )]
@@ -20187,7 +20187,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCdotu_v2"
             )]
@@ -20202,7 +20202,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cdotu_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -20220,7 +20220,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCdotc_v2"
             )]
@@ -20235,7 +20235,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCdotc_v2"
             )]
@@ -20250,7 +20250,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cdotc_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -20268,7 +20268,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSrotm_v2"
             )]
@@ -20283,7 +20283,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSrotm_v2"
             )]
@@ -20298,7 +20298,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Srotm_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -20316,7 +20316,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDrotm_v2"
             )]
@@ -20331,7 +20331,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDrotm_v2"
             )]
@@ -20346,7 +20346,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Drotm_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -20364,7 +20364,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSrot_v2"
             )]
@@ -20380,7 +20380,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSrot_v2"
             )]
@@ -20396,7 +20396,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Srot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -20416,7 +20416,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDrot_v2"
             )]
@@ -20432,7 +20432,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDrot_v2"
             )]
@@ -20448,7 +20448,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Drot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -20468,7 +20468,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsrot_v2"
             )]
@@ -20484,7 +20484,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsrot_v2"
             )]
@@ -20500,7 +20500,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csrot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -20520,7 +20520,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZdrot_v2"
             )]
@@ -20536,7 +20536,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZdrot_v2"
             )]
@@ -20552,7 +20552,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zdrot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -20572,7 +20572,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSrotg_v2"
             )]
@@ -20585,7 +20585,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSrotg_v2"
             )]
@@ -20598,7 +20598,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Srotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -20612,7 +20612,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDrotg_v2"
             )]
@@ -20625,7 +20625,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDrotg_v2"
             )]
@@ -20638,7 +20638,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Drotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -20652,7 +20652,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCrotg_v2"
             )]
@@ -20665,7 +20665,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCrotg_v2"
             )]
@@ -20678,7 +20678,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Crotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -20692,7 +20692,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZrotg_v2"
             )]
@@ -20705,7 +20705,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZrotg_v2"
             )]
@@ -20718,7 +20718,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zrotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -20732,7 +20732,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSscal_v2"
             )]
@@ -20745,7 +20745,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSscal_v2"
             )]
@@ -20758,7 +20758,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -20772,7 +20772,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDscal_v2"
             )]
@@ -20785,7 +20785,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDscal_v2"
             )]
@@ -20798,7 +20798,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -20812,7 +20812,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCscal_v2"
             )]
@@ -20825,7 +20825,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCscal_v2"
             )]
@@ -20838,7 +20838,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -20852,7 +20852,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZscal_v2"
             )]
@@ -20865,7 +20865,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZscal_v2"
             )]
@@ -20878,7 +20878,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -20892,7 +20892,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSswap_v2"
             )]
@@ -20906,7 +20906,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSswap_v2"
             )]
@@ -20920,7 +20920,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -20936,7 +20936,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDswap_v2"
             )]
@@ -20950,7 +20950,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDswap_v2"
             )]
@@ -20964,7 +20964,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -20980,7 +20980,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCswap_v2"
             )]
@@ -20994,7 +20994,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCswap_v2"
             )]
@@ -21008,7 +21008,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -21024,7 +21024,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZswap_v2"
             )]
@@ -21038,7 +21038,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZswap_v2"
             )]
@@ -21052,7 +21052,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -21072,7 +21072,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Level 2
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgbmv_v2"
             )]
@@ -21094,7 +21094,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgbmv_v2"
             )]
@@ -21116,7 +21116,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -21148,7 +21148,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgbmv_v2"
             )]
@@ -21170,7 +21170,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgbmv_v2"
             )]
@@ -21192,7 +21192,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -21224,7 +21224,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgbmv_v2"
             )]
@@ -21246,7 +21246,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgbmv_v2"
             )]
@@ -21268,7 +21268,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -21300,7 +21300,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgbmv_v2"
             )]
@@ -21322,7 +21322,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgbmv_v2"
             )]
@@ -21344,7 +21344,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -21376,7 +21376,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgemv_v2"
             )]
@@ -21396,7 +21396,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgemv_v2"
             )]
@@ -21416,7 +21416,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -21444,7 +21444,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgemv_v2"
             )]
@@ -21464,7 +21464,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgemv_v2"
             )]
@@ -21484,7 +21484,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -21512,7 +21512,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgemv_v2"
             )]
@@ -21532,7 +21532,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgemv_v2"
             )]
@@ -21552,7 +21552,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -21580,7 +21580,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgemv_v2"
             )]
@@ -21600,7 +21600,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgemv_v2"
             )]
@@ -21620,7 +21620,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -21648,7 +21648,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSger_v2"
             )]
@@ -21666,7 +21666,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSger_v2"
             )]
@@ -21684,7 +21684,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sger_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -21708,7 +21708,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDger_v2"
             )]
@@ -21726,7 +21726,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDger_v2"
             )]
@@ -21744,7 +21744,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dger_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -21768,7 +21768,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgeru_v2"
             )]
@@ -21786,7 +21786,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgeru_v2"
             )]
@@ -21804,7 +21804,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgeru_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -21828,7 +21828,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgeru_v2"
             )]
@@ -21846,7 +21846,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgeru_v2"
             )]
@@ -21864,7 +21864,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgeru_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -21888,7 +21888,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsbmv_v2"
             )]
@@ -21908,7 +21908,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsbmv_v2"
             )]
@@ -21928,7 +21928,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -21956,7 +21956,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsbmv_v2"
             )]
@@ -21976,7 +21976,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsbmv_v2"
             )]
@@ -21996,7 +21996,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -22024,7 +22024,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChbmv_v2"
             )]
@@ -22044,7 +22044,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChbmv_v2"
             )]
@@ -22064,7 +22064,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -22092,7 +22092,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhbmv_v2"
             )]
@@ -22112,7 +22112,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhbmv_v2"
             )]
@@ -22132,7 +22132,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -22160,7 +22160,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSspmv_v2"
             )]
@@ -22178,7 +22178,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSspmv_v2"
             )]
@@ -22196,7 +22196,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sspmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -22220,7 +22220,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDspmv_v2"
             )]
@@ -22238,7 +22238,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDspmv_v2"
             )]
@@ -22256,7 +22256,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dspmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -22280,7 +22280,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChpmv_v2"
             )]
@@ -22298,7 +22298,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChpmv_v2"
             )]
@@ -22316,7 +22316,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -22340,7 +22340,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhpmv_v2"
             )]
@@ -22358,7 +22358,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhpmv_v2"
             )]
@@ -22376,7 +22376,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -22400,7 +22400,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSspr_v2"
             )]
@@ -22415,7 +22415,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSspr_v2"
             )]
@@ -22430,7 +22430,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sspr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -22448,7 +22448,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDspr_v2"
             )]
@@ -22463,7 +22463,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDspr_v2"
             )]
@@ -22478,7 +22478,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dspr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -22496,7 +22496,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChpr_v2"
             )]
@@ -22511,7 +22511,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChpr_v2"
             )]
@@ -22526,7 +22526,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chpr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -22544,7 +22544,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhpr_v2"
             )]
@@ -22559,7 +22559,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhpr_v2"
             )]
@@ -22574,7 +22574,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhpr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -22592,7 +22592,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSspr2_v2"
             )]
@@ -22609,7 +22609,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSspr2_v2"
             )]
@@ -22626,7 +22626,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sspr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -22648,7 +22648,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDspr2_v2"
             )]
@@ -22665,7 +22665,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDspr2_v2"
             )]
@@ -22682,7 +22682,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dspr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -22704,7 +22704,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChpr2_v2"
             )]
@@ -22721,7 +22721,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChpr2_v2"
             )]
@@ -22738,7 +22738,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chpr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -22760,7 +22760,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhpr2_v2"
             )]
@@ -22777,7 +22777,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhpr2_v2"
             )]
@@ -22794,7 +22794,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhpr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -22816,7 +22816,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsymv_v2"
             )]
@@ -22835,7 +22835,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsymv_v2"
             )]
@@ -22854,7 +22854,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -22880,7 +22880,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsymv_v2"
             )]
@@ -22899,7 +22899,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsymv_v2"
             )]
@@ -22918,7 +22918,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -22944,7 +22944,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsymv_v2"
             )]
@@ -22963,7 +22963,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsymv_v2"
             )]
@@ -22982,7 +22982,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -23008,7 +23008,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsymv_v2"
             )]
@@ -23027,7 +23027,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsymv_v2"
             )]
@@ -23046,7 +23046,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -23072,7 +23072,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyr_v2"
             )]
@@ -23088,7 +23088,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyr_v2"
             )]
@@ -23104,7 +23104,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -23124,7 +23124,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyr_v2"
             )]
@@ -23140,7 +23140,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyr_v2"
             )]
@@ -23156,7 +23156,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -23176,7 +23176,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyr_v2"
             )]
@@ -23192,7 +23192,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyr_v2"
             )]
@@ -23208,7 +23208,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -23228,7 +23228,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyr_v2"
             )]
@@ -23244,7 +23244,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyr_v2"
             )]
@@ -23260,7 +23260,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -23280,7 +23280,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyr2_v2"
             )]
@@ -23298,7 +23298,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyr2_v2"
             )]
@@ -23316,7 +23316,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -23340,7 +23340,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyr2_v2"
             )]
@@ -23358,7 +23358,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyr2_v2"
             )]
@@ -23376,7 +23376,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -23400,7 +23400,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyr2_v2"
             )]
@@ -23418,7 +23418,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyr2_v2"
             )]
@@ -23436,7 +23436,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -23460,7 +23460,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyr2_v2"
             )]
@@ -23478,7 +23478,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyr2_v2"
             )]
@@ -23496,7 +23496,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -23520,7 +23520,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStbmv_v2"
             )]
@@ -23538,7 +23538,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStbmv_v2"
             )]
@@ -23556,7 +23556,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -23580,7 +23580,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtbmv_v2"
             )]
@@ -23598,7 +23598,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtbmv_v2"
             )]
@@ -23616,7 +23616,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -23640,7 +23640,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtbmv_v2"
             )]
@@ -23658,7 +23658,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtbmv_v2"
             )]
@@ -23676,7 +23676,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -23700,7 +23700,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtbmv_v2"
             )]
@@ -23718,7 +23718,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtbmv_v2"
             )]
@@ -23736,7 +23736,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -23760,7 +23760,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStbsv_v2"
             )]
@@ -23778,7 +23778,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStbsv_v2"
             )]
@@ -23796,7 +23796,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -23820,7 +23820,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtbsv_v2"
             )]
@@ -23838,7 +23838,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtbsv_v2"
             )]
@@ -23856,7 +23856,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -23880,7 +23880,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtbsv_v2"
             )]
@@ -23898,7 +23898,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtbsv_v2"
             )]
@@ -23916,7 +23916,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -23940,7 +23940,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtbsv_v2"
             )]
@@ -23958,7 +23958,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtbsv_v2"
             )]
@@ -23976,7 +23976,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -24000,7 +24000,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStpmv_v2"
             )]
@@ -24016,7 +24016,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStpmv_v2"
             )]
@@ -24032,7 +24032,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -24052,7 +24052,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtpmv_v2"
             )]
@@ -24068,7 +24068,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtpmv_v2"
             )]
@@ -24084,7 +24084,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -24104,7 +24104,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtpmv_v2"
             )]
@@ -24120,7 +24120,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtpmv_v2"
             )]
@@ -24136,7 +24136,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -24156,7 +24156,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtpmv_v2"
             )]
@@ -24172,7 +24172,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtpmv_v2"
             )]
@@ -24188,7 +24188,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -24208,7 +24208,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStpsv_v2"
             )]
@@ -24224,7 +24224,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStpsv_v2"
             )]
@@ -24240,7 +24240,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -24260,7 +24260,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtpsv_v2"
             )]
@@ -24276,7 +24276,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtpsv_v2"
             )]
@@ -24292,7 +24292,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -24312,7 +24312,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtpsv_v2"
             )]
@@ -24328,7 +24328,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtpsv_v2"
             )]
@@ -24344,7 +24344,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -24364,7 +24364,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtpsv_v2"
             )]
@@ -24380,7 +24380,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtpsv_v2"
             )]
@@ -24396,7 +24396,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -24416,7 +24416,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrmv_v2"
             )]
@@ -24433,7 +24433,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrmv_v2"
             )]
@@ -24450,7 +24450,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -24472,7 +24472,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrmv_v2"
             )]
@@ -24489,7 +24489,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrmv_v2"
             )]
@@ -24506,7 +24506,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -24528,7 +24528,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrmv_v2"
             )]
@@ -24545,7 +24545,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrmv_v2"
             )]
@@ -24562,7 +24562,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -24584,7 +24584,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrmv_v2"
             )]
@@ -24601,7 +24601,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrmv_v2"
             )]
@@ -24618,7 +24618,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -24640,7 +24640,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrsv_v2"
             )]
@@ -24657,7 +24657,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrsv_v2"
             )]
@@ -24674,7 +24674,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -24696,7 +24696,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrsv_v2"
             )]
@@ -24713,7 +24713,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrsv_v2"
             )]
@@ -24730,7 +24730,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -24752,7 +24752,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrsv_v2"
             )]
@@ -24769,7 +24769,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrsv_v2"
             )]
@@ -24786,7 +24786,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -24808,7 +24808,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrsv_v2"
             )]
@@ -24825,7 +24825,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrsv_v2"
             )]
@@ -24842,7 +24842,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -24868,7 +24868,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Level 3
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgemm_v2"
             )]
@@ -24890,7 +24890,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgemm_v2"
             )]
@@ -24912,7 +24912,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -24944,7 +24944,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgemm_v2"
             )]
@@ -24966,7 +24966,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgemm_v2"
             )]
@@ -24988,7 +24988,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -25020,7 +25020,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgemm_v2"
             )]
@@ -25042,7 +25042,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgemm_v2"
             )]
@@ -25064,7 +25064,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -25096,7 +25096,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgemm_v2"
             )]
@@ -25118,7 +25118,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgemm_v2"
             )]
@@ -25140,7 +25140,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -25172,7 +25172,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasHgemm"
             )]
@@ -25194,7 +25194,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasHgemm"
             )]
@@ -25216,7 +25216,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Hgemm(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -25248,7 +25248,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsymm_v2"
             )]
@@ -25269,7 +25269,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsymm_v2"
             )]
@@ -25290,7 +25290,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -25320,7 +25320,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsymm_v2"
             )]
@@ -25341,7 +25341,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsymm_v2"
             )]
@@ -25362,7 +25362,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -25392,7 +25392,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsymm_v2"
             )]
@@ -25413,7 +25413,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsymm_v2"
             )]
@@ -25434,7 +25434,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -25464,7 +25464,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsymm_v2"
             )]
@@ -25485,7 +25485,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsymm_v2"
             )]
@@ -25506,7 +25506,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -25536,7 +25536,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyrk_v2"
             )]
@@ -25555,7 +25555,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyrk_v2"
             )]
@@ -25574,7 +25574,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -25600,7 +25600,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyrk_v2"
             )]
@@ -25619,7 +25619,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyrk_v2"
             )]
@@ -25638,7 +25638,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -25664,7 +25664,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyrk_v2"
             )]
@@ -25683,7 +25683,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyrk_v2"
             )]
@@ -25702,7 +25702,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -25728,7 +25728,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyrk_v2"
             )]
@@ -25747,7 +25747,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyrk_v2"
             )]
@@ -25766,7 +25766,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -25792,7 +25792,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyr2k_v2"
             )]
@@ -25813,7 +25813,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyr2k_v2"
             )]
@@ -25834,7 +25834,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -25864,7 +25864,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyr2k_v2"
             )]
@@ -25885,7 +25885,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyr2k_v2"
             )]
@@ -25906,7 +25906,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -25936,7 +25936,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyr2k_v2"
             )]
@@ -25957,7 +25957,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyr2k_v2"
             )]
@@ -25978,7 +25978,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -26008,7 +26008,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyr2k_v2"
             )]
@@ -26029,7 +26029,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyr2k_v2"
             )]
@@ -26050,7 +26050,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -26080,7 +26080,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyrkx"
             )]
@@ -26101,7 +26101,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyrkx"
             )]
@@ -26122,7 +26122,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -26152,7 +26152,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyrkx"
             )]
@@ -26173,7 +26173,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyrkx"
             )]
@@ -26194,7 +26194,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -26224,7 +26224,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyrkx"
             )]
@@ -26245,7 +26245,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyrkx"
             )]
@@ -26266,7 +26266,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -26296,7 +26296,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyrkx"
             )]
@@ -26317,7 +26317,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyrkx"
             )]
@@ -26338,7 +26338,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -26368,7 +26368,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrmm_v2"
             )]
@@ -26390,7 +26390,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrmm_v2"
             )]
@@ -26412,7 +26412,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -26444,7 +26444,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrmm_v2"
             )]
@@ -26466,7 +26466,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrmm_v2"
             )]
@@ -26488,7 +26488,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -26520,7 +26520,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrmm_v2"
             )]
@@ -26542,7 +26542,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrmm_v2"
             )]
@@ -26564,7 +26564,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -26596,7 +26596,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrmm_v2"
             )]
@@ -26618,7 +26618,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrmm_v2"
             )]
@@ -26640,7 +26640,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -26672,7 +26672,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrsm_v2"
             )]
@@ -26692,7 +26692,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrsm_v2"
             )]
@@ -26712,7 +26712,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -26740,7 +26740,7 @@ namespace ILGPU.Runtime.Cuda.API
                 b,
                 ldb);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrsm_v2"
             )]
@@ -26760,7 +26760,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrsm_v2"
             )]
@@ -26780,7 +26780,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -26808,7 +26808,7 @@ namespace ILGPU.Runtime.Cuda.API
                 b,
                 ldb);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrsm_v2"
             )]
@@ -26828,7 +26828,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrsm_v2"
             )]
@@ -26848,7 +26848,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -26876,7 +26876,7 @@ namespace ILGPU.Runtime.Cuda.API
                 b,
                 ldb);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrsm_v2"
             )]
@@ -26896,7 +26896,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrsm_v2"
             )]
@@ -26916,7 +26916,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -26948,7 +26948,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Extensions
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgeam"
             )]
@@ -26969,7 +26969,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgeam"
             )]
@@ -26990,7 +26990,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -27020,7 +27020,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgeam"
             )]
@@ -27041,7 +27041,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgeam"
             )]
@@ -27062,7 +27062,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -27092,7 +27092,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgeam"
             )]
@@ -27113,7 +27113,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgeam"
             )]
@@ -27134,7 +27134,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -27164,7 +27164,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgeam"
             )]
@@ -27185,7 +27185,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgeam"
             )]
@@ -27206,7 +27206,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -27236,7 +27236,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSdgmm"
             )]
@@ -27254,7 +27254,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSdgmm"
             )]
@@ -27272,7 +27272,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sdgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -27296,7 +27296,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDdgmm"
             )]
@@ -27314,7 +27314,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDdgmm"
             )]
@@ -27332,7 +27332,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ddgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -27356,7 +27356,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCdgmm"
             )]
@@ -27374,7 +27374,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCdgmm"
             )]
@@ -27392,7 +27392,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cdgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -27416,7 +27416,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZdgmm"
             )]
@@ -27434,7 +27434,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZdgmm"
             )]
@@ -27452,7 +27452,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zdgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -27493,7 +27493,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Context
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCreate_v2"
             )]
@@ -27502,7 +27502,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasCreate_v2(
              out IntPtr handle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCreate_v2"
             )]
@@ -27511,13 +27511,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasCreate_v2(
             [Out] out IntPtr handle);
 
-#endif
+        #endif
         public sealed override CuBlasStatus Create(
             [Out] out IntPtr handle) =>
             cublasCreate_v2(
                 out handle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetVersion_v2"
             )]
@@ -27527,7 +27527,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out int version);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetVersion_v2"
             )]
@@ -27537,7 +27537,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out int version);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetVersion(
             [In] IntPtr handle,
             [Out] out int version) =>
@@ -27545,7 +27545,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out version);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDestroy_v2"
             )]
@@ -27554,7 +27554,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasDestroy_v2(
              IntPtr handle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDestroy_v2"
             )]
@@ -27563,13 +27563,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasDestroy_v2(
             [In] IntPtr handle);
 
-#endif
+        #endif
         public sealed override CuBlasStatus Free(
             [In] IntPtr handle) =>
             cublasDestroy_v2(
                 handle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetStream_v2"
             )]
@@ -27579,7 +27579,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out IntPtr stream);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetStream_v2"
             )]
@@ -27589,7 +27589,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out IntPtr stream);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetStream(
             [In] IntPtr handle,
             [Out] out IntPtr stream) =>
@@ -27597,7 +27597,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out stream);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetStream_v2"
             )]
@@ -27607,7 +27607,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              IntPtr stream);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetStream_v2"
             )]
@@ -27617,7 +27617,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] IntPtr stream);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetStream(
             [In] IntPtr handle,
             [In] IntPtr stream) =>
@@ -27625,7 +27625,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 stream);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetPointerMode_v2"
             )]
@@ -27635,7 +27635,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out CuBlasPointerMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetPointerMode_v2"
             )]
@@ -27645,7 +27645,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out CuBlasPointerMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetPointerMode(
             [In] IntPtr handle,
             [Out] out CuBlasPointerMode mode) =>
@@ -27653,7 +27653,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetPointerMode_v2"
             )]
@@ -27663,7 +27663,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              CuBlasPointerMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetPointerMode_v2"
             )]
@@ -27673,7 +27673,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] CuBlasPointerMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetPointerMode(
             [In] IntPtr handle,
             [In] CuBlasPointerMode mode) =>
@@ -27681,7 +27681,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetAtomicsMode"
             )]
@@ -27691,7 +27691,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out CuBlasAtomicsMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetAtomicsMode"
             )]
@@ -27701,7 +27701,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out CuBlasAtomicsMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetAtomicsMode(
             [In] IntPtr handle,
             [Out] out CuBlasAtomicsMode mode) =>
@@ -27709,7 +27709,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetAtomicsMode"
             )]
@@ -27719,7 +27719,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              CuBlasAtomicsMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetAtomicsMode"
             )]
@@ -27729,7 +27729,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] CuBlasAtomicsMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetAtomicsMode(
             [In] IntPtr handle,
             [In] CuBlasAtomicsMode mode) =>
@@ -27737,7 +27737,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetMathMode"
             )]
@@ -27747,7 +27747,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out CuBlasMathMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetMathMode"
             )]
@@ -27757,7 +27757,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out CuBlasMathMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetMathMode(
             [In] IntPtr handle,
             [Out] out CuBlasMathMode mode) =>
@@ -27765,7 +27765,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetMathMode"
             )]
@@ -27775,7 +27775,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              CuBlasMathMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetMathMode"
             )]
@@ -27785,7 +27785,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] CuBlasMathMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetMathMode(
             [In] IntPtr handle,
             [In] CuBlasMathMode mode) =>
@@ -27797,7 +27797,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Level 1
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIsamax_v2"
             )]
@@ -27810,7 +27810,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIsamax_v2"
             )]
@@ -27823,7 +27823,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Isamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -27837,7 +27837,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIdamax_v2"
             )]
@@ -27850,7 +27850,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIdamax_v2"
             )]
@@ -27863,7 +27863,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Idamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -27877,7 +27877,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIcamax_v2"
             )]
@@ -27890,7 +27890,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIcamax_v2"
             )]
@@ -27903,7 +27903,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Icamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -27917,7 +27917,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIzamax_v2"
             )]
@@ -27930,7 +27930,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIzamax_v2"
             )]
@@ -27943,7 +27943,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Izamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -27957,7 +27957,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIsamin_v2"
             )]
@@ -27970,7 +27970,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIsamin_v2"
             )]
@@ -27983,7 +27983,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Isamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -27997,7 +27997,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIdamin_v2"
             )]
@@ -28010,7 +28010,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIdamin_v2"
             )]
@@ -28023,7 +28023,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Idamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -28037,7 +28037,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIcamin_v2"
             )]
@@ -28050,7 +28050,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIcamin_v2"
             )]
@@ -28063,7 +28063,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Icamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -28077,7 +28077,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIzamin_v2"
             )]
@@ -28090,7 +28090,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIzamin_v2"
             )]
@@ -28103,7 +28103,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Izamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -28117,7 +28117,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSasum_v2"
             )]
@@ -28130,7 +28130,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSasum_v2"
             )]
@@ -28143,7 +28143,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -28157,7 +28157,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDasum_v2"
             )]
@@ -28170,7 +28170,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDasum_v2"
             )]
@@ -28183,7 +28183,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -28197,7 +28197,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasScasum_v2"
             )]
@@ -28210,7 +28210,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasScasum_v2"
             )]
@@ -28223,7 +28223,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Scasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -28237,7 +28237,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDzasum_v2"
             )]
@@ -28250,7 +28250,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDzasum_v2"
             )]
@@ -28263,7 +28263,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dzasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -28277,7 +28277,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSnrm2_v2"
             )]
@@ -28290,7 +28290,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSnrm2_v2"
             )]
@@ -28303,7 +28303,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Snrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -28317,7 +28317,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDnrm2_v2"
             )]
@@ -28330,7 +28330,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDnrm2_v2"
             )]
@@ -28343,7 +28343,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dnrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -28357,7 +28357,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasScnrm2_v2"
             )]
@@ -28370,7 +28370,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasScnrm2_v2"
             )]
@@ -28383,7 +28383,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Scnrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -28397,7 +28397,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDznrm2_v2"
             )]
@@ -28410,7 +28410,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDznrm2_v2"
             )]
@@ -28423,7 +28423,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dznrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -28437,7 +28437,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSaxpy_v2"
             )]
@@ -28452,7 +28452,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSaxpy_v2"
             )]
@@ -28467,7 +28467,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Saxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -28485,7 +28485,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDaxpy_v2"
             )]
@@ -28500,7 +28500,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDaxpy_v2"
             )]
@@ -28515,7 +28515,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Daxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -28533,7 +28533,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCaxpy_v2"
             )]
@@ -28548,7 +28548,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCaxpy_v2"
             )]
@@ -28563,7 +28563,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Caxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -28581,7 +28581,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZaxpy_v2"
             )]
@@ -28596,7 +28596,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZaxpy_v2"
             )]
@@ -28611,7 +28611,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zaxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -28629,7 +28629,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSdot_v2"
             )]
@@ -28644,7 +28644,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSdot_v2"
             )]
@@ -28659,7 +28659,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sdot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -28677,7 +28677,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDdot_v2"
             )]
@@ -28692,7 +28692,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDdot_v2"
             )]
@@ -28707,7 +28707,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ddot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -28725,7 +28725,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCdotu_v2"
             )]
@@ -28740,7 +28740,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCdotu_v2"
             )]
@@ -28755,7 +28755,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cdotu_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -28773,7 +28773,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCdotc_v2"
             )]
@@ -28788,7 +28788,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCdotc_v2"
             )]
@@ -28803,7 +28803,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cdotc_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -28821,7 +28821,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSrotm_v2"
             )]
@@ -28836,7 +28836,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSrotm_v2"
             )]
@@ -28851,7 +28851,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Srotm_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -28869,7 +28869,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDrotm_v2"
             )]
@@ -28884,7 +28884,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDrotm_v2"
             )]
@@ -28899,7 +28899,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Drotm_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -28917,7 +28917,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSrot_v2"
             )]
@@ -28933,7 +28933,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSrot_v2"
             )]
@@ -28949,7 +28949,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Srot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -28969,7 +28969,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDrot_v2"
             )]
@@ -28985,7 +28985,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDrot_v2"
             )]
@@ -29001,7 +29001,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Drot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -29021,7 +29021,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsrot_v2"
             )]
@@ -29037,7 +29037,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsrot_v2"
             )]
@@ -29053,7 +29053,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csrot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -29073,7 +29073,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZdrot_v2"
             )]
@@ -29089,7 +29089,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZdrot_v2"
             )]
@@ -29105,7 +29105,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zdrot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -29125,7 +29125,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSrotg_v2"
             )]
@@ -29138,7 +29138,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSrotg_v2"
             )]
@@ -29151,7 +29151,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Srotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -29165,7 +29165,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDrotg_v2"
             )]
@@ -29178,7 +29178,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDrotg_v2"
             )]
@@ -29191,7 +29191,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Drotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -29205,7 +29205,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCrotg_v2"
             )]
@@ -29218,7 +29218,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCrotg_v2"
             )]
@@ -29231,7 +29231,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Crotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -29245,7 +29245,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZrotg_v2"
             )]
@@ -29258,7 +29258,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZrotg_v2"
             )]
@@ -29271,7 +29271,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zrotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -29285,7 +29285,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSscal_v2"
             )]
@@ -29298,7 +29298,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSscal_v2"
             )]
@@ -29311,7 +29311,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -29325,7 +29325,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDscal_v2"
             )]
@@ -29338,7 +29338,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDscal_v2"
             )]
@@ -29351,7 +29351,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -29365,7 +29365,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCscal_v2"
             )]
@@ -29378,7 +29378,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCscal_v2"
             )]
@@ -29391,7 +29391,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -29405,7 +29405,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZscal_v2"
             )]
@@ -29418,7 +29418,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZscal_v2"
             )]
@@ -29431,7 +29431,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -29445,7 +29445,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSswap_v2"
             )]
@@ -29459,7 +29459,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSswap_v2"
             )]
@@ -29473,7 +29473,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -29489,7 +29489,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDswap_v2"
             )]
@@ -29503,7 +29503,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDswap_v2"
             )]
@@ -29517,7 +29517,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -29533,7 +29533,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCswap_v2"
             )]
@@ -29547,7 +29547,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCswap_v2"
             )]
@@ -29561,7 +29561,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -29577,7 +29577,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZswap_v2"
             )]
@@ -29591,7 +29591,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZswap_v2"
             )]
@@ -29605,7 +29605,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -29625,7 +29625,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Level 2
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgbmv_v2"
             )]
@@ -29647,7 +29647,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgbmv_v2"
             )]
@@ -29669,7 +29669,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -29701,7 +29701,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgbmv_v2"
             )]
@@ -29723,7 +29723,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgbmv_v2"
             )]
@@ -29745,7 +29745,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -29777,7 +29777,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgbmv_v2"
             )]
@@ -29799,7 +29799,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgbmv_v2"
             )]
@@ -29821,7 +29821,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -29853,7 +29853,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgbmv_v2"
             )]
@@ -29875,7 +29875,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgbmv_v2"
             )]
@@ -29897,7 +29897,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -29929,7 +29929,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgemv_v2"
             )]
@@ -29949,7 +29949,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgemv_v2"
             )]
@@ -29969,7 +29969,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -29997,7 +29997,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgemv_v2"
             )]
@@ -30017,7 +30017,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgemv_v2"
             )]
@@ -30037,7 +30037,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -30065,7 +30065,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgemv_v2"
             )]
@@ -30085,7 +30085,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgemv_v2"
             )]
@@ -30105,7 +30105,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -30133,7 +30133,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgemv_v2"
             )]
@@ -30153,7 +30153,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgemv_v2"
             )]
@@ -30173,7 +30173,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -30201,7 +30201,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSger_v2"
             )]
@@ -30219,7 +30219,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSger_v2"
             )]
@@ -30237,7 +30237,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sger_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -30261,7 +30261,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDger_v2"
             )]
@@ -30279,7 +30279,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDger_v2"
             )]
@@ -30297,7 +30297,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dger_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -30321,7 +30321,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgeru_v2"
             )]
@@ -30339,7 +30339,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgeru_v2"
             )]
@@ -30357,7 +30357,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgeru_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -30381,7 +30381,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgeru_v2"
             )]
@@ -30399,7 +30399,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgeru_v2"
             )]
@@ -30417,7 +30417,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgeru_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -30441,7 +30441,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsbmv_v2"
             )]
@@ -30461,7 +30461,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsbmv_v2"
             )]
@@ -30481,7 +30481,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -30509,7 +30509,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsbmv_v2"
             )]
@@ -30529,7 +30529,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsbmv_v2"
             )]
@@ -30549,7 +30549,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -30577,7 +30577,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChbmv_v2"
             )]
@@ -30597,7 +30597,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChbmv_v2"
             )]
@@ -30617,7 +30617,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -30645,7 +30645,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhbmv_v2"
             )]
@@ -30665,7 +30665,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhbmv_v2"
             )]
@@ -30685,7 +30685,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -30713,7 +30713,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSspmv_v2"
             )]
@@ -30731,7 +30731,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSspmv_v2"
             )]
@@ -30749,7 +30749,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sspmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -30773,7 +30773,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDspmv_v2"
             )]
@@ -30791,7 +30791,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDspmv_v2"
             )]
@@ -30809,7 +30809,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dspmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -30833,7 +30833,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChpmv_v2"
             )]
@@ -30851,7 +30851,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChpmv_v2"
             )]
@@ -30869,7 +30869,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -30893,7 +30893,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhpmv_v2"
             )]
@@ -30911,7 +30911,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhpmv_v2"
             )]
@@ -30929,7 +30929,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -30953,7 +30953,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSspr_v2"
             )]
@@ -30968,7 +30968,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSspr_v2"
             )]
@@ -30983,7 +30983,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sspr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -31001,7 +31001,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDspr_v2"
             )]
@@ -31016,7 +31016,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDspr_v2"
             )]
@@ -31031,7 +31031,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dspr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -31049,7 +31049,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChpr_v2"
             )]
@@ -31064,7 +31064,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChpr_v2"
             )]
@@ -31079,7 +31079,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chpr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -31097,7 +31097,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhpr_v2"
             )]
@@ -31112,7 +31112,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhpr_v2"
             )]
@@ -31127,7 +31127,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhpr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -31145,7 +31145,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSspr2_v2"
             )]
@@ -31162,7 +31162,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSspr2_v2"
             )]
@@ -31179,7 +31179,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sspr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -31201,7 +31201,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDspr2_v2"
             )]
@@ -31218,7 +31218,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDspr2_v2"
             )]
@@ -31235,7 +31235,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dspr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -31257,7 +31257,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChpr2_v2"
             )]
@@ -31274,7 +31274,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChpr2_v2"
             )]
@@ -31291,7 +31291,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chpr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -31313,7 +31313,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhpr2_v2"
             )]
@@ -31330,7 +31330,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhpr2_v2"
             )]
@@ -31347,7 +31347,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhpr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -31369,7 +31369,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsymv_v2"
             )]
@@ -31388,7 +31388,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsymv_v2"
             )]
@@ -31407,7 +31407,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -31433,7 +31433,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsymv_v2"
             )]
@@ -31452,7 +31452,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsymv_v2"
             )]
@@ -31471,7 +31471,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -31497,7 +31497,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsymv_v2"
             )]
@@ -31516,7 +31516,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsymv_v2"
             )]
@@ -31535,7 +31535,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -31561,7 +31561,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsymv_v2"
             )]
@@ -31580,7 +31580,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsymv_v2"
             )]
@@ -31599,7 +31599,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -31625,7 +31625,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyr_v2"
             )]
@@ -31641,7 +31641,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyr_v2"
             )]
@@ -31657,7 +31657,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -31677,7 +31677,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyr_v2"
             )]
@@ -31693,7 +31693,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyr_v2"
             )]
@@ -31709,7 +31709,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -31729,7 +31729,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyr_v2"
             )]
@@ -31745,7 +31745,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyr_v2"
             )]
@@ -31761,7 +31761,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -31781,7 +31781,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyr_v2"
             )]
@@ -31797,7 +31797,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyr_v2"
             )]
@@ -31813,7 +31813,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -31833,7 +31833,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyr2_v2"
             )]
@@ -31851,7 +31851,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyr2_v2"
             )]
@@ -31869,7 +31869,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -31893,7 +31893,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyr2_v2"
             )]
@@ -31911,7 +31911,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyr2_v2"
             )]
@@ -31929,7 +31929,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -31953,7 +31953,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyr2_v2"
             )]
@@ -31971,7 +31971,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyr2_v2"
             )]
@@ -31989,7 +31989,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -32013,7 +32013,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyr2_v2"
             )]
@@ -32031,7 +32031,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyr2_v2"
             )]
@@ -32049,7 +32049,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -32073,7 +32073,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStbmv_v2"
             )]
@@ -32091,7 +32091,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStbmv_v2"
             )]
@@ -32109,7 +32109,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -32133,7 +32133,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtbmv_v2"
             )]
@@ -32151,7 +32151,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtbmv_v2"
             )]
@@ -32169,7 +32169,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -32193,7 +32193,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtbmv_v2"
             )]
@@ -32211,7 +32211,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtbmv_v2"
             )]
@@ -32229,7 +32229,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -32253,7 +32253,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtbmv_v2"
             )]
@@ -32271,7 +32271,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtbmv_v2"
             )]
@@ -32289,7 +32289,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -32313,7 +32313,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStbsv_v2"
             )]
@@ -32331,7 +32331,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStbsv_v2"
             )]
@@ -32349,7 +32349,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -32373,7 +32373,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtbsv_v2"
             )]
@@ -32391,7 +32391,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtbsv_v2"
             )]
@@ -32409,7 +32409,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -32433,7 +32433,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtbsv_v2"
             )]
@@ -32451,7 +32451,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtbsv_v2"
             )]
@@ -32469,7 +32469,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -32493,7 +32493,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtbsv_v2"
             )]
@@ -32511,7 +32511,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtbsv_v2"
             )]
@@ -32529,7 +32529,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -32553,7 +32553,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStpmv_v2"
             )]
@@ -32569,7 +32569,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStpmv_v2"
             )]
@@ -32585,7 +32585,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -32605,7 +32605,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtpmv_v2"
             )]
@@ -32621,7 +32621,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtpmv_v2"
             )]
@@ -32637,7 +32637,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -32657,7 +32657,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtpmv_v2"
             )]
@@ -32673,7 +32673,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtpmv_v2"
             )]
@@ -32689,7 +32689,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -32709,7 +32709,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtpmv_v2"
             )]
@@ -32725,7 +32725,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtpmv_v2"
             )]
@@ -32741,7 +32741,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -32761,7 +32761,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStpsv_v2"
             )]
@@ -32777,7 +32777,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStpsv_v2"
             )]
@@ -32793,7 +32793,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -32813,7 +32813,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtpsv_v2"
             )]
@@ -32829,7 +32829,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtpsv_v2"
             )]
@@ -32845,7 +32845,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -32865,7 +32865,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtpsv_v2"
             )]
@@ -32881,7 +32881,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtpsv_v2"
             )]
@@ -32897,7 +32897,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -32917,7 +32917,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtpsv_v2"
             )]
@@ -32933,7 +32933,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtpsv_v2"
             )]
@@ -32949,7 +32949,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -32969,7 +32969,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrmv_v2"
             )]
@@ -32986,7 +32986,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrmv_v2"
             )]
@@ -33003,7 +33003,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -33025,7 +33025,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrmv_v2"
             )]
@@ -33042,7 +33042,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrmv_v2"
             )]
@@ -33059,7 +33059,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -33081,7 +33081,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrmv_v2"
             )]
@@ -33098,7 +33098,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrmv_v2"
             )]
@@ -33115,7 +33115,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -33137,7 +33137,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrmv_v2"
             )]
@@ -33154,7 +33154,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrmv_v2"
             )]
@@ -33171,7 +33171,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -33193,7 +33193,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrsv_v2"
             )]
@@ -33210,7 +33210,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrsv_v2"
             )]
@@ -33227,7 +33227,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -33249,7 +33249,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrsv_v2"
             )]
@@ -33266,7 +33266,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrsv_v2"
             )]
@@ -33283,7 +33283,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -33305,7 +33305,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrsv_v2"
             )]
@@ -33322,7 +33322,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrsv_v2"
             )]
@@ -33339,7 +33339,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -33361,7 +33361,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrsv_v2"
             )]
@@ -33378,7 +33378,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrsv_v2"
             )]
@@ -33395,7 +33395,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -33421,7 +33421,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Level 3
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgemm_v2"
             )]
@@ -33443,7 +33443,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgemm_v2"
             )]
@@ -33465,7 +33465,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -33497,7 +33497,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgemm_v2"
             )]
@@ -33519,7 +33519,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgemm_v2"
             )]
@@ -33541,7 +33541,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -33573,7 +33573,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgemm_v2"
             )]
@@ -33595,7 +33595,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgemm_v2"
             )]
@@ -33617,7 +33617,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -33649,7 +33649,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgemm_v2"
             )]
@@ -33671,7 +33671,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgemm_v2"
             )]
@@ -33693,7 +33693,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -33725,7 +33725,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasHgemm"
             )]
@@ -33747,7 +33747,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasHgemm"
             )]
@@ -33769,7 +33769,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Hgemm(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -33801,7 +33801,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsymm_v2"
             )]
@@ -33822,7 +33822,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsymm_v2"
             )]
@@ -33843,7 +33843,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -33873,7 +33873,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsymm_v2"
             )]
@@ -33894,7 +33894,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsymm_v2"
             )]
@@ -33915,7 +33915,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -33945,7 +33945,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsymm_v2"
             )]
@@ -33966,7 +33966,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsymm_v2"
             )]
@@ -33987,7 +33987,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -34017,7 +34017,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsymm_v2"
             )]
@@ -34038,7 +34038,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsymm_v2"
             )]
@@ -34059,7 +34059,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -34089,7 +34089,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyrk_v2"
             )]
@@ -34108,7 +34108,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyrk_v2"
             )]
@@ -34127,7 +34127,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -34153,7 +34153,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyrk_v2"
             )]
@@ -34172,7 +34172,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyrk_v2"
             )]
@@ -34191,7 +34191,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -34217,7 +34217,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyrk_v2"
             )]
@@ -34236,7 +34236,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyrk_v2"
             )]
@@ -34255,7 +34255,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -34281,7 +34281,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyrk_v2"
             )]
@@ -34300,7 +34300,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyrk_v2"
             )]
@@ -34319,7 +34319,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -34345,7 +34345,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyr2k_v2"
             )]
@@ -34366,7 +34366,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyr2k_v2"
             )]
@@ -34387,7 +34387,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -34417,7 +34417,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyr2k_v2"
             )]
@@ -34438,7 +34438,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyr2k_v2"
             )]
@@ -34459,7 +34459,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -34489,7 +34489,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyr2k_v2"
             )]
@@ -34510,7 +34510,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyr2k_v2"
             )]
@@ -34531,7 +34531,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -34561,7 +34561,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyr2k_v2"
             )]
@@ -34582,7 +34582,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyr2k_v2"
             )]
@@ -34603,7 +34603,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -34633,7 +34633,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyrkx"
             )]
@@ -34654,7 +34654,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyrkx"
             )]
@@ -34675,7 +34675,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -34705,7 +34705,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyrkx"
             )]
@@ -34726,7 +34726,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyrkx"
             )]
@@ -34747,7 +34747,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -34777,7 +34777,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyrkx"
             )]
@@ -34798,7 +34798,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyrkx"
             )]
@@ -34819,7 +34819,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -34849,7 +34849,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyrkx"
             )]
@@ -34870,7 +34870,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyrkx"
             )]
@@ -34891,7 +34891,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -34921,7 +34921,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrmm_v2"
             )]
@@ -34943,7 +34943,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrmm_v2"
             )]
@@ -34965,7 +34965,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -34997,7 +34997,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrmm_v2"
             )]
@@ -35019,7 +35019,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrmm_v2"
             )]
@@ -35041,7 +35041,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -35073,7 +35073,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrmm_v2"
             )]
@@ -35095,7 +35095,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrmm_v2"
             )]
@@ -35117,7 +35117,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -35149,7 +35149,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrmm_v2"
             )]
@@ -35171,7 +35171,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrmm_v2"
             )]
@@ -35193,7 +35193,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -35225,7 +35225,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrsm_v2"
             )]
@@ -35245,7 +35245,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrsm_v2"
             )]
@@ -35265,7 +35265,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -35293,7 +35293,7 @@ namespace ILGPU.Runtime.Cuda.API
                 b,
                 ldb);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrsm_v2"
             )]
@@ -35313,7 +35313,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrsm_v2"
             )]
@@ -35333,7 +35333,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -35361,7 +35361,7 @@ namespace ILGPU.Runtime.Cuda.API
                 b,
                 ldb);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrsm_v2"
             )]
@@ -35381,7 +35381,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrsm_v2"
             )]
@@ -35401,7 +35401,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -35429,7 +35429,7 @@ namespace ILGPU.Runtime.Cuda.API
                 b,
                 ldb);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrsm_v2"
             )]
@@ -35449,7 +35449,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrsm_v2"
             )]
@@ -35469,7 +35469,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -35501,7 +35501,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Extensions
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgeam"
             )]
@@ -35522,7 +35522,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgeam"
             )]
@@ -35543,7 +35543,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -35573,7 +35573,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgeam"
             )]
@@ -35594,7 +35594,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgeam"
             )]
@@ -35615,7 +35615,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -35645,7 +35645,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgeam"
             )]
@@ -35666,7 +35666,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgeam"
             )]
@@ -35687,7 +35687,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -35717,7 +35717,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgeam"
             )]
@@ -35738,7 +35738,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgeam"
             )]
@@ -35759,7 +35759,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -35789,7 +35789,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSdgmm"
             )]
@@ -35807,7 +35807,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSdgmm"
             )]
@@ -35825,7 +35825,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sdgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -35849,7 +35849,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDdgmm"
             )]
@@ -35867,7 +35867,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDdgmm"
             )]
@@ -35885,7 +35885,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ddgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -35909,7 +35909,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCdgmm"
             )]
@@ -35927,7 +35927,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCdgmm"
             )]
@@ -35945,7 +35945,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cdgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -35969,7 +35969,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZdgmm"
             )]
@@ -35987,7 +35987,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZdgmm"
             )]
@@ -36005,7 +36005,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zdgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -36046,7 +36046,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Context
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCreate_v2"
             )]
@@ -36055,7 +36055,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasCreate_v2(
              out IntPtr handle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCreate_v2"
             )]
@@ -36064,13 +36064,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasCreate_v2(
             [Out] out IntPtr handle);
 
-#endif
+        #endif
         public sealed override CuBlasStatus Create(
             [Out] out IntPtr handle) =>
             cublasCreate_v2(
                 out handle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetVersion_v2"
             )]
@@ -36080,7 +36080,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out int version);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetVersion_v2"
             )]
@@ -36090,7 +36090,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out int version);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetVersion(
             [In] IntPtr handle,
             [Out] out int version) =>
@@ -36098,7 +36098,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out version);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDestroy_v2"
             )]
@@ -36107,7 +36107,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasDestroy_v2(
              IntPtr handle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDestroy_v2"
             )]
@@ -36116,13 +36116,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasDestroy_v2(
             [In] IntPtr handle);
 
-#endif
+        #endif
         public sealed override CuBlasStatus Free(
             [In] IntPtr handle) =>
             cublasDestroy_v2(
                 handle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetStream_v2"
             )]
@@ -36132,7 +36132,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out IntPtr stream);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetStream_v2"
             )]
@@ -36142,7 +36142,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out IntPtr stream);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetStream(
             [In] IntPtr handle,
             [Out] out IntPtr stream) =>
@@ -36150,7 +36150,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out stream);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetStream_v2"
             )]
@@ -36160,7 +36160,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              IntPtr stream);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetStream_v2"
             )]
@@ -36170,7 +36170,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] IntPtr stream);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetStream(
             [In] IntPtr handle,
             [In] IntPtr stream) =>
@@ -36178,7 +36178,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 stream);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetPointerMode_v2"
             )]
@@ -36188,7 +36188,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out CuBlasPointerMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetPointerMode_v2"
             )]
@@ -36198,7 +36198,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out CuBlasPointerMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetPointerMode(
             [In] IntPtr handle,
             [Out] out CuBlasPointerMode mode) =>
@@ -36206,7 +36206,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetPointerMode_v2"
             )]
@@ -36216,7 +36216,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              CuBlasPointerMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetPointerMode_v2"
             )]
@@ -36226,7 +36226,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] CuBlasPointerMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetPointerMode(
             [In] IntPtr handle,
             [In] CuBlasPointerMode mode) =>
@@ -36234,7 +36234,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetAtomicsMode"
             )]
@@ -36244,7 +36244,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out CuBlasAtomicsMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetAtomicsMode"
             )]
@@ -36254,7 +36254,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out CuBlasAtomicsMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetAtomicsMode(
             [In] IntPtr handle,
             [Out] out CuBlasAtomicsMode mode) =>
@@ -36262,7 +36262,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetAtomicsMode"
             )]
@@ -36272,7 +36272,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              CuBlasAtomicsMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetAtomicsMode"
             )]
@@ -36282,7 +36282,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] CuBlasAtomicsMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetAtomicsMode(
             [In] IntPtr handle,
             [In] CuBlasAtomicsMode mode) =>
@@ -36290,7 +36290,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetMathMode"
             )]
@@ -36300,7 +36300,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out CuBlasMathMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetMathMode"
             )]
@@ -36310,7 +36310,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out CuBlasMathMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetMathMode(
             [In] IntPtr handle,
             [Out] out CuBlasMathMode mode) =>
@@ -36318,7 +36318,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetMathMode"
             )]
@@ -36328,7 +36328,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              CuBlasMathMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetMathMode"
             )]
@@ -36338,7 +36338,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] CuBlasMathMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetMathMode(
             [In] IntPtr handle,
             [In] CuBlasMathMode mode) =>
@@ -36350,7 +36350,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Level 1
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIsamax_v2"
             )]
@@ -36363,7 +36363,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIsamax_v2"
             )]
@@ -36376,7 +36376,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Isamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -36390,7 +36390,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIdamax_v2"
             )]
@@ -36403,7 +36403,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIdamax_v2"
             )]
@@ -36416,7 +36416,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Idamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -36430,7 +36430,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIcamax_v2"
             )]
@@ -36443,7 +36443,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIcamax_v2"
             )]
@@ -36456,7 +36456,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Icamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -36470,7 +36470,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIzamax_v2"
             )]
@@ -36483,7 +36483,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIzamax_v2"
             )]
@@ -36496,7 +36496,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Izamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -36510,7 +36510,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIsamin_v2"
             )]
@@ -36523,7 +36523,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIsamin_v2"
             )]
@@ -36536,7 +36536,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Isamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -36550,7 +36550,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIdamin_v2"
             )]
@@ -36563,7 +36563,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIdamin_v2"
             )]
@@ -36576,7 +36576,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Idamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -36590,7 +36590,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIcamin_v2"
             )]
@@ -36603,7 +36603,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIcamin_v2"
             )]
@@ -36616,7 +36616,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Icamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -36630,7 +36630,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIzamin_v2"
             )]
@@ -36643,7 +36643,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIzamin_v2"
             )]
@@ -36656,7 +36656,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Izamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -36670,7 +36670,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSasum_v2"
             )]
@@ -36683,7 +36683,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSasum_v2"
             )]
@@ -36696,7 +36696,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -36710,7 +36710,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDasum_v2"
             )]
@@ -36723,7 +36723,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDasum_v2"
             )]
@@ -36736,7 +36736,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -36750,7 +36750,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasScasum_v2"
             )]
@@ -36763,7 +36763,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasScasum_v2"
             )]
@@ -36776,7 +36776,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Scasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -36790,7 +36790,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDzasum_v2"
             )]
@@ -36803,7 +36803,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDzasum_v2"
             )]
@@ -36816,7 +36816,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dzasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -36830,7 +36830,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSnrm2_v2"
             )]
@@ -36843,7 +36843,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSnrm2_v2"
             )]
@@ -36856,7 +36856,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Snrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -36870,7 +36870,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDnrm2_v2"
             )]
@@ -36883,7 +36883,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDnrm2_v2"
             )]
@@ -36896,7 +36896,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dnrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -36910,7 +36910,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasScnrm2_v2"
             )]
@@ -36923,7 +36923,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasScnrm2_v2"
             )]
@@ -36936,7 +36936,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Scnrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -36950,7 +36950,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDznrm2_v2"
             )]
@@ -36963,7 +36963,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDznrm2_v2"
             )]
@@ -36976,7 +36976,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dznrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -36990,7 +36990,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSaxpy_v2"
             )]
@@ -37005,7 +37005,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSaxpy_v2"
             )]
@@ -37020,7 +37020,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Saxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -37038,7 +37038,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDaxpy_v2"
             )]
@@ -37053,7 +37053,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDaxpy_v2"
             )]
@@ -37068,7 +37068,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Daxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -37086,7 +37086,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCaxpy_v2"
             )]
@@ -37101,7 +37101,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCaxpy_v2"
             )]
@@ -37116,7 +37116,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Caxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -37134,7 +37134,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZaxpy_v2"
             )]
@@ -37149,7 +37149,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZaxpy_v2"
             )]
@@ -37164,7 +37164,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zaxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -37182,7 +37182,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSdot_v2"
             )]
@@ -37197,7 +37197,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSdot_v2"
             )]
@@ -37212,7 +37212,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sdot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -37230,7 +37230,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDdot_v2"
             )]
@@ -37245,7 +37245,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDdot_v2"
             )]
@@ -37260,7 +37260,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ddot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -37278,7 +37278,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCdotu_v2"
             )]
@@ -37293,7 +37293,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCdotu_v2"
             )]
@@ -37308,7 +37308,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cdotu_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -37326,7 +37326,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCdotc_v2"
             )]
@@ -37341,7 +37341,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCdotc_v2"
             )]
@@ -37356,7 +37356,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cdotc_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -37374,7 +37374,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSrotm_v2"
             )]
@@ -37389,7 +37389,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSrotm_v2"
             )]
@@ -37404,7 +37404,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Srotm_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -37422,7 +37422,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDrotm_v2"
             )]
@@ -37437,7 +37437,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDrotm_v2"
             )]
@@ -37452,7 +37452,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Drotm_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -37470,7 +37470,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSrot_v2"
             )]
@@ -37486,7 +37486,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSrot_v2"
             )]
@@ -37502,7 +37502,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Srot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -37522,7 +37522,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDrot_v2"
             )]
@@ -37538,7 +37538,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDrot_v2"
             )]
@@ -37554,7 +37554,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Drot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -37574,7 +37574,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsrot_v2"
             )]
@@ -37590,7 +37590,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsrot_v2"
             )]
@@ -37606,7 +37606,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csrot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -37626,7 +37626,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZdrot_v2"
             )]
@@ -37642,7 +37642,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZdrot_v2"
             )]
@@ -37658,7 +37658,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zdrot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -37678,7 +37678,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSrotg_v2"
             )]
@@ -37691,7 +37691,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSrotg_v2"
             )]
@@ -37704,7 +37704,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Srotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -37718,7 +37718,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDrotg_v2"
             )]
@@ -37731,7 +37731,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDrotg_v2"
             )]
@@ -37744,7 +37744,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Drotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -37758,7 +37758,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCrotg_v2"
             )]
@@ -37771,7 +37771,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCrotg_v2"
             )]
@@ -37784,7 +37784,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Crotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -37798,7 +37798,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZrotg_v2"
             )]
@@ -37811,7 +37811,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZrotg_v2"
             )]
@@ -37824,7 +37824,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zrotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -37838,7 +37838,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSscal_v2"
             )]
@@ -37851,7 +37851,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSscal_v2"
             )]
@@ -37864,7 +37864,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -37878,7 +37878,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDscal_v2"
             )]
@@ -37891,7 +37891,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDscal_v2"
             )]
@@ -37904,7 +37904,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -37918,7 +37918,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCscal_v2"
             )]
@@ -37931,7 +37931,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCscal_v2"
             )]
@@ -37944,7 +37944,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -37958,7 +37958,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZscal_v2"
             )]
@@ -37971,7 +37971,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZscal_v2"
             )]
@@ -37984,7 +37984,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -37998,7 +37998,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSswap_v2"
             )]
@@ -38012,7 +38012,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSswap_v2"
             )]
@@ -38026,7 +38026,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -38042,7 +38042,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDswap_v2"
             )]
@@ -38056,7 +38056,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDswap_v2"
             )]
@@ -38070,7 +38070,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -38086,7 +38086,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCswap_v2"
             )]
@@ -38100,7 +38100,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCswap_v2"
             )]
@@ -38114,7 +38114,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -38130,7 +38130,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZswap_v2"
             )]
@@ -38144,7 +38144,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZswap_v2"
             )]
@@ -38158,7 +38158,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -38178,7 +38178,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Level 2
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgbmv_v2"
             )]
@@ -38200,7 +38200,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgbmv_v2"
             )]
@@ -38222,7 +38222,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -38254,7 +38254,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgbmv_v2"
             )]
@@ -38276,7 +38276,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgbmv_v2"
             )]
@@ -38298,7 +38298,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -38330,7 +38330,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgbmv_v2"
             )]
@@ -38352,7 +38352,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgbmv_v2"
             )]
@@ -38374,7 +38374,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -38406,7 +38406,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgbmv_v2"
             )]
@@ -38428,7 +38428,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgbmv_v2"
             )]
@@ -38450,7 +38450,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -38482,7 +38482,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgemv_v2"
             )]
@@ -38502,7 +38502,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgemv_v2"
             )]
@@ -38522,7 +38522,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -38550,7 +38550,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgemv_v2"
             )]
@@ -38570,7 +38570,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgemv_v2"
             )]
@@ -38590,7 +38590,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -38618,7 +38618,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgemv_v2"
             )]
@@ -38638,7 +38638,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgemv_v2"
             )]
@@ -38658,7 +38658,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -38686,7 +38686,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgemv_v2"
             )]
@@ -38706,7 +38706,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgemv_v2"
             )]
@@ -38726,7 +38726,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -38754,7 +38754,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSger_v2"
             )]
@@ -38772,7 +38772,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSger_v2"
             )]
@@ -38790,7 +38790,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sger_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -38814,7 +38814,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDger_v2"
             )]
@@ -38832,7 +38832,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDger_v2"
             )]
@@ -38850,7 +38850,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dger_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -38874,7 +38874,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgeru_v2"
             )]
@@ -38892,7 +38892,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgeru_v2"
             )]
@@ -38910,7 +38910,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgeru_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -38934,7 +38934,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgeru_v2"
             )]
@@ -38952,7 +38952,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgeru_v2"
             )]
@@ -38970,7 +38970,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgeru_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -38994,7 +38994,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsbmv_v2"
             )]
@@ -39014,7 +39014,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsbmv_v2"
             )]
@@ -39034,7 +39034,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -39062,7 +39062,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsbmv_v2"
             )]
@@ -39082,7 +39082,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsbmv_v2"
             )]
@@ -39102,7 +39102,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -39130,7 +39130,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChbmv_v2"
             )]
@@ -39150,7 +39150,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChbmv_v2"
             )]
@@ -39170,7 +39170,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -39198,7 +39198,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhbmv_v2"
             )]
@@ -39218,7 +39218,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhbmv_v2"
             )]
@@ -39238,7 +39238,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -39266,7 +39266,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSspmv_v2"
             )]
@@ -39284,7 +39284,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSspmv_v2"
             )]
@@ -39302,7 +39302,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sspmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -39326,7 +39326,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDspmv_v2"
             )]
@@ -39344,7 +39344,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDspmv_v2"
             )]
@@ -39362,7 +39362,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dspmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -39386,7 +39386,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChpmv_v2"
             )]
@@ -39404,7 +39404,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChpmv_v2"
             )]
@@ -39422,7 +39422,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -39446,7 +39446,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhpmv_v2"
             )]
@@ -39464,7 +39464,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhpmv_v2"
             )]
@@ -39482,7 +39482,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -39506,7 +39506,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSspr_v2"
             )]
@@ -39521,7 +39521,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSspr_v2"
             )]
@@ -39536,7 +39536,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sspr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -39554,7 +39554,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDspr_v2"
             )]
@@ -39569,7 +39569,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDspr_v2"
             )]
@@ -39584,7 +39584,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dspr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -39602,7 +39602,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChpr_v2"
             )]
@@ -39617,7 +39617,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChpr_v2"
             )]
@@ -39632,7 +39632,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chpr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -39650,7 +39650,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhpr_v2"
             )]
@@ -39665,7 +39665,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhpr_v2"
             )]
@@ -39680,7 +39680,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhpr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -39698,7 +39698,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSspr2_v2"
             )]
@@ -39715,7 +39715,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSspr2_v2"
             )]
@@ -39732,7 +39732,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sspr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -39754,7 +39754,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDspr2_v2"
             )]
@@ -39771,7 +39771,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDspr2_v2"
             )]
@@ -39788,7 +39788,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dspr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -39810,7 +39810,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChpr2_v2"
             )]
@@ -39827,7 +39827,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChpr2_v2"
             )]
@@ -39844,7 +39844,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chpr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -39866,7 +39866,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhpr2_v2"
             )]
@@ -39883,7 +39883,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhpr2_v2"
             )]
@@ -39900,7 +39900,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhpr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -39922,7 +39922,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsymv_v2"
             )]
@@ -39941,7 +39941,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsymv_v2"
             )]
@@ -39960,7 +39960,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -39986,7 +39986,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsymv_v2"
             )]
@@ -40005,7 +40005,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsymv_v2"
             )]
@@ -40024,7 +40024,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -40050,7 +40050,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsymv_v2"
             )]
@@ -40069,7 +40069,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsymv_v2"
             )]
@@ -40088,7 +40088,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -40114,7 +40114,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsymv_v2"
             )]
@@ -40133,7 +40133,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsymv_v2"
             )]
@@ -40152,7 +40152,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -40178,7 +40178,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyr_v2"
             )]
@@ -40194,7 +40194,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyr_v2"
             )]
@@ -40210,7 +40210,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -40230,7 +40230,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyr_v2"
             )]
@@ -40246,7 +40246,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyr_v2"
             )]
@@ -40262,7 +40262,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -40282,7 +40282,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyr_v2"
             )]
@@ -40298,7 +40298,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyr_v2"
             )]
@@ -40314,7 +40314,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -40334,7 +40334,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyr_v2"
             )]
@@ -40350,7 +40350,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyr_v2"
             )]
@@ -40366,7 +40366,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -40386,7 +40386,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyr2_v2"
             )]
@@ -40404,7 +40404,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyr2_v2"
             )]
@@ -40422,7 +40422,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -40446,7 +40446,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyr2_v2"
             )]
@@ -40464,7 +40464,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyr2_v2"
             )]
@@ -40482,7 +40482,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -40506,7 +40506,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyr2_v2"
             )]
@@ -40524,7 +40524,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyr2_v2"
             )]
@@ -40542,7 +40542,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -40566,7 +40566,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyr2_v2"
             )]
@@ -40584,7 +40584,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyr2_v2"
             )]
@@ -40602,7 +40602,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -40626,7 +40626,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStbmv_v2"
             )]
@@ -40644,7 +40644,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStbmv_v2"
             )]
@@ -40662,7 +40662,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -40686,7 +40686,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtbmv_v2"
             )]
@@ -40704,7 +40704,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtbmv_v2"
             )]
@@ -40722,7 +40722,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -40746,7 +40746,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtbmv_v2"
             )]
@@ -40764,7 +40764,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtbmv_v2"
             )]
@@ -40782,7 +40782,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -40806,7 +40806,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtbmv_v2"
             )]
@@ -40824,7 +40824,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtbmv_v2"
             )]
@@ -40842,7 +40842,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -40866,7 +40866,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStbsv_v2"
             )]
@@ -40884,7 +40884,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStbsv_v2"
             )]
@@ -40902,7 +40902,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -40926,7 +40926,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtbsv_v2"
             )]
@@ -40944,7 +40944,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtbsv_v2"
             )]
@@ -40962,7 +40962,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -40986,7 +40986,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtbsv_v2"
             )]
@@ -41004,7 +41004,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtbsv_v2"
             )]
@@ -41022,7 +41022,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -41046,7 +41046,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtbsv_v2"
             )]
@@ -41064,7 +41064,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtbsv_v2"
             )]
@@ -41082,7 +41082,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -41106,7 +41106,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStpmv_v2"
             )]
@@ -41122,7 +41122,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStpmv_v2"
             )]
@@ -41138,7 +41138,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -41158,7 +41158,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtpmv_v2"
             )]
@@ -41174,7 +41174,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtpmv_v2"
             )]
@@ -41190,7 +41190,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -41210,7 +41210,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtpmv_v2"
             )]
@@ -41226,7 +41226,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtpmv_v2"
             )]
@@ -41242,7 +41242,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -41262,7 +41262,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtpmv_v2"
             )]
@@ -41278,7 +41278,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtpmv_v2"
             )]
@@ -41294,7 +41294,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -41314,7 +41314,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStpsv_v2"
             )]
@@ -41330,7 +41330,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStpsv_v2"
             )]
@@ -41346,7 +41346,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -41366,7 +41366,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtpsv_v2"
             )]
@@ -41382,7 +41382,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtpsv_v2"
             )]
@@ -41398,7 +41398,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -41418,7 +41418,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtpsv_v2"
             )]
@@ -41434,7 +41434,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtpsv_v2"
             )]
@@ -41450,7 +41450,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -41470,7 +41470,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtpsv_v2"
             )]
@@ -41486,7 +41486,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtpsv_v2"
             )]
@@ -41502,7 +41502,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -41522,7 +41522,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrmv_v2"
             )]
@@ -41539,7 +41539,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrmv_v2"
             )]
@@ -41556,7 +41556,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -41578,7 +41578,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrmv_v2"
             )]
@@ -41595,7 +41595,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrmv_v2"
             )]
@@ -41612,7 +41612,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -41634,7 +41634,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrmv_v2"
             )]
@@ -41651,7 +41651,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrmv_v2"
             )]
@@ -41668,7 +41668,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -41690,7 +41690,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrmv_v2"
             )]
@@ -41707,7 +41707,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrmv_v2"
             )]
@@ -41724,7 +41724,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -41746,7 +41746,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrsv_v2"
             )]
@@ -41763,7 +41763,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrsv_v2"
             )]
@@ -41780,7 +41780,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -41802,7 +41802,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrsv_v2"
             )]
@@ -41819,7 +41819,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrsv_v2"
             )]
@@ -41836,7 +41836,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -41858,7 +41858,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrsv_v2"
             )]
@@ -41875,7 +41875,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrsv_v2"
             )]
@@ -41892,7 +41892,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -41914,7 +41914,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrsv_v2"
             )]
@@ -41931,7 +41931,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrsv_v2"
             )]
@@ -41948,7 +41948,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -41974,7 +41974,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Level 3
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgemm_v2"
             )]
@@ -41996,7 +41996,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgemm_v2"
             )]
@@ -42018,7 +42018,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -42050,7 +42050,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgemm_v2"
             )]
@@ -42072,7 +42072,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgemm_v2"
             )]
@@ -42094,7 +42094,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -42126,7 +42126,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgemm_v2"
             )]
@@ -42148,7 +42148,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgemm_v2"
             )]
@@ -42170,7 +42170,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -42202,7 +42202,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgemm_v2"
             )]
@@ -42224,7 +42224,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgemm_v2"
             )]
@@ -42246,7 +42246,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -42278,7 +42278,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasHgemm"
             )]
@@ -42300,7 +42300,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasHgemm"
             )]
@@ -42322,7 +42322,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Hgemm(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -42354,7 +42354,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsymm_v2"
             )]
@@ -42375,7 +42375,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsymm_v2"
             )]
@@ -42396,7 +42396,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -42426,7 +42426,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsymm_v2"
             )]
@@ -42447,7 +42447,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsymm_v2"
             )]
@@ -42468,7 +42468,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -42498,7 +42498,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsymm_v2"
             )]
@@ -42519,7 +42519,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsymm_v2"
             )]
@@ -42540,7 +42540,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -42570,7 +42570,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsymm_v2"
             )]
@@ -42591,7 +42591,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsymm_v2"
             )]
@@ -42612,7 +42612,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -42642,7 +42642,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyrk_v2"
             )]
@@ -42661,7 +42661,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyrk_v2"
             )]
@@ -42680,7 +42680,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -42706,7 +42706,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyrk_v2"
             )]
@@ -42725,7 +42725,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyrk_v2"
             )]
@@ -42744,7 +42744,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -42770,7 +42770,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyrk_v2"
             )]
@@ -42789,7 +42789,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyrk_v2"
             )]
@@ -42808,7 +42808,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -42834,7 +42834,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyrk_v2"
             )]
@@ -42853,7 +42853,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyrk_v2"
             )]
@@ -42872,7 +42872,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -42898,7 +42898,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyr2k_v2"
             )]
@@ -42919,7 +42919,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyr2k_v2"
             )]
@@ -42940,7 +42940,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -42970,7 +42970,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyr2k_v2"
             )]
@@ -42991,7 +42991,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyr2k_v2"
             )]
@@ -43012,7 +43012,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -43042,7 +43042,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyr2k_v2"
             )]
@@ -43063,7 +43063,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyr2k_v2"
             )]
@@ -43084,7 +43084,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -43114,7 +43114,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyr2k_v2"
             )]
@@ -43135,7 +43135,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyr2k_v2"
             )]
@@ -43156,7 +43156,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -43186,7 +43186,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyrkx"
             )]
@@ -43207,7 +43207,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyrkx"
             )]
@@ -43228,7 +43228,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -43258,7 +43258,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyrkx"
             )]
@@ -43279,7 +43279,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyrkx"
             )]
@@ -43300,7 +43300,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -43330,7 +43330,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyrkx"
             )]
@@ -43351,7 +43351,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyrkx"
             )]
@@ -43372,7 +43372,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -43402,7 +43402,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyrkx"
             )]
@@ -43423,7 +43423,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyrkx"
             )]
@@ -43444,7 +43444,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -43474,7 +43474,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrmm_v2"
             )]
@@ -43496,7 +43496,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrmm_v2"
             )]
@@ -43518,7 +43518,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -43550,7 +43550,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrmm_v2"
             )]
@@ -43572,7 +43572,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrmm_v2"
             )]
@@ -43594,7 +43594,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -43626,7 +43626,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrmm_v2"
             )]
@@ -43648,7 +43648,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrmm_v2"
             )]
@@ -43670,7 +43670,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -43702,7 +43702,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrmm_v2"
             )]
@@ -43724,7 +43724,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrmm_v2"
             )]
@@ -43746,7 +43746,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -43778,7 +43778,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrsm_v2"
             )]
@@ -43798,7 +43798,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrsm_v2"
             )]
@@ -43818,7 +43818,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -43846,7 +43846,7 @@ namespace ILGPU.Runtime.Cuda.API
                 b,
                 ldb);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrsm_v2"
             )]
@@ -43866,7 +43866,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrsm_v2"
             )]
@@ -43886,7 +43886,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -43914,7 +43914,7 @@ namespace ILGPU.Runtime.Cuda.API
                 b,
                 ldb);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrsm_v2"
             )]
@@ -43934,7 +43934,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrsm_v2"
             )]
@@ -43954,7 +43954,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -43982,7 +43982,7 @@ namespace ILGPU.Runtime.Cuda.API
                 b,
                 ldb);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrsm_v2"
             )]
@@ -44002,7 +44002,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrsm_v2"
             )]
@@ -44022,7 +44022,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -44054,7 +44054,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Extensions
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgeam"
             )]
@@ -44075,7 +44075,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgeam"
             )]
@@ -44096,7 +44096,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -44126,7 +44126,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgeam"
             )]
@@ -44147,7 +44147,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgeam"
             )]
@@ -44168,7 +44168,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -44198,7 +44198,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgeam"
             )]
@@ -44219,7 +44219,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgeam"
             )]
@@ -44240,7 +44240,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -44270,7 +44270,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgeam"
             )]
@@ -44291,7 +44291,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgeam"
             )]
@@ -44312,7 +44312,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -44342,7 +44342,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSdgmm"
             )]
@@ -44360,7 +44360,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSdgmm"
             )]
@@ -44378,7 +44378,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sdgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -44402,7 +44402,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDdgmm"
             )]
@@ -44420,7 +44420,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDdgmm"
             )]
@@ -44438,7 +44438,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ddgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -44462,7 +44462,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCdgmm"
             )]
@@ -44480,7 +44480,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCdgmm"
             )]
@@ -44498,7 +44498,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cdgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -44522,7 +44522,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZdgmm"
             )]
@@ -44540,7 +44540,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZdgmm"
             )]
@@ -44558,7 +44558,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zdgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -44599,7 +44599,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Context
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCreate_v2"
             )]
@@ -44608,7 +44608,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasCreate_v2(
              out IntPtr handle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCreate_v2"
             )]
@@ -44617,13 +44617,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasCreate_v2(
             [Out] out IntPtr handle);
 
-#endif
+        #endif
         public sealed override CuBlasStatus Create(
             [Out] out IntPtr handle) =>
             cublasCreate_v2(
                 out handle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetVersion_v2"
             )]
@@ -44633,7 +44633,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out int version);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetVersion_v2"
             )]
@@ -44643,7 +44643,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out int version);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetVersion(
             [In] IntPtr handle,
             [Out] out int version) =>
@@ -44651,7 +44651,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out version);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDestroy_v2"
             )]
@@ -44660,7 +44660,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasDestroy_v2(
              IntPtr handle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDestroy_v2"
             )]
@@ -44669,13 +44669,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasDestroy_v2(
             [In] IntPtr handle);
 
-#endif
+        #endif
         public sealed override CuBlasStatus Free(
             [In] IntPtr handle) =>
             cublasDestroy_v2(
                 handle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetStream_v2"
             )]
@@ -44685,7 +44685,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out IntPtr stream);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetStream_v2"
             )]
@@ -44695,7 +44695,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out IntPtr stream);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetStream(
             [In] IntPtr handle,
             [Out] out IntPtr stream) =>
@@ -44703,7 +44703,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out stream);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetStream_v2"
             )]
@@ -44713,7 +44713,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              IntPtr stream);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetStream_v2"
             )]
@@ -44723,7 +44723,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] IntPtr stream);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetStream(
             [In] IntPtr handle,
             [In] IntPtr stream) =>
@@ -44731,7 +44731,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 stream);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetPointerMode_v2"
             )]
@@ -44741,7 +44741,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out CuBlasPointerMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetPointerMode_v2"
             )]
@@ -44751,7 +44751,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out CuBlasPointerMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetPointerMode(
             [In] IntPtr handle,
             [Out] out CuBlasPointerMode mode) =>
@@ -44759,7 +44759,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetPointerMode_v2"
             )]
@@ -44769,7 +44769,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              CuBlasPointerMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetPointerMode_v2"
             )]
@@ -44779,7 +44779,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] CuBlasPointerMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetPointerMode(
             [In] IntPtr handle,
             [In] CuBlasPointerMode mode) =>
@@ -44787,7 +44787,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetAtomicsMode"
             )]
@@ -44797,7 +44797,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out CuBlasAtomicsMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetAtomicsMode"
             )]
@@ -44807,7 +44807,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out CuBlasAtomicsMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetAtomicsMode(
             [In] IntPtr handle,
             [Out] out CuBlasAtomicsMode mode) =>
@@ -44815,7 +44815,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetAtomicsMode"
             )]
@@ -44825,7 +44825,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              CuBlasAtomicsMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetAtomicsMode"
             )]
@@ -44835,7 +44835,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] CuBlasAtomicsMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetAtomicsMode(
             [In] IntPtr handle,
             [In] CuBlasAtomicsMode mode) =>
@@ -44843,7 +44843,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetMathMode"
             )]
@@ -44853,7 +44853,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out CuBlasMathMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetMathMode"
             )]
@@ -44863,7 +44863,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out CuBlasMathMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetMathMode(
             [In] IntPtr handle,
             [Out] out CuBlasMathMode mode) =>
@@ -44871,7 +44871,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetMathMode"
             )]
@@ -44881,7 +44881,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              CuBlasMathMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetMathMode"
             )]
@@ -44891,7 +44891,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] CuBlasMathMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetMathMode(
             [In] IntPtr handle,
             [In] CuBlasMathMode mode) =>
@@ -44903,7 +44903,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Level 1
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIsamax_v2"
             )]
@@ -44916,7 +44916,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIsamax_v2"
             )]
@@ -44929,7 +44929,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Isamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -44943,7 +44943,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIdamax_v2"
             )]
@@ -44956,7 +44956,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIdamax_v2"
             )]
@@ -44969,7 +44969,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Idamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -44983,7 +44983,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIcamax_v2"
             )]
@@ -44996,7 +44996,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIcamax_v2"
             )]
@@ -45009,7 +45009,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Icamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -45023,7 +45023,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIzamax_v2"
             )]
@@ -45036,7 +45036,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIzamax_v2"
             )]
@@ -45049,7 +45049,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Izamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -45063,7 +45063,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIsamin_v2"
             )]
@@ -45076,7 +45076,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIsamin_v2"
             )]
@@ -45089,7 +45089,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Isamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -45103,7 +45103,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIdamin_v2"
             )]
@@ -45116,7 +45116,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIdamin_v2"
             )]
@@ -45129,7 +45129,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Idamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -45143,7 +45143,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIcamin_v2"
             )]
@@ -45156,7 +45156,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIcamin_v2"
             )]
@@ -45169,7 +45169,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Icamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -45183,7 +45183,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIzamin_v2"
             )]
@@ -45196,7 +45196,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIzamin_v2"
             )]
@@ -45209,7 +45209,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Izamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -45223,7 +45223,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSasum_v2"
             )]
@@ -45236,7 +45236,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSasum_v2"
             )]
@@ -45249,7 +45249,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -45263,7 +45263,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDasum_v2"
             )]
@@ -45276,7 +45276,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDasum_v2"
             )]
@@ -45289,7 +45289,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -45303,7 +45303,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasScasum_v2"
             )]
@@ -45316,7 +45316,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasScasum_v2"
             )]
@@ -45329,7 +45329,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Scasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -45343,7 +45343,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDzasum_v2"
             )]
@@ -45356,7 +45356,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDzasum_v2"
             )]
@@ -45369,7 +45369,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dzasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -45383,7 +45383,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSnrm2_v2"
             )]
@@ -45396,7 +45396,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSnrm2_v2"
             )]
@@ -45409,7 +45409,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Snrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -45423,7 +45423,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDnrm2_v2"
             )]
@@ -45436,7 +45436,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDnrm2_v2"
             )]
@@ -45449,7 +45449,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dnrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -45463,7 +45463,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasScnrm2_v2"
             )]
@@ -45476,7 +45476,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasScnrm2_v2"
             )]
@@ -45489,7 +45489,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Scnrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -45503,7 +45503,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDznrm2_v2"
             )]
@@ -45516,7 +45516,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDznrm2_v2"
             )]
@@ -45529,7 +45529,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dznrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -45543,7 +45543,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSaxpy_v2"
             )]
@@ -45558,7 +45558,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSaxpy_v2"
             )]
@@ -45573,7 +45573,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Saxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -45591,7 +45591,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDaxpy_v2"
             )]
@@ -45606,7 +45606,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDaxpy_v2"
             )]
@@ -45621,7 +45621,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Daxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -45639,7 +45639,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCaxpy_v2"
             )]
@@ -45654,7 +45654,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCaxpy_v2"
             )]
@@ -45669,7 +45669,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Caxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -45687,7 +45687,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZaxpy_v2"
             )]
@@ -45702,7 +45702,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZaxpy_v2"
             )]
@@ -45717,7 +45717,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zaxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -45735,7 +45735,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSdot_v2"
             )]
@@ -45750,7 +45750,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSdot_v2"
             )]
@@ -45765,7 +45765,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sdot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -45783,7 +45783,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDdot_v2"
             )]
@@ -45798,7 +45798,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDdot_v2"
             )]
@@ -45813,7 +45813,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ddot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -45831,7 +45831,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCdotu_v2"
             )]
@@ -45846,7 +45846,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCdotu_v2"
             )]
@@ -45861,7 +45861,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cdotu_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -45879,7 +45879,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCdotc_v2"
             )]
@@ -45894,7 +45894,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCdotc_v2"
             )]
@@ -45909,7 +45909,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cdotc_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -45927,7 +45927,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSrotm_v2"
             )]
@@ -45942,7 +45942,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSrotm_v2"
             )]
@@ -45957,7 +45957,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Srotm_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -45975,7 +45975,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDrotm_v2"
             )]
@@ -45990,7 +45990,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDrotm_v2"
             )]
@@ -46005,7 +46005,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Drotm_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -46023,7 +46023,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSrot_v2"
             )]
@@ -46039,7 +46039,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSrot_v2"
             )]
@@ -46055,7 +46055,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Srot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -46075,7 +46075,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDrot_v2"
             )]
@@ -46091,7 +46091,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDrot_v2"
             )]
@@ -46107,7 +46107,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Drot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -46127,7 +46127,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsrot_v2"
             )]
@@ -46143,7 +46143,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsrot_v2"
             )]
@@ -46159,7 +46159,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csrot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -46179,7 +46179,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZdrot_v2"
             )]
@@ -46195,7 +46195,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZdrot_v2"
             )]
@@ -46211,7 +46211,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zdrot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -46231,7 +46231,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSrotg_v2"
             )]
@@ -46244,7 +46244,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSrotg_v2"
             )]
@@ -46257,7 +46257,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Srotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -46271,7 +46271,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDrotg_v2"
             )]
@@ -46284,7 +46284,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDrotg_v2"
             )]
@@ -46297,7 +46297,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Drotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -46311,7 +46311,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCrotg_v2"
             )]
@@ -46324,7 +46324,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCrotg_v2"
             )]
@@ -46337,7 +46337,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Crotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -46351,7 +46351,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZrotg_v2"
             )]
@@ -46364,7 +46364,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZrotg_v2"
             )]
@@ -46377,7 +46377,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zrotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -46391,7 +46391,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSscal_v2"
             )]
@@ -46404,7 +46404,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSscal_v2"
             )]
@@ -46417,7 +46417,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -46431,7 +46431,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDscal_v2"
             )]
@@ -46444,7 +46444,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDscal_v2"
             )]
@@ -46457,7 +46457,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -46471,7 +46471,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCscal_v2"
             )]
@@ -46484,7 +46484,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCscal_v2"
             )]
@@ -46497,7 +46497,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -46511,7 +46511,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZscal_v2"
             )]
@@ -46524,7 +46524,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZscal_v2"
             )]
@@ -46537,7 +46537,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -46551,7 +46551,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSswap_v2"
             )]
@@ -46565,7 +46565,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSswap_v2"
             )]
@@ -46579,7 +46579,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -46595,7 +46595,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDswap_v2"
             )]
@@ -46609,7 +46609,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDswap_v2"
             )]
@@ -46623,7 +46623,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -46639,7 +46639,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCswap_v2"
             )]
@@ -46653,7 +46653,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCswap_v2"
             )]
@@ -46667,7 +46667,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -46683,7 +46683,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZswap_v2"
             )]
@@ -46697,7 +46697,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZswap_v2"
             )]
@@ -46711,7 +46711,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -46731,7 +46731,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Level 2
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgbmv_v2"
             )]
@@ -46753,7 +46753,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgbmv_v2"
             )]
@@ -46775,7 +46775,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -46807,7 +46807,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgbmv_v2"
             )]
@@ -46829,7 +46829,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgbmv_v2"
             )]
@@ -46851,7 +46851,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -46883,7 +46883,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgbmv_v2"
             )]
@@ -46905,7 +46905,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgbmv_v2"
             )]
@@ -46927,7 +46927,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -46959,7 +46959,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgbmv_v2"
             )]
@@ -46981,7 +46981,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgbmv_v2"
             )]
@@ -47003,7 +47003,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -47035,7 +47035,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgemv_v2"
             )]
@@ -47055,7 +47055,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgemv_v2"
             )]
@@ -47075,7 +47075,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -47103,7 +47103,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgemv_v2"
             )]
@@ -47123,7 +47123,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgemv_v2"
             )]
@@ -47143,7 +47143,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -47171,7 +47171,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgemv_v2"
             )]
@@ -47191,7 +47191,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgemv_v2"
             )]
@@ -47211,7 +47211,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -47239,7 +47239,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgemv_v2"
             )]
@@ -47259,7 +47259,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgemv_v2"
             )]
@@ -47279,7 +47279,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -47307,7 +47307,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSger_v2"
             )]
@@ -47325,7 +47325,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSger_v2"
             )]
@@ -47343,7 +47343,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sger_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -47367,7 +47367,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDger_v2"
             )]
@@ -47385,7 +47385,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDger_v2"
             )]
@@ -47403,7 +47403,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dger_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -47427,7 +47427,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgeru_v2"
             )]
@@ -47445,7 +47445,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgeru_v2"
             )]
@@ -47463,7 +47463,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgeru_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -47487,7 +47487,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgeru_v2"
             )]
@@ -47505,7 +47505,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgeru_v2"
             )]
@@ -47523,7 +47523,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgeru_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -47547,7 +47547,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsbmv_v2"
             )]
@@ -47567,7 +47567,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsbmv_v2"
             )]
@@ -47587,7 +47587,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -47615,7 +47615,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsbmv_v2"
             )]
@@ -47635,7 +47635,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsbmv_v2"
             )]
@@ -47655,7 +47655,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -47683,7 +47683,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChbmv_v2"
             )]
@@ -47703,7 +47703,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChbmv_v2"
             )]
@@ -47723,7 +47723,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -47751,7 +47751,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhbmv_v2"
             )]
@@ -47771,7 +47771,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhbmv_v2"
             )]
@@ -47791,7 +47791,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -47819,7 +47819,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSspmv_v2"
             )]
@@ -47837,7 +47837,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSspmv_v2"
             )]
@@ -47855,7 +47855,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sspmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -47879,7 +47879,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDspmv_v2"
             )]
@@ -47897,7 +47897,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDspmv_v2"
             )]
@@ -47915,7 +47915,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dspmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -47939,7 +47939,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChpmv_v2"
             )]
@@ -47957,7 +47957,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChpmv_v2"
             )]
@@ -47975,7 +47975,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -47999,7 +47999,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhpmv_v2"
             )]
@@ -48017,7 +48017,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhpmv_v2"
             )]
@@ -48035,7 +48035,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -48059,7 +48059,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSspr_v2"
             )]
@@ -48074,7 +48074,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSspr_v2"
             )]
@@ -48089,7 +48089,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sspr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -48107,7 +48107,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDspr_v2"
             )]
@@ -48122,7 +48122,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDspr_v2"
             )]
@@ -48137,7 +48137,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dspr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -48155,7 +48155,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChpr_v2"
             )]
@@ -48170,7 +48170,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChpr_v2"
             )]
@@ -48185,7 +48185,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chpr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -48203,7 +48203,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhpr_v2"
             )]
@@ -48218,7 +48218,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhpr_v2"
             )]
@@ -48233,7 +48233,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhpr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -48251,7 +48251,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSspr2_v2"
             )]
@@ -48268,7 +48268,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSspr2_v2"
             )]
@@ -48285,7 +48285,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sspr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -48307,7 +48307,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDspr2_v2"
             )]
@@ -48324,7 +48324,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDspr2_v2"
             )]
@@ -48341,7 +48341,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dspr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -48363,7 +48363,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChpr2_v2"
             )]
@@ -48380,7 +48380,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChpr2_v2"
             )]
@@ -48397,7 +48397,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chpr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -48419,7 +48419,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhpr2_v2"
             )]
@@ -48436,7 +48436,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhpr2_v2"
             )]
@@ -48453,7 +48453,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhpr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -48475,7 +48475,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsymv_v2"
             )]
@@ -48494,7 +48494,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsymv_v2"
             )]
@@ -48513,7 +48513,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -48539,7 +48539,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsymv_v2"
             )]
@@ -48558,7 +48558,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsymv_v2"
             )]
@@ -48577,7 +48577,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -48603,7 +48603,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsymv_v2"
             )]
@@ -48622,7 +48622,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsymv_v2"
             )]
@@ -48641,7 +48641,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -48667,7 +48667,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsymv_v2"
             )]
@@ -48686,7 +48686,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsymv_v2"
             )]
@@ -48705,7 +48705,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -48731,7 +48731,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyr_v2"
             )]
@@ -48747,7 +48747,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyr_v2"
             )]
@@ -48763,7 +48763,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -48783,7 +48783,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyr_v2"
             )]
@@ -48799,7 +48799,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyr_v2"
             )]
@@ -48815,7 +48815,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -48835,7 +48835,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyr_v2"
             )]
@@ -48851,7 +48851,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyr_v2"
             )]
@@ -48867,7 +48867,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -48887,7 +48887,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyr_v2"
             )]
@@ -48903,7 +48903,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyr_v2"
             )]
@@ -48919,7 +48919,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -48939,7 +48939,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyr2_v2"
             )]
@@ -48957,7 +48957,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyr2_v2"
             )]
@@ -48975,7 +48975,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -48999,7 +48999,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyr2_v2"
             )]
@@ -49017,7 +49017,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyr2_v2"
             )]
@@ -49035,7 +49035,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -49059,7 +49059,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyr2_v2"
             )]
@@ -49077,7 +49077,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyr2_v2"
             )]
@@ -49095,7 +49095,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -49119,7 +49119,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyr2_v2"
             )]
@@ -49137,7 +49137,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyr2_v2"
             )]
@@ -49155,7 +49155,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -49179,7 +49179,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStbmv_v2"
             )]
@@ -49197,7 +49197,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStbmv_v2"
             )]
@@ -49215,7 +49215,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -49239,7 +49239,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtbmv_v2"
             )]
@@ -49257,7 +49257,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtbmv_v2"
             )]
@@ -49275,7 +49275,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -49299,7 +49299,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtbmv_v2"
             )]
@@ -49317,7 +49317,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtbmv_v2"
             )]
@@ -49335,7 +49335,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -49359,7 +49359,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtbmv_v2"
             )]
@@ -49377,7 +49377,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtbmv_v2"
             )]
@@ -49395,7 +49395,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -49419,7 +49419,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStbsv_v2"
             )]
@@ -49437,7 +49437,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStbsv_v2"
             )]
@@ -49455,7 +49455,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -49479,7 +49479,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtbsv_v2"
             )]
@@ -49497,7 +49497,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtbsv_v2"
             )]
@@ -49515,7 +49515,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -49539,7 +49539,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtbsv_v2"
             )]
@@ -49557,7 +49557,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtbsv_v2"
             )]
@@ -49575,7 +49575,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -49599,7 +49599,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtbsv_v2"
             )]
@@ -49617,7 +49617,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtbsv_v2"
             )]
@@ -49635,7 +49635,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -49659,7 +49659,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStpmv_v2"
             )]
@@ -49675,7 +49675,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStpmv_v2"
             )]
@@ -49691,7 +49691,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -49711,7 +49711,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtpmv_v2"
             )]
@@ -49727,7 +49727,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtpmv_v2"
             )]
@@ -49743,7 +49743,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -49763,7 +49763,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtpmv_v2"
             )]
@@ -49779,7 +49779,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtpmv_v2"
             )]
@@ -49795,7 +49795,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -49815,7 +49815,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtpmv_v2"
             )]
@@ -49831,7 +49831,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtpmv_v2"
             )]
@@ -49847,7 +49847,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -49867,7 +49867,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStpsv_v2"
             )]
@@ -49883,7 +49883,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStpsv_v2"
             )]
@@ -49899,7 +49899,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -49919,7 +49919,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtpsv_v2"
             )]
@@ -49935,7 +49935,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtpsv_v2"
             )]
@@ -49951,7 +49951,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -49971,7 +49971,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtpsv_v2"
             )]
@@ -49987,7 +49987,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtpsv_v2"
             )]
@@ -50003,7 +50003,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -50023,7 +50023,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtpsv_v2"
             )]
@@ -50039,7 +50039,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtpsv_v2"
             )]
@@ -50055,7 +50055,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -50075,7 +50075,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrmv_v2"
             )]
@@ -50092,7 +50092,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrmv_v2"
             )]
@@ -50109,7 +50109,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -50131,7 +50131,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrmv_v2"
             )]
@@ -50148,7 +50148,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrmv_v2"
             )]
@@ -50165,7 +50165,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -50187,7 +50187,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrmv_v2"
             )]
@@ -50204,7 +50204,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrmv_v2"
             )]
@@ -50221,7 +50221,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -50243,7 +50243,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrmv_v2"
             )]
@@ -50260,7 +50260,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrmv_v2"
             )]
@@ -50277,7 +50277,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -50299,7 +50299,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrsv_v2"
             )]
@@ -50316,7 +50316,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrsv_v2"
             )]
@@ -50333,7 +50333,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -50355,7 +50355,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrsv_v2"
             )]
@@ -50372,7 +50372,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrsv_v2"
             )]
@@ -50389,7 +50389,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -50411,7 +50411,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrsv_v2"
             )]
@@ -50428,7 +50428,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrsv_v2"
             )]
@@ -50445,7 +50445,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -50467,7 +50467,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrsv_v2"
             )]
@@ -50484,7 +50484,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrsv_v2"
             )]
@@ -50501,7 +50501,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -50527,7 +50527,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Level 3
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgemm_v2"
             )]
@@ -50549,7 +50549,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgemm_v2"
             )]
@@ -50571,7 +50571,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -50603,7 +50603,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgemm_v2"
             )]
@@ -50625,7 +50625,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgemm_v2"
             )]
@@ -50647,7 +50647,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -50679,7 +50679,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgemm_v2"
             )]
@@ -50701,7 +50701,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgemm_v2"
             )]
@@ -50723,7 +50723,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -50755,7 +50755,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgemm_v2"
             )]
@@ -50777,7 +50777,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgemm_v2"
             )]
@@ -50799,7 +50799,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -50831,7 +50831,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasHgemm"
             )]
@@ -50853,7 +50853,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasHgemm"
             )]
@@ -50875,7 +50875,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Hgemm(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -50907,7 +50907,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsymm_v2"
             )]
@@ -50928,7 +50928,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsymm_v2"
             )]
@@ -50949,7 +50949,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -50979,7 +50979,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsymm_v2"
             )]
@@ -51000,7 +51000,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsymm_v2"
             )]
@@ -51021,7 +51021,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -51051,7 +51051,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsymm_v2"
             )]
@@ -51072,7 +51072,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsymm_v2"
             )]
@@ -51093,7 +51093,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -51123,7 +51123,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsymm_v2"
             )]
@@ -51144,7 +51144,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsymm_v2"
             )]
@@ -51165,7 +51165,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -51195,7 +51195,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyrk_v2"
             )]
@@ -51214,7 +51214,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyrk_v2"
             )]
@@ -51233,7 +51233,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -51259,7 +51259,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyrk_v2"
             )]
@@ -51278,7 +51278,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyrk_v2"
             )]
@@ -51297,7 +51297,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -51323,7 +51323,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyrk_v2"
             )]
@@ -51342,7 +51342,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyrk_v2"
             )]
@@ -51361,7 +51361,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -51387,7 +51387,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyrk_v2"
             )]
@@ -51406,7 +51406,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyrk_v2"
             )]
@@ -51425,7 +51425,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -51451,7 +51451,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyr2k_v2"
             )]
@@ -51472,7 +51472,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyr2k_v2"
             )]
@@ -51493,7 +51493,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -51523,7 +51523,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyr2k_v2"
             )]
@@ -51544,7 +51544,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyr2k_v2"
             )]
@@ -51565,7 +51565,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -51595,7 +51595,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyr2k_v2"
             )]
@@ -51616,7 +51616,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyr2k_v2"
             )]
@@ -51637,7 +51637,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -51667,7 +51667,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyr2k_v2"
             )]
@@ -51688,7 +51688,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyr2k_v2"
             )]
@@ -51709,7 +51709,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -51739,7 +51739,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyrkx"
             )]
@@ -51760,7 +51760,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyrkx"
             )]
@@ -51781,7 +51781,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -51811,7 +51811,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyrkx"
             )]
@@ -51832,7 +51832,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyrkx"
             )]
@@ -51853,7 +51853,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -51883,7 +51883,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyrkx"
             )]
@@ -51904,7 +51904,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyrkx"
             )]
@@ -51925,7 +51925,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -51955,7 +51955,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyrkx"
             )]
@@ -51976,7 +51976,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyrkx"
             )]
@@ -51997,7 +51997,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -52027,7 +52027,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrmm_v2"
             )]
@@ -52049,7 +52049,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrmm_v2"
             )]
@@ -52071,7 +52071,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -52103,7 +52103,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrmm_v2"
             )]
@@ -52125,7 +52125,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrmm_v2"
             )]
@@ -52147,7 +52147,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -52179,7 +52179,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrmm_v2"
             )]
@@ -52201,7 +52201,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrmm_v2"
             )]
@@ -52223,7 +52223,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -52255,7 +52255,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrmm_v2"
             )]
@@ -52277,7 +52277,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrmm_v2"
             )]
@@ -52299,7 +52299,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -52331,7 +52331,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrsm_v2"
             )]
@@ -52351,7 +52351,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrsm_v2"
             )]
@@ -52371,7 +52371,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -52399,7 +52399,7 @@ namespace ILGPU.Runtime.Cuda.API
                 b,
                 ldb);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrsm_v2"
             )]
@@ -52419,7 +52419,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrsm_v2"
             )]
@@ -52439,7 +52439,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -52467,7 +52467,7 @@ namespace ILGPU.Runtime.Cuda.API
                 b,
                 ldb);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrsm_v2"
             )]
@@ -52487,7 +52487,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrsm_v2"
             )]
@@ -52507,7 +52507,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -52535,7 +52535,7 @@ namespace ILGPU.Runtime.Cuda.API
                 b,
                 ldb);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrsm_v2"
             )]
@@ -52555,7 +52555,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrsm_v2"
             )]
@@ -52575,7 +52575,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -52607,7 +52607,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Extensions
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgeam"
             )]
@@ -52628,7 +52628,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgeam"
             )]
@@ -52649,7 +52649,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -52679,7 +52679,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgeam"
             )]
@@ -52700,7 +52700,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgeam"
             )]
@@ -52721,7 +52721,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -52751,7 +52751,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgeam"
             )]
@@ -52772,7 +52772,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgeam"
             )]
@@ -52793,7 +52793,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -52823,7 +52823,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgeam"
             )]
@@ -52844,7 +52844,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgeam"
             )]
@@ -52865,7 +52865,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -52895,7 +52895,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSdgmm"
             )]
@@ -52913,7 +52913,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSdgmm"
             )]
@@ -52931,7 +52931,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sdgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -52955,7 +52955,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDdgmm"
             )]
@@ -52973,7 +52973,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDdgmm"
             )]
@@ -52991,7 +52991,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ddgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -53015,7 +53015,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCdgmm"
             )]
@@ -53033,7 +53033,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCdgmm"
             )]
@@ -53051,7 +53051,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cdgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -53075,7 +53075,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZdgmm"
             )]
@@ -53093,7 +53093,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZdgmm"
             )]
@@ -53111,7 +53111,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zdgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -53152,7 +53152,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Context
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCreate_v2"
             )]
@@ -53161,7 +53161,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasCreate_v2(
              out IntPtr handle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCreate_v2"
             )]
@@ -53170,13 +53170,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasCreate_v2(
             [Out] out IntPtr handle);
 
-#endif
+        #endif
         public sealed override CuBlasStatus Create(
             [Out] out IntPtr handle) =>
             cublasCreate_v2(
                 out handle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetVersion_v2"
             )]
@@ -53186,7 +53186,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out int version);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetVersion_v2"
             )]
@@ -53196,7 +53196,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out int version);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetVersion(
             [In] IntPtr handle,
             [Out] out int version) =>
@@ -53204,7 +53204,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out version);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDestroy_v2"
             )]
@@ -53213,7 +53213,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasDestroy_v2(
              IntPtr handle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDestroy_v2"
             )]
@@ -53222,13 +53222,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasDestroy_v2(
             [In] IntPtr handle);
 
-#endif
+        #endif
         public sealed override CuBlasStatus Free(
             [In] IntPtr handle) =>
             cublasDestroy_v2(
                 handle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetStream_v2"
             )]
@@ -53238,7 +53238,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out IntPtr stream);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetStream_v2"
             )]
@@ -53248,7 +53248,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out IntPtr stream);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetStream(
             [In] IntPtr handle,
             [Out] out IntPtr stream) =>
@@ -53256,7 +53256,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out stream);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetStream_v2"
             )]
@@ -53266,7 +53266,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              IntPtr stream);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetStream_v2"
             )]
@@ -53276,7 +53276,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] IntPtr stream);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetStream(
             [In] IntPtr handle,
             [In] IntPtr stream) =>
@@ -53284,7 +53284,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 stream);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetPointerMode_v2"
             )]
@@ -53294,7 +53294,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out CuBlasPointerMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetPointerMode_v2"
             )]
@@ -53304,7 +53304,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out CuBlasPointerMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetPointerMode(
             [In] IntPtr handle,
             [Out] out CuBlasPointerMode mode) =>
@@ -53312,7 +53312,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetPointerMode_v2"
             )]
@@ -53322,7 +53322,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              CuBlasPointerMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetPointerMode_v2"
             )]
@@ -53332,7 +53332,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] CuBlasPointerMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetPointerMode(
             [In] IntPtr handle,
             [In] CuBlasPointerMode mode) =>
@@ -53340,7 +53340,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetAtomicsMode"
             )]
@@ -53350,7 +53350,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out CuBlasAtomicsMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetAtomicsMode"
             )]
@@ -53360,7 +53360,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out CuBlasAtomicsMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetAtomicsMode(
             [In] IntPtr handle,
             [Out] out CuBlasAtomicsMode mode) =>
@@ -53368,7 +53368,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetAtomicsMode"
             )]
@@ -53378,7 +53378,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              CuBlasAtomicsMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetAtomicsMode"
             )]
@@ -53388,7 +53388,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] CuBlasAtomicsMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetAtomicsMode(
             [In] IntPtr handle,
             [In] CuBlasAtomicsMode mode) =>
@@ -53396,7 +53396,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetMathMode"
             )]
@@ -53406,7 +53406,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out CuBlasMathMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetMathMode"
             )]
@@ -53416,7 +53416,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out CuBlasMathMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetMathMode(
             [In] IntPtr handle,
             [Out] out CuBlasMathMode mode) =>
@@ -53424,7 +53424,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetMathMode"
             )]
@@ -53434,7 +53434,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              CuBlasMathMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetMathMode"
             )]
@@ -53444,7 +53444,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] CuBlasMathMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetMathMode(
             [In] IntPtr handle,
             [In] CuBlasMathMode mode) =>
@@ -53456,7 +53456,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Level 1
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIsamax_v2"
             )]
@@ -53469,7 +53469,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIsamax_v2"
             )]
@@ -53482,7 +53482,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Isamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -53496,7 +53496,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIdamax_v2"
             )]
@@ -53509,7 +53509,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIdamax_v2"
             )]
@@ -53522,7 +53522,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Idamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -53536,7 +53536,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIcamax_v2"
             )]
@@ -53549,7 +53549,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIcamax_v2"
             )]
@@ -53562,7 +53562,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Icamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -53576,7 +53576,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIzamax_v2"
             )]
@@ -53589,7 +53589,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIzamax_v2"
             )]
@@ -53602,7 +53602,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Izamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -53616,7 +53616,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIsamin_v2"
             )]
@@ -53629,7 +53629,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIsamin_v2"
             )]
@@ -53642,7 +53642,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Isamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -53656,7 +53656,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIdamin_v2"
             )]
@@ -53669,7 +53669,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIdamin_v2"
             )]
@@ -53682,7 +53682,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Idamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -53696,7 +53696,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIcamin_v2"
             )]
@@ -53709,7 +53709,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIcamin_v2"
             )]
@@ -53722,7 +53722,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Icamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -53736,7 +53736,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIzamin_v2"
             )]
@@ -53749,7 +53749,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIzamin_v2"
             )]
@@ -53762,7 +53762,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Izamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -53776,7 +53776,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSasum_v2"
             )]
@@ -53789,7 +53789,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSasum_v2"
             )]
@@ -53802,7 +53802,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -53816,7 +53816,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDasum_v2"
             )]
@@ -53829,7 +53829,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDasum_v2"
             )]
@@ -53842,7 +53842,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -53856,7 +53856,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasScasum_v2"
             )]
@@ -53869,7 +53869,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasScasum_v2"
             )]
@@ -53882,7 +53882,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Scasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -53896,7 +53896,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDzasum_v2"
             )]
@@ -53909,7 +53909,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDzasum_v2"
             )]
@@ -53922,7 +53922,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dzasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -53936,7 +53936,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSnrm2_v2"
             )]
@@ -53949,7 +53949,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSnrm2_v2"
             )]
@@ -53962,7 +53962,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Snrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -53976,7 +53976,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDnrm2_v2"
             )]
@@ -53989,7 +53989,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDnrm2_v2"
             )]
@@ -54002,7 +54002,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dnrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -54016,7 +54016,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasScnrm2_v2"
             )]
@@ -54029,7 +54029,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasScnrm2_v2"
             )]
@@ -54042,7 +54042,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Scnrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -54056,7 +54056,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDznrm2_v2"
             )]
@@ -54069,7 +54069,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDznrm2_v2"
             )]
@@ -54082,7 +54082,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dznrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -54096,7 +54096,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSaxpy_v2"
             )]
@@ -54111,7 +54111,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSaxpy_v2"
             )]
@@ -54126,7 +54126,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Saxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -54144,7 +54144,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDaxpy_v2"
             )]
@@ -54159,7 +54159,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDaxpy_v2"
             )]
@@ -54174,7 +54174,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Daxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -54192,7 +54192,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCaxpy_v2"
             )]
@@ -54207,7 +54207,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCaxpy_v2"
             )]
@@ -54222,7 +54222,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Caxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -54240,7 +54240,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZaxpy_v2"
             )]
@@ -54255,7 +54255,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZaxpy_v2"
             )]
@@ -54270,7 +54270,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zaxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -54288,7 +54288,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSdot_v2"
             )]
@@ -54303,7 +54303,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSdot_v2"
             )]
@@ -54318,7 +54318,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sdot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -54336,7 +54336,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDdot_v2"
             )]
@@ -54351,7 +54351,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDdot_v2"
             )]
@@ -54366,7 +54366,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ddot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -54384,7 +54384,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCdotu_v2"
             )]
@@ -54399,7 +54399,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCdotu_v2"
             )]
@@ -54414,7 +54414,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cdotu_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -54432,7 +54432,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCdotc_v2"
             )]
@@ -54447,7 +54447,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCdotc_v2"
             )]
@@ -54462,7 +54462,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cdotc_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -54480,7 +54480,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSrotm_v2"
             )]
@@ -54495,7 +54495,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSrotm_v2"
             )]
@@ -54510,7 +54510,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Srotm_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -54528,7 +54528,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDrotm_v2"
             )]
@@ -54543,7 +54543,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDrotm_v2"
             )]
@@ -54558,7 +54558,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Drotm_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -54576,7 +54576,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSrot_v2"
             )]
@@ -54592,7 +54592,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSrot_v2"
             )]
@@ -54608,7 +54608,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Srot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -54628,7 +54628,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDrot_v2"
             )]
@@ -54644,7 +54644,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDrot_v2"
             )]
@@ -54660,7 +54660,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Drot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -54680,7 +54680,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsrot_v2"
             )]
@@ -54696,7 +54696,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsrot_v2"
             )]
@@ -54712,7 +54712,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csrot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -54732,7 +54732,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZdrot_v2"
             )]
@@ -54748,7 +54748,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZdrot_v2"
             )]
@@ -54764,7 +54764,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zdrot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -54784,7 +54784,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSrotg_v2"
             )]
@@ -54797,7 +54797,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSrotg_v2"
             )]
@@ -54810,7 +54810,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Srotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -54824,7 +54824,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDrotg_v2"
             )]
@@ -54837,7 +54837,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDrotg_v2"
             )]
@@ -54850,7 +54850,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Drotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -54864,7 +54864,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCrotg_v2"
             )]
@@ -54877,7 +54877,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCrotg_v2"
             )]
@@ -54890,7 +54890,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Crotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -54904,7 +54904,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZrotg_v2"
             )]
@@ -54917,7 +54917,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZrotg_v2"
             )]
@@ -54930,7 +54930,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zrotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -54944,7 +54944,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSscal_v2"
             )]
@@ -54957,7 +54957,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSscal_v2"
             )]
@@ -54970,7 +54970,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -54984,7 +54984,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDscal_v2"
             )]
@@ -54997,7 +54997,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDscal_v2"
             )]
@@ -55010,7 +55010,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -55024,7 +55024,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCscal_v2"
             )]
@@ -55037,7 +55037,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCscal_v2"
             )]
@@ -55050,7 +55050,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -55064,7 +55064,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZscal_v2"
             )]
@@ -55077,7 +55077,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZscal_v2"
             )]
@@ -55090,7 +55090,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -55104,7 +55104,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSswap_v2"
             )]
@@ -55118,7 +55118,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSswap_v2"
             )]
@@ -55132,7 +55132,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -55148,7 +55148,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDswap_v2"
             )]
@@ -55162,7 +55162,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDswap_v2"
             )]
@@ -55176,7 +55176,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -55192,7 +55192,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCswap_v2"
             )]
@@ -55206,7 +55206,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCswap_v2"
             )]
@@ -55220,7 +55220,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -55236,7 +55236,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZswap_v2"
             )]
@@ -55250,7 +55250,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZswap_v2"
             )]
@@ -55264,7 +55264,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -55284,7 +55284,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Level 2
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgbmv_v2"
             )]
@@ -55306,7 +55306,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgbmv_v2"
             )]
@@ -55328,7 +55328,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -55360,7 +55360,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgbmv_v2"
             )]
@@ -55382,7 +55382,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgbmv_v2"
             )]
@@ -55404,7 +55404,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -55436,7 +55436,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgbmv_v2"
             )]
@@ -55458,7 +55458,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgbmv_v2"
             )]
@@ -55480,7 +55480,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -55512,7 +55512,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgbmv_v2"
             )]
@@ -55534,7 +55534,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgbmv_v2"
             )]
@@ -55556,7 +55556,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -55588,7 +55588,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgemv_v2"
             )]
@@ -55608,7 +55608,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgemv_v2"
             )]
@@ -55628,7 +55628,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -55656,7 +55656,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgemv_v2"
             )]
@@ -55676,7 +55676,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgemv_v2"
             )]
@@ -55696,7 +55696,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -55724,7 +55724,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgemv_v2"
             )]
@@ -55744,7 +55744,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgemv_v2"
             )]
@@ -55764,7 +55764,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -55792,7 +55792,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgemv_v2"
             )]
@@ -55812,7 +55812,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgemv_v2"
             )]
@@ -55832,7 +55832,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -55860,7 +55860,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSger_v2"
             )]
@@ -55878,7 +55878,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSger_v2"
             )]
@@ -55896,7 +55896,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sger_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -55920,7 +55920,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDger_v2"
             )]
@@ -55938,7 +55938,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDger_v2"
             )]
@@ -55956,7 +55956,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dger_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -55980,7 +55980,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgeru_v2"
             )]
@@ -55998,7 +55998,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgeru_v2"
             )]
@@ -56016,7 +56016,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgeru_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -56040,7 +56040,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgeru_v2"
             )]
@@ -56058,7 +56058,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgeru_v2"
             )]
@@ -56076,7 +56076,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgeru_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -56100,7 +56100,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsbmv_v2"
             )]
@@ -56120,7 +56120,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsbmv_v2"
             )]
@@ -56140,7 +56140,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -56168,7 +56168,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsbmv_v2"
             )]
@@ -56188,7 +56188,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsbmv_v2"
             )]
@@ -56208,7 +56208,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -56236,7 +56236,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChbmv_v2"
             )]
@@ -56256,7 +56256,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChbmv_v2"
             )]
@@ -56276,7 +56276,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -56304,7 +56304,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhbmv_v2"
             )]
@@ -56324,7 +56324,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhbmv_v2"
             )]
@@ -56344,7 +56344,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -56372,7 +56372,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSspmv_v2"
             )]
@@ -56390,7 +56390,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSspmv_v2"
             )]
@@ -56408,7 +56408,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sspmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -56432,7 +56432,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDspmv_v2"
             )]
@@ -56450,7 +56450,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDspmv_v2"
             )]
@@ -56468,7 +56468,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dspmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -56492,7 +56492,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChpmv_v2"
             )]
@@ -56510,7 +56510,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChpmv_v2"
             )]
@@ -56528,7 +56528,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -56552,7 +56552,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhpmv_v2"
             )]
@@ -56570,7 +56570,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhpmv_v2"
             )]
@@ -56588,7 +56588,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -56612,7 +56612,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSspr_v2"
             )]
@@ -56627,7 +56627,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSspr_v2"
             )]
@@ -56642,7 +56642,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sspr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -56660,7 +56660,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDspr_v2"
             )]
@@ -56675,7 +56675,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDspr_v2"
             )]
@@ -56690,7 +56690,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dspr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -56708,7 +56708,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChpr_v2"
             )]
@@ -56723,7 +56723,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChpr_v2"
             )]
@@ -56738,7 +56738,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chpr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -56756,7 +56756,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhpr_v2"
             )]
@@ -56771,7 +56771,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhpr_v2"
             )]
@@ -56786,7 +56786,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhpr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -56804,7 +56804,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSspr2_v2"
             )]
@@ -56821,7 +56821,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSspr2_v2"
             )]
@@ -56838,7 +56838,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sspr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -56860,7 +56860,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDspr2_v2"
             )]
@@ -56877,7 +56877,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDspr2_v2"
             )]
@@ -56894,7 +56894,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dspr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -56916,7 +56916,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChpr2_v2"
             )]
@@ -56933,7 +56933,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChpr2_v2"
             )]
@@ -56950,7 +56950,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chpr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -56972,7 +56972,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhpr2_v2"
             )]
@@ -56989,7 +56989,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhpr2_v2"
             )]
@@ -57006,7 +57006,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhpr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -57028,7 +57028,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsymv_v2"
             )]
@@ -57047,7 +57047,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsymv_v2"
             )]
@@ -57066,7 +57066,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -57092,7 +57092,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsymv_v2"
             )]
@@ -57111,7 +57111,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsymv_v2"
             )]
@@ -57130,7 +57130,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -57156,7 +57156,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsymv_v2"
             )]
@@ -57175,7 +57175,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsymv_v2"
             )]
@@ -57194,7 +57194,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -57220,7 +57220,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsymv_v2"
             )]
@@ -57239,7 +57239,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsymv_v2"
             )]
@@ -57258,7 +57258,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -57284,7 +57284,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyr_v2"
             )]
@@ -57300,7 +57300,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyr_v2"
             )]
@@ -57316,7 +57316,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -57336,7 +57336,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyr_v2"
             )]
@@ -57352,7 +57352,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyr_v2"
             )]
@@ -57368,7 +57368,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -57388,7 +57388,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyr_v2"
             )]
@@ -57404,7 +57404,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyr_v2"
             )]
@@ -57420,7 +57420,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -57440,7 +57440,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyr_v2"
             )]
@@ -57456,7 +57456,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyr_v2"
             )]
@@ -57472,7 +57472,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -57492,7 +57492,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyr2_v2"
             )]
@@ -57510,7 +57510,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyr2_v2"
             )]
@@ -57528,7 +57528,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -57552,7 +57552,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyr2_v2"
             )]
@@ -57570,7 +57570,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyr2_v2"
             )]
@@ -57588,7 +57588,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -57612,7 +57612,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyr2_v2"
             )]
@@ -57630,7 +57630,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyr2_v2"
             )]
@@ -57648,7 +57648,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -57672,7 +57672,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyr2_v2"
             )]
@@ -57690,7 +57690,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyr2_v2"
             )]
@@ -57708,7 +57708,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -57732,7 +57732,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStbmv_v2"
             )]
@@ -57750,7 +57750,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStbmv_v2"
             )]
@@ -57768,7 +57768,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -57792,7 +57792,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtbmv_v2"
             )]
@@ -57810,7 +57810,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtbmv_v2"
             )]
@@ -57828,7 +57828,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -57852,7 +57852,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtbmv_v2"
             )]
@@ -57870,7 +57870,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtbmv_v2"
             )]
@@ -57888,7 +57888,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -57912,7 +57912,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtbmv_v2"
             )]
@@ -57930,7 +57930,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtbmv_v2"
             )]
@@ -57948,7 +57948,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -57972,7 +57972,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStbsv_v2"
             )]
@@ -57990,7 +57990,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStbsv_v2"
             )]
@@ -58008,7 +58008,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -58032,7 +58032,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtbsv_v2"
             )]
@@ -58050,7 +58050,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtbsv_v2"
             )]
@@ -58068,7 +58068,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -58092,7 +58092,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtbsv_v2"
             )]
@@ -58110,7 +58110,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtbsv_v2"
             )]
@@ -58128,7 +58128,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -58152,7 +58152,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtbsv_v2"
             )]
@@ -58170,7 +58170,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtbsv_v2"
             )]
@@ -58188,7 +58188,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -58212,7 +58212,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStpmv_v2"
             )]
@@ -58228,7 +58228,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStpmv_v2"
             )]
@@ -58244,7 +58244,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -58264,7 +58264,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtpmv_v2"
             )]
@@ -58280,7 +58280,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtpmv_v2"
             )]
@@ -58296,7 +58296,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -58316,7 +58316,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtpmv_v2"
             )]
@@ -58332,7 +58332,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtpmv_v2"
             )]
@@ -58348,7 +58348,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -58368,7 +58368,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtpmv_v2"
             )]
@@ -58384,7 +58384,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtpmv_v2"
             )]
@@ -58400,7 +58400,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -58420,7 +58420,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStpsv_v2"
             )]
@@ -58436,7 +58436,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStpsv_v2"
             )]
@@ -58452,7 +58452,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -58472,7 +58472,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtpsv_v2"
             )]
@@ -58488,7 +58488,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtpsv_v2"
             )]
@@ -58504,7 +58504,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -58524,7 +58524,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtpsv_v2"
             )]
@@ -58540,7 +58540,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtpsv_v2"
             )]
@@ -58556,7 +58556,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -58576,7 +58576,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtpsv_v2"
             )]
@@ -58592,7 +58592,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtpsv_v2"
             )]
@@ -58608,7 +58608,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -58628,7 +58628,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrmv_v2"
             )]
@@ -58645,7 +58645,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrmv_v2"
             )]
@@ -58662,7 +58662,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -58684,7 +58684,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrmv_v2"
             )]
@@ -58701,7 +58701,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrmv_v2"
             )]
@@ -58718,7 +58718,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -58740,7 +58740,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrmv_v2"
             )]
@@ -58757,7 +58757,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrmv_v2"
             )]
@@ -58774,7 +58774,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -58796,7 +58796,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrmv_v2"
             )]
@@ -58813,7 +58813,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrmv_v2"
             )]
@@ -58830,7 +58830,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -58852,7 +58852,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrsv_v2"
             )]
@@ -58869,7 +58869,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrsv_v2"
             )]
@@ -58886,7 +58886,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -58908,7 +58908,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrsv_v2"
             )]
@@ -58925,7 +58925,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrsv_v2"
             )]
@@ -58942,7 +58942,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -58964,7 +58964,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrsv_v2"
             )]
@@ -58981,7 +58981,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrsv_v2"
             )]
@@ -58998,7 +58998,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -59020,7 +59020,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrsv_v2"
             )]
@@ -59037,7 +59037,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrsv_v2"
             )]
@@ -59054,7 +59054,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -59080,7 +59080,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Level 3
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgemm_v2"
             )]
@@ -59102,7 +59102,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgemm_v2"
             )]
@@ -59124,7 +59124,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -59156,7 +59156,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgemm_v2"
             )]
@@ -59178,7 +59178,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgemm_v2"
             )]
@@ -59200,7 +59200,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -59232,7 +59232,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgemm_v2"
             )]
@@ -59254,7 +59254,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgemm_v2"
             )]
@@ -59276,7 +59276,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -59308,7 +59308,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgemm_v2"
             )]
@@ -59330,7 +59330,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgemm_v2"
             )]
@@ -59352,7 +59352,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -59384,7 +59384,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasHgemm"
             )]
@@ -59406,7 +59406,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasHgemm"
             )]
@@ -59428,7 +59428,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Hgemm(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -59460,7 +59460,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsymm_v2"
             )]
@@ -59481,7 +59481,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsymm_v2"
             )]
@@ -59502,7 +59502,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -59532,7 +59532,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsymm_v2"
             )]
@@ -59553,7 +59553,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsymm_v2"
             )]
@@ -59574,7 +59574,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -59604,7 +59604,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsymm_v2"
             )]
@@ -59625,7 +59625,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsymm_v2"
             )]
@@ -59646,7 +59646,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -59676,7 +59676,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsymm_v2"
             )]
@@ -59697,7 +59697,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsymm_v2"
             )]
@@ -59718,7 +59718,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -59748,7 +59748,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyrk_v2"
             )]
@@ -59767,7 +59767,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyrk_v2"
             )]
@@ -59786,7 +59786,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -59812,7 +59812,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyrk_v2"
             )]
@@ -59831,7 +59831,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyrk_v2"
             )]
@@ -59850,7 +59850,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -59876,7 +59876,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyrk_v2"
             )]
@@ -59895,7 +59895,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyrk_v2"
             )]
@@ -59914,7 +59914,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -59940,7 +59940,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyrk_v2"
             )]
@@ -59959,7 +59959,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyrk_v2"
             )]
@@ -59978,7 +59978,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -60004,7 +60004,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyr2k_v2"
             )]
@@ -60025,7 +60025,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyr2k_v2"
             )]
@@ -60046,7 +60046,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -60076,7 +60076,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyr2k_v2"
             )]
@@ -60097,7 +60097,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyr2k_v2"
             )]
@@ -60118,7 +60118,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -60148,7 +60148,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyr2k_v2"
             )]
@@ -60169,7 +60169,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyr2k_v2"
             )]
@@ -60190,7 +60190,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -60220,7 +60220,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyr2k_v2"
             )]
@@ -60241,7 +60241,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyr2k_v2"
             )]
@@ -60262,7 +60262,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -60292,7 +60292,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyrkx"
             )]
@@ -60313,7 +60313,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyrkx"
             )]
@@ -60334,7 +60334,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -60364,7 +60364,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyrkx"
             )]
@@ -60385,7 +60385,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyrkx"
             )]
@@ -60406,7 +60406,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -60436,7 +60436,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyrkx"
             )]
@@ -60457,7 +60457,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyrkx"
             )]
@@ -60478,7 +60478,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -60508,7 +60508,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyrkx"
             )]
@@ -60529,7 +60529,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyrkx"
             )]
@@ -60550,7 +60550,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -60580,7 +60580,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrmm_v2"
             )]
@@ -60602,7 +60602,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrmm_v2"
             )]
@@ -60624,7 +60624,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -60656,7 +60656,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrmm_v2"
             )]
@@ -60678,7 +60678,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrmm_v2"
             )]
@@ -60700,7 +60700,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -60732,7 +60732,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrmm_v2"
             )]
@@ -60754,7 +60754,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrmm_v2"
             )]
@@ -60776,7 +60776,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -60808,7 +60808,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrmm_v2"
             )]
@@ -60830,7 +60830,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrmm_v2"
             )]
@@ -60852,7 +60852,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -60884,7 +60884,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrsm_v2"
             )]
@@ -60904,7 +60904,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrsm_v2"
             )]
@@ -60924,7 +60924,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -60952,7 +60952,7 @@ namespace ILGPU.Runtime.Cuda.API
                 b,
                 ldb);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrsm_v2"
             )]
@@ -60972,7 +60972,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrsm_v2"
             )]
@@ -60992,7 +60992,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -61020,7 +61020,7 @@ namespace ILGPU.Runtime.Cuda.API
                 b,
                 ldb);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrsm_v2"
             )]
@@ -61040,7 +61040,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrsm_v2"
             )]
@@ -61060,7 +61060,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -61088,7 +61088,7 @@ namespace ILGPU.Runtime.Cuda.API
                 b,
                 ldb);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrsm_v2"
             )]
@@ -61108,7 +61108,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrsm_v2"
             )]
@@ -61128,7 +61128,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -61160,7 +61160,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Extensions
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgeam"
             )]
@@ -61181,7 +61181,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgeam"
             )]
@@ -61202,7 +61202,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -61232,7 +61232,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgeam"
             )]
@@ -61253,7 +61253,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgeam"
             )]
@@ -61274,7 +61274,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -61304,7 +61304,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgeam"
             )]
@@ -61325,7 +61325,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgeam"
             )]
@@ -61346,7 +61346,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -61376,7 +61376,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgeam"
             )]
@@ -61397,7 +61397,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgeam"
             )]
@@ -61418,7 +61418,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -61448,7 +61448,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSdgmm"
             )]
@@ -61466,7 +61466,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSdgmm"
             )]
@@ -61484,7 +61484,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sdgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -61508,7 +61508,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDdgmm"
             )]
@@ -61526,7 +61526,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDdgmm"
             )]
@@ -61544,7 +61544,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ddgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -61568,7 +61568,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCdgmm"
             )]
@@ -61586,7 +61586,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCdgmm"
             )]
@@ -61604,7 +61604,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cdgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -61628,7 +61628,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZdgmm"
             )]
@@ -61646,7 +61646,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZdgmm"
             )]
@@ -61664,7 +61664,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zdgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -61705,7 +61705,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Context
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCreate_v2"
             )]
@@ -61714,7 +61714,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasCreate_v2(
              out IntPtr handle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCreate_v2"
             )]
@@ -61723,13 +61723,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasCreate_v2(
             [Out] out IntPtr handle);
 
-#endif
+        #endif
         public sealed override CuBlasStatus Create(
             [Out] out IntPtr handle) =>
             cublasCreate_v2(
                 out handle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetVersion_v2"
             )]
@@ -61739,7 +61739,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out int version);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetVersion_v2"
             )]
@@ -61749,7 +61749,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out int version);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetVersion(
             [In] IntPtr handle,
             [Out] out int version) =>
@@ -61757,7 +61757,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out version);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDestroy_v2"
             )]
@@ -61766,7 +61766,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasDestroy_v2(
              IntPtr handle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDestroy_v2"
             )]
@@ -61775,13 +61775,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuBlasStatus cublasDestroy_v2(
             [In] IntPtr handle);
 
-#endif
+        #endif
         public sealed override CuBlasStatus Free(
             [In] IntPtr handle) =>
             cublasDestroy_v2(
                 handle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetStream_v2"
             )]
@@ -61791,7 +61791,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out IntPtr stream);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetStream_v2"
             )]
@@ -61801,7 +61801,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out IntPtr stream);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetStream(
             [In] IntPtr handle,
             [Out] out IntPtr stream) =>
@@ -61809,7 +61809,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out stream);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetStream_v2"
             )]
@@ -61819,7 +61819,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              IntPtr stream);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetStream_v2"
             )]
@@ -61829,7 +61829,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] IntPtr stream);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetStream(
             [In] IntPtr handle,
             [In] IntPtr stream) =>
@@ -61837,7 +61837,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 stream);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetPointerMode_v2"
             )]
@@ -61847,7 +61847,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out CuBlasPointerMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetPointerMode_v2"
             )]
@@ -61857,7 +61857,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out CuBlasPointerMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetPointerMode(
             [In] IntPtr handle,
             [Out] out CuBlasPointerMode mode) =>
@@ -61865,7 +61865,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetPointerMode_v2"
             )]
@@ -61875,7 +61875,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              CuBlasPointerMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetPointerMode_v2"
             )]
@@ -61885,7 +61885,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] CuBlasPointerMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetPointerMode(
             [In] IntPtr handle,
             [In] CuBlasPointerMode mode) =>
@@ -61893,7 +61893,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetAtomicsMode"
             )]
@@ -61903,7 +61903,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out CuBlasAtomicsMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetAtomicsMode"
             )]
@@ -61913,7 +61913,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out CuBlasAtomicsMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetAtomicsMode(
             [In] IntPtr handle,
             [Out] out CuBlasAtomicsMode mode) =>
@@ -61921,7 +61921,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetAtomicsMode"
             )]
@@ -61931,7 +61931,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              CuBlasAtomicsMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetAtomicsMode"
             )]
@@ -61941,7 +61941,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] CuBlasAtomicsMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetAtomicsMode(
             [In] IntPtr handle,
             [In] CuBlasAtomicsMode mode) =>
@@ -61949,7 +61949,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasGetMathMode"
             )]
@@ -61959,7 +61959,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              out CuBlasMathMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasGetMathMode"
             )]
@@ -61969,7 +61969,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [Out] out CuBlasMathMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus GetMathMode(
             [In] IntPtr handle,
             [Out] out CuBlasMathMode mode) =>
@@ -61977,7 +61977,7 @@ namespace ILGPU.Runtime.Cuda.API
                 handle,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSetMathMode"
             )]
@@ -61987,7 +61987,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr handle,
              CuBlasMathMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSetMathMode"
             )]
@@ -61997,7 +61997,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr handle,
             [In] CuBlasMathMode mode);
 
-#endif
+        #endif
         public sealed override CuBlasStatus SetMathMode(
             [In] IntPtr handle,
             [In] CuBlasMathMode mode) =>
@@ -62009,7 +62009,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Level 1
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIsamax_v2"
             )]
@@ -62022,7 +62022,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIsamax_v2"
             )]
@@ -62035,7 +62035,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Isamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -62049,7 +62049,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIdamax_v2"
             )]
@@ -62062,7 +62062,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIdamax_v2"
             )]
@@ -62075,7 +62075,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Idamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -62089,7 +62089,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIcamax_v2"
             )]
@@ -62102,7 +62102,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIcamax_v2"
             )]
@@ -62115,7 +62115,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Icamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -62129,7 +62129,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIzamax_v2"
             )]
@@ -62142,7 +62142,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIzamax_v2"
             )]
@@ -62155,7 +62155,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Izamax_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -62169,7 +62169,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIsamin_v2"
             )]
@@ -62182,7 +62182,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIsamin_v2"
             )]
@@ -62195,7 +62195,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Isamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -62209,7 +62209,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIdamin_v2"
             )]
@@ -62222,7 +62222,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIdamin_v2"
             )]
@@ -62235,7 +62235,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Idamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -62249,7 +62249,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIcamin_v2"
             )]
@@ -62262,7 +62262,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIcamin_v2"
             )]
@@ -62275,7 +62275,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Icamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -62289,7 +62289,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasIzamin_v2"
             )]
@@ -62302,7 +62302,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasIzamin_v2"
             )]
@@ -62315,7 +62315,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Izamin_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -62329,7 +62329,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSasum_v2"
             )]
@@ -62342,7 +62342,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSasum_v2"
             )]
@@ -62355,7 +62355,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -62369,7 +62369,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDasum_v2"
             )]
@@ -62382,7 +62382,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDasum_v2"
             )]
@@ -62395,7 +62395,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -62409,7 +62409,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasScasum_v2"
             )]
@@ -62422,7 +62422,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasScasum_v2"
             )]
@@ -62435,7 +62435,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Scasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -62449,7 +62449,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDzasum_v2"
             )]
@@ -62462,7 +62462,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDzasum_v2"
             )]
@@ -62475,7 +62475,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dzasum_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -62489,7 +62489,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSnrm2_v2"
             )]
@@ -62502,7 +62502,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSnrm2_v2"
             )]
@@ -62515,7 +62515,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Snrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -62529,7 +62529,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDnrm2_v2"
             )]
@@ -62542,7 +62542,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDnrm2_v2"
             )]
@@ -62555,7 +62555,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dnrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -62569,7 +62569,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasScnrm2_v2"
             )]
@@ -62582,7 +62582,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasScnrm2_v2"
             )]
@@ -62595,7 +62595,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Scnrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -62609,7 +62609,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDznrm2_v2"
             )]
@@ -62622,7 +62622,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDznrm2_v2"
             )]
@@ -62635,7 +62635,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dznrm2_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -62649,7 +62649,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSaxpy_v2"
             )]
@@ -62664,7 +62664,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSaxpy_v2"
             )]
@@ -62679,7 +62679,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Saxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -62697,7 +62697,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDaxpy_v2"
             )]
@@ -62712,7 +62712,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDaxpy_v2"
             )]
@@ -62727,7 +62727,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Daxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -62745,7 +62745,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCaxpy_v2"
             )]
@@ -62760,7 +62760,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCaxpy_v2"
             )]
@@ -62775,7 +62775,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Caxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -62793,7 +62793,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZaxpy_v2"
             )]
@@ -62808,7 +62808,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZaxpy_v2"
             )]
@@ -62823,7 +62823,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zaxpy_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -62841,7 +62841,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSdot_v2"
             )]
@@ -62856,7 +62856,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSdot_v2"
             )]
@@ -62871,7 +62871,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sdot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -62889,7 +62889,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDdot_v2"
             )]
@@ -62904,7 +62904,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDdot_v2"
             )]
@@ -62919,7 +62919,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ddot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -62937,7 +62937,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCdotu_v2"
             )]
@@ -62952,7 +62952,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCdotu_v2"
             )]
@@ -62967,7 +62967,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cdotu_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -62985,7 +62985,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCdotc_v2"
             )]
@@ -63000,7 +63000,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCdotc_v2"
             )]
@@ -63015,7 +63015,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cdotc_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -63033,7 +63033,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSrotm_v2"
             )]
@@ -63048,7 +63048,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSrotm_v2"
             )]
@@ -63063,7 +63063,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Srotm_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -63081,7 +63081,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDrotm_v2"
             )]
@@ -63096,7 +63096,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* result);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDrotm_v2"
             )]
@@ -63111,7 +63111,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* result);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Drotm_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -63129,7 +63129,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 result);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSrot_v2"
             )]
@@ -63145,7 +63145,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSrot_v2"
             )]
@@ -63161,7 +63161,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Srot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -63181,7 +63181,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDrot_v2"
             )]
@@ -63197,7 +63197,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDrot_v2"
             )]
@@ -63213,7 +63213,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Drot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -63233,7 +63233,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsrot_v2"
             )]
@@ -63249,7 +63249,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsrot_v2"
             )]
@@ -63265,7 +63265,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csrot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -63285,7 +63285,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZdrot_v2"
             )]
@@ -63301,7 +63301,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZdrot_v2"
             )]
@@ -63317,7 +63317,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zdrot_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -63337,7 +63337,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSrotg_v2"
             )]
@@ -63350,7 +63350,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSrotg_v2"
             )]
@@ -63363,7 +63363,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Srotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -63377,7 +63377,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDrotg_v2"
             )]
@@ -63390,7 +63390,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDrotg_v2"
             )]
@@ -63403,7 +63403,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Drotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -63417,7 +63417,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCrotg_v2"
             )]
@@ -63430,7 +63430,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCrotg_v2"
             )]
@@ -63443,7 +63443,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Crotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -63457,7 +63457,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZrotg_v2"
             )]
@@ -63470,7 +63470,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              void* s);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZrotg_v2"
             )]
@@ -63483,7 +63483,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] void* s);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zrotg_v2(
             [In] IntPtr handle,
             [In] void* a,
@@ -63497,7 +63497,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 s);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSscal_v2"
             )]
@@ -63510,7 +63510,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSscal_v2"
             )]
@@ -63523,7 +63523,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -63537,7 +63537,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDscal_v2"
             )]
@@ -63550,7 +63550,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDscal_v2"
             )]
@@ -63563,7 +63563,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -63577,7 +63577,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCscal_v2"
             )]
@@ -63590,7 +63590,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCscal_v2"
             )]
@@ -63603,7 +63603,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -63617,7 +63617,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZscal_v2"
             )]
@@ -63630,7 +63630,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZscal_v2"
             )]
@@ -63643,7 +63643,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zscal_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -63657,7 +63657,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSswap_v2"
             )]
@@ -63671,7 +63671,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSswap_v2"
             )]
@@ -63685,7 +63685,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -63701,7 +63701,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDswap_v2"
             )]
@@ -63715,7 +63715,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDswap_v2"
             )]
@@ -63729,7 +63729,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -63745,7 +63745,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCswap_v2"
             )]
@@ -63759,7 +63759,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCswap_v2"
             )]
@@ -63773,7 +63773,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -63789,7 +63789,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZswap_v2"
             )]
@@ -63803,7 +63803,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZswap_v2"
             )]
@@ -63817,7 +63817,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zswap_v2(
             [In] IntPtr handle,
             [In] int n,
@@ -63837,7 +63837,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Level 2
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgbmv_v2"
             )]
@@ -63859,7 +63859,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgbmv_v2"
             )]
@@ -63881,7 +63881,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -63913,7 +63913,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgbmv_v2"
             )]
@@ -63935,7 +63935,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgbmv_v2"
             )]
@@ -63957,7 +63957,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -63989,7 +63989,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgbmv_v2"
             )]
@@ -64011,7 +64011,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgbmv_v2"
             )]
@@ -64033,7 +64033,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -64065,7 +64065,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgbmv_v2"
             )]
@@ -64087,7 +64087,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgbmv_v2"
             )]
@@ -64109,7 +64109,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -64141,7 +64141,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgemv_v2"
             )]
@@ -64161,7 +64161,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgemv_v2"
             )]
@@ -64181,7 +64181,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -64209,7 +64209,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgemv_v2"
             )]
@@ -64229,7 +64229,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgemv_v2"
             )]
@@ -64249,7 +64249,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -64277,7 +64277,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgemv_v2"
             )]
@@ -64297,7 +64297,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgemv_v2"
             )]
@@ -64317,7 +64317,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -64345,7 +64345,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgemv_v2"
             )]
@@ -64365,7 +64365,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgemv_v2"
             )]
@@ -64385,7 +64385,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgemv_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation trans,
@@ -64413,7 +64413,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSger_v2"
             )]
@@ -64431,7 +64431,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSger_v2"
             )]
@@ -64449,7 +64449,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sger_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -64473,7 +64473,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDger_v2"
             )]
@@ -64491,7 +64491,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDger_v2"
             )]
@@ -64509,7 +64509,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dger_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -64533,7 +64533,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgeru_v2"
             )]
@@ -64551,7 +64551,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgeru_v2"
             )]
@@ -64569,7 +64569,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgeru_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -64593,7 +64593,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgeru_v2"
             )]
@@ -64611,7 +64611,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgeru_v2"
             )]
@@ -64629,7 +64629,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgeru_v2(
             [In] IntPtr handle,
             [In] int m,
@@ -64653,7 +64653,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsbmv_v2"
             )]
@@ -64673,7 +64673,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsbmv_v2"
             )]
@@ -64693,7 +64693,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -64721,7 +64721,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsbmv_v2"
             )]
@@ -64741,7 +64741,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsbmv_v2"
             )]
@@ -64761,7 +64761,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -64789,7 +64789,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChbmv_v2"
             )]
@@ -64809,7 +64809,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChbmv_v2"
             )]
@@ -64829,7 +64829,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -64857,7 +64857,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhbmv_v2"
             )]
@@ -64877,7 +64877,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhbmv_v2"
             )]
@@ -64897,7 +64897,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -64925,7 +64925,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSspmv_v2"
             )]
@@ -64943,7 +64943,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSspmv_v2"
             )]
@@ -64961,7 +64961,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sspmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -64985,7 +64985,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDspmv_v2"
             )]
@@ -65003,7 +65003,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDspmv_v2"
             )]
@@ -65021,7 +65021,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dspmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -65045,7 +65045,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChpmv_v2"
             )]
@@ -65063,7 +65063,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChpmv_v2"
             )]
@@ -65081,7 +65081,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -65105,7 +65105,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhpmv_v2"
             )]
@@ -65123,7 +65123,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhpmv_v2"
             )]
@@ -65141,7 +65141,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -65165,7 +65165,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSspr_v2"
             )]
@@ -65180,7 +65180,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSspr_v2"
             )]
@@ -65195,7 +65195,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sspr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -65213,7 +65213,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDspr_v2"
             )]
@@ -65228,7 +65228,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDspr_v2"
             )]
@@ -65243,7 +65243,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dspr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -65261,7 +65261,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChpr_v2"
             )]
@@ -65276,7 +65276,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChpr_v2"
             )]
@@ -65291,7 +65291,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chpr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -65309,7 +65309,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhpr_v2"
             )]
@@ -65324,7 +65324,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incx,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhpr_v2"
             )]
@@ -65339,7 +65339,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incx,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhpr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -65357,7 +65357,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incx,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSspr2_v2"
             )]
@@ -65374,7 +65374,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSspr2_v2"
             )]
@@ -65391,7 +65391,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sspr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -65413,7 +65413,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDspr2_v2"
             )]
@@ -65430,7 +65430,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDspr2_v2"
             )]
@@ -65447,7 +65447,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dspr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -65469,7 +65469,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasChpr2_v2"
             )]
@@ -65486,7 +65486,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasChpr2_v2"
             )]
@@ -65503,7 +65503,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Chpr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -65525,7 +65525,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZhpr2_v2"
             )]
@@ -65542,7 +65542,7 @@ namespace ILGPU.Runtime.Cuda.API
              int incy,
              void* ap);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZhpr2_v2"
             )]
@@ -65559,7 +65559,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int incy,
             [In] void* ap);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zhpr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -65581,7 +65581,7 @@ namespace ILGPU.Runtime.Cuda.API
                 incy,
                 ap);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsymv_v2"
             )]
@@ -65600,7 +65600,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsymv_v2"
             )]
@@ -65619,7 +65619,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -65645,7 +65645,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsymv_v2"
             )]
@@ -65664,7 +65664,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsymv_v2"
             )]
@@ -65683,7 +65683,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -65709,7 +65709,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsymv_v2"
             )]
@@ -65728,7 +65728,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsymv_v2"
             )]
@@ -65747,7 +65747,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -65773,7 +65773,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsymv_v2"
             )]
@@ -65792,7 +65792,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* y,
              int incy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsymv_v2"
             )]
@@ -65811,7 +65811,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* y,
             [In] int incy);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsymv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -65837,7 +65837,7 @@ namespace ILGPU.Runtime.Cuda.API
                 y,
                 incy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyr_v2"
             )]
@@ -65853,7 +65853,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyr_v2"
             )]
@@ -65869,7 +65869,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -65889,7 +65889,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyr_v2"
             )]
@@ -65905,7 +65905,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyr_v2"
             )]
@@ -65921,7 +65921,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -65941,7 +65941,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyr_v2"
             )]
@@ -65957,7 +65957,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyr_v2"
             )]
@@ -65973,7 +65973,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -65993,7 +65993,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyr_v2"
             )]
@@ -66009,7 +66009,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyr_v2"
             )]
@@ -66025,7 +66025,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyr_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -66045,7 +66045,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyr2_v2"
             )]
@@ -66063,7 +66063,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyr2_v2"
             )]
@@ -66081,7 +66081,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -66105,7 +66105,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyr2_v2"
             )]
@@ -66123,7 +66123,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyr2_v2"
             )]
@@ -66141,7 +66141,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -66165,7 +66165,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyr2_v2"
             )]
@@ -66183,7 +66183,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyr2_v2"
             )]
@@ -66201,7 +66201,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -66225,7 +66225,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyr2_v2"
             )]
@@ -66243,7 +66243,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* a,
              int lda);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyr2_v2"
             )]
@@ -66261,7 +66261,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* a,
             [In] int lda);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyr2_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -66285,7 +66285,7 @@ namespace ILGPU.Runtime.Cuda.API
                 a,
                 lda);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStbmv_v2"
             )]
@@ -66303,7 +66303,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStbmv_v2"
             )]
@@ -66321,7 +66321,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -66345,7 +66345,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtbmv_v2"
             )]
@@ -66363,7 +66363,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtbmv_v2"
             )]
@@ -66381,7 +66381,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -66405,7 +66405,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtbmv_v2"
             )]
@@ -66423,7 +66423,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtbmv_v2"
             )]
@@ -66441,7 +66441,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -66465,7 +66465,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtbmv_v2"
             )]
@@ -66483,7 +66483,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtbmv_v2"
             )]
@@ -66501,7 +66501,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztbmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -66525,7 +66525,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStbsv_v2"
             )]
@@ -66543,7 +66543,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStbsv_v2"
             )]
@@ -66561,7 +66561,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -66585,7 +66585,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtbsv_v2"
             )]
@@ -66603,7 +66603,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtbsv_v2"
             )]
@@ -66621,7 +66621,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -66645,7 +66645,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtbsv_v2"
             )]
@@ -66663,7 +66663,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtbsv_v2"
             )]
@@ -66681,7 +66681,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -66705,7 +66705,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtbsv_v2"
             )]
@@ -66723,7 +66723,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtbsv_v2"
             )]
@@ -66741,7 +66741,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztbsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -66765,7 +66765,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStpmv_v2"
             )]
@@ -66781,7 +66781,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStpmv_v2"
             )]
@@ -66797,7 +66797,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -66817,7 +66817,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtpmv_v2"
             )]
@@ -66833,7 +66833,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtpmv_v2"
             )]
@@ -66849,7 +66849,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -66869,7 +66869,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtpmv_v2"
             )]
@@ -66885,7 +66885,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtpmv_v2"
             )]
@@ -66901,7 +66901,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -66921,7 +66921,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtpmv_v2"
             )]
@@ -66937,7 +66937,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtpmv_v2"
             )]
@@ -66953,7 +66953,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztpmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -66973,7 +66973,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStpsv_v2"
             )]
@@ -66989,7 +66989,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStpsv_v2"
             )]
@@ -67005,7 +67005,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Stpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -67025,7 +67025,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtpsv_v2"
             )]
@@ -67041,7 +67041,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtpsv_v2"
             )]
@@ -67057,7 +67057,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -67077,7 +67077,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtpsv_v2"
             )]
@@ -67093,7 +67093,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtpsv_v2"
             )]
@@ -67109,7 +67109,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -67129,7 +67129,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtpsv_v2"
             )]
@@ -67145,7 +67145,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtpsv_v2"
             )]
@@ -67161,7 +67161,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztpsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -67181,7 +67181,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrmv_v2"
             )]
@@ -67198,7 +67198,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrmv_v2"
             )]
@@ -67215,7 +67215,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -67237,7 +67237,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrmv_v2"
             )]
@@ -67254,7 +67254,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrmv_v2"
             )]
@@ -67271,7 +67271,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -67293,7 +67293,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrmv_v2"
             )]
@@ -67310,7 +67310,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrmv_v2"
             )]
@@ -67327,7 +67327,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -67349,7 +67349,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrmv_v2"
             )]
@@ -67366,7 +67366,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrmv_v2"
             )]
@@ -67383,7 +67383,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrmv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -67405,7 +67405,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrsv_v2"
             )]
@@ -67422,7 +67422,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrsv_v2"
             )]
@@ -67439,7 +67439,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -67461,7 +67461,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrsv_v2"
             )]
@@ -67478,7 +67478,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrsv_v2"
             )]
@@ -67495,7 +67495,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -67517,7 +67517,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrsv_v2"
             )]
@@ -67534,7 +67534,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrsv_v2"
             )]
@@ -67551,7 +67551,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -67573,7 +67573,7 @@ namespace ILGPU.Runtime.Cuda.API
                 x,
                 incx);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrsv_v2"
             )]
@@ -67590,7 +67590,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* x,
              int incx);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrsv_v2"
             )]
@@ -67607,7 +67607,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* x,
             [In] int incx);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrsv_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -67633,7 +67633,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Level 3
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgemm_v2"
             )]
@@ -67655,7 +67655,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgemm_v2"
             )]
@@ -67677,7 +67677,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -67709,7 +67709,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgemm_v2"
             )]
@@ -67731,7 +67731,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgemm_v2"
             )]
@@ -67753,7 +67753,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -67785,7 +67785,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgemm_v2"
             )]
@@ -67807,7 +67807,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgemm_v2"
             )]
@@ -67829,7 +67829,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -67861,7 +67861,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgemm_v2"
             )]
@@ -67883,7 +67883,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgemm_v2"
             )]
@@ -67905,7 +67905,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgemm_v2(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -67937,7 +67937,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasHgemm"
             )]
@@ -67959,7 +67959,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasHgemm"
             )]
@@ -67981,7 +67981,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Hgemm(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -68013,7 +68013,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsymm_v2"
             )]
@@ -68034,7 +68034,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsymm_v2"
             )]
@@ -68055,7 +68055,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -68085,7 +68085,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsymm_v2"
             )]
@@ -68106,7 +68106,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsymm_v2"
             )]
@@ -68127,7 +68127,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -68157,7 +68157,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsymm_v2"
             )]
@@ -68178,7 +68178,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsymm_v2"
             )]
@@ -68199,7 +68199,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -68229,7 +68229,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsymm_v2"
             )]
@@ -68250,7 +68250,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsymm_v2"
             )]
@@ -68271,7 +68271,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsymm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -68301,7 +68301,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyrk_v2"
             )]
@@ -68320,7 +68320,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyrk_v2"
             )]
@@ -68339,7 +68339,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -68365,7 +68365,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyrk_v2"
             )]
@@ -68384,7 +68384,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyrk_v2"
             )]
@@ -68403,7 +68403,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -68429,7 +68429,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyrk_v2"
             )]
@@ -68448,7 +68448,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyrk_v2"
             )]
@@ -68467,7 +68467,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -68493,7 +68493,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyrk_v2"
             )]
@@ -68512,7 +68512,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyrk_v2"
             )]
@@ -68531,7 +68531,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyrk_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -68557,7 +68557,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyr2k_v2"
             )]
@@ -68578,7 +68578,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyr2k_v2"
             )]
@@ -68599,7 +68599,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -68629,7 +68629,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyr2k_v2"
             )]
@@ -68650,7 +68650,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyr2k_v2"
             )]
@@ -68671,7 +68671,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -68701,7 +68701,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyr2k_v2"
             )]
@@ -68722,7 +68722,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyr2k_v2"
             )]
@@ -68743,7 +68743,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -68773,7 +68773,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyr2k_v2"
             )]
@@ -68794,7 +68794,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyr2k_v2"
             )]
@@ -68815,7 +68815,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyr2k_v2(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -68845,7 +68845,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSsyrkx"
             )]
@@ -68866,7 +68866,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSsyrkx"
             )]
@@ -68887,7 +68887,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ssyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -68917,7 +68917,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDsyrkx"
             )]
@@ -68938,7 +68938,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDsyrkx"
             )]
@@ -68959,7 +68959,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dsyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -68989,7 +68989,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCsyrkx"
             )]
@@ -69010,7 +69010,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCsyrkx"
             )]
@@ -69031,7 +69031,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Csyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -69061,7 +69061,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZsyrkx"
             )]
@@ -69082,7 +69082,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZsyrkx"
             )]
@@ -69103,7 +69103,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zsyrkx(
             [In] IntPtr handle,
             [In] CuBlasFillMode uplo,
@@ -69133,7 +69133,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrmm_v2"
             )]
@@ -69155,7 +69155,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrmm_v2"
             )]
@@ -69177,7 +69177,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -69209,7 +69209,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrmm_v2"
             )]
@@ -69231,7 +69231,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrmm_v2"
             )]
@@ -69253,7 +69253,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -69285,7 +69285,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrmm_v2"
             )]
@@ -69307,7 +69307,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrmm_v2"
             )]
@@ -69329,7 +69329,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -69361,7 +69361,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrmm_v2"
             )]
@@ -69383,7 +69383,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrmm_v2"
             )]
@@ -69405,7 +69405,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrmm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -69437,7 +69437,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasStrsm_v2"
             )]
@@ -69457,7 +69457,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasStrsm_v2"
             )]
@@ -69477,7 +69477,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Strsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -69505,7 +69505,7 @@ namespace ILGPU.Runtime.Cuda.API
                 b,
                 ldb);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDtrsm_v2"
             )]
@@ -69525,7 +69525,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDtrsm_v2"
             )]
@@ -69545,7 +69545,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dtrsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -69573,7 +69573,7 @@ namespace ILGPU.Runtime.Cuda.API
                 b,
                 ldb);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCtrsm_v2"
             )]
@@ -69593,7 +69593,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCtrsm_v2"
             )]
@@ -69613,7 +69613,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ctrsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -69641,7 +69641,7 @@ namespace ILGPU.Runtime.Cuda.API
                 b,
                 ldb);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZtrsm_v2"
             )]
@@ -69661,7 +69661,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* b,
              int ldb);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZtrsm_v2"
             )]
@@ -69681,7 +69681,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* b,
             [In] int ldb);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ztrsm_v2(
             [In] IntPtr handle,
             [In] CuBlasSideMode side,
@@ -69713,7 +69713,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Extensions
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSgeam"
             )]
@@ -69734,7 +69734,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSgeam"
             )]
@@ -69755,7 +69755,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -69785,7 +69785,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDgeam"
             )]
@@ -69806,7 +69806,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDgeam"
             )]
@@ -69827,7 +69827,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Dgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -69857,7 +69857,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCgeam"
             )]
@@ -69878,7 +69878,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCgeam"
             )]
@@ -69899,7 +69899,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -69929,7 +69929,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZgeam"
             )]
@@ -69950,7 +69950,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZgeam"
             )]
@@ -69971,7 +69971,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zgeam(
             [In] IntPtr handle,
             [In] CuBlasOperation transa,
@@ -70001,7 +70001,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasSdgmm"
             )]
@@ -70019,7 +70019,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasSdgmm"
             )]
@@ -70037,7 +70037,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Sdgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -70061,7 +70061,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasDdgmm"
             )]
@@ -70079,7 +70079,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasDdgmm"
             )]
@@ -70097,7 +70097,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Ddgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -70121,7 +70121,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasCdgmm"
             )]
@@ -70139,7 +70139,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasCdgmm"
             )]
@@ -70157,7 +70157,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Cdgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,
@@ -70181,7 +70181,7 @@ namespace ILGPU.Runtime.Cuda.API
                 c,
                 ldc);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cublasZdgmm"
             )]
@@ -70199,7 +70199,7 @@ namespace ILGPU.Runtime.Cuda.API
              void* c,
              int ldc);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "cublasZdgmm"
             )]
@@ -70217,7 +70217,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] void* c,
             [In] int ldc);
 
-#endif
+        #endif
         public unsafe sealed override CuBlasStatus Zdgmm(
             [In] IntPtr handle,
             [In] CuBlasSideMode mode,

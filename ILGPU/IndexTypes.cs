@@ -23,7 +23,9 @@
 
 using ILGPU.Util;
 using System;
+using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace ILGPU
@@ -394,7 +396,7 @@ namespace ILGPU
         /// <returns>The minimum of first and second value.</returns>
         public static Index2D Min(Index2D first, Index2D second) =>
             new Index2D(
-                IntrinsicMath.Min(first.X, second.X),
+                IntrinsicMath.Min(first.X, second.X), 
                 IntrinsicMath.Min(first.Y, second.Y));
 
         /// <summary>
@@ -405,7 +407,7 @@ namespace ILGPU
         /// <returns>The maximum of first and second value.</returns>
         public static Index2D Max(Index2D first, Index2D second) =>
             new Index2D(
-                IntrinsicMath.Max(first.X, second.X),
+                IntrinsicMath.Max(first.X, second.X), 
                 IntrinsicMath.Max(first.Y, second.Y));
 
         /// <summary>
@@ -420,7 +422,7 @@ namespace ILGPU
             Index2D min,
             Index2D max) =>
             new Index2D(
-                IntrinsicMath.Clamp(value.X, min.X, max.X),
+                IntrinsicMath.Clamp(value.X, min.X, max.X), 
                 IntrinsicMath.Clamp(value.Y, min.Y, max.Y));
 
         #endregion
@@ -769,8 +771,8 @@ namespace ILGPU
         /// <returns>The minimum of first and second value.</returns>
         public static Index3D Min(Index3D first, Index3D second) =>
             new Index3D(
-                IntrinsicMath.Min(first.X, second.X),
-                IntrinsicMath.Min(first.Y, second.Y),
+                IntrinsicMath.Min(first.X, second.X), 
+                IntrinsicMath.Min(first.Y, second.Y), 
                 IntrinsicMath.Min(first.Z, second.Z));
 
         /// <summary>
@@ -781,8 +783,8 @@ namespace ILGPU
         /// <returns>The maximum of first and second value.</returns>
         public static Index3D Max(Index3D first, Index3D second) =>
             new Index3D(
-                IntrinsicMath.Max(first.X, second.X),
-                IntrinsicMath.Max(first.Y, second.Y),
+                IntrinsicMath.Max(first.X, second.X), 
+                IntrinsicMath.Max(first.Y, second.Y), 
                 IntrinsicMath.Max(first.Z, second.Z));
 
         /// <summary>
@@ -797,8 +799,8 @@ namespace ILGPU
             Index3D min,
             Index3D max) =>
             new Index3D(
-                IntrinsicMath.Clamp(value.X, min.X, max.X),
-                IntrinsicMath.Clamp(value.Y, min.Y, max.Y),
+                IntrinsicMath.Clamp(value.X, min.X, max.X), 
+                IntrinsicMath.Clamp(value.Y, min.Y, max.Y), 
                 IntrinsicMath.Clamp(value.Z, min.Z, max.Z));
 
         #endregion
@@ -1468,7 +1470,7 @@ namespace ILGPU
         /// <returns>The minimum of first and second value.</returns>
         public static LongIndex2D Min(LongIndex2D first, LongIndex2D second) =>
             new LongIndex2D(
-                IntrinsicMath.Min(first.X, second.X),
+                IntrinsicMath.Min(first.X, second.X), 
                 IntrinsicMath.Min(first.Y, second.Y));
 
         /// <summary>
@@ -1479,7 +1481,7 @@ namespace ILGPU
         /// <returns>The maximum of first and second value.</returns>
         public static LongIndex2D Max(LongIndex2D first, LongIndex2D second) =>
             new LongIndex2D(
-                IntrinsicMath.Max(first.X, second.X),
+                IntrinsicMath.Max(first.X, second.X), 
                 IntrinsicMath.Max(first.Y, second.Y));
 
         /// <summary>
@@ -1494,7 +1496,7 @@ namespace ILGPU
             LongIndex2D min,
             LongIndex2D max) =>
             new LongIndex2D(
-                IntrinsicMath.Clamp(value.X, min.X, max.X),
+                IntrinsicMath.Clamp(value.X, min.X, max.X), 
                 IntrinsicMath.Clamp(value.Y, min.Y, max.Y));
 
         #endregion
@@ -1833,8 +1835,8 @@ namespace ILGPU
         /// <returns>The minimum of first and second value.</returns>
         public static LongIndex3D Min(LongIndex3D first, LongIndex3D second) =>
             new LongIndex3D(
-                IntrinsicMath.Min(first.X, second.X),
-                IntrinsicMath.Min(first.Y, second.Y),
+                IntrinsicMath.Min(first.X, second.X), 
+                IntrinsicMath.Min(first.Y, second.Y), 
                 IntrinsicMath.Min(first.Z, second.Z));
 
         /// <summary>
@@ -1845,8 +1847,8 @@ namespace ILGPU
         /// <returns>The maximum of first and second value.</returns>
         public static LongIndex3D Max(LongIndex3D first, LongIndex3D second) =>
             new LongIndex3D(
-                IntrinsicMath.Max(first.X, second.X),
-                IntrinsicMath.Max(first.Y, second.Y),
+                IntrinsicMath.Max(first.X, second.X), 
+                IntrinsicMath.Max(first.Y, second.Y), 
                 IntrinsicMath.Max(first.Z, second.Z));
 
         /// <summary>
@@ -1861,8 +1863,8 @@ namespace ILGPU
             LongIndex3D min,
             LongIndex3D max) =>
             new LongIndex3D(
-                IntrinsicMath.Clamp(value.X, min.X, max.X),
-                IntrinsicMath.Clamp(value.Y, min.Y, max.Y),
+                IntrinsicMath.Clamp(value.X, min.X, max.X), 
+                IntrinsicMath.Clamp(value.Y, min.Y, max.Y), 
                 IntrinsicMath.Clamp(value.Z, min.Z, max.Z));
 
         #endregion

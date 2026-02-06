@@ -783,7 +783,7 @@ namespace ILGPU.IR.Construction
             {
                 case UnaryArithmeticKind.Neg:
                     if (value.BasicValueType == BasicValueType.Int1)
-                        return CreateArithmetic(location, value, UnaryArithmeticKind.Not);
+                        return CreateArithmetic(location,value,UnaryArithmeticKind.Not);
                     break;
                 case UnaryArithmeticKind.Not:
                     {
@@ -957,13 +957,13 @@ namespace ILGPU.IR.Construction
             {
                 case BinaryArithmeticKind.Sub:
                     if (left.IsZero)
-                        return CreateArithmetic(location, right, UnaryArithmeticKind.Neg, flags);
+                        return CreateArithmetic(location,right,UnaryArithmeticKind.Neg,flags);
                     break;
                 case BinaryArithmeticKind.Div:
                     if (left.HasIntValue(0))
                         return left;
                     if (left.HasFloatValue(1.0f, 1.0))
-                        return CreateArithmetic(location, right, UnaryArithmeticKind.RcpF, flags);
+                        return CreateArithmetic(location,right,UnaryArithmeticKind.RcpF,flags);
                     break;
                 case BinaryArithmeticKind.And:
                     if (left == right)
@@ -1011,14 +1011,14 @@ namespace ILGPU.IR.Construction
                         return right;
                     if (right.HasIntValue(1))
                         return left;
-                    if (right.IsInt && right.RawValue > 0 && Utilities.IsPowerOf2(right.RawValue))
-                        return CreateArithmetic(location, left, GetDivMulShiftAmount(location, right), BinaryArithmeticKind.Shl);
+                    if (right.IsInt && right.RawValue > 0 &&Utilities.IsPowerOf2(right.RawValue))
+                        return CreateArithmetic(location,left,GetDivMulShiftAmount(location, right),BinaryArithmeticKind.Shl);
                     break;
                 case BinaryArithmeticKind.Div:
                     if (right.HasIntValue(1))
                         return left;
-                    if (right.IsInt && right.RawValue > 0 && Utilities.IsPowerOf2(right.RawValue))
-                        return CreateArithmetic(location, left, GetDivMulShiftAmount(location, right), BinaryArithmeticKind.Shr);
+                    if (right.IsInt && right.RawValue > 0 &&Utilities.IsPowerOf2(right.RawValue))
+                        return CreateArithmetic(location,left,GetDivMulShiftAmount(location, right),BinaryArithmeticKind.Shr);
                     break;
                 case BinaryArithmeticKind.And:
                     if (left == right)

@@ -645,7 +645,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Initialization
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlInit_v2"
             )]
@@ -654,7 +654,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlInit_v2(
               );
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlInit_v2"
             )]
@@ -663,13 +663,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlInit_v2(
               );
 
-#endif
+        #endif
         public sealed override NvmlReturn Init(
               ) =>
             nvmlInit_v2(
                 );
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlShutdown"
             )]
@@ -678,7 +678,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlShutdown(
               );
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlShutdown"
             )]
@@ -687,7 +687,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlShutdown(
               );
 
-#endif
+        #endif
         public sealed override NvmlReturn Shutdown(
               ) =>
             nvmlShutdown(
@@ -697,7 +697,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Device Queries
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetAPIRestriction"
             )]
@@ -708,7 +708,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlRestrictedAPI apiType,
              out NvmlEnableState isRestricted);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetAPIRestriction"
             )]
@@ -719,7 +719,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlRestrictedAPI apiType,
             [Out] out NvmlEnableState isRestricted);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetAPIRestriction(
             [In] IntPtr device,
             [In] NvmlRestrictedAPI apiType,
@@ -729,7 +729,7 @@ namespace ILGPU.Runtime.Cuda.API
                 apiType,
                 out isRestricted);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetApplicationsClock"
             )]
@@ -740,7 +740,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlClockType clockType,
              out uint clockMHz);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetApplicationsClock"
             )]
@@ -751,7 +751,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlClockType clockType,
             [Out] out uint clockMHz);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetApplicationsClock(
             [In] IntPtr device,
             [In] NvmlClockType clockType,
@@ -761,7 +761,7 @@ namespace ILGPU.Runtime.Cuda.API
                 clockType,
                 out clockMHz);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetArchitecture"
             )]
@@ -771,7 +771,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlDeviceArchitecture arch);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetArchitecture"
             )]
@@ -781,7 +781,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlDeviceArchitecture arch);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetArchitecture(
             [In] IntPtr device,
             [Out] out NvmlDeviceArchitecture arch) =>
@@ -789,7 +789,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out arch);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetAttributes"
             )]
@@ -799,7 +799,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlDeviceAttributes attributes);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetAttributes"
             )]
@@ -809,7 +809,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlDeviceAttributes attributes);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetAttributes(
             [In] IntPtr device,
             [Out] out NvmlDeviceAttributes attributes) =>
@@ -817,7 +817,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out attributes);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetAutoBoostedClocksEnabled"
             )]
@@ -828,7 +828,7 @@ namespace ILGPU.Runtime.Cuda.API
              out NvmlEnableState isEnabled,
              out NvmlEnableState defaultIsEnabled);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetAutoBoostedClocksEnabled"
             )]
@@ -839,7 +839,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out NvmlEnableState isEnabled,
             [Out] out NvmlEnableState defaultIsEnabled);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetAutoBoostedClocksEnabled(
             [In] IntPtr device,
             [Out] out NvmlEnableState isEnabled,
@@ -849,7 +849,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out isEnabled,
                 out defaultIsEnabled);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetBAR1MemoryInfo"
             )]
@@ -859,7 +859,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlBAR1Memory bar1Memory);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetBAR1MemoryInfo"
             )]
@@ -869,7 +869,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlBAR1Memory bar1Memory);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetBAR1MemoryInfo(
             [In] IntPtr device,
             [Out] out NvmlBAR1Memory bar1Memory) =>
@@ -877,7 +877,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out bar1Memory);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetBoardId"
             )]
@@ -887,7 +887,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint boardId);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetBoardId"
             )]
@@ -897,7 +897,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint boardId);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetBoardId(
             [In] IntPtr device,
             [Out] out uint boardId) =>
@@ -905,7 +905,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out boardId);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetBoardPartNumber"
             )]
@@ -916,7 +916,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr partNumber,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetBoardPartNumber"
             )]
@@ -927,7 +927,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr partNumber,
             [In] uint length);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetBoardPartNumber_Interop(
             [In] IntPtr device,
             [In] IntPtr partNumber,
@@ -937,7 +937,7 @@ namespace ILGPU.Runtime.Cuda.API
                 partNumber,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetBrand"
             )]
@@ -947,7 +947,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlBrandType type);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetBrand"
             )]
@@ -957,7 +957,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlBrandType type);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetBrand(
             [In] IntPtr device,
             [Out] out NvmlBrandType type) =>
@@ -965,7 +965,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out type);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetBridgeChipInfo"
             )]
@@ -975,7 +975,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlBridgeChipHierarchy_Interop bridgeHierarchy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetBridgeChipInfo"
             )]
@@ -985,7 +985,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlBridgeChipHierarchy_Interop bridgeHierarchy);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetBridgeChipInfo_Interop(
             [In] IntPtr device,
             [Out] out NvmlBridgeChipHierarchy_Interop bridgeHierarchy) =>
@@ -993,7 +993,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out bridgeHierarchy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetClock"
             )]
@@ -1005,7 +1005,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlClockId clockId,
              out uint clockMHz);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetClock"
             )]
@@ -1017,7 +1017,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlClockId clockId,
             [Out] out uint clockMHz);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetClock(
             [In] IntPtr device,
             [In] NvmlClockType clockType,
@@ -1029,7 +1029,7 @@ namespace ILGPU.Runtime.Cuda.API
                 clockId,
                 out clockMHz);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetClockInfo"
             )]
@@ -1040,7 +1040,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlClockType clockType,
              out uint clock);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetClockInfo"
             )]
@@ -1051,7 +1051,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlClockType clockType,
             [Out] out uint clock);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetClockInfo(
             [In] IntPtr device,
             [In] NvmlClockType clockType,
@@ -1061,7 +1061,7 @@ namespace ILGPU.Runtime.Cuda.API
                 clockType,
                 out clock);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetComputeMode"
             )]
@@ -1071,7 +1071,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlComputeMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetComputeMode"
             )]
@@ -1081,7 +1081,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlComputeMode mode);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetComputeMode(
             [In] IntPtr device,
             [Out] out NvmlComputeMode mode) =>
@@ -1089,7 +1089,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetComputeRunningProcesses_v2"
             )]
@@ -1100,7 +1100,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint infoCount,
              NvmlProcessInfo* infos);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetComputeRunningProcesses_v2"
             )]
@@ -1111,7 +1111,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint infoCount,
             [In] NvmlProcessInfo* infos);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetComputeRunningProcesses_v2_Interop(
             [In] IntPtr device,
             [In] ref uint infoCount,
@@ -1121,7 +1121,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref infoCount,
                 infos);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetCount_v2"
             )]
@@ -1130,7 +1130,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceGetCount_v2(
              out uint deviceCount);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetCount_v2"
             )]
@@ -1139,13 +1139,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceGetCount_v2(
             [Out] out uint deviceCount);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetCount(
             [Out] out uint deviceCount) =>
             nvmlDeviceGetCount_v2(
                 out deviceCount);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetCudaComputeCapability"
             )]
@@ -1156,7 +1156,7 @@ namespace ILGPU.Runtime.Cuda.API
              out int major,
              out int minor);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetCudaComputeCapability"
             )]
@@ -1167,7 +1167,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out int major,
             [Out] out int minor);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetCudaComputeCapability(
             [In] IntPtr device,
             [Out] out int major,
@@ -1177,7 +1177,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out major,
                 out minor);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetCurrPcieLinkGeneration"
             )]
@@ -1187,7 +1187,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint currLinkGen);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetCurrPcieLinkGeneration"
             )]
@@ -1197,7 +1197,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint currLinkGen);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetCurrPcieLinkGeneration(
             [In] IntPtr device,
             [Out] out uint currLinkGen) =>
@@ -1205,7 +1205,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out currLinkGen);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetCurrPcieLinkWidth"
             )]
@@ -1215,7 +1215,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint currLinkWidth);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetCurrPcieLinkWidth"
             )]
@@ -1225,7 +1225,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint currLinkWidth);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetCurrPcieLinkWidth(
             [In] IntPtr device,
             [Out] out uint currLinkWidth) =>
@@ -1233,7 +1233,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out currLinkWidth);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetCurrentClocksThrottleReasons"
             )]
@@ -1243,7 +1243,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out ulong clocksThrottleReasons);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetCurrentClocksThrottleReasons"
             )]
@@ -1253,7 +1253,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out ulong clocksThrottleReasons);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetCurrentClocksThrottleReasons(
             [In] IntPtr device,
             [Out] out ulong clocksThrottleReasons) =>
@@ -1261,7 +1261,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out clocksThrottleReasons);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetDecoderUtilization"
             )]
@@ -1272,7 +1272,7 @@ namespace ILGPU.Runtime.Cuda.API
              out uint utilization,
              out uint samplingPeriodUs);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetDecoderUtilization"
             )]
@@ -1283,7 +1283,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out uint utilization,
             [Out] out uint samplingPeriodUs);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetDecoderUtilization(
             [In] IntPtr device,
             [Out] out uint utilization,
@@ -1293,7 +1293,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out utilization,
                 out samplingPeriodUs);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetDefaultApplicationsClock"
             )]
@@ -1304,7 +1304,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlClockType clockType,
              out uint clockMHz);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetDefaultApplicationsClock"
             )]
@@ -1315,7 +1315,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlClockType clockType,
             [Out] out uint clockMHz);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetDefaultApplicationsClock(
             [In] IntPtr device,
             [In] NvmlClockType clockType,
@@ -1325,7 +1325,7 @@ namespace ILGPU.Runtime.Cuda.API
                 clockType,
                 out clockMHz);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetDetailedEccErrors"
             )]
@@ -1337,7 +1337,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlEccCounterType counterType,
              out NvmlEccErrorCounts eccCounts);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetDetailedEccErrors"
             )]
@@ -1349,7 +1349,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlEccCounterType counterType,
             [Out] out NvmlEccErrorCounts eccCounts);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetDetailedEccErrors(
             [In] IntPtr device,
             [In] NvmlMemoryErrorType errorType,
@@ -1361,7 +1361,7 @@ namespace ILGPU.Runtime.Cuda.API
                 counterType,
                 out eccCounts);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetDisplayActive"
             )]
@@ -1371,7 +1371,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlEnableState isActive);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetDisplayActive"
             )]
@@ -1381,7 +1381,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlEnableState isActive);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetDisplayActive(
             [In] IntPtr device,
             [Out] out NvmlEnableState isActive) =>
@@ -1389,7 +1389,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out isActive);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetDisplayMode"
             )]
@@ -1399,7 +1399,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlEnableState display);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetDisplayMode"
             )]
@@ -1409,7 +1409,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlEnableState display);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetDisplayMode(
             [In] IntPtr device,
             [Out] out NvmlEnableState display) =>
@@ -1417,7 +1417,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out display);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetDriverModel"
             )]
@@ -1428,7 +1428,7 @@ namespace ILGPU.Runtime.Cuda.API
              out NvmlDriverModel current,
              out NvmlDriverModel pending);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetDriverModel"
             )]
@@ -1439,7 +1439,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out NvmlDriverModel current,
             [Out] out NvmlDriverModel pending);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetDriverModel(
             [In] IntPtr device,
             [Out] out NvmlDriverModel current,
@@ -1449,7 +1449,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out current,
                 out pending);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetEccMode"
             )]
@@ -1460,7 +1460,7 @@ namespace ILGPU.Runtime.Cuda.API
              out NvmlEnableState current,
              out NvmlEnableState pending);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetEccMode"
             )]
@@ -1471,7 +1471,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out NvmlEnableState current,
             [Out] out NvmlEnableState pending);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetEccMode(
             [In] IntPtr device,
             [Out] out NvmlEnableState current,
@@ -1481,7 +1481,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out current,
                 out pending);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetEncoderCapacity"
             )]
@@ -1492,7 +1492,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlEncoderType encoderQueryType,
              out uint encoderCapacity);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetEncoderCapacity"
             )]
@@ -1503,7 +1503,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlEncoderType encoderQueryType,
             [Out] out uint encoderCapacity);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetEncoderCapacity(
             [In] IntPtr device,
             [In] NvmlEncoderType encoderQueryType,
@@ -1513,7 +1513,7 @@ namespace ILGPU.Runtime.Cuda.API
                 encoderQueryType,
                 out encoderCapacity);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetEncoderSessions"
             )]
@@ -1524,7 +1524,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint sessionCount,
              NvmlEncoderSessionInfo* sessionInfos);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetEncoderSessions"
             )]
@@ -1535,7 +1535,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint sessionCount,
             [In] NvmlEncoderSessionInfo* sessionInfos);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetEncoderSessions_Interop(
             [In] IntPtr device,
             [In] ref uint sessionCount,
@@ -1545,7 +1545,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref sessionCount,
                 sessionInfos);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetEncoderStats"
             )]
@@ -1557,7 +1557,7 @@ namespace ILGPU.Runtime.Cuda.API
              out uint averageFps,
              out uint averageLatency);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetEncoderStats"
             )]
@@ -1569,7 +1569,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out uint averageFps,
             [Out] out uint averageLatency);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetEncoderStats(
             [In] IntPtr device,
             [Out] out uint sessionCount,
@@ -1581,7 +1581,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out averageFps,
                 out averageLatency);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetEncoderUtilization"
             )]
@@ -1592,7 +1592,7 @@ namespace ILGPU.Runtime.Cuda.API
              out uint utilization,
              out uint samplingPeriodUs);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetEncoderUtilization"
             )]
@@ -1603,7 +1603,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out uint utilization,
             [Out] out uint samplingPeriodUs);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetEncoderUtilization(
             [In] IntPtr device,
             [Out] out uint utilization,
@@ -1613,7 +1613,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out utilization,
                 out samplingPeriodUs);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetEnforcedPowerLimit"
             )]
@@ -1623,7 +1623,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint limit);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetEnforcedPowerLimit"
             )]
@@ -1633,7 +1633,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint limit);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetEnforcedPowerLimit(
             [In] IntPtr device,
             [Out] out uint limit) =>
@@ -1641,7 +1641,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out limit);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetFBCSessions"
             )]
@@ -1652,7 +1652,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint sessionCount,
              NvmlFBCSessionInfo* sessionInfos);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetFBCSessions"
             )]
@@ -1663,7 +1663,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint sessionCount,
             [In] NvmlFBCSessionInfo* sessionInfos);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetFBCSessions_Interop(
             [In] IntPtr device,
             [In] ref uint sessionCount,
@@ -1673,7 +1673,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref sessionCount,
                 sessionInfos);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetFBCStats"
             )]
@@ -1683,7 +1683,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlFBCStats fbcStats);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetFBCStats"
             )]
@@ -1693,7 +1693,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlFBCStats fbcStats);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetFBCStats(
             [In] IntPtr device,
             [Out] out NvmlFBCStats fbcStats) =>
@@ -1701,7 +1701,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out fbcStats);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetFanSpeed"
             )]
@@ -1711,7 +1711,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint speed);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetFanSpeed"
             )]
@@ -1721,7 +1721,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint speed);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetFanSpeed(
             [In] IntPtr device,
             [Out] out uint speed) =>
@@ -1729,7 +1729,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out speed);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetFanSpeed_v2"
             )]
@@ -1740,7 +1740,7 @@ namespace ILGPU.Runtime.Cuda.API
              uint fan,
              out uint speed);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetFanSpeed_v2"
             )]
@@ -1751,7 +1751,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] uint fan,
             [Out] out uint speed);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetFanSpeed(
             [In] IntPtr device,
             [In] uint fan,
@@ -1761,7 +1761,7 @@ namespace ILGPU.Runtime.Cuda.API
                 fan,
                 out speed);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetGpuOperationMode"
             )]
@@ -1772,7 +1772,7 @@ namespace ILGPU.Runtime.Cuda.API
              out NvmlGpuOperationMode current,
              out NvmlGpuOperationMode pending);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetGpuOperationMode"
             )]
@@ -1783,7 +1783,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out NvmlGpuOperationMode current,
             [Out] out NvmlGpuOperationMode pending);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetGpuOperationMode(
             [In] IntPtr device,
             [Out] out NvmlGpuOperationMode current,
@@ -1793,7 +1793,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out current,
                 out pending);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetGraphicsRunningProcesses_v2"
             )]
@@ -1804,7 +1804,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint infoCount,
              NvmlProcessInfo* infos);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetGraphicsRunningProcesses_v2"
             )]
@@ -1815,7 +1815,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint infoCount,
             [In] NvmlProcessInfo* infos);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetGraphicsRunningProcesses_v2_Interop(
             [In] IntPtr device,
             [In] ref uint infoCount,
@@ -1825,7 +1825,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref infoCount,
                 infos);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetHandleByIndex_v2"
             )]
@@ -1835,7 +1835,7 @@ namespace ILGPU.Runtime.Cuda.API
              uint index,
              out IntPtr device);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetHandleByIndex_v2"
             )]
@@ -1845,7 +1845,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] uint index,
             [Out] out IntPtr device);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetHandleByIndex(
             [In] uint index,
             [Out] out IntPtr device) =>
@@ -1853,7 +1853,7 @@ namespace ILGPU.Runtime.Cuda.API
                 index,
                 out device);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetHandleByPciBusId_v2"
             , StringMarshalling = StringMarshalling.Utf8
@@ -1864,7 +1864,7 @@ namespace ILGPU.Runtime.Cuda.API
              string pciBusId,
              out IntPtr device);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetHandleByPciBusId_v2"
             , CharSet = CharSet.Ansi
@@ -1877,7 +1877,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] string pciBusId,
             [Out] out IntPtr device);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetHandleByPciBusId(
             [In] string pciBusId,
             [Out] out IntPtr device) =>
@@ -1885,7 +1885,7 @@ namespace ILGPU.Runtime.Cuda.API
                 pciBusId,
                 out device);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetHandleBySerial"
             , StringMarshalling = StringMarshalling.Utf8
@@ -1896,7 +1896,7 @@ namespace ILGPU.Runtime.Cuda.API
              string serial,
              out IntPtr device);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetHandleBySerial"
             , CharSet = CharSet.Ansi
@@ -1909,7 +1909,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] string serial,
             [Out] out IntPtr device);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetHandleBySerial(
             [In] string serial,
             [Out] out IntPtr device) =>
@@ -1917,7 +1917,7 @@ namespace ILGPU.Runtime.Cuda.API
                 serial,
                 out device);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetHandleByUUID"
             , StringMarshalling = StringMarshalling.Utf8
@@ -1928,7 +1928,7 @@ namespace ILGPU.Runtime.Cuda.API
              string uuid,
              out IntPtr device);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetHandleByUUID"
             , CharSet = CharSet.Ansi
@@ -1941,7 +1941,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] string uuid,
             [Out] out IntPtr device);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetHandleByUUID(
             [In] string uuid,
             [Out] out IntPtr device) =>
@@ -1949,7 +1949,7 @@ namespace ILGPU.Runtime.Cuda.API
                 uuid,
                 out device);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetIndex"
             )]
@@ -1959,7 +1959,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint index);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetIndex"
             )]
@@ -1969,7 +1969,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint index);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetIndex(
             [In] IntPtr device,
             [Out] out uint index) =>
@@ -1977,7 +1977,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out index);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetInforomConfigurationChecksum"
             )]
@@ -1987,7 +1987,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint checksum);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetInforomConfigurationChecksum"
             )]
@@ -1997,7 +1997,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint checksum);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetInforomConfigurationChecksum(
             [In] IntPtr device,
             [Out] out uint checksum) =>
@@ -2005,7 +2005,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out checksum);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetInforomImageVersion"
             )]
@@ -2016,7 +2016,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr version,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetInforomImageVersion"
             )]
@@ -2027,7 +2027,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr version,
             [In] uint length);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetInforomImageVersion_Interop(
             [In] IntPtr device,
             [In] IntPtr version,
@@ -2037,7 +2037,7 @@ namespace ILGPU.Runtime.Cuda.API
                 version,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetInforomVersion"
             )]
@@ -2049,7 +2049,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr version,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetInforomVersion"
             )]
@@ -2061,7 +2061,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr version,
             [In] uint length);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetInforomVersion_Interop(
             [In] IntPtr device,
             [In] NvmlInforomObject inforomObject,
@@ -2073,7 +2073,7 @@ namespace ILGPU.Runtime.Cuda.API
                 version,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMaxClockInfo"
             )]
@@ -2084,7 +2084,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlClockType type,
              out uint clock);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMaxClockInfo"
             )]
@@ -2095,7 +2095,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlClockType type,
             [Out] out uint clock);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetMaxClockInfo(
             [In] IntPtr device,
             [In] NvmlClockType type,
@@ -2105,7 +2105,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 out clock);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMaxCustomerBoostClock"
             )]
@@ -2116,7 +2116,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlClockType clockType,
              out uint clockMHz);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMaxCustomerBoostClock"
             )]
@@ -2127,7 +2127,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlClockType clockType,
             [Out] out uint clockMHz);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetMaxCustomerBoostClock(
             [In] IntPtr device,
             [In] NvmlClockType clockType,
@@ -2137,7 +2137,7 @@ namespace ILGPU.Runtime.Cuda.API
                 clockType,
                 out clockMHz);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMaxPcieLinkGeneration"
             )]
@@ -2147,7 +2147,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint maxLinkGen);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMaxPcieLinkGeneration"
             )]
@@ -2157,7 +2157,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint maxLinkGen);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetMaxPcieLinkGeneration(
             [In] IntPtr device,
             [Out] out uint maxLinkGen) =>
@@ -2165,7 +2165,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out maxLinkGen);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMaxPcieLinkWidth"
             )]
@@ -2175,7 +2175,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint maxLinkWidth);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMaxPcieLinkWidth"
             )]
@@ -2185,7 +2185,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint maxLinkWidth);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetMaxPcieLinkWidth(
             [In] IntPtr device,
             [Out] out uint maxLinkWidth) =>
@@ -2193,7 +2193,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out maxLinkWidth);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMemoryErrorCounter"
             )]
@@ -2206,7 +2206,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlMemoryLocation locationType,
              out ulong count);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMemoryErrorCounter"
             )]
@@ -2219,7 +2219,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlMemoryLocation locationType,
             [Out] out ulong count);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetMemoryErrorCounter(
             [In] IntPtr device,
             [In] NvmlMemoryErrorType errorType,
@@ -2233,7 +2233,7 @@ namespace ILGPU.Runtime.Cuda.API
                 locationType,
                 out count);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMemoryInfo"
             )]
@@ -2243,7 +2243,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlMemory memory);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMemoryInfo"
             )]
@@ -2253,7 +2253,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlMemory memory);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetMemoryInfo(
             [In] IntPtr device,
             [Out] out NvmlMemory memory) =>
@@ -2261,7 +2261,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out memory);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMinorNumber"
             )]
@@ -2271,7 +2271,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint minorNumber);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMinorNumber"
             )]
@@ -2281,7 +2281,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint minorNumber);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetMinorNumber(
             [In] IntPtr device,
             [Out] out uint minorNumber) =>
@@ -2289,7 +2289,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out minorNumber);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMultiGpuBoard"
             )]
@@ -2299,7 +2299,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint multiGpuBool);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMultiGpuBoard"
             )]
@@ -2309,7 +2309,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint multiGpuBool);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetMultiGpuBoard(
             [In] IntPtr device,
             [Out] out uint multiGpuBool) =>
@@ -2317,7 +2317,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out multiGpuBool);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetName"
             )]
@@ -2328,7 +2328,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr name,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetName"
             )]
@@ -2339,7 +2339,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr name,
             [In] uint length);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetName_Interop(
             [In] IntPtr device,
             [In] IntPtr name,
@@ -2349,7 +2349,7 @@ namespace ILGPU.Runtime.Cuda.API
                 name,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetP2PStatus"
             )]
@@ -2361,7 +2361,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlGpuP2PCapsIndex p2pIndex,
              out NvmlGpuP2PStatus p2pStatus);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetP2PStatus"
             )]
@@ -2373,7 +2373,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlGpuP2PCapsIndex p2pIndex,
             [Out] out NvmlGpuP2PStatus p2pStatus);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetP2PStatus(
             [In] IntPtr device1,
             [In] IntPtr device2,
@@ -2385,7 +2385,7 @@ namespace ILGPU.Runtime.Cuda.API
                 p2pIndex,
                 out p2pStatus);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPciInfo_v3"
             )]
@@ -2395,7 +2395,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlPciInfo_Interop pci);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPciInfo_v3"
             )]
@@ -2405,7 +2405,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlPciInfo_Interop pci);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPciInfo_Interop(
             [In] IntPtr device,
             [Out] out NvmlPciInfo_Interop pci) =>
@@ -2413,7 +2413,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out pci);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPcieReplayCounter"
             )]
@@ -2423,7 +2423,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint value);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPcieReplayCounter"
             )]
@@ -2433,7 +2433,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint value);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPcieReplayCounter(
             [In] IntPtr device,
             [Out] out uint value) =>
@@ -2441,7 +2441,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out value);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPcieThroughput"
             )]
@@ -2452,7 +2452,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlPcieUtilCounter counter,
              out uint value);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPcieThroughput"
             )]
@@ -2463,7 +2463,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlPcieUtilCounter counter,
             [Out] out uint value);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPcieThroughput(
             [In] IntPtr device,
             [In] NvmlPcieUtilCounter counter,
@@ -2473,7 +2473,7 @@ namespace ILGPU.Runtime.Cuda.API
                 counter,
                 out value);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPerformanceState"
             )]
@@ -2483,7 +2483,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlPstates state);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPerformanceState"
             )]
@@ -2493,7 +2493,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlPstates state);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPerformanceState(
             [In] IntPtr device,
             [Out] out NvmlPstates state) =>
@@ -2501,7 +2501,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out state);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPersistenceMode"
             )]
@@ -2511,7 +2511,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlEnableState mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPersistenceMode"
             )]
@@ -2521,7 +2521,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlEnableState mode);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPersistenceMode(
             [In] IntPtr device,
             [Out] out NvmlEnableState mode) =>
@@ -2529,7 +2529,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerManagementDefaultLimit"
             )]
@@ -2539,7 +2539,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint defaultLimit);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerManagementDefaultLimit"
             )]
@@ -2549,7 +2549,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint defaultLimit);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPowerManagementDefaultLimit(
             [In] IntPtr device,
             [Out] out uint defaultLimit) =>
@@ -2557,7 +2557,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out defaultLimit);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerManagementLimit"
             )]
@@ -2567,7 +2567,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint limit);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerManagementLimit"
             )]
@@ -2577,7 +2577,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint limit);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPowerManagementLimit(
             [In] IntPtr device,
             [Out] out uint limit) =>
@@ -2585,7 +2585,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out limit);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerManagementLimitConstraints"
             )]
@@ -2596,7 +2596,7 @@ namespace ILGPU.Runtime.Cuda.API
              out uint minLimit,
              out uint maxLimit);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerManagementLimitConstraints"
             )]
@@ -2607,7 +2607,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out uint minLimit,
             [Out] out uint maxLimit);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPowerManagementLimitConstraints(
             [In] IntPtr device,
             [Out] out uint minLimit,
@@ -2617,7 +2617,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out minLimit,
                 out maxLimit);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerManagementMode"
             )]
@@ -2627,7 +2627,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlEnableState mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerManagementMode"
             )]
@@ -2637,7 +2637,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlEnableState mode);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPowerManagementMode(
             [In] IntPtr device,
             [Out] out NvmlEnableState mode) =>
@@ -2645,7 +2645,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerState"
             )]
@@ -2655,7 +2655,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlPstates pState);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerState"
             )]
@@ -2665,7 +2665,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlPstates pState);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPowerState(
             [In] IntPtr device,
             [Out] out NvmlPstates pState) =>
@@ -2673,7 +2673,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out pState);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerUsage"
             )]
@@ -2683,7 +2683,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint power);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerUsage"
             )]
@@ -2693,7 +2693,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint power);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPowerUsage(
             [In] IntPtr device,
             [Out] out uint power) =>
@@ -2701,7 +2701,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out power);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetRemappedRows"
             )]
@@ -2714,7 +2714,7 @@ namespace ILGPU.Runtime.Cuda.API
              out uint isPending,
              out uint failureOccurred);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetRemappedRows"
             )]
@@ -2727,7 +2727,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out uint isPending,
             [Out] out uint failureOccurred);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetRemappedRows(
             [In] IntPtr device,
             [Out] out uint corrRows,
@@ -2741,7 +2741,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out isPending,
                 out failureOccurred);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetRetiredPages"
             )]
@@ -2753,7 +2753,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint pageCount,
              ulong* addresses);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetRetiredPages"
             )]
@@ -2765,7 +2765,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint pageCount,
             [In] ulong* addresses);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetRetiredPages_Interop(
             [In] IntPtr device,
             [In] NvmlPageRetirementCause cause,
@@ -2777,7 +2777,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref pageCount,
                 addresses);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetRetiredPagesPendingStatus"
             )]
@@ -2787,7 +2787,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlEnableState isPending);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetRetiredPagesPendingStatus"
             )]
@@ -2797,7 +2797,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlEnableState isPending);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetRetiredPagesPendingStatus(
             [In] IntPtr device,
             [Out] out NvmlEnableState isPending) =>
@@ -2805,7 +2805,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out isPending);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetRetiredPages_v2"
             )]
@@ -2818,7 +2818,7 @@ namespace ILGPU.Runtime.Cuda.API
              ulong* addresses,
              ulong* timestamps);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetRetiredPages_v2"
             )]
@@ -2831,7 +2831,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ulong* addresses,
             [In] ulong* timestamps);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetRetiredPages_v2_Interop(
             [In] IntPtr device,
             [In] NvmlPageRetirementCause cause,
@@ -2845,7 +2845,7 @@ namespace ILGPU.Runtime.Cuda.API
                 addresses,
                 timestamps);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetSamples"
             )]
@@ -2859,7 +2859,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint sampleCount,
              NvmlSample* samples);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetSamples"
             )]
@@ -2873,7 +2873,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint sampleCount,
             [In] NvmlSample* samples);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetSamples_Interop(
             [In] IntPtr device,
             [In] NvmlSamplingType type,
@@ -2889,7 +2889,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref sampleCount,
                 samples);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetSerial"
             )]
@@ -2900,7 +2900,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr serial,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetSerial"
             )]
@@ -2911,7 +2911,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr serial,
             [In] uint length);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetSerial_Interop(
             [In] IntPtr device,
             [In] IntPtr serial,
@@ -2921,7 +2921,7 @@ namespace ILGPU.Runtime.Cuda.API
                 serial,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetSupportedClocksThrottleReasons"
             )]
@@ -2931,7 +2931,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlClocksThrottleReasons supportedClocksThrottleReasons);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetSupportedClocksThrottleReasons"
             )]
@@ -2941,7 +2941,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlClocksThrottleReasons supportedClocksThrottleReasons);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetSupportedClocksThrottleReasons(
             [In] IntPtr device,
             [Out] out NvmlClocksThrottleReasons supportedClocksThrottleReasons) =>
@@ -2949,7 +2949,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out supportedClocksThrottleReasons);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetSupportedGraphicsClocks"
             )]
@@ -2961,7 +2961,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint count,
              uint* clocksMHz);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetSupportedGraphicsClocks"
             )]
@@ -2973,7 +2973,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint count,
             [In] uint* clocksMHz);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetSupportedGraphicsClocks_Interop(
             [In] IntPtr device,
             [In] uint memoryClockMHz,
@@ -2985,7 +2985,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref count,
                 clocksMHz);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetSupportedMemoryClocks"
             )]
@@ -2996,7 +2996,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint count,
              uint* clocksMHz);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetSupportedMemoryClocks"
             )]
@@ -3007,7 +3007,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint count,
             [In] uint* clocksMHz);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetSupportedMemoryClocks_Interop(
             [In] IntPtr device,
             [In] ref uint count,
@@ -3017,7 +3017,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref count,
                 clocksMHz);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetTemperature"
             )]
@@ -3028,7 +3028,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlTemperatureSensors sensorType,
              out uint temp);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetTemperature"
             )]
@@ -3039,7 +3039,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlTemperatureSensors sensorType,
             [Out] out uint temp);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetTemperature(
             [In] IntPtr device,
             [In] NvmlTemperatureSensors sensorType,
@@ -3049,7 +3049,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sensorType,
                 out temp);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetTemperatureThreshold"
             )]
@@ -3060,7 +3060,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlTemperatureThresholds thresholdType,
              out uint temp);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetTemperatureThreshold"
             )]
@@ -3071,7 +3071,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlTemperatureThresholds thresholdType,
             [Out] out uint temp);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetTemperatureThreshold(
             [In] IntPtr device,
             [In] NvmlTemperatureThresholds thresholdType,
@@ -3081,7 +3081,7 @@ namespace ILGPU.Runtime.Cuda.API
                 thresholdType,
                 out temp);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetTopologyCommonAncestor"
             )]
@@ -3092,7 +3092,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device2,
              out NvmlGpuTopologyLevel pathInfo);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetTopologyCommonAncestor"
             )]
@@ -3103,7 +3103,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device2,
             [Out] out NvmlGpuTopologyLevel pathInfo);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetTopologyCommonAncestor(
             [In] IntPtr device1,
             [In] IntPtr device2,
@@ -3113,7 +3113,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device2,
                 out pathInfo);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetTopologyNearestGpus"
             )]
@@ -3125,7 +3125,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint count,
              IntPtr* deviceArray);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetTopologyNearestGpus"
             )]
@@ -3137,7 +3137,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint count,
             [In] IntPtr* deviceArray);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetTopologyNearestGpus_Interop(
             [In] IntPtr device,
             [In] NvmlGpuTopologyLevel level,
@@ -3149,7 +3149,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref count,
                 deviceArray);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetTotalEccErrors"
             )]
@@ -3161,7 +3161,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlEccCounterType counterType,
              out ulong eccCounts);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetTotalEccErrors"
             )]
@@ -3173,7 +3173,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlEccCounterType counterType,
             [Out] out ulong eccCounts);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetTotalEccErrors(
             [In] IntPtr device,
             [In] NvmlMemoryErrorType errorType,
@@ -3185,7 +3185,7 @@ namespace ILGPU.Runtime.Cuda.API
                 counterType,
                 out eccCounts);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetTotalEnergyConsumption"
             )]
@@ -3195,7 +3195,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out ulong energy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetTotalEnergyConsumption"
             )]
@@ -3205,7 +3205,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out ulong energy);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetTotalEnergyConsumption(
             [In] IntPtr device,
             [Out] out ulong energy) =>
@@ -3213,7 +3213,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out energy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetUUID"
             )]
@@ -3224,7 +3224,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr uuid,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetUUID"
             )]
@@ -3235,7 +3235,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr uuid,
             [In] uint length);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetUUID_Interop(
             [In] IntPtr device,
             [In] IntPtr uuid,
@@ -3245,7 +3245,7 @@ namespace ILGPU.Runtime.Cuda.API
                 uuid,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetUtilizationRates"
             )]
@@ -3255,7 +3255,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlUtilization utilization);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetUtilizationRates"
             )]
@@ -3265,7 +3265,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlUtilization utilization);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetUtilizationRates(
             [In] IntPtr device,
             [Out] out NvmlUtilization utilization) =>
@@ -3273,7 +3273,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out utilization);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetVbiosVersion"
             )]
@@ -3284,7 +3284,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr version,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetVbiosVersion"
             )]
@@ -3295,7 +3295,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr version,
             [In] uint length);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetVbiosVersion_Interop(
             [In] IntPtr device,
             [In] IntPtr version,
@@ -3305,7 +3305,7 @@ namespace ILGPU.Runtime.Cuda.API
                 version,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetViolationStatus"
             )]
@@ -3316,7 +3316,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlPerfPolicyType perfPolicyType,
              out NvmlViolationTime violTime);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetViolationStatus"
             )]
@@ -3327,7 +3327,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlPerfPolicyType perfPolicyType,
             [Out] out NvmlViolationTime violTime);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetViolationStatus(
             [In] IntPtr device,
             [In] NvmlPerfPolicyType perfPolicyType,
@@ -3337,7 +3337,7 @@ namespace ILGPU.Runtime.Cuda.API
                 perfPolicyType,
                 out violTime);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceOnSameBoard"
             )]
@@ -3348,7 +3348,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device2,
              out int onSameBoard);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceOnSameBoard"
             )]
@@ -3359,7 +3359,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device2,
             [Out] out int onSameBoard);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceOnSameBoard(
             [In] IntPtr device1,
             [In] IntPtr device2,
@@ -3369,7 +3369,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device2,
                 out onSameBoard);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceResetApplicationsClocks"
             )]
@@ -3378,7 +3378,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceResetApplicationsClocks(
              IntPtr device1);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceResetApplicationsClocks"
             )]
@@ -3387,13 +3387,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceResetApplicationsClocks(
             [In] IntPtr device1);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceResetApplicationsClocks(
             [In] IntPtr device1) =>
             nvmlDeviceResetApplicationsClocks(
                 device1);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceSetAutoBoostedClocksEnabled"
             )]
@@ -3403,7 +3403,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              NvmlEnableState enabled);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceSetAutoBoostedClocksEnabled"
             )]
@@ -3413,7 +3413,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [In] NvmlEnableState enabled);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceSetAutoBoostedClocksEnabled(
             [In] IntPtr device,
             [In] NvmlEnableState enabled) =>
@@ -3421,7 +3421,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 enabled);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceSetDefaultAutoBoostedClocksEnabled"
             )]
@@ -3432,7 +3432,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlEnableState enabled,
              uint flags);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceSetDefaultAutoBoostedClocksEnabled"
             )]
@@ -3443,7 +3443,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlEnableState enabled,
             [In] uint flags);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceSetDefaultAutoBoostedClocksEnabled(
             [In] IntPtr device,
             [In] NvmlEnableState enabled,
@@ -3453,7 +3453,7 @@ namespace ILGPU.Runtime.Cuda.API
                 enabled,
                 flags);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceValidateInforom"
             )]
@@ -3462,7 +3462,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceValidateInforom(
              IntPtr device);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceValidateInforom"
             )]
@@ -3471,13 +3471,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceValidateInforom(
             [In] IntPtr device);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceValidateInforom(
             [In] IntPtr device) =>
             nvmlDeviceValidateInforom(
                 device);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlSystemGetTopologyGpuSet"
             )]
@@ -3488,7 +3488,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint count,
              IntPtr* deviceArray);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlSystemGetTopologyGpuSet"
             )]
@@ -3499,7 +3499,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint count,
             [In] IntPtr* deviceArray);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn SystemGetTopologyGpuSet_Interop(
             [In] uint cpuNumber,
             [In] ref uint count,
@@ -3509,7 +3509,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref count,
                 deviceArray);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlVgpuInstanceGetMdevUUID"
             )]
@@ -3520,7 +3520,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr mdevUuid,
              uint size);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlVgpuInstanceGetMdevUUID"
             )]
@@ -3531,7 +3531,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr mdevUuid,
             [In] uint size);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn VgpuInstanceGetMdevUUID_Interop(
             [In] uint vgpuInstance,
             [In] IntPtr mdevUuid,
@@ -3545,7 +3545,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Device Queries - CPU and Memory Affinity
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceClearCpuAffinity"
             )]
@@ -3554,7 +3554,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceClearCpuAffinity(
              IntPtr device);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceClearCpuAffinity"
             )]
@@ -3563,13 +3563,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceClearCpuAffinity(
             [In] IntPtr device);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceClearCpuAffinity(
             [In] IntPtr device) =>
             nvmlDeviceClearCpuAffinity(
                 device);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetCpuAffinity"
             )]
@@ -3580,7 +3580,7 @@ namespace ILGPU.Runtime.Cuda.API
              uint cpuSetSize,
              ulong* cpuSet);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetCpuAffinity"
             )]
@@ -3591,7 +3591,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] uint cpuSetSize,
             [In] ulong* cpuSet);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetCpuAffinity_Interop(
             [In] IntPtr device,
             [In] uint cpuSetSize,
@@ -3601,7 +3601,7 @@ namespace ILGPU.Runtime.Cuda.API
                 cpuSetSize,
                 cpuSet);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetCpuAffinityWithinScope"
             )]
@@ -3613,7 +3613,7 @@ namespace ILGPU.Runtime.Cuda.API
              ulong* cpuSet,
              NvmlAffinityScope scope);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetCpuAffinityWithinScope"
             )]
@@ -3625,7 +3625,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ulong* cpuSet,
             [In] NvmlAffinityScope scope);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetCpuAffinityWithinScope_Interop(
             [In] IntPtr device,
             [In] uint cpuSetSize,
@@ -3637,7 +3637,7 @@ namespace ILGPU.Runtime.Cuda.API
                 cpuSet,
                 scope);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMemoryAffinity"
             )]
@@ -3649,7 +3649,7 @@ namespace ILGPU.Runtime.Cuda.API
              ulong* nodeSet,
              NvmlAffinityScope scope);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMemoryAffinity"
             )]
@@ -3661,7 +3661,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ulong* nodeSet,
             [In] NvmlAffinityScope scope);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetMemoryAffinity_Interop(
             [In] IntPtr device,
             [In] uint nodeSetSize,
@@ -3673,7 +3673,7 @@ namespace ILGPU.Runtime.Cuda.API
                 nodeSet,
                 scope);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceSetCpuAffinity"
             )]
@@ -3682,7 +3682,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceSetCpuAffinity(
              IntPtr device);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceSetCpuAffinity"
             )]
@@ -3691,7 +3691,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceSetCpuAffinity(
             [In] IntPtr device);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceSetCpuAffinity(
             [In] IntPtr device) =>
             nvmlDeviceSetCpuAffinity(
@@ -3701,7 +3701,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region System Queries
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlSystemGetCudaDriverVersion"
             )]
@@ -3710,7 +3710,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlSystemGetCudaDriverVersion(
              out int cudaDriverVersion);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlSystemGetCudaDriverVersion"
             )]
@@ -3719,13 +3719,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlSystemGetCudaDriverVersion(
             [Out] out int cudaDriverVersion);
 
-#endif
+        #endif
         public sealed override NvmlReturn SystemGetCudaDriverVersion_Interop(
             [Out] out int cudaDriverVersion) =>
             nvmlSystemGetCudaDriverVersion(
                 out cudaDriverVersion);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlSystemGetCudaDriverVersion_v2"
             )]
@@ -3734,7 +3734,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlSystemGetCudaDriverVersion_v2(
              out int cudaDriverVersion);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlSystemGetCudaDriverVersion_v2"
             )]
@@ -3743,13 +3743,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlSystemGetCudaDriverVersion_v2(
             [Out] out int cudaDriverVersion);
 
-#endif
+        #endif
         public sealed override NvmlReturn SystemGetCudaDriverVersion_v2_Interop(
             [Out] out int cudaDriverVersion) =>
             nvmlSystemGetCudaDriverVersion_v2(
                 out cudaDriverVersion);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlSystemGetDriverVersion"
             )]
@@ -3759,7 +3759,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr name,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlSystemGetDriverVersion"
             )]
@@ -3769,7 +3769,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr name,
             [In] uint length);
 
-#endif
+        #endif
         public sealed override NvmlReturn SystemGetDriverVersion_Interop(
             [In] IntPtr name,
             [In] uint length) =>
@@ -3777,7 +3777,7 @@ namespace ILGPU.Runtime.Cuda.API
                 name,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlSystemGetNVMLVersion"
             )]
@@ -3787,7 +3787,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr name,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlSystemGetNVMLVersion"
             )]
@@ -3797,7 +3797,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr name,
             [In] uint length);
 
-#endif
+        #endif
         public sealed override NvmlReturn SystemGetNVMLVersion_Interop(
             [In] IntPtr name,
             [In] uint length) =>
@@ -3805,7 +3805,7 @@ namespace ILGPU.Runtime.Cuda.API
                 name,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlSystemGetProcessName"
             )]
@@ -3816,7 +3816,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr name,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlSystemGetProcessName"
             )]
@@ -3827,7 +3827,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr name,
             [In] uint length);
 
-#endif
+        #endif
         public sealed override NvmlReturn SystemGetProcessName_Interop(
             [In] uint pid,
             [In] IntPtr name,
@@ -3841,7 +3841,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Unit Queries
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlSystemGetHicVersion"
             )]
@@ -3851,7 +3851,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint hwbcCount,
              NvmlHwbcEntry_Interop* hwbcEntries);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlSystemGetHicVersion"
             )]
@@ -3861,7 +3861,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint hwbcCount,
             [In] NvmlHwbcEntry_Interop* hwbcEntries);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn SystemGetHicVersion_Interop(
             [In] ref uint hwbcCount,
             [In] NvmlHwbcEntry_Interop* hwbcEntries) =>
@@ -3869,7 +3869,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref hwbcCount,
                 hwbcEntries);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlUnitGetCount"
             )]
@@ -3878,7 +3878,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlUnitGetCount(
              out uint unitCount);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlUnitGetCount"
             )]
@@ -3887,13 +3887,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlUnitGetCount(
             [Out] out uint unitCount);
 
-#endif
+        #endif
         public sealed override NvmlReturn UnitGetCount(
             [Out] out uint unitCount) =>
             nvmlUnitGetCount(
                 out unitCount);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlUnitGetDevices"
             )]
@@ -3904,7 +3904,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint deviceCount,
              IntPtr* devices);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlUnitGetDevices"
             )]
@@ -3915,7 +3915,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint deviceCount,
             [In] IntPtr* devices);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn UnitGetDevices_Interop(
             [In] IntPtr unit,
             [In] ref uint deviceCount,
@@ -3925,7 +3925,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref deviceCount,
                 devices);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlUnitGetFanSpeedInfo"
             )]
@@ -3935,7 +3935,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr unit,
              out NvmlUnitFanSpeeds_Interop fanSpeeds);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlUnitGetFanSpeedInfo"
             )]
@@ -3945,7 +3945,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr unit,
             [Out] out NvmlUnitFanSpeeds_Interop fanSpeeds);
 
-#endif
+        #endif
         public sealed override NvmlReturn UnitGetFanSpeedInfo_Interop(
             [In] IntPtr unit,
             [Out] out NvmlUnitFanSpeeds_Interop fanSpeeds) =>
@@ -3953,7 +3953,7 @@ namespace ILGPU.Runtime.Cuda.API
                 unit,
                 out fanSpeeds);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlUnitGetHandleByIndex"
             )]
@@ -3963,7 +3963,7 @@ namespace ILGPU.Runtime.Cuda.API
              uint index,
              out IntPtr unit);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlUnitGetHandleByIndex"
             )]
@@ -3973,7 +3973,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] uint index,
             [Out] out IntPtr unit);
 
-#endif
+        #endif
         public sealed override NvmlReturn UnitGetHandleByIndex(
             [In] uint index,
             [Out] out IntPtr unit) =>
@@ -3981,7 +3981,7 @@ namespace ILGPU.Runtime.Cuda.API
                 index,
                 out unit);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlUnitGetLedState"
             )]
@@ -3991,7 +3991,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr unit,
              out NvmlLedState_Interop state);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlUnitGetLedState"
             )]
@@ -4001,7 +4001,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr unit,
             [Out] out NvmlLedState_Interop state);
 
-#endif
+        #endif
         public sealed override NvmlReturn UnitGetLedState_Interop(
             [In] IntPtr unit,
             [Out] out NvmlLedState_Interop state) =>
@@ -4009,7 +4009,7 @@ namespace ILGPU.Runtime.Cuda.API
                 unit,
                 out state);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlUnitGetPsuInfo"
             )]
@@ -4019,7 +4019,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr unit,
              out NvmlPSUInfo_Interop psu);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlUnitGetPsuInfo"
             )]
@@ -4029,7 +4029,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr unit,
             [Out] out NvmlPSUInfo_Interop psu);
 
-#endif
+        #endif
         public sealed override NvmlReturn UnitGetPsuInfo_Interop(
             [In] IntPtr unit,
             [Out] out NvmlPSUInfo_Interop psu) =>
@@ -4037,7 +4037,7 @@ namespace ILGPU.Runtime.Cuda.API
                 unit,
                 out psu);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlUnitGetTemperature"
             )]
@@ -4048,7 +4048,7 @@ namespace ILGPU.Runtime.Cuda.API
              uint type,
              out uint temp);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlUnitGetTemperature"
             )]
@@ -4059,7 +4059,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] uint type,
             [Out] out uint temp);
 
-#endif
+        #endif
         public sealed override NvmlReturn UnitGetTemperature(
             [In] IntPtr unit,
             [In] uint type,
@@ -4069,7 +4069,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 out temp);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlUnitGetUnitInfo"
             )]
@@ -4079,7 +4079,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr unit,
              out NvmlUnitInfo_Interop info);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlUnitGetUnitInfo"
             )]
@@ -4089,7 +4089,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr unit,
             [Out] out NvmlUnitInfo_Interop info);
 
-#endif
+        #endif
         public sealed override NvmlReturn UnitGetUnitInfo_Interop(
             [In] IntPtr unit,
             [Out] out NvmlUnitInfo_Interop info) =>
@@ -4114,7 +4114,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Initialization
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlInit_v2"
             )]
@@ -4123,7 +4123,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlInit_v2(
               );
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlInit_v2"
             )]
@@ -4132,13 +4132,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlInit_v2(
               );
 
-#endif
+        #endif
         public sealed override NvmlReturn Init(
               ) =>
             nvmlInit_v2(
                 );
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlShutdown"
             )]
@@ -4147,7 +4147,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlShutdown(
               );
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlShutdown"
             )]
@@ -4156,7 +4156,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlShutdown(
               );
 
-#endif
+        #endif
         public sealed override NvmlReturn Shutdown(
               ) =>
             nvmlShutdown(
@@ -4166,7 +4166,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Device Queries
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetAPIRestriction"
             )]
@@ -4177,7 +4177,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlRestrictedAPI apiType,
              out NvmlEnableState isRestricted);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetAPIRestriction"
             )]
@@ -4188,7 +4188,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlRestrictedAPI apiType,
             [Out] out NvmlEnableState isRestricted);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetAPIRestriction(
             [In] IntPtr device,
             [In] NvmlRestrictedAPI apiType,
@@ -4198,7 +4198,7 @@ namespace ILGPU.Runtime.Cuda.API
                 apiType,
                 out isRestricted);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetApplicationsClock"
             )]
@@ -4209,7 +4209,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlClockType clockType,
              out uint clockMHz);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetApplicationsClock"
             )]
@@ -4220,7 +4220,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlClockType clockType,
             [Out] out uint clockMHz);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetApplicationsClock(
             [In] IntPtr device,
             [In] NvmlClockType clockType,
@@ -4230,7 +4230,7 @@ namespace ILGPU.Runtime.Cuda.API
                 clockType,
                 out clockMHz);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetArchitecture"
             )]
@@ -4240,7 +4240,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlDeviceArchitecture arch);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetArchitecture"
             )]
@@ -4250,7 +4250,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlDeviceArchitecture arch);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetArchitecture(
             [In] IntPtr device,
             [Out] out NvmlDeviceArchitecture arch) =>
@@ -4258,7 +4258,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out arch);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetAttributes"
             )]
@@ -4268,7 +4268,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlDeviceAttributes attributes);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetAttributes"
             )]
@@ -4278,7 +4278,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlDeviceAttributes attributes);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetAttributes(
             [In] IntPtr device,
             [Out] out NvmlDeviceAttributes attributes) =>
@@ -4286,7 +4286,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out attributes);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetAutoBoostedClocksEnabled"
             )]
@@ -4297,7 +4297,7 @@ namespace ILGPU.Runtime.Cuda.API
              out NvmlEnableState isEnabled,
              out NvmlEnableState defaultIsEnabled);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetAutoBoostedClocksEnabled"
             )]
@@ -4308,7 +4308,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out NvmlEnableState isEnabled,
             [Out] out NvmlEnableState defaultIsEnabled);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetAutoBoostedClocksEnabled(
             [In] IntPtr device,
             [Out] out NvmlEnableState isEnabled,
@@ -4318,7 +4318,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out isEnabled,
                 out defaultIsEnabled);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetBAR1MemoryInfo"
             )]
@@ -4328,7 +4328,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlBAR1Memory bar1Memory);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetBAR1MemoryInfo"
             )]
@@ -4338,7 +4338,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlBAR1Memory bar1Memory);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetBAR1MemoryInfo(
             [In] IntPtr device,
             [Out] out NvmlBAR1Memory bar1Memory) =>
@@ -4346,7 +4346,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out bar1Memory);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetBoardId"
             )]
@@ -4356,7 +4356,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint boardId);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetBoardId"
             )]
@@ -4366,7 +4366,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint boardId);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetBoardId(
             [In] IntPtr device,
             [Out] out uint boardId) =>
@@ -4374,7 +4374,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out boardId);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetBoardPartNumber"
             )]
@@ -4385,7 +4385,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr partNumber,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetBoardPartNumber"
             )]
@@ -4396,7 +4396,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr partNumber,
             [In] uint length);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetBoardPartNumber_Interop(
             [In] IntPtr device,
             [In] IntPtr partNumber,
@@ -4406,7 +4406,7 @@ namespace ILGPU.Runtime.Cuda.API
                 partNumber,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetBrand"
             )]
@@ -4416,7 +4416,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlBrandType type);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetBrand"
             )]
@@ -4426,7 +4426,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlBrandType type);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetBrand(
             [In] IntPtr device,
             [Out] out NvmlBrandType type) =>
@@ -4434,7 +4434,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out type);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetBridgeChipInfo"
             )]
@@ -4444,7 +4444,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlBridgeChipHierarchy_Interop bridgeHierarchy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetBridgeChipInfo"
             )]
@@ -4454,7 +4454,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlBridgeChipHierarchy_Interop bridgeHierarchy);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetBridgeChipInfo_Interop(
             [In] IntPtr device,
             [Out] out NvmlBridgeChipHierarchy_Interop bridgeHierarchy) =>
@@ -4462,7 +4462,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out bridgeHierarchy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetClock"
             )]
@@ -4474,7 +4474,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlClockId clockId,
              out uint clockMHz);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetClock"
             )]
@@ -4486,7 +4486,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlClockId clockId,
             [Out] out uint clockMHz);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetClock(
             [In] IntPtr device,
             [In] NvmlClockType clockType,
@@ -4498,7 +4498,7 @@ namespace ILGPU.Runtime.Cuda.API
                 clockId,
                 out clockMHz);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetClockInfo"
             )]
@@ -4509,7 +4509,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlClockType clockType,
              out uint clock);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetClockInfo"
             )]
@@ -4520,7 +4520,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlClockType clockType,
             [Out] out uint clock);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetClockInfo(
             [In] IntPtr device,
             [In] NvmlClockType clockType,
@@ -4530,7 +4530,7 @@ namespace ILGPU.Runtime.Cuda.API
                 clockType,
                 out clock);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetComputeMode"
             )]
@@ -4540,7 +4540,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlComputeMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetComputeMode"
             )]
@@ -4550,7 +4550,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlComputeMode mode);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetComputeMode(
             [In] IntPtr device,
             [Out] out NvmlComputeMode mode) =>
@@ -4558,7 +4558,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetComputeRunningProcesses_v2"
             )]
@@ -4569,7 +4569,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint infoCount,
              NvmlProcessInfo* infos);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetComputeRunningProcesses_v2"
             )]
@@ -4580,7 +4580,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint infoCount,
             [In] NvmlProcessInfo* infos);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetComputeRunningProcesses_v2_Interop(
             [In] IntPtr device,
             [In] ref uint infoCount,
@@ -4590,7 +4590,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref infoCount,
                 infos);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetCount_v2"
             )]
@@ -4599,7 +4599,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceGetCount_v2(
              out uint deviceCount);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetCount_v2"
             )]
@@ -4608,13 +4608,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceGetCount_v2(
             [Out] out uint deviceCount);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetCount(
             [Out] out uint deviceCount) =>
             nvmlDeviceGetCount_v2(
                 out deviceCount);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetCudaComputeCapability"
             )]
@@ -4625,7 +4625,7 @@ namespace ILGPU.Runtime.Cuda.API
              out int major,
              out int minor);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetCudaComputeCapability"
             )]
@@ -4636,7 +4636,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out int major,
             [Out] out int minor);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetCudaComputeCapability(
             [In] IntPtr device,
             [Out] out int major,
@@ -4646,7 +4646,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out major,
                 out minor);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetCurrPcieLinkGeneration"
             )]
@@ -4656,7 +4656,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint currLinkGen);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetCurrPcieLinkGeneration"
             )]
@@ -4666,7 +4666,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint currLinkGen);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetCurrPcieLinkGeneration(
             [In] IntPtr device,
             [Out] out uint currLinkGen) =>
@@ -4674,7 +4674,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out currLinkGen);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetCurrPcieLinkWidth"
             )]
@@ -4684,7 +4684,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint currLinkWidth);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetCurrPcieLinkWidth"
             )]
@@ -4694,7 +4694,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint currLinkWidth);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetCurrPcieLinkWidth(
             [In] IntPtr device,
             [Out] out uint currLinkWidth) =>
@@ -4702,7 +4702,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out currLinkWidth);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetCurrentClocksThrottleReasons"
             )]
@@ -4712,7 +4712,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out ulong clocksThrottleReasons);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetCurrentClocksThrottleReasons"
             )]
@@ -4722,7 +4722,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out ulong clocksThrottleReasons);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetCurrentClocksThrottleReasons(
             [In] IntPtr device,
             [Out] out ulong clocksThrottleReasons) =>
@@ -4730,7 +4730,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out clocksThrottleReasons);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetDecoderUtilization"
             )]
@@ -4741,7 +4741,7 @@ namespace ILGPU.Runtime.Cuda.API
              out uint utilization,
              out uint samplingPeriodUs);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetDecoderUtilization"
             )]
@@ -4752,7 +4752,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out uint utilization,
             [Out] out uint samplingPeriodUs);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetDecoderUtilization(
             [In] IntPtr device,
             [Out] out uint utilization,
@@ -4762,7 +4762,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out utilization,
                 out samplingPeriodUs);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetDefaultApplicationsClock"
             )]
@@ -4773,7 +4773,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlClockType clockType,
              out uint clockMHz);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetDefaultApplicationsClock"
             )]
@@ -4784,7 +4784,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlClockType clockType,
             [Out] out uint clockMHz);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetDefaultApplicationsClock(
             [In] IntPtr device,
             [In] NvmlClockType clockType,
@@ -4794,7 +4794,7 @@ namespace ILGPU.Runtime.Cuda.API
                 clockType,
                 out clockMHz);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetDetailedEccErrors"
             )]
@@ -4806,7 +4806,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlEccCounterType counterType,
              out NvmlEccErrorCounts eccCounts);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetDetailedEccErrors"
             )]
@@ -4818,7 +4818,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlEccCounterType counterType,
             [Out] out NvmlEccErrorCounts eccCounts);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetDetailedEccErrors(
             [In] IntPtr device,
             [In] NvmlMemoryErrorType errorType,
@@ -4830,7 +4830,7 @@ namespace ILGPU.Runtime.Cuda.API
                 counterType,
                 out eccCounts);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetDisplayActive"
             )]
@@ -4840,7 +4840,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlEnableState isActive);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetDisplayActive"
             )]
@@ -4850,7 +4850,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlEnableState isActive);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetDisplayActive(
             [In] IntPtr device,
             [Out] out NvmlEnableState isActive) =>
@@ -4858,7 +4858,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out isActive);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetDisplayMode"
             )]
@@ -4868,7 +4868,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlEnableState display);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetDisplayMode"
             )]
@@ -4878,7 +4878,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlEnableState display);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetDisplayMode(
             [In] IntPtr device,
             [Out] out NvmlEnableState display) =>
@@ -4886,7 +4886,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out display);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetDriverModel"
             )]
@@ -4897,7 +4897,7 @@ namespace ILGPU.Runtime.Cuda.API
              out NvmlDriverModel current,
              out NvmlDriverModel pending);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetDriverModel"
             )]
@@ -4908,7 +4908,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out NvmlDriverModel current,
             [Out] out NvmlDriverModel pending);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetDriverModel(
             [In] IntPtr device,
             [Out] out NvmlDriverModel current,
@@ -4918,7 +4918,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out current,
                 out pending);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetEccMode"
             )]
@@ -4929,7 +4929,7 @@ namespace ILGPU.Runtime.Cuda.API
              out NvmlEnableState current,
              out NvmlEnableState pending);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetEccMode"
             )]
@@ -4940,7 +4940,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out NvmlEnableState current,
             [Out] out NvmlEnableState pending);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetEccMode(
             [In] IntPtr device,
             [Out] out NvmlEnableState current,
@@ -4950,7 +4950,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out current,
                 out pending);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetEncoderCapacity"
             )]
@@ -4961,7 +4961,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlEncoderType encoderQueryType,
              out uint encoderCapacity);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetEncoderCapacity"
             )]
@@ -4972,7 +4972,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlEncoderType encoderQueryType,
             [Out] out uint encoderCapacity);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetEncoderCapacity(
             [In] IntPtr device,
             [In] NvmlEncoderType encoderQueryType,
@@ -4982,7 +4982,7 @@ namespace ILGPU.Runtime.Cuda.API
                 encoderQueryType,
                 out encoderCapacity);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetEncoderSessions"
             )]
@@ -4993,7 +4993,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint sessionCount,
              NvmlEncoderSessionInfo* sessionInfos);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetEncoderSessions"
             )]
@@ -5004,7 +5004,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint sessionCount,
             [In] NvmlEncoderSessionInfo* sessionInfos);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetEncoderSessions_Interop(
             [In] IntPtr device,
             [In] ref uint sessionCount,
@@ -5014,7 +5014,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref sessionCount,
                 sessionInfos);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetEncoderStats"
             )]
@@ -5026,7 +5026,7 @@ namespace ILGPU.Runtime.Cuda.API
              out uint averageFps,
              out uint averageLatency);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetEncoderStats"
             )]
@@ -5038,7 +5038,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out uint averageFps,
             [Out] out uint averageLatency);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetEncoderStats(
             [In] IntPtr device,
             [Out] out uint sessionCount,
@@ -5050,7 +5050,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out averageFps,
                 out averageLatency);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetEncoderUtilization"
             )]
@@ -5061,7 +5061,7 @@ namespace ILGPU.Runtime.Cuda.API
              out uint utilization,
              out uint samplingPeriodUs);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetEncoderUtilization"
             )]
@@ -5072,7 +5072,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out uint utilization,
             [Out] out uint samplingPeriodUs);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetEncoderUtilization(
             [In] IntPtr device,
             [Out] out uint utilization,
@@ -5082,7 +5082,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out utilization,
                 out samplingPeriodUs);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetEnforcedPowerLimit"
             )]
@@ -5092,7 +5092,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint limit);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetEnforcedPowerLimit"
             )]
@@ -5102,7 +5102,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint limit);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetEnforcedPowerLimit(
             [In] IntPtr device,
             [Out] out uint limit) =>
@@ -5110,7 +5110,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out limit);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetFBCSessions"
             )]
@@ -5121,7 +5121,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint sessionCount,
              NvmlFBCSessionInfo* sessionInfos);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetFBCSessions"
             )]
@@ -5132,7 +5132,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint sessionCount,
             [In] NvmlFBCSessionInfo* sessionInfos);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetFBCSessions_Interop(
             [In] IntPtr device,
             [In] ref uint sessionCount,
@@ -5142,7 +5142,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref sessionCount,
                 sessionInfos);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetFBCStats"
             )]
@@ -5152,7 +5152,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlFBCStats fbcStats);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetFBCStats"
             )]
@@ -5162,7 +5162,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlFBCStats fbcStats);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetFBCStats(
             [In] IntPtr device,
             [Out] out NvmlFBCStats fbcStats) =>
@@ -5170,7 +5170,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out fbcStats);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetFanSpeed"
             )]
@@ -5180,7 +5180,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint speed);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetFanSpeed"
             )]
@@ -5190,7 +5190,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint speed);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetFanSpeed(
             [In] IntPtr device,
             [Out] out uint speed) =>
@@ -5198,7 +5198,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out speed);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetFanSpeed_v2"
             )]
@@ -5209,7 +5209,7 @@ namespace ILGPU.Runtime.Cuda.API
              uint fan,
              out uint speed);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetFanSpeed_v2"
             )]
@@ -5220,7 +5220,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] uint fan,
             [Out] out uint speed);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetFanSpeed(
             [In] IntPtr device,
             [In] uint fan,
@@ -5230,7 +5230,7 @@ namespace ILGPU.Runtime.Cuda.API
                 fan,
                 out speed);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetGpuOperationMode"
             )]
@@ -5241,7 +5241,7 @@ namespace ILGPU.Runtime.Cuda.API
              out NvmlGpuOperationMode current,
              out NvmlGpuOperationMode pending);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetGpuOperationMode"
             )]
@@ -5252,7 +5252,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out NvmlGpuOperationMode current,
             [Out] out NvmlGpuOperationMode pending);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetGpuOperationMode(
             [In] IntPtr device,
             [Out] out NvmlGpuOperationMode current,
@@ -5262,7 +5262,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out current,
                 out pending);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetGraphicsRunningProcesses_v2"
             )]
@@ -5273,7 +5273,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint infoCount,
              NvmlProcessInfo* infos);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetGraphicsRunningProcesses_v2"
             )]
@@ -5284,7 +5284,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint infoCount,
             [In] NvmlProcessInfo* infos);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetGraphicsRunningProcesses_v2_Interop(
             [In] IntPtr device,
             [In] ref uint infoCount,
@@ -5294,7 +5294,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref infoCount,
                 infos);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetHandleByIndex_v2"
             )]
@@ -5304,7 +5304,7 @@ namespace ILGPU.Runtime.Cuda.API
              uint index,
              out IntPtr device);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetHandleByIndex_v2"
             )]
@@ -5314,7 +5314,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] uint index,
             [Out] out IntPtr device);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetHandleByIndex(
             [In] uint index,
             [Out] out IntPtr device) =>
@@ -5322,7 +5322,7 @@ namespace ILGPU.Runtime.Cuda.API
                 index,
                 out device);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetHandleByPciBusId_v2"
             , StringMarshalling = StringMarshalling.Utf8
@@ -5333,7 +5333,7 @@ namespace ILGPU.Runtime.Cuda.API
              string pciBusId,
              out IntPtr device);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetHandleByPciBusId_v2"
             , CharSet = CharSet.Ansi
@@ -5346,7 +5346,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] string pciBusId,
             [Out] out IntPtr device);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetHandleByPciBusId(
             [In] string pciBusId,
             [Out] out IntPtr device) =>
@@ -5354,7 +5354,7 @@ namespace ILGPU.Runtime.Cuda.API
                 pciBusId,
                 out device);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetHandleBySerial"
             , StringMarshalling = StringMarshalling.Utf8
@@ -5365,7 +5365,7 @@ namespace ILGPU.Runtime.Cuda.API
              string serial,
              out IntPtr device);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetHandleBySerial"
             , CharSet = CharSet.Ansi
@@ -5378,7 +5378,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] string serial,
             [Out] out IntPtr device);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetHandleBySerial(
             [In] string serial,
             [Out] out IntPtr device) =>
@@ -5386,7 +5386,7 @@ namespace ILGPU.Runtime.Cuda.API
                 serial,
                 out device);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetHandleByUUID"
             , StringMarshalling = StringMarshalling.Utf8
@@ -5397,7 +5397,7 @@ namespace ILGPU.Runtime.Cuda.API
              string uuid,
              out IntPtr device);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetHandleByUUID"
             , CharSet = CharSet.Ansi
@@ -5410,7 +5410,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] string uuid,
             [Out] out IntPtr device);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetHandleByUUID(
             [In] string uuid,
             [Out] out IntPtr device) =>
@@ -5418,7 +5418,7 @@ namespace ILGPU.Runtime.Cuda.API
                 uuid,
                 out device);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetIndex"
             )]
@@ -5428,7 +5428,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint index);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetIndex"
             )]
@@ -5438,7 +5438,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint index);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetIndex(
             [In] IntPtr device,
             [Out] out uint index) =>
@@ -5446,7 +5446,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out index);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetInforomConfigurationChecksum"
             )]
@@ -5456,7 +5456,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint checksum);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetInforomConfigurationChecksum"
             )]
@@ -5466,7 +5466,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint checksum);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetInforomConfigurationChecksum(
             [In] IntPtr device,
             [Out] out uint checksum) =>
@@ -5474,7 +5474,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out checksum);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetInforomImageVersion"
             )]
@@ -5485,7 +5485,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr version,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetInforomImageVersion"
             )]
@@ -5496,7 +5496,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr version,
             [In] uint length);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetInforomImageVersion_Interop(
             [In] IntPtr device,
             [In] IntPtr version,
@@ -5506,7 +5506,7 @@ namespace ILGPU.Runtime.Cuda.API
                 version,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetInforomVersion"
             )]
@@ -5518,7 +5518,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr version,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetInforomVersion"
             )]
@@ -5530,7 +5530,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr version,
             [In] uint length);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetInforomVersion_Interop(
             [In] IntPtr device,
             [In] NvmlInforomObject inforomObject,
@@ -5542,7 +5542,7 @@ namespace ILGPU.Runtime.Cuda.API
                 version,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMaxClockInfo"
             )]
@@ -5553,7 +5553,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlClockType type,
              out uint clock);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMaxClockInfo"
             )]
@@ -5564,7 +5564,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlClockType type,
             [Out] out uint clock);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetMaxClockInfo(
             [In] IntPtr device,
             [In] NvmlClockType type,
@@ -5574,7 +5574,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 out clock);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMaxCustomerBoostClock"
             )]
@@ -5585,7 +5585,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlClockType clockType,
              out uint clockMHz);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMaxCustomerBoostClock"
             )]
@@ -5596,7 +5596,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlClockType clockType,
             [Out] out uint clockMHz);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetMaxCustomerBoostClock(
             [In] IntPtr device,
             [In] NvmlClockType clockType,
@@ -5606,7 +5606,7 @@ namespace ILGPU.Runtime.Cuda.API
                 clockType,
                 out clockMHz);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMaxPcieLinkGeneration"
             )]
@@ -5616,7 +5616,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint maxLinkGen);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMaxPcieLinkGeneration"
             )]
@@ -5626,7 +5626,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint maxLinkGen);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetMaxPcieLinkGeneration(
             [In] IntPtr device,
             [Out] out uint maxLinkGen) =>
@@ -5634,7 +5634,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out maxLinkGen);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMaxPcieLinkWidth"
             )]
@@ -5644,7 +5644,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint maxLinkWidth);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMaxPcieLinkWidth"
             )]
@@ -5654,7 +5654,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint maxLinkWidth);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetMaxPcieLinkWidth(
             [In] IntPtr device,
             [Out] out uint maxLinkWidth) =>
@@ -5662,7 +5662,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out maxLinkWidth);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMemoryErrorCounter"
             )]
@@ -5675,7 +5675,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlMemoryLocation locationType,
              out ulong count);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMemoryErrorCounter"
             )]
@@ -5688,7 +5688,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlMemoryLocation locationType,
             [Out] out ulong count);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetMemoryErrorCounter(
             [In] IntPtr device,
             [In] NvmlMemoryErrorType errorType,
@@ -5702,7 +5702,7 @@ namespace ILGPU.Runtime.Cuda.API
                 locationType,
                 out count);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMemoryInfo"
             )]
@@ -5712,7 +5712,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlMemory memory);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMemoryInfo"
             )]
@@ -5722,7 +5722,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlMemory memory);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetMemoryInfo(
             [In] IntPtr device,
             [Out] out NvmlMemory memory) =>
@@ -5730,7 +5730,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out memory);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMinorNumber"
             )]
@@ -5740,7 +5740,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint minorNumber);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMinorNumber"
             )]
@@ -5750,7 +5750,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint minorNumber);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetMinorNumber(
             [In] IntPtr device,
             [Out] out uint minorNumber) =>
@@ -5758,7 +5758,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out minorNumber);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMultiGpuBoard"
             )]
@@ -5768,7 +5768,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint multiGpuBool);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMultiGpuBoard"
             )]
@@ -5778,7 +5778,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint multiGpuBool);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetMultiGpuBoard(
             [In] IntPtr device,
             [Out] out uint multiGpuBool) =>
@@ -5786,7 +5786,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out multiGpuBool);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetName"
             )]
@@ -5797,7 +5797,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr name,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetName"
             )]
@@ -5808,7 +5808,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr name,
             [In] uint length);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetName_Interop(
             [In] IntPtr device,
             [In] IntPtr name,
@@ -5818,7 +5818,7 @@ namespace ILGPU.Runtime.Cuda.API
                 name,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetP2PStatus"
             )]
@@ -5830,7 +5830,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlGpuP2PCapsIndex p2pIndex,
              out NvmlGpuP2PStatus p2pStatus);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetP2PStatus"
             )]
@@ -5842,7 +5842,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlGpuP2PCapsIndex p2pIndex,
             [Out] out NvmlGpuP2PStatus p2pStatus);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetP2PStatus(
             [In] IntPtr device1,
             [In] IntPtr device2,
@@ -5854,7 +5854,7 @@ namespace ILGPU.Runtime.Cuda.API
                 p2pIndex,
                 out p2pStatus);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPciInfo_v3"
             )]
@@ -5864,7 +5864,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlPciInfo_Interop pci);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPciInfo_v3"
             )]
@@ -5874,7 +5874,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlPciInfo_Interop pci);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPciInfo_Interop(
             [In] IntPtr device,
             [Out] out NvmlPciInfo_Interop pci) =>
@@ -5882,7 +5882,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out pci);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPcieReplayCounter"
             )]
@@ -5892,7 +5892,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint value);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPcieReplayCounter"
             )]
@@ -5902,7 +5902,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint value);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPcieReplayCounter(
             [In] IntPtr device,
             [Out] out uint value) =>
@@ -5910,7 +5910,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out value);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPcieThroughput"
             )]
@@ -5921,7 +5921,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlPcieUtilCounter counter,
              out uint value);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPcieThroughput"
             )]
@@ -5932,7 +5932,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlPcieUtilCounter counter,
             [Out] out uint value);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPcieThroughput(
             [In] IntPtr device,
             [In] NvmlPcieUtilCounter counter,
@@ -5942,7 +5942,7 @@ namespace ILGPU.Runtime.Cuda.API
                 counter,
                 out value);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPerformanceState"
             )]
@@ -5952,7 +5952,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlPstates state);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPerformanceState"
             )]
@@ -5962,7 +5962,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlPstates state);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPerformanceState(
             [In] IntPtr device,
             [Out] out NvmlPstates state) =>
@@ -5970,7 +5970,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out state);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPersistenceMode"
             )]
@@ -5980,7 +5980,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlEnableState mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPersistenceMode"
             )]
@@ -5990,7 +5990,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlEnableState mode);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPersistenceMode(
             [In] IntPtr device,
             [Out] out NvmlEnableState mode) =>
@@ -5998,7 +5998,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerManagementDefaultLimit"
             )]
@@ -6008,7 +6008,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint defaultLimit);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerManagementDefaultLimit"
             )]
@@ -6018,7 +6018,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint defaultLimit);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPowerManagementDefaultLimit(
             [In] IntPtr device,
             [Out] out uint defaultLimit) =>
@@ -6026,7 +6026,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out defaultLimit);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerManagementLimit"
             )]
@@ -6036,7 +6036,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint limit);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerManagementLimit"
             )]
@@ -6046,7 +6046,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint limit);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPowerManagementLimit(
             [In] IntPtr device,
             [Out] out uint limit) =>
@@ -6054,7 +6054,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out limit);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerManagementLimitConstraints"
             )]
@@ -6065,7 +6065,7 @@ namespace ILGPU.Runtime.Cuda.API
              out uint minLimit,
              out uint maxLimit);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerManagementLimitConstraints"
             )]
@@ -6076,7 +6076,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out uint minLimit,
             [Out] out uint maxLimit);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPowerManagementLimitConstraints(
             [In] IntPtr device,
             [Out] out uint minLimit,
@@ -6086,7 +6086,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out minLimit,
                 out maxLimit);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerManagementMode"
             )]
@@ -6096,7 +6096,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlEnableState mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerManagementMode"
             )]
@@ -6106,7 +6106,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlEnableState mode);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPowerManagementMode(
             [In] IntPtr device,
             [Out] out NvmlEnableState mode) =>
@@ -6114,7 +6114,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerState"
             )]
@@ -6124,7 +6124,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlPstates pState);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerState"
             )]
@@ -6134,7 +6134,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlPstates pState);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPowerState(
             [In] IntPtr device,
             [Out] out NvmlPstates pState) =>
@@ -6142,7 +6142,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out pState);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerUsage"
             )]
@@ -6152,7 +6152,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint power);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerUsage"
             )]
@@ -6162,7 +6162,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint power);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPowerUsage(
             [In] IntPtr device,
             [Out] out uint power) =>
@@ -6170,7 +6170,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out power);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetRemappedRows"
             )]
@@ -6183,7 +6183,7 @@ namespace ILGPU.Runtime.Cuda.API
              out uint isPending,
              out uint failureOccurred);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetRemappedRows"
             )]
@@ -6196,7 +6196,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out uint isPending,
             [Out] out uint failureOccurred);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetRemappedRows(
             [In] IntPtr device,
             [Out] out uint corrRows,
@@ -6210,7 +6210,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out isPending,
                 out failureOccurred);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetRetiredPages"
             )]
@@ -6222,7 +6222,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint pageCount,
              ulong* addresses);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetRetiredPages"
             )]
@@ -6234,7 +6234,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint pageCount,
             [In] ulong* addresses);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetRetiredPages_Interop(
             [In] IntPtr device,
             [In] NvmlPageRetirementCause cause,
@@ -6246,7 +6246,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref pageCount,
                 addresses);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetRetiredPagesPendingStatus"
             )]
@@ -6256,7 +6256,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlEnableState isPending);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetRetiredPagesPendingStatus"
             )]
@@ -6266,7 +6266,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlEnableState isPending);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetRetiredPagesPendingStatus(
             [In] IntPtr device,
             [Out] out NvmlEnableState isPending) =>
@@ -6274,7 +6274,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out isPending);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetRetiredPages_v2"
             )]
@@ -6287,7 +6287,7 @@ namespace ILGPU.Runtime.Cuda.API
              ulong* addresses,
              ulong* timestamps);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetRetiredPages_v2"
             )]
@@ -6300,7 +6300,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ulong* addresses,
             [In] ulong* timestamps);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetRetiredPages_v2_Interop(
             [In] IntPtr device,
             [In] NvmlPageRetirementCause cause,
@@ -6314,7 +6314,7 @@ namespace ILGPU.Runtime.Cuda.API
                 addresses,
                 timestamps);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetSamples"
             )]
@@ -6328,7 +6328,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint sampleCount,
              NvmlSample* samples);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetSamples"
             )]
@@ -6342,7 +6342,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint sampleCount,
             [In] NvmlSample* samples);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetSamples_Interop(
             [In] IntPtr device,
             [In] NvmlSamplingType type,
@@ -6358,7 +6358,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref sampleCount,
                 samples);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetSerial"
             )]
@@ -6369,7 +6369,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr serial,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetSerial"
             )]
@@ -6380,7 +6380,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr serial,
             [In] uint length);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetSerial_Interop(
             [In] IntPtr device,
             [In] IntPtr serial,
@@ -6390,7 +6390,7 @@ namespace ILGPU.Runtime.Cuda.API
                 serial,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetSupportedClocksThrottleReasons"
             )]
@@ -6400,7 +6400,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlClocksThrottleReasons supportedClocksThrottleReasons);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetSupportedClocksThrottleReasons"
             )]
@@ -6410,7 +6410,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlClocksThrottleReasons supportedClocksThrottleReasons);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetSupportedClocksThrottleReasons(
             [In] IntPtr device,
             [Out] out NvmlClocksThrottleReasons supportedClocksThrottleReasons) =>
@@ -6418,7 +6418,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out supportedClocksThrottleReasons);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetSupportedGraphicsClocks"
             )]
@@ -6430,7 +6430,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint count,
              uint* clocksMHz);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetSupportedGraphicsClocks"
             )]
@@ -6442,7 +6442,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint count,
             [In] uint* clocksMHz);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetSupportedGraphicsClocks_Interop(
             [In] IntPtr device,
             [In] uint memoryClockMHz,
@@ -6454,7 +6454,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref count,
                 clocksMHz);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetSupportedMemoryClocks"
             )]
@@ -6465,7 +6465,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint count,
              uint* clocksMHz);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetSupportedMemoryClocks"
             )]
@@ -6476,7 +6476,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint count,
             [In] uint* clocksMHz);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetSupportedMemoryClocks_Interop(
             [In] IntPtr device,
             [In] ref uint count,
@@ -6486,7 +6486,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref count,
                 clocksMHz);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetTemperature"
             )]
@@ -6497,7 +6497,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlTemperatureSensors sensorType,
              out uint temp);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetTemperature"
             )]
@@ -6508,7 +6508,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlTemperatureSensors sensorType,
             [Out] out uint temp);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetTemperature(
             [In] IntPtr device,
             [In] NvmlTemperatureSensors sensorType,
@@ -6518,7 +6518,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sensorType,
                 out temp);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetTemperatureThreshold"
             )]
@@ -6529,7 +6529,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlTemperatureThresholds thresholdType,
              out uint temp);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetTemperatureThreshold"
             )]
@@ -6540,7 +6540,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlTemperatureThresholds thresholdType,
             [Out] out uint temp);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetTemperatureThreshold(
             [In] IntPtr device,
             [In] NvmlTemperatureThresholds thresholdType,
@@ -6550,7 +6550,7 @@ namespace ILGPU.Runtime.Cuda.API
                 thresholdType,
                 out temp);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetTopologyCommonAncestor"
             )]
@@ -6561,7 +6561,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device2,
              out NvmlGpuTopologyLevel pathInfo);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetTopologyCommonAncestor"
             )]
@@ -6572,7 +6572,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device2,
             [Out] out NvmlGpuTopologyLevel pathInfo);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetTopologyCommonAncestor(
             [In] IntPtr device1,
             [In] IntPtr device2,
@@ -6582,7 +6582,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device2,
                 out pathInfo);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetTopologyNearestGpus"
             )]
@@ -6594,7 +6594,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint count,
              IntPtr* deviceArray);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetTopologyNearestGpus"
             )]
@@ -6606,7 +6606,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint count,
             [In] IntPtr* deviceArray);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetTopologyNearestGpus_Interop(
             [In] IntPtr device,
             [In] NvmlGpuTopologyLevel level,
@@ -6618,7 +6618,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref count,
                 deviceArray);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetTotalEccErrors"
             )]
@@ -6630,7 +6630,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlEccCounterType counterType,
              out ulong eccCounts);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetTotalEccErrors"
             )]
@@ -6642,7 +6642,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlEccCounterType counterType,
             [Out] out ulong eccCounts);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetTotalEccErrors(
             [In] IntPtr device,
             [In] NvmlMemoryErrorType errorType,
@@ -6654,7 +6654,7 @@ namespace ILGPU.Runtime.Cuda.API
                 counterType,
                 out eccCounts);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetTotalEnergyConsumption"
             )]
@@ -6664,7 +6664,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out ulong energy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetTotalEnergyConsumption"
             )]
@@ -6674,7 +6674,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out ulong energy);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetTotalEnergyConsumption(
             [In] IntPtr device,
             [Out] out ulong energy) =>
@@ -6682,7 +6682,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out energy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetUUID"
             )]
@@ -6693,7 +6693,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr uuid,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetUUID"
             )]
@@ -6704,7 +6704,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr uuid,
             [In] uint length);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetUUID_Interop(
             [In] IntPtr device,
             [In] IntPtr uuid,
@@ -6714,7 +6714,7 @@ namespace ILGPU.Runtime.Cuda.API
                 uuid,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetUtilizationRates"
             )]
@@ -6724,7 +6724,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlUtilization utilization);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetUtilizationRates"
             )]
@@ -6734,7 +6734,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlUtilization utilization);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetUtilizationRates(
             [In] IntPtr device,
             [Out] out NvmlUtilization utilization) =>
@@ -6742,7 +6742,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out utilization);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetVbiosVersion"
             )]
@@ -6753,7 +6753,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr version,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetVbiosVersion"
             )]
@@ -6764,7 +6764,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr version,
             [In] uint length);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetVbiosVersion_Interop(
             [In] IntPtr device,
             [In] IntPtr version,
@@ -6774,7 +6774,7 @@ namespace ILGPU.Runtime.Cuda.API
                 version,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetViolationStatus"
             )]
@@ -6785,7 +6785,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlPerfPolicyType perfPolicyType,
              out NvmlViolationTime violTime);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetViolationStatus"
             )]
@@ -6796,7 +6796,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlPerfPolicyType perfPolicyType,
             [Out] out NvmlViolationTime violTime);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetViolationStatus(
             [In] IntPtr device,
             [In] NvmlPerfPolicyType perfPolicyType,
@@ -6806,7 +6806,7 @@ namespace ILGPU.Runtime.Cuda.API
                 perfPolicyType,
                 out violTime);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceOnSameBoard"
             )]
@@ -6817,7 +6817,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device2,
              out int onSameBoard);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceOnSameBoard"
             )]
@@ -6828,7 +6828,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device2,
             [Out] out int onSameBoard);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceOnSameBoard(
             [In] IntPtr device1,
             [In] IntPtr device2,
@@ -6838,7 +6838,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device2,
                 out onSameBoard);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceResetApplicationsClocks"
             )]
@@ -6847,7 +6847,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceResetApplicationsClocks(
              IntPtr device1);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceResetApplicationsClocks"
             )]
@@ -6856,13 +6856,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceResetApplicationsClocks(
             [In] IntPtr device1);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceResetApplicationsClocks(
             [In] IntPtr device1) =>
             nvmlDeviceResetApplicationsClocks(
                 device1);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceSetAutoBoostedClocksEnabled"
             )]
@@ -6872,7 +6872,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              NvmlEnableState enabled);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceSetAutoBoostedClocksEnabled"
             )]
@@ -6882,7 +6882,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [In] NvmlEnableState enabled);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceSetAutoBoostedClocksEnabled(
             [In] IntPtr device,
             [In] NvmlEnableState enabled) =>
@@ -6890,7 +6890,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 enabled);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceSetDefaultAutoBoostedClocksEnabled"
             )]
@@ -6901,7 +6901,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlEnableState enabled,
              uint flags);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceSetDefaultAutoBoostedClocksEnabled"
             )]
@@ -6912,7 +6912,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlEnableState enabled,
             [In] uint flags);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceSetDefaultAutoBoostedClocksEnabled(
             [In] IntPtr device,
             [In] NvmlEnableState enabled,
@@ -6922,7 +6922,7 @@ namespace ILGPU.Runtime.Cuda.API
                 enabled,
                 flags);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceValidateInforom"
             )]
@@ -6931,7 +6931,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceValidateInforom(
              IntPtr device);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceValidateInforom"
             )]
@@ -6940,13 +6940,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceValidateInforom(
             [In] IntPtr device);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceValidateInforom(
             [In] IntPtr device) =>
             nvmlDeviceValidateInforom(
                 device);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlSystemGetTopologyGpuSet"
             )]
@@ -6957,7 +6957,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint count,
              IntPtr* deviceArray);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlSystemGetTopologyGpuSet"
             )]
@@ -6968,7 +6968,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint count,
             [In] IntPtr* deviceArray);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn SystemGetTopologyGpuSet_Interop(
             [In] uint cpuNumber,
             [In] ref uint count,
@@ -6978,7 +6978,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref count,
                 deviceArray);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlVgpuInstanceGetMdevUUID"
             )]
@@ -6989,7 +6989,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr mdevUuid,
              uint size);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlVgpuInstanceGetMdevUUID"
             )]
@@ -7000,7 +7000,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr mdevUuid,
             [In] uint size);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn VgpuInstanceGetMdevUUID_Interop(
             [In] uint vgpuInstance,
             [In] IntPtr mdevUuid,
@@ -7014,7 +7014,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Device Queries - CPU and Memory Affinity
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceClearCpuAffinity"
             )]
@@ -7023,7 +7023,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceClearCpuAffinity(
              IntPtr device);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceClearCpuAffinity"
             )]
@@ -7032,13 +7032,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceClearCpuAffinity(
             [In] IntPtr device);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceClearCpuAffinity(
             [In] IntPtr device) =>
             nvmlDeviceClearCpuAffinity(
                 device);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetCpuAffinity"
             )]
@@ -7049,7 +7049,7 @@ namespace ILGPU.Runtime.Cuda.API
              uint cpuSetSize,
              ulong* cpuSet);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetCpuAffinity"
             )]
@@ -7060,7 +7060,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] uint cpuSetSize,
             [In] ulong* cpuSet);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetCpuAffinity_Interop(
             [In] IntPtr device,
             [In] uint cpuSetSize,
@@ -7070,7 +7070,7 @@ namespace ILGPU.Runtime.Cuda.API
                 cpuSetSize,
                 cpuSet);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetCpuAffinityWithinScope"
             )]
@@ -7082,7 +7082,7 @@ namespace ILGPU.Runtime.Cuda.API
              ulong* cpuSet,
              NvmlAffinityScope scope);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetCpuAffinityWithinScope"
             )]
@@ -7094,7 +7094,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ulong* cpuSet,
             [In] NvmlAffinityScope scope);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetCpuAffinityWithinScope_Interop(
             [In] IntPtr device,
             [In] uint cpuSetSize,
@@ -7106,7 +7106,7 @@ namespace ILGPU.Runtime.Cuda.API
                 cpuSet,
                 scope);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMemoryAffinity"
             )]
@@ -7118,7 +7118,7 @@ namespace ILGPU.Runtime.Cuda.API
              ulong* nodeSet,
              NvmlAffinityScope scope);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMemoryAffinity"
             )]
@@ -7130,7 +7130,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ulong* nodeSet,
             [In] NvmlAffinityScope scope);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetMemoryAffinity_Interop(
             [In] IntPtr device,
             [In] uint nodeSetSize,
@@ -7142,7 +7142,7 @@ namespace ILGPU.Runtime.Cuda.API
                 nodeSet,
                 scope);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceSetCpuAffinity"
             )]
@@ -7151,7 +7151,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceSetCpuAffinity(
              IntPtr device);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceSetCpuAffinity"
             )]
@@ -7160,7 +7160,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceSetCpuAffinity(
             [In] IntPtr device);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceSetCpuAffinity(
             [In] IntPtr device) =>
             nvmlDeviceSetCpuAffinity(
@@ -7170,7 +7170,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region System Queries
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlSystemGetCudaDriverVersion"
             )]
@@ -7179,7 +7179,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlSystemGetCudaDriverVersion(
              out int cudaDriverVersion);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlSystemGetCudaDriverVersion"
             )]
@@ -7188,13 +7188,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlSystemGetCudaDriverVersion(
             [Out] out int cudaDriverVersion);
 
-#endif
+        #endif
         public sealed override NvmlReturn SystemGetCudaDriverVersion_Interop(
             [Out] out int cudaDriverVersion) =>
             nvmlSystemGetCudaDriverVersion(
                 out cudaDriverVersion);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlSystemGetCudaDriverVersion_v2"
             )]
@@ -7203,7 +7203,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlSystemGetCudaDriverVersion_v2(
              out int cudaDriverVersion);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlSystemGetCudaDriverVersion_v2"
             )]
@@ -7212,13 +7212,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlSystemGetCudaDriverVersion_v2(
             [Out] out int cudaDriverVersion);
 
-#endif
+        #endif
         public sealed override NvmlReturn SystemGetCudaDriverVersion_v2_Interop(
             [Out] out int cudaDriverVersion) =>
             nvmlSystemGetCudaDriverVersion_v2(
                 out cudaDriverVersion);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlSystemGetDriverVersion"
             )]
@@ -7228,7 +7228,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr name,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlSystemGetDriverVersion"
             )]
@@ -7238,7 +7238,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr name,
             [In] uint length);
 
-#endif
+        #endif
         public sealed override NvmlReturn SystemGetDriverVersion_Interop(
             [In] IntPtr name,
             [In] uint length) =>
@@ -7246,7 +7246,7 @@ namespace ILGPU.Runtime.Cuda.API
                 name,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlSystemGetNVMLVersion"
             )]
@@ -7256,7 +7256,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr name,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlSystemGetNVMLVersion"
             )]
@@ -7266,7 +7266,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr name,
             [In] uint length);
 
-#endif
+        #endif
         public sealed override NvmlReturn SystemGetNVMLVersion_Interop(
             [In] IntPtr name,
             [In] uint length) =>
@@ -7274,7 +7274,7 @@ namespace ILGPU.Runtime.Cuda.API
                 name,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlSystemGetProcessName"
             )]
@@ -7285,7 +7285,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr name,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlSystemGetProcessName"
             )]
@@ -7296,7 +7296,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr name,
             [In] uint length);
 
-#endif
+        #endif
         public sealed override NvmlReturn SystemGetProcessName_Interop(
             [In] uint pid,
             [In] IntPtr name,
@@ -7310,7 +7310,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Unit Queries
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlSystemGetHicVersion"
             )]
@@ -7320,7 +7320,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint hwbcCount,
              NvmlHwbcEntry_Interop* hwbcEntries);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlSystemGetHicVersion"
             )]
@@ -7330,7 +7330,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint hwbcCount,
             [In] NvmlHwbcEntry_Interop* hwbcEntries);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn SystemGetHicVersion_Interop(
             [In] ref uint hwbcCount,
             [In] NvmlHwbcEntry_Interop* hwbcEntries) =>
@@ -7338,7 +7338,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref hwbcCount,
                 hwbcEntries);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlUnitGetCount"
             )]
@@ -7347,7 +7347,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlUnitGetCount(
              out uint unitCount);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlUnitGetCount"
             )]
@@ -7356,13 +7356,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlUnitGetCount(
             [Out] out uint unitCount);
 
-#endif
+        #endif
         public sealed override NvmlReturn UnitGetCount(
             [Out] out uint unitCount) =>
             nvmlUnitGetCount(
                 out unitCount);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlUnitGetDevices"
             )]
@@ -7373,7 +7373,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint deviceCount,
              IntPtr* devices);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlUnitGetDevices"
             )]
@@ -7384,7 +7384,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint deviceCount,
             [In] IntPtr* devices);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn UnitGetDevices_Interop(
             [In] IntPtr unit,
             [In] ref uint deviceCount,
@@ -7394,7 +7394,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref deviceCount,
                 devices);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlUnitGetFanSpeedInfo"
             )]
@@ -7404,7 +7404,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr unit,
              out NvmlUnitFanSpeeds_Interop fanSpeeds);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlUnitGetFanSpeedInfo"
             )]
@@ -7414,7 +7414,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr unit,
             [Out] out NvmlUnitFanSpeeds_Interop fanSpeeds);
 
-#endif
+        #endif
         public sealed override NvmlReturn UnitGetFanSpeedInfo_Interop(
             [In] IntPtr unit,
             [Out] out NvmlUnitFanSpeeds_Interop fanSpeeds) =>
@@ -7422,7 +7422,7 @@ namespace ILGPU.Runtime.Cuda.API
                 unit,
                 out fanSpeeds);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlUnitGetHandleByIndex"
             )]
@@ -7432,7 +7432,7 @@ namespace ILGPU.Runtime.Cuda.API
              uint index,
              out IntPtr unit);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlUnitGetHandleByIndex"
             )]
@@ -7442,7 +7442,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] uint index,
             [Out] out IntPtr unit);
 
-#endif
+        #endif
         public sealed override NvmlReturn UnitGetHandleByIndex(
             [In] uint index,
             [Out] out IntPtr unit) =>
@@ -7450,7 +7450,7 @@ namespace ILGPU.Runtime.Cuda.API
                 index,
                 out unit);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlUnitGetLedState"
             )]
@@ -7460,7 +7460,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr unit,
              out NvmlLedState_Interop state);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlUnitGetLedState"
             )]
@@ -7470,7 +7470,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr unit,
             [Out] out NvmlLedState_Interop state);
 
-#endif
+        #endif
         public sealed override NvmlReturn UnitGetLedState_Interop(
             [In] IntPtr unit,
             [Out] out NvmlLedState_Interop state) =>
@@ -7478,7 +7478,7 @@ namespace ILGPU.Runtime.Cuda.API
                 unit,
                 out state);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlUnitGetPsuInfo"
             )]
@@ -7488,7 +7488,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr unit,
              out NvmlPSUInfo_Interop psu);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlUnitGetPsuInfo"
             )]
@@ -7498,7 +7498,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr unit,
             [Out] out NvmlPSUInfo_Interop psu);
 
-#endif
+        #endif
         public sealed override NvmlReturn UnitGetPsuInfo_Interop(
             [In] IntPtr unit,
             [Out] out NvmlPSUInfo_Interop psu) =>
@@ -7506,7 +7506,7 @@ namespace ILGPU.Runtime.Cuda.API
                 unit,
                 out psu);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlUnitGetTemperature"
             )]
@@ -7517,7 +7517,7 @@ namespace ILGPU.Runtime.Cuda.API
              uint type,
              out uint temp);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlUnitGetTemperature"
             )]
@@ -7528,7 +7528,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] uint type,
             [Out] out uint temp);
 
-#endif
+        #endif
         public sealed override NvmlReturn UnitGetTemperature(
             [In] IntPtr unit,
             [In] uint type,
@@ -7538,7 +7538,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 out temp);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlUnitGetUnitInfo"
             )]
@@ -7548,7 +7548,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr unit,
              out NvmlUnitInfo_Interop info);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlUnitGetUnitInfo"
             )]
@@ -7558,7 +7558,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr unit,
             [Out] out NvmlUnitInfo_Interop info);
 
-#endif
+        #endif
         public sealed override NvmlReturn UnitGetUnitInfo_Interop(
             [In] IntPtr unit,
             [Out] out NvmlUnitInfo_Interop info) =>
@@ -7583,7 +7583,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Initialization
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlInit_v2"
             )]
@@ -7592,7 +7592,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlInit_v2(
               );
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlInit_v2"
             )]
@@ -7601,13 +7601,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlInit_v2(
               );
 
-#endif
+        #endif
         public sealed override NvmlReturn Init(
               ) =>
             nvmlInit_v2(
                 );
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlShutdown"
             )]
@@ -7616,7 +7616,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlShutdown(
               );
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlShutdown"
             )]
@@ -7625,7 +7625,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlShutdown(
               );
 
-#endif
+        #endif
         public sealed override NvmlReturn Shutdown(
               ) =>
             nvmlShutdown(
@@ -7635,7 +7635,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Device Queries
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetAPIRestriction"
             )]
@@ -7646,7 +7646,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlRestrictedAPI apiType,
              out NvmlEnableState isRestricted);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetAPIRestriction"
             )]
@@ -7657,7 +7657,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlRestrictedAPI apiType,
             [Out] out NvmlEnableState isRestricted);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetAPIRestriction(
             [In] IntPtr device,
             [In] NvmlRestrictedAPI apiType,
@@ -7667,7 +7667,7 @@ namespace ILGPU.Runtime.Cuda.API
                 apiType,
                 out isRestricted);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetApplicationsClock"
             )]
@@ -7678,7 +7678,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlClockType clockType,
              out uint clockMHz);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetApplicationsClock"
             )]
@@ -7689,7 +7689,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlClockType clockType,
             [Out] out uint clockMHz);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetApplicationsClock(
             [In] IntPtr device,
             [In] NvmlClockType clockType,
@@ -7699,7 +7699,7 @@ namespace ILGPU.Runtime.Cuda.API
                 clockType,
                 out clockMHz);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetArchitecture"
             )]
@@ -7709,7 +7709,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlDeviceArchitecture arch);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetArchitecture"
             )]
@@ -7719,7 +7719,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlDeviceArchitecture arch);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetArchitecture(
             [In] IntPtr device,
             [Out] out NvmlDeviceArchitecture arch) =>
@@ -7727,7 +7727,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out arch);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetAttributes"
             )]
@@ -7737,7 +7737,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlDeviceAttributes attributes);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetAttributes"
             )]
@@ -7747,7 +7747,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlDeviceAttributes attributes);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetAttributes(
             [In] IntPtr device,
             [Out] out NvmlDeviceAttributes attributes) =>
@@ -7755,7 +7755,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out attributes);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetAutoBoostedClocksEnabled"
             )]
@@ -7766,7 +7766,7 @@ namespace ILGPU.Runtime.Cuda.API
              out NvmlEnableState isEnabled,
              out NvmlEnableState defaultIsEnabled);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetAutoBoostedClocksEnabled"
             )]
@@ -7777,7 +7777,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out NvmlEnableState isEnabled,
             [Out] out NvmlEnableState defaultIsEnabled);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetAutoBoostedClocksEnabled(
             [In] IntPtr device,
             [Out] out NvmlEnableState isEnabled,
@@ -7787,7 +7787,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out isEnabled,
                 out defaultIsEnabled);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetBAR1MemoryInfo"
             )]
@@ -7797,7 +7797,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlBAR1Memory bar1Memory);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetBAR1MemoryInfo"
             )]
@@ -7807,7 +7807,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlBAR1Memory bar1Memory);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetBAR1MemoryInfo(
             [In] IntPtr device,
             [Out] out NvmlBAR1Memory bar1Memory) =>
@@ -7815,7 +7815,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out bar1Memory);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetBoardId"
             )]
@@ -7825,7 +7825,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint boardId);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetBoardId"
             )]
@@ -7835,7 +7835,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint boardId);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetBoardId(
             [In] IntPtr device,
             [Out] out uint boardId) =>
@@ -7843,7 +7843,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out boardId);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetBoardPartNumber"
             )]
@@ -7854,7 +7854,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr partNumber,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetBoardPartNumber"
             )]
@@ -7865,7 +7865,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr partNumber,
             [In] uint length);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetBoardPartNumber_Interop(
             [In] IntPtr device,
             [In] IntPtr partNumber,
@@ -7875,7 +7875,7 @@ namespace ILGPU.Runtime.Cuda.API
                 partNumber,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetBrand"
             )]
@@ -7885,7 +7885,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlBrandType type);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetBrand"
             )]
@@ -7895,7 +7895,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlBrandType type);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetBrand(
             [In] IntPtr device,
             [Out] out NvmlBrandType type) =>
@@ -7903,7 +7903,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out type);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetBridgeChipInfo"
             )]
@@ -7913,7 +7913,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlBridgeChipHierarchy_Interop bridgeHierarchy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetBridgeChipInfo"
             )]
@@ -7923,7 +7923,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlBridgeChipHierarchy_Interop bridgeHierarchy);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetBridgeChipInfo_Interop(
             [In] IntPtr device,
             [Out] out NvmlBridgeChipHierarchy_Interop bridgeHierarchy) =>
@@ -7931,7 +7931,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out bridgeHierarchy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetClock"
             )]
@@ -7943,7 +7943,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlClockId clockId,
              out uint clockMHz);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetClock"
             )]
@@ -7955,7 +7955,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlClockId clockId,
             [Out] out uint clockMHz);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetClock(
             [In] IntPtr device,
             [In] NvmlClockType clockType,
@@ -7967,7 +7967,7 @@ namespace ILGPU.Runtime.Cuda.API
                 clockId,
                 out clockMHz);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetClockInfo"
             )]
@@ -7978,7 +7978,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlClockType clockType,
              out uint clock);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetClockInfo"
             )]
@@ -7989,7 +7989,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlClockType clockType,
             [Out] out uint clock);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetClockInfo(
             [In] IntPtr device,
             [In] NvmlClockType clockType,
@@ -7999,7 +7999,7 @@ namespace ILGPU.Runtime.Cuda.API
                 clockType,
                 out clock);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetComputeMode"
             )]
@@ -8009,7 +8009,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlComputeMode mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetComputeMode"
             )]
@@ -8019,7 +8019,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlComputeMode mode);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetComputeMode(
             [In] IntPtr device,
             [Out] out NvmlComputeMode mode) =>
@@ -8027,7 +8027,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetComputeRunningProcesses_v2"
             )]
@@ -8038,7 +8038,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint infoCount,
              NvmlProcessInfo* infos);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetComputeRunningProcesses_v2"
             )]
@@ -8049,7 +8049,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint infoCount,
             [In] NvmlProcessInfo* infos);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetComputeRunningProcesses_v2_Interop(
             [In] IntPtr device,
             [In] ref uint infoCount,
@@ -8059,7 +8059,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref infoCount,
                 infos);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetCount_v2"
             )]
@@ -8068,7 +8068,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceGetCount_v2(
              out uint deviceCount);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetCount_v2"
             )]
@@ -8077,13 +8077,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceGetCount_v2(
             [Out] out uint deviceCount);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetCount(
             [Out] out uint deviceCount) =>
             nvmlDeviceGetCount_v2(
                 out deviceCount);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetCudaComputeCapability"
             )]
@@ -8094,7 +8094,7 @@ namespace ILGPU.Runtime.Cuda.API
              out int major,
              out int minor);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetCudaComputeCapability"
             )]
@@ -8105,7 +8105,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out int major,
             [Out] out int minor);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetCudaComputeCapability(
             [In] IntPtr device,
             [Out] out int major,
@@ -8115,7 +8115,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out major,
                 out minor);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetCurrPcieLinkGeneration"
             )]
@@ -8125,7 +8125,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint currLinkGen);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetCurrPcieLinkGeneration"
             )]
@@ -8135,7 +8135,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint currLinkGen);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetCurrPcieLinkGeneration(
             [In] IntPtr device,
             [Out] out uint currLinkGen) =>
@@ -8143,7 +8143,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out currLinkGen);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetCurrPcieLinkWidth"
             )]
@@ -8153,7 +8153,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint currLinkWidth);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetCurrPcieLinkWidth"
             )]
@@ -8163,7 +8163,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint currLinkWidth);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetCurrPcieLinkWidth(
             [In] IntPtr device,
             [Out] out uint currLinkWidth) =>
@@ -8171,7 +8171,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out currLinkWidth);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetCurrentClocksThrottleReasons"
             )]
@@ -8181,7 +8181,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out ulong clocksThrottleReasons);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetCurrentClocksThrottleReasons"
             )]
@@ -8191,7 +8191,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out ulong clocksThrottleReasons);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetCurrentClocksThrottleReasons(
             [In] IntPtr device,
             [Out] out ulong clocksThrottleReasons) =>
@@ -8199,7 +8199,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out clocksThrottleReasons);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetDecoderUtilization"
             )]
@@ -8210,7 +8210,7 @@ namespace ILGPU.Runtime.Cuda.API
              out uint utilization,
              out uint samplingPeriodUs);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetDecoderUtilization"
             )]
@@ -8221,7 +8221,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out uint utilization,
             [Out] out uint samplingPeriodUs);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetDecoderUtilization(
             [In] IntPtr device,
             [Out] out uint utilization,
@@ -8231,7 +8231,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out utilization,
                 out samplingPeriodUs);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetDefaultApplicationsClock"
             )]
@@ -8242,7 +8242,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlClockType clockType,
              out uint clockMHz);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetDefaultApplicationsClock"
             )]
@@ -8253,7 +8253,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlClockType clockType,
             [Out] out uint clockMHz);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetDefaultApplicationsClock(
             [In] IntPtr device,
             [In] NvmlClockType clockType,
@@ -8263,7 +8263,7 @@ namespace ILGPU.Runtime.Cuda.API
                 clockType,
                 out clockMHz);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetDetailedEccErrors"
             )]
@@ -8275,7 +8275,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlEccCounterType counterType,
              out NvmlEccErrorCounts eccCounts);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetDetailedEccErrors"
             )]
@@ -8287,7 +8287,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlEccCounterType counterType,
             [Out] out NvmlEccErrorCounts eccCounts);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetDetailedEccErrors(
             [In] IntPtr device,
             [In] NvmlMemoryErrorType errorType,
@@ -8299,7 +8299,7 @@ namespace ILGPU.Runtime.Cuda.API
                 counterType,
                 out eccCounts);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetDisplayActive"
             )]
@@ -8309,7 +8309,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlEnableState isActive);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetDisplayActive"
             )]
@@ -8319,7 +8319,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlEnableState isActive);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetDisplayActive(
             [In] IntPtr device,
             [Out] out NvmlEnableState isActive) =>
@@ -8327,7 +8327,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out isActive);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetDisplayMode"
             )]
@@ -8337,7 +8337,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlEnableState display);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetDisplayMode"
             )]
@@ -8347,7 +8347,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlEnableState display);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetDisplayMode(
             [In] IntPtr device,
             [Out] out NvmlEnableState display) =>
@@ -8355,7 +8355,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out display);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetDriverModel"
             )]
@@ -8366,7 +8366,7 @@ namespace ILGPU.Runtime.Cuda.API
              out NvmlDriverModel current,
              out NvmlDriverModel pending);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetDriverModel"
             )]
@@ -8377,7 +8377,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out NvmlDriverModel current,
             [Out] out NvmlDriverModel pending);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetDriverModel(
             [In] IntPtr device,
             [Out] out NvmlDriverModel current,
@@ -8387,7 +8387,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out current,
                 out pending);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetEccMode"
             )]
@@ -8398,7 +8398,7 @@ namespace ILGPU.Runtime.Cuda.API
              out NvmlEnableState current,
              out NvmlEnableState pending);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetEccMode"
             )]
@@ -8409,7 +8409,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out NvmlEnableState current,
             [Out] out NvmlEnableState pending);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetEccMode(
             [In] IntPtr device,
             [Out] out NvmlEnableState current,
@@ -8419,7 +8419,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out current,
                 out pending);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetEncoderCapacity"
             )]
@@ -8430,7 +8430,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlEncoderType encoderQueryType,
              out uint encoderCapacity);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetEncoderCapacity"
             )]
@@ -8441,7 +8441,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlEncoderType encoderQueryType,
             [Out] out uint encoderCapacity);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetEncoderCapacity(
             [In] IntPtr device,
             [In] NvmlEncoderType encoderQueryType,
@@ -8451,7 +8451,7 @@ namespace ILGPU.Runtime.Cuda.API
                 encoderQueryType,
                 out encoderCapacity);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetEncoderSessions"
             )]
@@ -8462,7 +8462,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint sessionCount,
              NvmlEncoderSessionInfo* sessionInfos);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetEncoderSessions"
             )]
@@ -8473,7 +8473,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint sessionCount,
             [In] NvmlEncoderSessionInfo* sessionInfos);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetEncoderSessions_Interop(
             [In] IntPtr device,
             [In] ref uint sessionCount,
@@ -8483,7 +8483,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref sessionCount,
                 sessionInfos);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetEncoderStats"
             )]
@@ -8495,7 +8495,7 @@ namespace ILGPU.Runtime.Cuda.API
              out uint averageFps,
              out uint averageLatency);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetEncoderStats"
             )]
@@ -8507,7 +8507,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out uint averageFps,
             [Out] out uint averageLatency);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetEncoderStats(
             [In] IntPtr device,
             [Out] out uint sessionCount,
@@ -8519,7 +8519,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out averageFps,
                 out averageLatency);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetEncoderUtilization"
             )]
@@ -8530,7 +8530,7 @@ namespace ILGPU.Runtime.Cuda.API
              out uint utilization,
              out uint samplingPeriodUs);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetEncoderUtilization"
             )]
@@ -8541,7 +8541,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out uint utilization,
             [Out] out uint samplingPeriodUs);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetEncoderUtilization(
             [In] IntPtr device,
             [Out] out uint utilization,
@@ -8551,7 +8551,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out utilization,
                 out samplingPeriodUs);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetEnforcedPowerLimit"
             )]
@@ -8561,7 +8561,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint limit);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetEnforcedPowerLimit"
             )]
@@ -8571,7 +8571,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint limit);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetEnforcedPowerLimit(
             [In] IntPtr device,
             [Out] out uint limit) =>
@@ -8579,7 +8579,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out limit);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetFBCSessions"
             )]
@@ -8590,7 +8590,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint sessionCount,
              NvmlFBCSessionInfo* sessionInfos);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetFBCSessions"
             )]
@@ -8601,7 +8601,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint sessionCount,
             [In] NvmlFBCSessionInfo* sessionInfos);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetFBCSessions_Interop(
             [In] IntPtr device,
             [In] ref uint sessionCount,
@@ -8611,7 +8611,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref sessionCount,
                 sessionInfos);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetFBCStats"
             )]
@@ -8621,7 +8621,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlFBCStats fbcStats);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetFBCStats"
             )]
@@ -8631,7 +8631,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlFBCStats fbcStats);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetFBCStats(
             [In] IntPtr device,
             [Out] out NvmlFBCStats fbcStats) =>
@@ -8639,7 +8639,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out fbcStats);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetFanSpeed"
             )]
@@ -8649,7 +8649,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint speed);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetFanSpeed"
             )]
@@ -8659,7 +8659,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint speed);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetFanSpeed(
             [In] IntPtr device,
             [Out] out uint speed) =>
@@ -8667,7 +8667,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out speed);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetFanSpeed_v2"
             )]
@@ -8678,7 +8678,7 @@ namespace ILGPU.Runtime.Cuda.API
              uint fan,
              out uint speed);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetFanSpeed_v2"
             )]
@@ -8689,7 +8689,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] uint fan,
             [Out] out uint speed);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetFanSpeed(
             [In] IntPtr device,
             [In] uint fan,
@@ -8699,7 +8699,7 @@ namespace ILGPU.Runtime.Cuda.API
                 fan,
                 out speed);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetGpuOperationMode"
             )]
@@ -8710,7 +8710,7 @@ namespace ILGPU.Runtime.Cuda.API
              out NvmlGpuOperationMode current,
              out NvmlGpuOperationMode pending);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetGpuOperationMode"
             )]
@@ -8721,7 +8721,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out NvmlGpuOperationMode current,
             [Out] out NvmlGpuOperationMode pending);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetGpuOperationMode(
             [In] IntPtr device,
             [Out] out NvmlGpuOperationMode current,
@@ -8731,7 +8731,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out current,
                 out pending);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetGraphicsRunningProcesses_v2"
             )]
@@ -8742,7 +8742,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint infoCount,
              NvmlProcessInfo* infos);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetGraphicsRunningProcesses_v2"
             )]
@@ -8753,7 +8753,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint infoCount,
             [In] NvmlProcessInfo* infos);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetGraphicsRunningProcesses_v2_Interop(
             [In] IntPtr device,
             [In] ref uint infoCount,
@@ -8763,7 +8763,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref infoCount,
                 infos);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetHandleByIndex_v2"
             )]
@@ -8773,7 +8773,7 @@ namespace ILGPU.Runtime.Cuda.API
              uint index,
              out IntPtr device);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetHandleByIndex_v2"
             )]
@@ -8783,7 +8783,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] uint index,
             [Out] out IntPtr device);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetHandleByIndex(
             [In] uint index,
             [Out] out IntPtr device) =>
@@ -8791,7 +8791,7 @@ namespace ILGPU.Runtime.Cuda.API
                 index,
                 out device);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetHandleByPciBusId_v2"
             , StringMarshalling = StringMarshalling.Utf8
@@ -8802,7 +8802,7 @@ namespace ILGPU.Runtime.Cuda.API
              string pciBusId,
              out IntPtr device);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetHandleByPciBusId_v2"
             , CharSet = CharSet.Ansi
@@ -8815,7 +8815,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] string pciBusId,
             [Out] out IntPtr device);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetHandleByPciBusId(
             [In] string pciBusId,
             [Out] out IntPtr device) =>
@@ -8823,7 +8823,7 @@ namespace ILGPU.Runtime.Cuda.API
                 pciBusId,
                 out device);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetHandleBySerial"
             , StringMarshalling = StringMarshalling.Utf8
@@ -8834,7 +8834,7 @@ namespace ILGPU.Runtime.Cuda.API
              string serial,
              out IntPtr device);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetHandleBySerial"
             , CharSet = CharSet.Ansi
@@ -8847,7 +8847,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] string serial,
             [Out] out IntPtr device);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetHandleBySerial(
             [In] string serial,
             [Out] out IntPtr device) =>
@@ -8855,7 +8855,7 @@ namespace ILGPU.Runtime.Cuda.API
                 serial,
                 out device);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetHandleByUUID"
             , StringMarshalling = StringMarshalling.Utf8
@@ -8866,7 +8866,7 @@ namespace ILGPU.Runtime.Cuda.API
              string uuid,
              out IntPtr device);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetHandleByUUID"
             , CharSet = CharSet.Ansi
@@ -8879,7 +8879,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] string uuid,
             [Out] out IntPtr device);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetHandleByUUID(
             [In] string uuid,
             [Out] out IntPtr device) =>
@@ -8887,7 +8887,7 @@ namespace ILGPU.Runtime.Cuda.API
                 uuid,
                 out device);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetIndex"
             )]
@@ -8897,7 +8897,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint index);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetIndex"
             )]
@@ -8907,7 +8907,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint index);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetIndex(
             [In] IntPtr device,
             [Out] out uint index) =>
@@ -8915,7 +8915,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out index);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetInforomConfigurationChecksum"
             )]
@@ -8925,7 +8925,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint checksum);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetInforomConfigurationChecksum"
             )]
@@ -8935,7 +8935,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint checksum);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetInforomConfigurationChecksum(
             [In] IntPtr device,
             [Out] out uint checksum) =>
@@ -8943,7 +8943,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out checksum);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetInforomImageVersion"
             )]
@@ -8954,7 +8954,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr version,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetInforomImageVersion"
             )]
@@ -8965,7 +8965,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr version,
             [In] uint length);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetInforomImageVersion_Interop(
             [In] IntPtr device,
             [In] IntPtr version,
@@ -8975,7 +8975,7 @@ namespace ILGPU.Runtime.Cuda.API
                 version,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetInforomVersion"
             )]
@@ -8987,7 +8987,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr version,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetInforomVersion"
             )]
@@ -8999,7 +8999,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr version,
             [In] uint length);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetInforomVersion_Interop(
             [In] IntPtr device,
             [In] NvmlInforomObject inforomObject,
@@ -9011,7 +9011,7 @@ namespace ILGPU.Runtime.Cuda.API
                 version,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMaxClockInfo"
             )]
@@ -9022,7 +9022,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlClockType type,
              out uint clock);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMaxClockInfo"
             )]
@@ -9033,7 +9033,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlClockType type,
             [Out] out uint clock);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetMaxClockInfo(
             [In] IntPtr device,
             [In] NvmlClockType type,
@@ -9043,7 +9043,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 out clock);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMaxCustomerBoostClock"
             )]
@@ -9054,7 +9054,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlClockType clockType,
              out uint clockMHz);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMaxCustomerBoostClock"
             )]
@@ -9065,7 +9065,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlClockType clockType,
             [Out] out uint clockMHz);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetMaxCustomerBoostClock(
             [In] IntPtr device,
             [In] NvmlClockType clockType,
@@ -9075,7 +9075,7 @@ namespace ILGPU.Runtime.Cuda.API
                 clockType,
                 out clockMHz);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMaxPcieLinkGeneration"
             )]
@@ -9085,7 +9085,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint maxLinkGen);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMaxPcieLinkGeneration"
             )]
@@ -9095,7 +9095,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint maxLinkGen);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetMaxPcieLinkGeneration(
             [In] IntPtr device,
             [Out] out uint maxLinkGen) =>
@@ -9103,7 +9103,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out maxLinkGen);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMaxPcieLinkWidth"
             )]
@@ -9113,7 +9113,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint maxLinkWidth);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMaxPcieLinkWidth"
             )]
@@ -9123,7 +9123,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint maxLinkWidth);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetMaxPcieLinkWidth(
             [In] IntPtr device,
             [Out] out uint maxLinkWidth) =>
@@ -9131,7 +9131,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out maxLinkWidth);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMemoryErrorCounter"
             )]
@@ -9144,7 +9144,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlMemoryLocation locationType,
              out ulong count);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMemoryErrorCounter"
             )]
@@ -9157,7 +9157,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlMemoryLocation locationType,
             [Out] out ulong count);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetMemoryErrorCounter(
             [In] IntPtr device,
             [In] NvmlMemoryErrorType errorType,
@@ -9171,7 +9171,7 @@ namespace ILGPU.Runtime.Cuda.API
                 locationType,
                 out count);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMemoryInfo"
             )]
@@ -9181,7 +9181,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlMemory memory);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMemoryInfo"
             )]
@@ -9191,7 +9191,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlMemory memory);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetMemoryInfo(
             [In] IntPtr device,
             [Out] out NvmlMemory memory) =>
@@ -9199,7 +9199,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out memory);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMinorNumber"
             )]
@@ -9209,7 +9209,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint minorNumber);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMinorNumber"
             )]
@@ -9219,7 +9219,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint minorNumber);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetMinorNumber(
             [In] IntPtr device,
             [Out] out uint minorNumber) =>
@@ -9227,7 +9227,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out minorNumber);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMultiGpuBoard"
             )]
@@ -9237,7 +9237,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint multiGpuBool);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMultiGpuBoard"
             )]
@@ -9247,7 +9247,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint multiGpuBool);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetMultiGpuBoard(
             [In] IntPtr device,
             [Out] out uint multiGpuBool) =>
@@ -9255,7 +9255,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out multiGpuBool);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetName"
             )]
@@ -9266,7 +9266,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr name,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetName"
             )]
@@ -9277,7 +9277,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr name,
             [In] uint length);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetName_Interop(
             [In] IntPtr device,
             [In] IntPtr name,
@@ -9287,7 +9287,7 @@ namespace ILGPU.Runtime.Cuda.API
                 name,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetP2PStatus"
             )]
@@ -9299,7 +9299,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlGpuP2PCapsIndex p2pIndex,
              out NvmlGpuP2PStatus p2pStatus);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetP2PStatus"
             )]
@@ -9311,7 +9311,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlGpuP2PCapsIndex p2pIndex,
             [Out] out NvmlGpuP2PStatus p2pStatus);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetP2PStatus(
             [In] IntPtr device1,
             [In] IntPtr device2,
@@ -9323,7 +9323,7 @@ namespace ILGPU.Runtime.Cuda.API
                 p2pIndex,
                 out p2pStatus);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPciInfo_v3"
             )]
@@ -9333,7 +9333,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlPciInfo_Interop pci);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPciInfo_v3"
             )]
@@ -9343,7 +9343,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlPciInfo_Interop pci);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPciInfo_Interop(
             [In] IntPtr device,
             [Out] out NvmlPciInfo_Interop pci) =>
@@ -9351,7 +9351,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out pci);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPcieReplayCounter"
             )]
@@ -9361,7 +9361,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint value);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPcieReplayCounter"
             )]
@@ -9371,7 +9371,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint value);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPcieReplayCounter(
             [In] IntPtr device,
             [Out] out uint value) =>
@@ -9379,7 +9379,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out value);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPcieThroughput"
             )]
@@ -9390,7 +9390,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlPcieUtilCounter counter,
              out uint value);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPcieThroughput"
             )]
@@ -9401,7 +9401,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlPcieUtilCounter counter,
             [Out] out uint value);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPcieThroughput(
             [In] IntPtr device,
             [In] NvmlPcieUtilCounter counter,
@@ -9411,7 +9411,7 @@ namespace ILGPU.Runtime.Cuda.API
                 counter,
                 out value);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPerformanceState"
             )]
@@ -9421,7 +9421,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlPstates state);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPerformanceState"
             )]
@@ -9431,7 +9431,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlPstates state);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPerformanceState(
             [In] IntPtr device,
             [Out] out NvmlPstates state) =>
@@ -9439,7 +9439,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out state);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPersistenceMode"
             )]
@@ -9449,7 +9449,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlEnableState mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPersistenceMode"
             )]
@@ -9459,7 +9459,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlEnableState mode);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPersistenceMode(
             [In] IntPtr device,
             [Out] out NvmlEnableState mode) =>
@@ -9467,7 +9467,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerManagementDefaultLimit"
             )]
@@ -9477,7 +9477,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint defaultLimit);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerManagementDefaultLimit"
             )]
@@ -9487,7 +9487,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint defaultLimit);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPowerManagementDefaultLimit(
             [In] IntPtr device,
             [Out] out uint defaultLimit) =>
@@ -9495,7 +9495,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out defaultLimit);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerManagementLimit"
             )]
@@ -9505,7 +9505,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint limit);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerManagementLimit"
             )]
@@ -9515,7 +9515,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint limit);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPowerManagementLimit(
             [In] IntPtr device,
             [Out] out uint limit) =>
@@ -9523,7 +9523,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out limit);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerManagementLimitConstraints"
             )]
@@ -9534,7 +9534,7 @@ namespace ILGPU.Runtime.Cuda.API
              out uint minLimit,
              out uint maxLimit);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerManagementLimitConstraints"
             )]
@@ -9545,7 +9545,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out uint minLimit,
             [Out] out uint maxLimit);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPowerManagementLimitConstraints(
             [In] IntPtr device,
             [Out] out uint minLimit,
@@ -9555,7 +9555,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out minLimit,
                 out maxLimit);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerManagementMode"
             )]
@@ -9565,7 +9565,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlEnableState mode);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerManagementMode"
             )]
@@ -9575,7 +9575,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlEnableState mode);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPowerManagementMode(
             [In] IntPtr device,
             [Out] out NvmlEnableState mode) =>
@@ -9583,7 +9583,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out mode);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerState"
             )]
@@ -9593,7 +9593,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlPstates pState);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerState"
             )]
@@ -9603,7 +9603,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlPstates pState);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPowerState(
             [In] IntPtr device,
             [Out] out NvmlPstates pState) =>
@@ -9611,7 +9611,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out pState);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerUsage"
             )]
@@ -9621,7 +9621,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out uint power);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetPowerUsage"
             )]
@@ -9631,7 +9631,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out uint power);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetPowerUsage(
             [In] IntPtr device,
             [Out] out uint power) =>
@@ -9639,7 +9639,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out power);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetRemappedRows"
             )]
@@ -9652,7 +9652,7 @@ namespace ILGPU.Runtime.Cuda.API
              out uint isPending,
              out uint failureOccurred);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetRemappedRows"
             )]
@@ -9665,7 +9665,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out uint isPending,
             [Out] out uint failureOccurred);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetRemappedRows(
             [In] IntPtr device,
             [Out] out uint corrRows,
@@ -9679,7 +9679,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out isPending,
                 out failureOccurred);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetRetiredPages"
             )]
@@ -9691,7 +9691,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint pageCount,
              ulong* addresses);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetRetiredPages"
             )]
@@ -9703,7 +9703,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint pageCount,
             [In] ulong* addresses);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetRetiredPages_Interop(
             [In] IntPtr device,
             [In] NvmlPageRetirementCause cause,
@@ -9715,7 +9715,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref pageCount,
                 addresses);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetRetiredPagesPendingStatus"
             )]
@@ -9725,7 +9725,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlEnableState isPending);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetRetiredPagesPendingStatus"
             )]
@@ -9735,7 +9735,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlEnableState isPending);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetRetiredPagesPendingStatus(
             [In] IntPtr device,
             [Out] out NvmlEnableState isPending) =>
@@ -9743,7 +9743,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out isPending);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetRetiredPages_v2"
             )]
@@ -9756,7 +9756,7 @@ namespace ILGPU.Runtime.Cuda.API
              ulong* addresses,
              ulong* timestamps);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetRetiredPages_v2"
             )]
@@ -9769,7 +9769,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ulong* addresses,
             [In] ulong* timestamps);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetRetiredPages_v2_Interop(
             [In] IntPtr device,
             [In] NvmlPageRetirementCause cause,
@@ -9783,7 +9783,7 @@ namespace ILGPU.Runtime.Cuda.API
                 addresses,
                 timestamps);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetSamples"
             )]
@@ -9797,7 +9797,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint sampleCount,
              NvmlSample* samples);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetSamples"
             )]
@@ -9811,7 +9811,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint sampleCount,
             [In] NvmlSample* samples);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetSamples_Interop(
             [In] IntPtr device,
             [In] NvmlSamplingType type,
@@ -9827,7 +9827,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref sampleCount,
                 samples);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetSerial"
             )]
@@ -9838,7 +9838,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr serial,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetSerial"
             )]
@@ -9849,7 +9849,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr serial,
             [In] uint length);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetSerial_Interop(
             [In] IntPtr device,
             [In] IntPtr serial,
@@ -9859,7 +9859,7 @@ namespace ILGPU.Runtime.Cuda.API
                 serial,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetSupportedClocksThrottleReasons"
             )]
@@ -9869,7 +9869,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlClocksThrottleReasons supportedClocksThrottleReasons);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetSupportedClocksThrottleReasons"
             )]
@@ -9879,7 +9879,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlClocksThrottleReasons supportedClocksThrottleReasons);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetSupportedClocksThrottleReasons(
             [In] IntPtr device,
             [Out] out NvmlClocksThrottleReasons supportedClocksThrottleReasons) =>
@@ -9887,7 +9887,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out supportedClocksThrottleReasons);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetSupportedGraphicsClocks"
             )]
@@ -9899,7 +9899,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint count,
              uint* clocksMHz);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetSupportedGraphicsClocks"
             )]
@@ -9911,7 +9911,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint count,
             [In] uint* clocksMHz);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetSupportedGraphicsClocks_Interop(
             [In] IntPtr device,
             [In] uint memoryClockMHz,
@@ -9923,7 +9923,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref count,
                 clocksMHz);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetSupportedMemoryClocks"
             )]
@@ -9934,7 +9934,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint count,
              uint* clocksMHz);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetSupportedMemoryClocks"
             )]
@@ -9945,7 +9945,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint count,
             [In] uint* clocksMHz);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetSupportedMemoryClocks_Interop(
             [In] IntPtr device,
             [In] ref uint count,
@@ -9955,7 +9955,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref count,
                 clocksMHz);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetTemperature"
             )]
@@ -9966,7 +9966,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlTemperatureSensors sensorType,
              out uint temp);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetTemperature"
             )]
@@ -9977,7 +9977,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlTemperatureSensors sensorType,
             [Out] out uint temp);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetTemperature(
             [In] IntPtr device,
             [In] NvmlTemperatureSensors sensorType,
@@ -9987,7 +9987,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sensorType,
                 out temp);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetTemperatureThreshold"
             )]
@@ -9998,7 +9998,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlTemperatureThresholds thresholdType,
              out uint temp);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetTemperatureThreshold"
             )]
@@ -10009,7 +10009,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlTemperatureThresholds thresholdType,
             [Out] out uint temp);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetTemperatureThreshold(
             [In] IntPtr device,
             [In] NvmlTemperatureThresholds thresholdType,
@@ -10019,7 +10019,7 @@ namespace ILGPU.Runtime.Cuda.API
                 thresholdType,
                 out temp);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetTopologyCommonAncestor"
             )]
@@ -10030,7 +10030,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device2,
              out NvmlGpuTopologyLevel pathInfo);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetTopologyCommonAncestor"
             )]
@@ -10041,7 +10041,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device2,
             [Out] out NvmlGpuTopologyLevel pathInfo);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetTopologyCommonAncestor(
             [In] IntPtr device1,
             [In] IntPtr device2,
@@ -10051,7 +10051,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device2,
                 out pathInfo);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetTopologyNearestGpus"
             )]
@@ -10063,7 +10063,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint count,
              IntPtr* deviceArray);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetTopologyNearestGpus"
             )]
@@ -10075,7 +10075,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint count,
             [In] IntPtr* deviceArray);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetTopologyNearestGpus_Interop(
             [In] IntPtr device,
             [In] NvmlGpuTopologyLevel level,
@@ -10087,7 +10087,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref count,
                 deviceArray);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetTotalEccErrors"
             )]
@@ -10099,7 +10099,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlEccCounterType counterType,
              out ulong eccCounts);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetTotalEccErrors"
             )]
@@ -10111,7 +10111,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlEccCounterType counterType,
             [Out] out ulong eccCounts);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetTotalEccErrors(
             [In] IntPtr device,
             [In] NvmlMemoryErrorType errorType,
@@ -10123,7 +10123,7 @@ namespace ILGPU.Runtime.Cuda.API
                 counterType,
                 out eccCounts);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetTotalEnergyConsumption"
             )]
@@ -10133,7 +10133,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out ulong energy);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetTotalEnergyConsumption"
             )]
@@ -10143,7 +10143,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out ulong energy);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetTotalEnergyConsumption(
             [In] IntPtr device,
             [Out] out ulong energy) =>
@@ -10151,7 +10151,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out energy);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetUUID"
             )]
@@ -10162,7 +10162,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr uuid,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetUUID"
             )]
@@ -10173,7 +10173,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr uuid,
             [In] uint length);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetUUID_Interop(
             [In] IntPtr device,
             [In] IntPtr uuid,
@@ -10183,7 +10183,7 @@ namespace ILGPU.Runtime.Cuda.API
                 uuid,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetUtilizationRates"
             )]
@@ -10193,7 +10193,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              out NvmlUtilization utilization);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetUtilizationRates"
             )]
@@ -10203,7 +10203,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [Out] out NvmlUtilization utilization);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetUtilizationRates(
             [In] IntPtr device,
             [Out] out NvmlUtilization utilization) =>
@@ -10211,7 +10211,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 out utilization);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetVbiosVersion"
             )]
@@ -10222,7 +10222,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr version,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetVbiosVersion"
             )]
@@ -10233,7 +10233,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr version,
             [In] uint length);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetVbiosVersion_Interop(
             [In] IntPtr device,
             [In] IntPtr version,
@@ -10243,7 +10243,7 @@ namespace ILGPU.Runtime.Cuda.API
                 version,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetViolationStatus"
             )]
@@ -10254,7 +10254,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlPerfPolicyType perfPolicyType,
              out NvmlViolationTime violTime);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetViolationStatus"
             )]
@@ -10265,7 +10265,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlPerfPolicyType perfPolicyType,
             [Out] out NvmlViolationTime violTime);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceGetViolationStatus(
             [In] IntPtr device,
             [In] NvmlPerfPolicyType perfPolicyType,
@@ -10275,7 +10275,7 @@ namespace ILGPU.Runtime.Cuda.API
                 perfPolicyType,
                 out violTime);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceOnSameBoard"
             )]
@@ -10286,7 +10286,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device2,
              out int onSameBoard);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceOnSameBoard"
             )]
@@ -10297,7 +10297,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device2,
             [Out] out int onSameBoard);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceOnSameBoard(
             [In] IntPtr device1,
             [In] IntPtr device2,
@@ -10307,7 +10307,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device2,
                 out onSameBoard);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceResetApplicationsClocks"
             )]
@@ -10316,7 +10316,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceResetApplicationsClocks(
              IntPtr device1);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceResetApplicationsClocks"
             )]
@@ -10325,13 +10325,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceResetApplicationsClocks(
             [In] IntPtr device1);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceResetApplicationsClocks(
             [In] IntPtr device1) =>
             nvmlDeviceResetApplicationsClocks(
                 device1);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceSetAutoBoostedClocksEnabled"
             )]
@@ -10341,7 +10341,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr device,
              NvmlEnableState enabled);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceSetAutoBoostedClocksEnabled"
             )]
@@ -10351,7 +10351,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr device,
             [In] NvmlEnableState enabled);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceSetAutoBoostedClocksEnabled(
             [In] IntPtr device,
             [In] NvmlEnableState enabled) =>
@@ -10359,7 +10359,7 @@ namespace ILGPU.Runtime.Cuda.API
                 device,
                 enabled);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceSetDefaultAutoBoostedClocksEnabled"
             )]
@@ -10370,7 +10370,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvmlEnableState enabled,
              uint flags);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceSetDefaultAutoBoostedClocksEnabled"
             )]
@@ -10381,7 +10381,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvmlEnableState enabled,
             [In] uint flags);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceSetDefaultAutoBoostedClocksEnabled(
             [In] IntPtr device,
             [In] NvmlEnableState enabled,
@@ -10391,7 +10391,7 @@ namespace ILGPU.Runtime.Cuda.API
                 enabled,
                 flags);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceValidateInforom"
             )]
@@ -10400,7 +10400,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceValidateInforom(
              IntPtr device);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceValidateInforom"
             )]
@@ -10409,13 +10409,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceValidateInforom(
             [In] IntPtr device);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceValidateInforom(
             [In] IntPtr device) =>
             nvmlDeviceValidateInforom(
                 device);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlSystemGetTopologyGpuSet"
             )]
@@ -10426,7 +10426,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint count,
              IntPtr* deviceArray);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlSystemGetTopologyGpuSet"
             )]
@@ -10437,7 +10437,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint count,
             [In] IntPtr* deviceArray);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn SystemGetTopologyGpuSet_Interop(
             [In] uint cpuNumber,
             [In] ref uint count,
@@ -10447,7 +10447,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref count,
                 deviceArray);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlVgpuInstanceGetMdevUUID"
             )]
@@ -10458,7 +10458,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr mdevUuid,
              uint size);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlVgpuInstanceGetMdevUUID"
             )]
@@ -10469,7 +10469,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr mdevUuid,
             [In] uint size);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn VgpuInstanceGetMdevUUID_Interop(
             [In] uint vgpuInstance,
             [In] IntPtr mdevUuid,
@@ -10483,7 +10483,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Device Queries - CPU and Memory Affinity
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceClearCpuAffinity"
             )]
@@ -10492,7 +10492,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceClearCpuAffinity(
              IntPtr device);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceClearCpuAffinity"
             )]
@@ -10501,13 +10501,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceClearCpuAffinity(
             [In] IntPtr device);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceClearCpuAffinity(
             [In] IntPtr device) =>
             nvmlDeviceClearCpuAffinity(
                 device);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetCpuAffinity"
             )]
@@ -10518,7 +10518,7 @@ namespace ILGPU.Runtime.Cuda.API
              uint cpuSetSize,
              ulong* cpuSet);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetCpuAffinity"
             )]
@@ -10529,7 +10529,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] uint cpuSetSize,
             [In] ulong* cpuSet);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetCpuAffinity_Interop(
             [In] IntPtr device,
             [In] uint cpuSetSize,
@@ -10539,7 +10539,7 @@ namespace ILGPU.Runtime.Cuda.API
                 cpuSetSize,
                 cpuSet);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetCpuAffinityWithinScope"
             )]
@@ -10551,7 +10551,7 @@ namespace ILGPU.Runtime.Cuda.API
              ulong* cpuSet,
              NvmlAffinityScope scope);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetCpuAffinityWithinScope"
             )]
@@ -10563,7 +10563,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ulong* cpuSet,
             [In] NvmlAffinityScope scope);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetCpuAffinityWithinScope_Interop(
             [In] IntPtr device,
             [In] uint cpuSetSize,
@@ -10575,7 +10575,7 @@ namespace ILGPU.Runtime.Cuda.API
                 cpuSet,
                 scope);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceGetMemoryAffinity"
             )]
@@ -10587,7 +10587,7 @@ namespace ILGPU.Runtime.Cuda.API
              ulong* nodeSet,
              NvmlAffinityScope scope);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceGetMemoryAffinity"
             )]
@@ -10599,7 +10599,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ulong* nodeSet,
             [In] NvmlAffinityScope scope);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn DeviceGetMemoryAffinity_Interop(
             [In] IntPtr device,
             [In] uint nodeSetSize,
@@ -10611,7 +10611,7 @@ namespace ILGPU.Runtime.Cuda.API
                 nodeSet,
                 scope);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlDeviceSetCpuAffinity"
             )]
@@ -10620,7 +10620,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceSetCpuAffinity(
              IntPtr device);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlDeviceSetCpuAffinity"
             )]
@@ -10629,7 +10629,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlDeviceSetCpuAffinity(
             [In] IntPtr device);
 
-#endif
+        #endif
         public sealed override NvmlReturn DeviceSetCpuAffinity(
             [In] IntPtr device) =>
             nvmlDeviceSetCpuAffinity(
@@ -10639,7 +10639,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region System Queries
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlSystemGetCudaDriverVersion"
             )]
@@ -10648,7 +10648,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlSystemGetCudaDriverVersion(
              out int cudaDriverVersion);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlSystemGetCudaDriverVersion"
             )]
@@ -10657,13 +10657,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlSystemGetCudaDriverVersion(
             [Out] out int cudaDriverVersion);
 
-#endif
+        #endif
         public sealed override NvmlReturn SystemGetCudaDriverVersion_Interop(
             [Out] out int cudaDriverVersion) =>
             nvmlSystemGetCudaDriverVersion(
                 out cudaDriverVersion);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlSystemGetCudaDriverVersion_v2"
             )]
@@ -10672,7 +10672,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlSystemGetCudaDriverVersion_v2(
              out int cudaDriverVersion);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlSystemGetCudaDriverVersion_v2"
             )]
@@ -10681,13 +10681,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlSystemGetCudaDriverVersion_v2(
             [Out] out int cudaDriverVersion);
 
-#endif
+        #endif
         public sealed override NvmlReturn SystemGetCudaDriverVersion_v2_Interop(
             [Out] out int cudaDriverVersion) =>
             nvmlSystemGetCudaDriverVersion_v2(
                 out cudaDriverVersion);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlSystemGetDriverVersion"
             )]
@@ -10697,7 +10697,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr name,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlSystemGetDriverVersion"
             )]
@@ -10707,7 +10707,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr name,
             [In] uint length);
 
-#endif
+        #endif
         public sealed override NvmlReturn SystemGetDriverVersion_Interop(
             [In] IntPtr name,
             [In] uint length) =>
@@ -10715,7 +10715,7 @@ namespace ILGPU.Runtime.Cuda.API
                 name,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlSystemGetNVMLVersion"
             )]
@@ -10725,7 +10725,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr name,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlSystemGetNVMLVersion"
             )]
@@ -10735,7 +10735,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr name,
             [In] uint length);
 
-#endif
+        #endif
         public sealed override NvmlReturn SystemGetNVMLVersion_Interop(
             [In] IntPtr name,
             [In] uint length) =>
@@ -10743,7 +10743,7 @@ namespace ILGPU.Runtime.Cuda.API
                 name,
                 length);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlSystemGetProcessName"
             )]
@@ -10754,7 +10754,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr name,
              uint length);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlSystemGetProcessName"
             )]
@@ -10765,7 +10765,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr name,
             [In] uint length);
 
-#endif
+        #endif
         public sealed override NvmlReturn SystemGetProcessName_Interop(
             [In] uint pid,
             [In] IntPtr name,
@@ -10779,7 +10779,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Unit Queries
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlSystemGetHicVersion"
             )]
@@ -10789,7 +10789,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint hwbcCount,
              NvmlHwbcEntry_Interop* hwbcEntries);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlSystemGetHicVersion"
             )]
@@ -10799,7 +10799,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint hwbcCount,
             [In] NvmlHwbcEntry_Interop* hwbcEntries);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn SystemGetHicVersion_Interop(
             [In] ref uint hwbcCount,
             [In] NvmlHwbcEntry_Interop* hwbcEntries) =>
@@ -10807,7 +10807,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref hwbcCount,
                 hwbcEntries);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlUnitGetCount"
             )]
@@ -10816,7 +10816,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlUnitGetCount(
              out uint unitCount);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlUnitGetCount"
             )]
@@ -10825,13 +10825,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvmlReturn nvmlUnitGetCount(
             [Out] out uint unitCount);
 
-#endif
+        #endif
         public sealed override NvmlReturn UnitGetCount(
             [Out] out uint unitCount) =>
             nvmlUnitGetCount(
                 out unitCount);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlUnitGetDevices"
             )]
@@ -10842,7 +10842,7 @@ namespace ILGPU.Runtime.Cuda.API
              ref uint deviceCount,
              IntPtr* devices);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlUnitGetDevices"
             )]
@@ -10853,7 +10853,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] ref uint deviceCount,
             [In] IntPtr* devices);
 
-#endif
+        #endif
         public unsafe sealed override NvmlReturn UnitGetDevices_Interop(
             [In] IntPtr unit,
             [In] ref uint deviceCount,
@@ -10863,7 +10863,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ref deviceCount,
                 devices);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlUnitGetFanSpeedInfo"
             )]
@@ -10873,7 +10873,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr unit,
              out NvmlUnitFanSpeeds_Interop fanSpeeds);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlUnitGetFanSpeedInfo"
             )]
@@ -10883,7 +10883,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr unit,
             [Out] out NvmlUnitFanSpeeds_Interop fanSpeeds);
 
-#endif
+        #endif
         public sealed override NvmlReturn UnitGetFanSpeedInfo_Interop(
             [In] IntPtr unit,
             [Out] out NvmlUnitFanSpeeds_Interop fanSpeeds) =>
@@ -10891,7 +10891,7 @@ namespace ILGPU.Runtime.Cuda.API
                 unit,
                 out fanSpeeds);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlUnitGetHandleByIndex"
             )]
@@ -10901,7 +10901,7 @@ namespace ILGPU.Runtime.Cuda.API
              uint index,
              out IntPtr unit);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlUnitGetHandleByIndex"
             )]
@@ -10911,7 +10911,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] uint index,
             [Out] out IntPtr unit);
 
-#endif
+        #endif
         public sealed override NvmlReturn UnitGetHandleByIndex(
             [In] uint index,
             [Out] out IntPtr unit) =>
@@ -10919,7 +10919,7 @@ namespace ILGPU.Runtime.Cuda.API
                 index,
                 out unit);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlUnitGetLedState"
             )]
@@ -10929,7 +10929,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr unit,
              out NvmlLedState_Interop state);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlUnitGetLedState"
             )]
@@ -10939,7 +10939,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr unit,
             [Out] out NvmlLedState_Interop state);
 
-#endif
+        #endif
         public sealed override NvmlReturn UnitGetLedState_Interop(
             [In] IntPtr unit,
             [Out] out NvmlLedState_Interop state) =>
@@ -10947,7 +10947,7 @@ namespace ILGPU.Runtime.Cuda.API
                 unit,
                 out state);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlUnitGetPsuInfo"
             )]
@@ -10957,7 +10957,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr unit,
              out NvmlPSUInfo_Interop psu);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlUnitGetPsuInfo"
             )]
@@ -10967,7 +10967,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr unit,
             [Out] out NvmlPSUInfo_Interop psu);
 
-#endif
+        #endif
         public sealed override NvmlReturn UnitGetPsuInfo_Interop(
             [In] IntPtr unit,
             [Out] out NvmlPSUInfo_Interop psu) =>
@@ -10975,7 +10975,7 @@ namespace ILGPU.Runtime.Cuda.API
                 unit,
                 out psu);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlUnitGetTemperature"
             )]
@@ -10986,7 +10986,7 @@ namespace ILGPU.Runtime.Cuda.API
              uint type,
              out uint temp);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlUnitGetTemperature"
             )]
@@ -10997,7 +10997,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] uint type,
             [Out] out uint temp);
 
-#endif
+        #endif
         public sealed override NvmlReturn UnitGetTemperature(
             [In] IntPtr unit,
             [In] uint type,
@@ -11007,7 +11007,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 out temp);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvmlUnitGetUnitInfo"
             )]
@@ -11017,7 +11017,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr unit,
              out NvmlUnitInfo_Interop info);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvmlUnitGetUnitInfo"
             )]
@@ -11027,7 +11027,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr unit,
             [Out] out NvmlUnitInfo_Interop info);
 
-#endif
+        #endif
         public sealed override NvmlReturn UnitGetUnitInfo_Interop(
             [In] IntPtr unit,
             [Out] out NvmlUnitInfo_Interop info) =>

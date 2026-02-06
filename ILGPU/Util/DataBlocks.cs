@@ -101,7 +101,7 @@ namespace ILGPU.Util
         /// Returns the combined hash code of all items.
         /// </summary>
         /// <returns>The hash code of all items.</returns>
-        public override int GetHashCode() =>
+        public override int GetHashCode() => 
             Item1.GetHashCode() ^ Item2.GetHashCode();
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace ILGPU.Util
         /// Returns the combined hash code of all items.
         /// </summary>
         /// <returns>The hash code of all items.</returns>
-        public override int GetHashCode() =>
+        public override int GetHashCode() => 
             Item1.GetHashCode() ^ Item2.GetHashCode() ^ Item3.GetHashCode();
 
         /// <summary>
@@ -394,7 +394,7 @@ namespace ILGPU.Util
         /// Returns the combined hash code of all items.
         /// </summary>
         /// <returns>The hash code of all items.</returns>
-        public override int GetHashCode() =>
+        public override int GetHashCode() => 
             Item1.GetHashCode() ^ Item2.GetHashCode() ^ Item3.GetHashCode() ^ Item4.GetHashCode();
 
         /// <summary>
@@ -554,7 +554,7 @@ namespace ILGPU.Util
         /// Returns the combined hash code of all items.
         /// </summary>
         /// <returns>The hash code of all items.</returns>
-        public override int GetHashCode() =>
+        public override int GetHashCode() => 
             Item1.GetHashCode() ^ Item2.GetHashCode() ^ Item3.GetHashCode() ^ Item4.GetHashCode() ^ Item5.GetHashCode();
 
         /// <summary>
@@ -723,7 +723,7 @@ namespace ILGPU.Util
         /// Returns the combined hash code of all items.
         /// </summary>
         /// <returns>The hash code of all items.</returns>
-        public override int GetHashCode() =>
+        public override int GetHashCode() => 
             Item1.GetHashCode() ^ Item2.GetHashCode() ^ Item3.GetHashCode() ^ Item4.GetHashCode() ^ Item5.GetHashCode() ^ Item6.GetHashCode();
 
         /// <summary>
@@ -901,7 +901,7 @@ namespace ILGPU.Util
         /// Returns the combined hash code of all items.
         /// </summary>
         /// <returns>The hash code of all items.</returns>
-        public override int GetHashCode() =>
+        public override int GetHashCode() => 
             Item1.GetHashCode() ^ Item2.GetHashCode() ^ Item3.GetHashCode() ^ Item4.GetHashCode() ^ Item5.GetHashCode() ^ Item6.GetHashCode() ^ Item7.GetHashCode();
 
         /// <summary>
@@ -1088,7 +1088,7 @@ namespace ILGPU.Util
         /// Returns the combined hash code of all items.
         /// </summary>
         /// <returns>The hash code of all items.</returns>
-        public override int GetHashCode() =>
+        public override int GetHashCode() => 
             Item1.GetHashCode() ^ Item2.GetHashCode() ^ Item3.GetHashCode() ^ Item4.GetHashCode() ^ Item5.GetHashCode() ^ Item6.GetHashCode() ^ Item7.GetHashCode() ^ Item8.GetHashCode();
 
         /// <summary>
@@ -1284,7 +1284,7 @@ namespace ILGPU.Util
         /// Returns the combined hash code of all items.
         /// </summary>
         /// <returns>The hash code of all items.</returns>
-        public override int GetHashCode() =>
+        public override int GetHashCode() => 
             Item1.GetHashCode() ^ Item2.GetHashCode() ^ Item3.GetHashCode() ^ Item4.GetHashCode() ^ Item5.GetHashCode() ^ Item6.GetHashCode() ^ Item7.GetHashCode() ^ Item8.GetHashCode() ^ Item9.GetHashCode();
 
         /// <summary>
@@ -1489,7 +1489,7 @@ namespace ILGPU.Util
         /// Returns the combined hash code of all items.
         /// </summary>
         /// <returns>The hash code of all items.</returns>
-        public override int GetHashCode() =>
+        public override int GetHashCode() => 
             Item1.GetHashCode() ^ Item2.GetHashCode() ^ Item3.GetHashCode() ^ Item4.GetHashCode() ^ Item5.GetHashCode() ^ Item6.GetHashCode() ^ Item7.GetHashCode() ^ Item8.GetHashCode() ^ Item9.GetHashCode() ^ Item10.GetHashCode();
 
         /// <summary>
@@ -1703,7 +1703,7 @@ namespace ILGPU.Util
         /// Returns the combined hash code of all items.
         /// </summary>
         /// <returns>The hash code of all items.</returns>
-        public override int GetHashCode() =>
+        public override int GetHashCode() => 
             Item1.GetHashCode() ^ Item2.GetHashCode() ^ Item3.GetHashCode() ^ Item4.GetHashCode() ^ Item5.GetHashCode() ^ Item6.GetHashCode() ^ Item7.GetHashCode() ^ Item8.GetHashCode() ^ Item9.GetHashCode() ^ Item10.GetHashCode() ^ Item11.GetHashCode();
 
         /// <summary>
@@ -1926,7 +1926,7 @@ namespace ILGPU.Util
         /// Returns the combined hash code of all items.
         /// </summary>
         /// <returns>The hash code of all items.</returns>
-        public override int GetHashCode() =>
+        public override int GetHashCode() => 
             Item1.GetHashCode() ^ Item2.GetHashCode() ^ Item3.GetHashCode() ^ Item4.GetHashCode() ^ Item5.GetHashCode() ^ Item6.GetHashCode() ^ Item7.GetHashCode() ^ Item8.GetHashCode() ^ Item9.GetHashCode() ^ Item10.GetHashCode() ^ Item11.GetHashCode() ^ Item12.GetHashCode();
 
         /// <summary>
@@ -2158,7 +2158,7 @@ namespace ILGPU.Util
         /// Returns the combined hash code of all items.
         /// </summary>
         /// <returns>The hash code of all items.</returns>
-        public override int GetHashCode() =>
+        public override int GetHashCode() => 
             Item1.GetHashCode() ^ Item2.GetHashCode() ^ Item3.GetHashCode() ^ Item4.GetHashCode() ^ Item5.GetHashCode() ^ Item6.GetHashCode() ^ Item7.GetHashCode() ^ Item8.GetHashCode() ^ Item9.GetHashCode() ^ Item10.GetHashCode() ^ Item11.GetHashCode() ^ Item12.GetHashCode() ^ Item13.GetHashCode();
 
         /// <summary>
@@ -2399,7 +2399,7 @@ namespace ILGPU.Util
         /// Returns the combined hash code of all items.
         /// </summary>
         /// <returns>The hash code of all items.</returns>
-        public override int GetHashCode() =>
+        public override int GetHashCode() => 
             Item1.GetHashCode() ^ Item2.GetHashCode() ^ Item3.GetHashCode() ^ Item4.GetHashCode() ^ Item5.GetHashCode() ^ Item6.GetHashCode() ^ Item7.GetHashCode() ^ Item8.GetHashCode() ^ Item9.GetHashCode() ^ Item10.GetHashCode() ^ Item11.GetHashCode() ^ Item12.GetHashCode() ^ Item13.GetHashCode() ^ Item14.GetHashCode();
 
         /// <summary>
@@ -2649,7 +2649,7 @@ namespace ILGPU.Util
         /// Returns the combined hash code of all items.
         /// </summary>
         /// <returns>The hash code of all items.</returns>
-        public override int GetHashCode() =>
+        public override int GetHashCode() => 
             Item1.GetHashCode() ^ Item2.GetHashCode() ^ Item3.GetHashCode() ^ Item4.GetHashCode() ^ Item5.GetHashCode() ^ Item6.GetHashCode() ^ Item7.GetHashCode() ^ Item8.GetHashCode() ^ Item9.GetHashCode() ^ Item10.GetHashCode() ^ Item11.GetHashCode() ^ Item12.GetHashCode() ^ Item13.GetHashCode() ^ Item14.GetHashCode() ^ Item15.GetHashCode();
 
         /// <summary>

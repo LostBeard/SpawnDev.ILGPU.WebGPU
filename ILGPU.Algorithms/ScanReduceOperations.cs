@@ -31,6 +31,9 @@
 // Source License. See LICENSE.txt for details.
 // ---------------------------------------------------------------------------------------
 
+using System;
+using ILGPU.Algorithms;
+
 // disable: max_line_length
 #pragma warning disable IDE0004 // Cast is redundant
 

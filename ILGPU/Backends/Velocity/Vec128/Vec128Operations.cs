@@ -41,6 +41,7 @@ using System.Numerics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics;
+using System.Runtime.Intrinsics.Arm;
 
 // ReSharper disable ArrangeMethodOrOperatorBody
 // ReSharper disable RedundantCast
@@ -3173,8 +3174,8 @@ namespace ILGPU.Backends.Velocity.Vec128
             var left = first;
             var right = second;
 
-            var result1 = Vector128.Equals(left.Item1, right.Item1).AsInt32();
-            var result2 = Vector128.Equals(left.Item2, right.Item2).AsInt32();
+            var result1 =  Vector128.Equals(left.Item1, right.Item1).AsInt32();
+            var result2 =  Vector128.Equals(left.Item2, right.Item2).AsInt32();
 
             return Vector128.Narrow(result1.AsInt64(), result2.AsInt64());
         }
@@ -3187,8 +3188,8 @@ namespace ILGPU.Backends.Velocity.Vec128
             var left = CastIToU64(first);
             var right = CastIToU64(second);
 
-            var result1 = Vector128.Equals(left.Item1, right.Item1).AsInt32();
-            var result2 = Vector128.Equals(left.Item2, right.Item2).AsInt32();
+            var result1 =  Vector128.Equals(left.Item1, right.Item1).AsInt32();
+            var result2 =  Vector128.Equals(left.Item2, right.Item2).AsInt32();
 
             return Vector128.Narrow(result1.AsInt64(), result2.AsInt64());
         }
@@ -3201,8 +3202,8 @@ namespace ILGPU.Backends.Velocity.Vec128
             var left = CastIToF64(first);
             var right = CastIToF64(second);
 
-            var result1 = Vector128.Equals(left.Item1, right.Item1).AsInt32();
-            var result2 = Vector128.Equals(left.Item2, right.Item2).AsInt32();
+            var result1 =  Vector128.Equals(left.Item1, right.Item1).AsInt32();
+            var result2 =  Vector128.Equals(left.Item2, right.Item2).AsInt32();
 
             return Vector128.Narrow(result1.AsInt64(), result2.AsInt64());
         }
@@ -3248,8 +3249,8 @@ namespace ILGPU.Backends.Velocity.Vec128
             var left = first;
             var right = second;
 
-            var result1 = NotI32(Vector128.Equals(left.Item1, right.Item1).AsInt32());
-            var result2 = NotI32(Vector128.Equals(left.Item2, right.Item2).AsInt32());
+            var result1 =  NotI32(Vector128.Equals(left.Item1, right.Item1).AsInt32());
+            var result2 =  NotI32(Vector128.Equals(left.Item2, right.Item2).AsInt32());
 
             return Vector128.Narrow(result1.AsInt64(), result2.AsInt64());
         }
@@ -3262,8 +3263,8 @@ namespace ILGPU.Backends.Velocity.Vec128
             var left = CastIToU64(first);
             var right = CastIToU64(second);
 
-            var result1 = NotI32(Vector128.Equals(left.Item1, right.Item1).AsInt32());
-            var result2 = NotI32(Vector128.Equals(left.Item2, right.Item2).AsInt32());
+            var result1 =  NotI32(Vector128.Equals(left.Item1, right.Item1).AsInt32());
+            var result2 =  NotI32(Vector128.Equals(left.Item2, right.Item2).AsInt32());
 
             return Vector128.Narrow(result1.AsInt64(), result2.AsInt64());
         }
@@ -3276,8 +3277,8 @@ namespace ILGPU.Backends.Velocity.Vec128
             var left = CastIToF64(first);
             var right = CastIToF64(second);
 
-            var result1 = NotI32(Vector128.Equals(left.Item1, right.Item1).AsInt32());
-            var result2 = NotI32(Vector128.Equals(left.Item2, right.Item2).AsInt32());
+            var result1 =  NotI32(Vector128.Equals(left.Item1, right.Item1).AsInt32());
+            var result2 =  NotI32(Vector128.Equals(left.Item2, right.Item2).AsInt32());
 
             return Vector128.Narrow(result1.AsInt64(), result2.AsInt64());
         }
@@ -3323,8 +3324,8 @@ namespace ILGPU.Backends.Velocity.Vec128
             var left = first;
             var right = second;
 
-            var result1 = Vector128.LessThan(left.Item1, right.Item1).AsInt32();
-            var result2 = Vector128.LessThan(left.Item2, right.Item2).AsInt32();
+            var result1 =  Vector128.LessThan(left.Item1, right.Item1).AsInt32();
+            var result2 =  Vector128.LessThan(left.Item2, right.Item2).AsInt32();
 
             return Vector128.Narrow(result1.AsInt64(), result2.AsInt64());
         }
@@ -3337,8 +3338,8 @@ namespace ILGPU.Backends.Velocity.Vec128
             var left = CastIToU64(first);
             var right = CastIToU64(second);
 
-            var result1 = Vector128.LessThan(left.Item1, right.Item1).AsInt32();
-            var result2 = Vector128.LessThan(left.Item2, right.Item2).AsInt32();
+            var result1 =  Vector128.LessThan(left.Item1, right.Item1).AsInt32();
+            var result2 =  Vector128.LessThan(left.Item2, right.Item2).AsInt32();
 
             return Vector128.Narrow(result1.AsInt64(), result2.AsInt64());
         }
@@ -3351,8 +3352,8 @@ namespace ILGPU.Backends.Velocity.Vec128
             var left = CastIToF64(first);
             var right = CastIToF64(second);
 
-            var result1 = Vector128.LessThan(left.Item1, right.Item1).AsInt32();
-            var result2 = Vector128.LessThan(left.Item2, right.Item2).AsInt32();
+            var result1 =  Vector128.LessThan(left.Item1, right.Item1).AsInt32();
+            var result2 =  Vector128.LessThan(left.Item2, right.Item2).AsInt32();
 
             return Vector128.Narrow(result1.AsInt64(), result2.AsInt64());
         }
@@ -3398,8 +3399,8 @@ namespace ILGPU.Backends.Velocity.Vec128
             var left = first;
             var right = second;
 
-            var result1 = Vector128.LessThanOrEqual(left.Item1, right.Item1).AsInt32();
-            var result2 = Vector128.LessThanOrEqual(left.Item2, right.Item2).AsInt32();
+            var result1 =  Vector128.LessThanOrEqual(left.Item1, right.Item1).AsInt32();
+            var result2 =  Vector128.LessThanOrEqual(left.Item2, right.Item2).AsInt32();
 
             return Vector128.Narrow(result1.AsInt64(), result2.AsInt64());
         }
@@ -3412,8 +3413,8 @@ namespace ILGPU.Backends.Velocity.Vec128
             var left = CastIToU64(first);
             var right = CastIToU64(second);
 
-            var result1 = Vector128.LessThanOrEqual(left.Item1, right.Item1).AsInt32();
-            var result2 = Vector128.LessThanOrEqual(left.Item2, right.Item2).AsInt32();
+            var result1 =  Vector128.LessThanOrEqual(left.Item1, right.Item1).AsInt32();
+            var result2 =  Vector128.LessThanOrEqual(left.Item2, right.Item2).AsInt32();
 
             return Vector128.Narrow(result1.AsInt64(), result2.AsInt64());
         }
@@ -3426,8 +3427,8 @@ namespace ILGPU.Backends.Velocity.Vec128
             var left = CastIToF64(first);
             var right = CastIToF64(second);
 
-            var result1 = Vector128.LessThanOrEqual(left.Item1, right.Item1).AsInt32();
-            var result2 = Vector128.LessThanOrEqual(left.Item2, right.Item2).AsInt32();
+            var result1 =  Vector128.LessThanOrEqual(left.Item1, right.Item1).AsInt32();
+            var result2 =  Vector128.LessThanOrEqual(left.Item2, right.Item2).AsInt32();
 
             return Vector128.Narrow(result1.AsInt64(), result2.AsInt64());
         }
@@ -3473,8 +3474,8 @@ namespace ILGPU.Backends.Velocity.Vec128
             var left = first;
             var right = second;
 
-            var result1 = Vector128.GreaterThan(left.Item1, right.Item1).AsInt32();
-            var result2 = Vector128.GreaterThan(left.Item2, right.Item2).AsInt32();
+            var result1 =  Vector128.GreaterThan(left.Item1, right.Item1).AsInt32();
+            var result2 =  Vector128.GreaterThan(left.Item2, right.Item2).AsInt32();
 
             return Vector128.Narrow(result1.AsInt64(), result2.AsInt64());
         }
@@ -3487,8 +3488,8 @@ namespace ILGPU.Backends.Velocity.Vec128
             var left = CastIToU64(first);
             var right = CastIToU64(second);
 
-            var result1 = Vector128.GreaterThan(left.Item1, right.Item1).AsInt32();
-            var result2 = Vector128.GreaterThan(left.Item2, right.Item2).AsInt32();
+            var result1 =  Vector128.GreaterThan(left.Item1, right.Item1).AsInt32();
+            var result2 =  Vector128.GreaterThan(left.Item2, right.Item2).AsInt32();
 
             return Vector128.Narrow(result1.AsInt64(), result2.AsInt64());
         }
@@ -3501,8 +3502,8 @@ namespace ILGPU.Backends.Velocity.Vec128
             var left = CastIToF64(first);
             var right = CastIToF64(second);
 
-            var result1 = Vector128.GreaterThan(left.Item1, right.Item1).AsInt32();
-            var result2 = Vector128.GreaterThan(left.Item2, right.Item2).AsInt32();
+            var result1 =  Vector128.GreaterThan(left.Item1, right.Item1).AsInt32();
+            var result2 =  Vector128.GreaterThan(left.Item2, right.Item2).AsInt32();
 
             return Vector128.Narrow(result1.AsInt64(), result2.AsInt64());
         }
@@ -3548,8 +3549,8 @@ namespace ILGPU.Backends.Velocity.Vec128
             var left = first;
             var right = second;
 
-            var result1 = Vector128.GreaterThanOrEqual(left.Item1, right.Item1).AsInt32();
-            var result2 = Vector128.GreaterThanOrEqual(left.Item2, right.Item2).AsInt32();
+            var result1 =  Vector128.GreaterThanOrEqual(left.Item1, right.Item1).AsInt32();
+            var result2 =  Vector128.GreaterThanOrEqual(left.Item2, right.Item2).AsInt32();
 
             return Vector128.Narrow(result1.AsInt64(), result2.AsInt64());
         }
@@ -3562,8 +3563,8 @@ namespace ILGPU.Backends.Velocity.Vec128
             var left = CastIToU64(first);
             var right = CastIToU64(second);
 
-            var result1 = Vector128.GreaterThanOrEqual(left.Item1, right.Item1).AsInt32();
-            var result2 = Vector128.GreaterThanOrEqual(left.Item2, right.Item2).AsInt32();
+            var result1 =  Vector128.GreaterThanOrEqual(left.Item1, right.Item1).AsInt32();
+            var result2 =  Vector128.GreaterThanOrEqual(left.Item2, right.Item2).AsInt32();
 
             return Vector128.Narrow(result1.AsInt64(), result2.AsInt64());
         }
@@ -3576,8 +3577,8 @@ namespace ILGPU.Backends.Velocity.Vec128
             var left = CastIToF64(first);
             var right = CastIToF64(second);
 
-            var result1 = Vector128.GreaterThanOrEqual(left.Item1, right.Item1).AsInt32();
-            var result2 = Vector128.GreaterThanOrEqual(left.Item2, right.Item2).AsInt32();
+            var result1 =  Vector128.GreaterThanOrEqual(left.Item1, right.Item1).AsInt32();
+            var result2 =  Vector128.GreaterThanOrEqual(left.Item2, right.Item2).AsInt32();
 
             return Vector128.Narrow(result1.AsInt64(), result2.AsInt64());
         }

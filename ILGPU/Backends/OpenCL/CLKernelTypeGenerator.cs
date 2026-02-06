@@ -15,6 +15,7 @@ using ILGPU.IR.Types;
 using ILGPU.IR.Values;
 using ILGPU.Util;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace ILGPU.Backends.OpenCL

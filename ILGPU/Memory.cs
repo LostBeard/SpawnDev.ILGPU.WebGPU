@@ -248,11 +248,11 @@ namespace ILGPU
         /// <typeparam name="T">The element type.</typeparam>
         /// <param name="extent">The number of elements to allocate.</param>
         /// <returns>An allocated 2D buffer on shared memory.</returns>
-        public static ArrayView2D<T, Stride2D.DenseX>
+        public static ArrayView2D<T, Stride2D.DenseX> 
             Allocate2DDenseX<T>(
             in Index2D extent)
             where T : unmanaged =>
-            Allocate2D<T, Stride2D.DenseX>(
+            Allocate2D<T, Stride2D.DenseX> (
                 extent,
                 new Stride2D.DenseX(extent.X));
     }
@@ -265,11 +265,11 @@ namespace ILGPU
         /// <typeparam name="T">The element type.</typeparam>
         /// <param name="extent">The number of elements to allocate.</param>
         /// <returns>An allocated 2D buffer on shared memory.</returns>
-        public static ArrayView2D<T, Stride2D.DenseY>
+        public static ArrayView2D<T, Stride2D.DenseY> 
             Allocate2DDenseY<T>(
             in Index2D extent)
             where T : unmanaged =>
-            Allocate2D<T, Stride2D.DenseY>(
+            Allocate2D<T, Stride2D.DenseY> (
                 extent,
                 new Stride2D.DenseY(extent.Y));
     }
@@ -288,11 +288,11 @@ namespace ILGPU
         /// Since XY are the leading dimension, combined dimension 
         /// (multiplied sizes) must be less or equal to <see cref="int.MaxValue"/>.
         /// </remarks>
-        public static ArrayView3D<T, Stride3D.DenseXY>
+        public static ArrayView3D<T, Stride3D.DenseXY> 
             Allocate3DDenseXY<T>(
             in Index3D extent)
             where T : unmanaged =>
-            Allocate3D<T, Stride3D.DenseXY>(
+            Allocate3D<T, Stride3D.DenseXY> (
                 extent,
                 new Stride3D.DenseXY(extent.X, extent.X * extent.Y));
     }
@@ -309,11 +309,11 @@ namespace ILGPU
         /// Since ZY are the leading dimension, combined dimension 
         /// (multiplied sizes) must be less or equal to <see cref="int.MaxValue"/>.
         /// </remarks>
-        public static ArrayView3D<T, Stride3D.DenseZY>
+        public static ArrayView3D<T, Stride3D.DenseZY> 
             Allocate3DDenseZY<T>(
             in Index3D extent)
             where T : unmanaged =>
-            Allocate3D<T, Stride3D.DenseZY>(
+            Allocate3D<T, Stride3D.DenseZY> (
                 extent,
                 new Stride3D.DenseZY(extent.Z * extent.Y, extent.Z));
     }

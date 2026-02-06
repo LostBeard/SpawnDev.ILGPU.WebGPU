@@ -168,7 +168,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Creation
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegCreateSimple"
             )]
@@ -177,7 +177,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvJpegStatus nvjpegCreateSimple(
              out IntPtr libHandle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegCreateSimple"
             )]
@@ -186,13 +186,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvJpegStatus nvjpegCreateSimple(
             [Out] out IntPtr libHandle);
 
-#endif
+        #endif
         public sealed override NvJpegStatus CreateSimple(
             [Out] out IntPtr libHandle) =>
             nvjpegCreateSimple(
                 out libHandle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegDestroy"
             )]
@@ -201,7 +201,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvJpegStatus nvjpegDestroy(
              IntPtr libHandle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegDestroy"
             )]
@@ -210,13 +210,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvJpegStatus nvjpegDestroy(
             [In] IntPtr libHandle);
 
-#endif
+        #endif
         public sealed override NvJpegStatus Destroy(
             [In] IntPtr libHandle) =>
             nvjpegDestroy(
                 libHandle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegJpegStateCreate"
             )]
@@ -226,7 +226,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr libHandle,
              out IntPtr stateHandle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegJpegStateCreate"
             )]
@@ -236,7 +236,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr libHandle,
             [Out] out IntPtr stateHandle);
 
-#endif
+        #endif
         public sealed override NvJpegStatus JpegStateCreate(
             [In] IntPtr libHandle,
             [Out] out IntPtr stateHandle) =>
@@ -244,7 +244,7 @@ namespace ILGPU.Runtime.Cuda.API
                 libHandle,
                 out stateHandle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegJpegStateDestroy"
             )]
@@ -253,7 +253,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvJpegStatus nvjpegJpegStateDestroy(
              IntPtr stateHandle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegJpegStateDestroy"
             )]
@@ -262,7 +262,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvJpegStatus nvjpegJpegStateDestroy(
             [In] IntPtr stateHandle);
 
-#endif
+        #endif
         public sealed override NvJpegStatus JpegStateDestroy(
             [In] IntPtr stateHandle) =>
             nvjpegJpegStateDestroy(
@@ -272,7 +272,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Retrieve Encoded Image Information
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegGetImageInfo"
             )]
@@ -287,7 +287,7 @@ namespace ILGPU.Runtime.Cuda.API
              int* widths,
              int* heights);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegGetImageInfo"
             )]
@@ -302,7 +302,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int* widths,
             [In] int* heights);
 
-#endif
+        #endif
         public unsafe sealed override NvJpegStatus GetImageInfo(
             [In] IntPtr libHandle,
             [In] byte* data,
@@ -324,7 +324,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Decode
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegDecode"
             )]
@@ -339,7 +339,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvJpegImage_Interop* destination,
              IntPtr cudaStreamHandle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegDecode"
             )]
@@ -354,7 +354,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvJpegImage_Interop* destination,
             [In] IntPtr cudaStreamHandle);
 
-#endif
+        #endif
         public unsafe sealed override NvJpegStatus Decode(
             [In] IntPtr libHandle,
             [In] IntPtr stateHandle,
@@ -376,7 +376,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegGetProperty"
             )]
@@ -386,7 +386,7 @@ namespace ILGPU.Runtime.Cuda.API
              LibraryPropertyType type,
              out int value);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegGetProperty"
             )]
@@ -396,7 +396,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] LibraryPropertyType type,
             [Out] out int value);
 
-#endif
+        #endif
         public sealed override NvJpegStatus GetProperty(
             [In] LibraryPropertyType type,
             [Out] out int value) =>
@@ -404,7 +404,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 out value);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegGetCudartProperty"
             )]
@@ -414,7 +414,7 @@ namespace ILGPU.Runtime.Cuda.API
              LibraryPropertyType type,
              out int value);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegGetCudartProperty"
             )]
@@ -424,7 +424,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] LibraryPropertyType type,
             [Out] out int value);
 
-#endif
+        #endif
         public sealed override NvJpegStatus GetCudartProperty(
             [In] LibraryPropertyType type,
             [Out] out int value) =>
@@ -449,7 +449,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Creation
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegCreateSimple"
             )]
@@ -458,7 +458,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvJpegStatus nvjpegCreateSimple(
              out IntPtr libHandle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegCreateSimple"
             )]
@@ -467,13 +467,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvJpegStatus nvjpegCreateSimple(
             [Out] out IntPtr libHandle);
 
-#endif
+        #endif
         public sealed override NvJpegStatus CreateSimple(
             [Out] out IntPtr libHandle) =>
             nvjpegCreateSimple(
                 out libHandle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegDestroy"
             )]
@@ -482,7 +482,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvJpegStatus nvjpegDestroy(
              IntPtr libHandle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegDestroy"
             )]
@@ -491,13 +491,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvJpegStatus nvjpegDestroy(
             [In] IntPtr libHandle);
 
-#endif
+        #endif
         public sealed override NvJpegStatus Destroy(
             [In] IntPtr libHandle) =>
             nvjpegDestroy(
                 libHandle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegJpegStateCreate"
             )]
@@ -507,7 +507,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr libHandle,
              out IntPtr stateHandle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegJpegStateCreate"
             )]
@@ -517,7 +517,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr libHandle,
             [Out] out IntPtr stateHandle);
 
-#endif
+        #endif
         public sealed override NvJpegStatus JpegStateCreate(
             [In] IntPtr libHandle,
             [Out] out IntPtr stateHandle) =>
@@ -525,7 +525,7 @@ namespace ILGPU.Runtime.Cuda.API
                 libHandle,
                 out stateHandle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegJpegStateDestroy"
             )]
@@ -534,7 +534,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvJpegStatus nvjpegJpegStateDestroy(
              IntPtr stateHandle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegJpegStateDestroy"
             )]
@@ -543,7 +543,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvJpegStatus nvjpegJpegStateDestroy(
             [In] IntPtr stateHandle);
 
-#endif
+        #endif
         public sealed override NvJpegStatus JpegStateDestroy(
             [In] IntPtr stateHandle) =>
             nvjpegJpegStateDestroy(
@@ -553,7 +553,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Retrieve Encoded Image Information
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegGetImageInfo"
             )]
@@ -568,7 +568,7 @@ namespace ILGPU.Runtime.Cuda.API
              int* widths,
              int* heights);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegGetImageInfo"
             )]
@@ -583,7 +583,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int* widths,
             [In] int* heights);
 
-#endif
+        #endif
         public unsafe sealed override NvJpegStatus GetImageInfo(
             [In] IntPtr libHandle,
             [In] byte* data,
@@ -605,7 +605,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Decode
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegDecode"
             )]
@@ -620,7 +620,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvJpegImage_Interop* destination,
              IntPtr cudaStreamHandle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegDecode"
             )]
@@ -635,7 +635,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvJpegImage_Interop* destination,
             [In] IntPtr cudaStreamHandle);
 
-#endif
+        #endif
         public unsafe sealed override NvJpegStatus Decode(
             [In] IntPtr libHandle,
             [In] IntPtr stateHandle,
@@ -657,7 +657,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegGetProperty"
             )]
@@ -667,7 +667,7 @@ namespace ILGPU.Runtime.Cuda.API
              LibraryPropertyType type,
              out int value);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegGetProperty"
             )]
@@ -677,7 +677,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] LibraryPropertyType type,
             [Out] out int value);
 
-#endif
+        #endif
         public sealed override NvJpegStatus GetProperty(
             [In] LibraryPropertyType type,
             [Out] out int value) =>
@@ -685,7 +685,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 out value);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegGetCudartProperty"
             )]
@@ -695,7 +695,7 @@ namespace ILGPU.Runtime.Cuda.API
              LibraryPropertyType type,
              out int value);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegGetCudartProperty"
             )]
@@ -705,7 +705,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] LibraryPropertyType type,
             [Out] out int value);
 
-#endif
+        #endif
         public sealed override NvJpegStatus GetCudartProperty(
             [In] LibraryPropertyType type,
             [Out] out int value) =>
@@ -730,7 +730,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Creation
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegCreateSimple"
             )]
@@ -739,7 +739,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvJpegStatus nvjpegCreateSimple(
              out IntPtr libHandle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegCreateSimple"
             )]
@@ -748,13 +748,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvJpegStatus nvjpegCreateSimple(
             [Out] out IntPtr libHandle);
 
-#endif
+        #endif
         public sealed override NvJpegStatus CreateSimple(
             [Out] out IntPtr libHandle) =>
             nvjpegCreateSimple(
                 out libHandle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegDestroy"
             )]
@@ -763,7 +763,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvJpegStatus nvjpegDestroy(
              IntPtr libHandle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegDestroy"
             )]
@@ -772,13 +772,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvJpegStatus nvjpegDestroy(
             [In] IntPtr libHandle);
 
-#endif
+        #endif
         public sealed override NvJpegStatus Destroy(
             [In] IntPtr libHandle) =>
             nvjpegDestroy(
                 libHandle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegJpegStateCreate"
             )]
@@ -788,7 +788,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr libHandle,
              out IntPtr stateHandle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegJpegStateCreate"
             )]
@@ -798,7 +798,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr libHandle,
             [Out] out IntPtr stateHandle);
 
-#endif
+        #endif
         public sealed override NvJpegStatus JpegStateCreate(
             [In] IntPtr libHandle,
             [Out] out IntPtr stateHandle) =>
@@ -806,7 +806,7 @@ namespace ILGPU.Runtime.Cuda.API
                 libHandle,
                 out stateHandle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegJpegStateDestroy"
             )]
@@ -815,7 +815,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvJpegStatus nvjpegJpegStateDestroy(
              IntPtr stateHandle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegJpegStateDestroy"
             )]
@@ -824,7 +824,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvJpegStatus nvjpegJpegStateDestroy(
             [In] IntPtr stateHandle);
 
-#endif
+        #endif
         public sealed override NvJpegStatus JpegStateDestroy(
             [In] IntPtr stateHandle) =>
             nvjpegJpegStateDestroy(
@@ -834,7 +834,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Retrieve Encoded Image Information
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegGetImageInfo"
             )]
@@ -849,7 +849,7 @@ namespace ILGPU.Runtime.Cuda.API
              int* widths,
              int* heights);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegGetImageInfo"
             )]
@@ -864,7 +864,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int* widths,
             [In] int* heights);
 
-#endif
+        #endif
         public unsafe sealed override NvJpegStatus GetImageInfo(
             [In] IntPtr libHandle,
             [In] byte* data,
@@ -886,7 +886,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Decode
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegDecode"
             )]
@@ -901,7 +901,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvJpegImage_Interop* destination,
              IntPtr cudaStreamHandle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegDecode"
             )]
@@ -916,7 +916,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvJpegImage_Interop* destination,
             [In] IntPtr cudaStreamHandle);
 
-#endif
+        #endif
         public unsafe sealed override NvJpegStatus Decode(
             [In] IntPtr libHandle,
             [In] IntPtr stateHandle,
@@ -938,7 +938,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegGetProperty"
             )]
@@ -948,7 +948,7 @@ namespace ILGPU.Runtime.Cuda.API
              LibraryPropertyType type,
              out int value);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegGetProperty"
             )]
@@ -958,7 +958,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] LibraryPropertyType type,
             [Out] out int value);
 
-#endif
+        #endif
         public sealed override NvJpegStatus GetProperty(
             [In] LibraryPropertyType type,
             [Out] out int value) =>
@@ -966,7 +966,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 out value);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegGetCudartProperty"
             )]
@@ -976,7 +976,7 @@ namespace ILGPU.Runtime.Cuda.API
              LibraryPropertyType type,
              out int value);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegGetCudartProperty"
             )]
@@ -986,7 +986,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] LibraryPropertyType type,
             [Out] out int value);
 
-#endif
+        #endif
         public sealed override NvJpegStatus GetCudartProperty(
             [In] LibraryPropertyType type,
             [Out] out int value) =>
@@ -1011,7 +1011,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Creation
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegCreateSimple"
             )]
@@ -1020,7 +1020,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvJpegStatus nvjpegCreateSimple(
              out IntPtr libHandle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegCreateSimple"
             )]
@@ -1029,13 +1029,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvJpegStatus nvjpegCreateSimple(
             [Out] out IntPtr libHandle);
 
-#endif
+        #endif
         public sealed override NvJpegStatus CreateSimple(
             [Out] out IntPtr libHandle) =>
             nvjpegCreateSimple(
                 out libHandle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegDestroy"
             )]
@@ -1044,7 +1044,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvJpegStatus nvjpegDestroy(
              IntPtr libHandle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegDestroy"
             )]
@@ -1053,13 +1053,13 @@ namespace ILGPU.Runtime.Cuda.API
          NvJpegStatus nvjpegDestroy(
             [In] IntPtr libHandle);
 
-#endif
+        #endif
         public sealed override NvJpegStatus Destroy(
             [In] IntPtr libHandle) =>
             nvjpegDestroy(
                 libHandle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegJpegStateCreate"
             )]
@@ -1069,7 +1069,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr libHandle,
              out IntPtr stateHandle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegJpegStateCreate"
             )]
@@ -1079,7 +1079,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr libHandle,
             [Out] out IntPtr stateHandle);
 
-#endif
+        #endif
         public sealed override NvJpegStatus JpegStateCreate(
             [In] IntPtr libHandle,
             [Out] out IntPtr stateHandle) =>
@@ -1087,7 +1087,7 @@ namespace ILGPU.Runtime.Cuda.API
                 libHandle,
                 out stateHandle);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegJpegStateDestroy"
             )]
@@ -1096,7 +1096,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvJpegStatus nvjpegJpegStateDestroy(
              IntPtr stateHandle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegJpegStateDestroy"
             )]
@@ -1105,7 +1105,7 @@ namespace ILGPU.Runtime.Cuda.API
          NvJpegStatus nvjpegJpegStateDestroy(
             [In] IntPtr stateHandle);
 
-#endif
+        #endif
         public sealed override NvJpegStatus JpegStateDestroy(
             [In] IntPtr stateHandle) =>
             nvjpegJpegStateDestroy(
@@ -1115,7 +1115,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Retrieve Encoded Image Information
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegGetImageInfo"
             )]
@@ -1130,7 +1130,7 @@ namespace ILGPU.Runtime.Cuda.API
              int* widths,
              int* heights);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegGetImageInfo"
             )]
@@ -1145,7 +1145,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int* widths,
             [In] int* heights);
 
-#endif
+        #endif
         public unsafe sealed override NvJpegStatus GetImageInfo(
             [In] IntPtr libHandle,
             [In] byte* data,
@@ -1167,7 +1167,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Decode
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegDecode"
             )]
@@ -1182,7 +1182,7 @@ namespace ILGPU.Runtime.Cuda.API
              NvJpegImage_Interop* destination,
              IntPtr cudaStreamHandle);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegDecode"
             )]
@@ -1197,7 +1197,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] NvJpegImage_Interop* destination,
             [In] IntPtr cudaStreamHandle);
 
-#endif
+        #endif
         public unsafe sealed override NvJpegStatus Decode(
             [In] IntPtr libHandle,
             [In] IntPtr stateHandle,
@@ -1219,7 +1219,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegGetProperty"
             )]
@@ -1229,7 +1229,7 @@ namespace ILGPU.Runtime.Cuda.API
              LibraryPropertyType type,
              out int value);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegGetProperty"
             )]
@@ -1239,7 +1239,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] LibraryPropertyType type,
             [Out] out int value);
 
-#endif
+        #endif
         public sealed override NvJpegStatus GetProperty(
             [In] LibraryPropertyType type,
             [Out] out int value) =>
@@ -1247,7 +1247,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 out value);
 
-#if NET7_0_OR_GREATER
+        #if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "nvjpegGetCudartProperty"
             )]
@@ -1257,7 +1257,7 @@ namespace ILGPU.Runtime.Cuda.API
              LibraryPropertyType type,
              out int value);
 
-#else
+        #else
         [DllImport(LibName,
             EntryPoint = "nvjpegGetCudartProperty"
             )]
@@ -1267,7 +1267,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] LibraryPropertyType type,
             [Out] out int value);
 
-#endif
+        #endif
         public sealed override NvJpegStatus GetCudartProperty(
             [In] LibraryPropertyType type,
             [Out] out int value) =>

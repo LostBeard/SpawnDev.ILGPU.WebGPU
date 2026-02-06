@@ -12,6 +12,8 @@
 
 using ILGPU.IR.Values;
 using ILGPU.Resources;
+using System;
+using System.Diagnostics.CodeAnalysis;
 
 // disable: max_line_length
 #pragma warning disable IDE0046 // Convert to conditional expression

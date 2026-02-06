@@ -31,9 +31,9 @@
 // Source License. See LICENSE.txt for details.
 // ---------------------------------------------------------------------------------------
 
-using ILGPU.Resources;
 using System;
 using System.Collections.Immutable;
+using ILGPU.Resources;
 
 namespace ILGPU.Runtime
 {

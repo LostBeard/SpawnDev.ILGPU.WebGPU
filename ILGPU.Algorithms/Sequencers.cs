@@ -33,6 +33,8 @@
 
 #pragma warning disable IDE0004 // Cast is redundant
 
+using System;
+
 namespace ILGPU.Algorithms.Sequencers
 {
     // Helpers for Int8
