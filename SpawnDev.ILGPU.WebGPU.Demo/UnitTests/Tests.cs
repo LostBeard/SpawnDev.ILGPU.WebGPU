@@ -2150,8 +2150,359 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
         {
             data[index] = data[index] + 1;
         }
+
+        // ============= MORE COVERAGE TESTS =============
+
+        [TestMethod]
+        public async Task WebGPUComparisonOperatorsTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 6;
+            var a = new int[] { 5, 5, 3, 7, 5, 5 };
+            var b = new int[] { 3, 7, 5, 5, 5, 6 };
+
+            using var bufA = accelerator.Allocate1D(a);
+            using var bufB = accelerator.Allocate1D(b);
+            using var bufOut = accelerator.Allocate1D<int>(len);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>, ArrayView<int>, ArrayView<int>>(ComparisonKernel);
+            kernel((Index1D)len, bufA.View, bufB.View, bufOut.View);
+            await accelerator.SynchronizeAsync();
+
+            var result = await ReadBufferAsync<int>(bufOut);
+
+            // Expected: [0]: a > b (5>3=1), [1]: a < b (5<7=1), [2]: a >= b (3>=5=0), 
+            //           [3]: a <= b (7<=5=0), [4]: a == b (5==5=1), [5]: a != b (5!=6=1)
+            int[] expected = { 1, 1, 0, 0, 1, 1 };
+            for (int i = 0; i < len; i++)
+            {
+                if (result[i] != expected[i])
+                    throw new Exception($"Comparison failed at {i}. Expected {expected[i]}, got {result[i]}");
+            }
+        }
+
+        static void ComparisonKernel(Index1D index, ArrayView<int> a, ArrayView<int> b, ArrayView<int> output)
+        {
+            int va = a[index], vb = b[index];
+            if (index == 0) output[index] = (va > vb) ? 1 : 0;
+            else if (index == 1) output[index] = (va < vb) ? 1 : 0;
+            else if (index == 2) output[index] = (va >= vb) ? 1 : 0;
+            else if (index == 3) output[index] = (va <= vb) ? 1 : 0;
+            else if (index == 4) output[index] = (va == vb) ? 1 : 0;
+            else if (index == 5) output[index] = (va != vb) ? 1 : 0;
+        }
+
+        [TestMethod]
+        public async Task WebGPUShortCircuitTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 4;
+            var a = new int[] { 0, 1, 0, 1 };
+            var b = new int[] { 0, 0, 1, 1 };
+
+            using var bufA = accelerator.Allocate1D(a);
+            using var bufB = accelerator.Allocate1D(b);
+            using var bufOut = accelerator.Allocate1D<int>(len);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>, ArrayView<int>, ArrayView<int>>(ShortCircuitKernel);
+            kernel((Index1D)len, bufA.View, bufB.View, bufOut.View);
+            await accelerator.SynchronizeAsync();
+
+            var result = await ReadBufferAsync<int>(bufOut);
+
+            // [0]: 0 && 0 = false, [1]: 1 && 0 = false, [2]: 0 || 1 = true, [3]: 1 || 1 = true
+            int[] expected = { 0, 0, 1, 1 };
+            for (int i = 0; i < len; i++)
+            {
+                if (result[i] != expected[i])
+                    throw new Exception($"Short circuit failed at {i}. Expected {expected[i]}, got {result[i]}");
+            }
+        }
+
+        static void ShortCircuitKernel(Index1D index, ArrayView<int> a, ArrayView<int> b, ArrayView<int> output)
+        {
+            bool valA = a[index] != 0;
+            bool valB = b[index] != 0;
+            bool result;
+            // Test && and || operators
+            if (index < 2) result = valA && valB;  // [0]: false && false, [1]: true && false
+            else result = valA || valB;             // [2]: false || true, [3]: true || true
+            output[index] = result ? 1 : 0;
+        }
+
+        [TestMethod]
+        public async Task WebGPUNaNInfinityTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 4;
+            var data = new float[len];
+            // Use normal values - special handling will be in kernel
+            data[0] = 1.0f;
+            data[1] = 1.0f;
+            data[2] = 0.0f;
+            data[3] = 0.0f;
+
+            using var buf = accelerator.Allocate1D(data);
+            using var bufOut = accelerator.Allocate1D<int>(len);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>, ArrayView<int>>(NaNInfinityKernel);
+            kernel((Index1D)len, buf.View, bufOut.View);
+            await accelerator.SynchronizeAsync();
+
+            var result = await ReadBufferAsync<int>(bufOut);
+
+            // [0]: 1/0 > 0 (inf > 0) = true, [1]: -1/0 < 0 (-inf < 0) = true, 
+            // [2]: 0/0 == 0/0 (NaN == NaN) = false, [3]: 0/0 is NaN = true
+            if (result[0] != 1) throw new Exception($"Inf > 0 failed. Expected 1, got {result[0]}");
+            if (result[1] != 1) throw new Exception($"-Inf < 0 failed. Expected 1, got {result[1]}");
+            if (result[2] != 0) throw new Exception($"NaN == NaN should be false. Expected 0, got {result[2]}");
+            if (result[3] != 1) throw new Exception($"IsNaN(0/0) should be true. Expected 1, got {result[3]}");
+        }
+
+        static void NaNInfinityKernel(Index1D index, ArrayView<float> input, ArrayView<int> output)
+        {
+            float val = input[index];
+            // Generate special values in the kernel to avoid transfer issues
+            if (index == 0)
+            {
+                float inf = 1.0f / 0.0f; // +Infinity
+                output[index] = (inf > 0.0f) ? 1 : 0;
+            }
+            else if (index == 1)
+            {
+                float negInf = -1.0f / 0.0f; // -Infinity
+                output[index] = (negInf < 0.0f) ? 1 : 0;
+            }
+            else if (index == 2)
+            {
+                float nan = 0.0f / 0.0f; // NaN
+                output[index] = (nan == nan) ? 1 : 0; // NaN != NaN
+            }
+            else
+            {
+                float nan = 0.0f / 0.0f;
+                output[index] = float.IsNaN(nan) ? 1 : 0;
+            }
+        }
+
+        [TestMethod]
+        public async Task WebGPUReductionTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 64;
+            var data = new int[len];
+            for (int i = 0; i < len; i++) data[i] = 1; // Sum of 64 ones = 64
+
+            var sumResult = new int[1];
+
+            using var bufData = accelerator.Allocate1D(data);
+            using var bufSum = accelerator.Allocate1D(sumResult);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>, ArrayView<int>>(ReductionKernel);
+            kernel((Index1D)len, bufData.View, bufSum.View);
+            await accelerator.SynchronizeAsync();
+
+            var result = await ReadBufferAsync<int>(bufSum);
+            if (result[0] != 64)
+                throw new Exception($"Reduction failed. Expected 64, got {result[0]}");
+        }
+
+        static void ReductionKernel(Index1D index, ArrayView<int> data, ArrayView<int> sum)
+        {
+            Atomic.Add(ref sum[0], data[index]);
+        }
+
+        [TestMethod]
+        public async Task WebGPUScatterGatherTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 8;
+            var data = new int[] { 10, 20, 30, 40, 50, 60, 70, 80 };
+            var indices = new int[] { 7, 5, 3, 1, 6, 4, 2, 0 }; // Reverse gather
+
+            using var bufData = accelerator.Allocate1D(data);
+            using var bufIndices = accelerator.Allocate1D(indices);
+            using var bufOut = accelerator.Allocate1D<int>(len);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>, ArrayView<int>, ArrayView<int>>(GatherKernel);
+            kernel((Index1D)len, bufData.View, bufIndices.View, bufOut.View);
+            await accelerator.SynchronizeAsync();
+
+            var result = await ReadBufferAsync<int>(bufOut);
+            int[] expected = { 80, 60, 40, 20, 70, 50, 30, 10 }; // Gathered values
+            for (int i = 0; i < len; i++)
+            {
+                if (result[i] != expected[i])
+                    throw new Exception($"Gather failed at {i}. Expected {expected[i]}, got {result[i]}");
+            }
+        }
+
+        static void GatherKernel(Index1D index, ArrayView<int> data, ArrayView<int> indices, ArrayView<int> output)
+        {
+            int idx = indices[index];
+            output[index] = data[idx];
+        }
+
+        [TestMethod]
+        public async Task WebGPUDeepNestingTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 8;
+            var data = new int[len];
+
+            using var buf = accelerator.Allocate1D(data);
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>>(DeepNestingKernel);
+            kernel((Index1D)len, buf.View);
+            await accelerator.SynchronizeAsync();
+
+            var result = await ReadBufferAsync<int>(buf);
+            for (int i = 0; i < len; i++)
+            {
+                // 5-deep nesting: if(if(if(if(if(true)))))
+                int expected = 5;
+                if (result[i] != expected)
+                    throw new Exception($"Deep nesting failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        static void DeepNestingKernel(Index1D index, ArrayView<int> data)
+        {
+            int count = 0;
+            if (true)
+            {
+                count++;
+                if (true)
+                {
+                    count++;
+                    if (true)
+                    {
+                        count++;
+                        if (true)
+                        {
+                            count++;
+                            if (true)
+                            {
+                                count++;
+                            }
+                        }
+                    }
+                }
+            }
+            data[index] = count;
+        }
+
+        [TestMethod]
+        public async Task WebGPUZeroIterationLoopTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 4;
+            var data = new int[] { 100, 100, 100, 100 };
+
+            using var buf = accelerator.Allocate1D(data);
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>>(ZeroLoopKernel);
+            kernel((Index1D)len, buf.View);
+            await accelerator.SynchronizeAsync();
+
+            var result = await ReadBufferAsync<int>(buf);
+            // Loop runs 0 times, so value should be unchanged
+            for (int i = 0; i < len; i++)
+            {
+                if (result[i] != 100)
+                    throw new Exception($"Zero loop failed at {i}. Expected 100, got {result[i]}");
+            }
+        }
+
+        static void ZeroLoopKernel(Index1D index, ArrayView<int> data)
+        {
+            for (int i = 0; i < 0; i++) // Zero iterations
+            {
+                data[index] = 0;
+            }
+        }
+
+        [TestMethod]
+        public async Task WebGPUMultipleOutputsTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 8;
+            var input = new int[len];
+            for (int i = 0; i < len; i++) input[i] = i;
+
+            using var bufIn = accelerator.Allocate1D(input);
+            using var bufSum = accelerator.Allocate1D<int>(len);
+            using var bufProduct = accelerator.Allocate1D<int>(len);
+            using var bufSquare = accelerator.Allocate1D<int>(len);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>, ArrayView<int>, ArrayView<int>, ArrayView<int>>(MultiOutputKernel);
+            kernel((Index1D)len, bufIn.View, bufSum.View, bufProduct.View, bufSquare.View);
+            await accelerator.SynchronizeAsync();
+
+            var sumResult = await ReadBufferAsync<int>(bufSum);
+            var prodResult = await ReadBufferAsync<int>(bufProduct);
+            var sqResult = await ReadBufferAsync<int>(bufSquare);
+
+            for (int i = 0; i < len; i++)
+            {
+                if (sumResult[i] != i + 10)
+                    throw new Exception($"Sum output failed at {i}. Expected {i + 10}, got {sumResult[i]}");
+                if (prodResult[i] != i * 2)
+                    throw new Exception($"Product output failed at {i}. Expected {i * 2}, got {prodResult[i]}");
+                if (sqResult[i] != i * i)
+                    throw new Exception($"Square output failed at {i}. Expected {i * i}, got {sqResult[i]}");
+            }
+        }
+
+        static void MultiOutputKernel(Index1D index, ArrayView<int> input, ArrayView<int> sum, ArrayView<int> product, ArrayView<int> square)
+        {
+            int val = input[index];
+            sum[index] = val + 10;
+            product[index] = val * 2;
+            square[index] = val * val;
+        }
     }
 }
+
+
 
 
 
