@@ -1028,6 +1028,49 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             data[index] = shared[rev];
         }
 
+        [TestMethod]
+        public async Task WebGPUDynamicSharedMemoryF64Test()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            var options = new WebGPUBackendOptions { EnableF64Emulation = true };
+            using var accelerator = await device.CreateAcceleratorAsync(context, options);
+
+            int len = 64;
+            var data = new double[len];
+            for (int i = 0; i < len; i++) data[i] = i * 1.5;
+
+            using var buffer = accelerator.Allocate1D(data);
+
+            var kernel = accelerator.LoadStreamKernel<Index1D, ArrayView<double>>(DynamicSharedF64Kernel);
+
+            // Allocate 64 doubles of dynamic shared mem
+            var config = new KernelConfig(1, 64, SharedMemoryConfig.RequestDynamic<double>(64));
+            kernel(config, (Index1D)len, buffer.View);
+            await accelerator.SynchronizeAsync();
+
+            var result = await buffer.CopyToHostAsync<double>();
+            for (int i = 0; i < len; i++)
+            {
+                var expected = (len - 1 - i) * 1.5;
+                if (Math.Abs(result[i] - expected) > 0.01)
+                    throw new Exception($"Dynamic Shared Mem F64 failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        static void DynamicSharedF64Kernel(Index1D index, ArrayView<double> data)
+        {
+            var shared = SharedMemory.GetDynamic<double>();
+
+            shared[index] = data[index];
+            Group.Barrier();
+
+            int rev = 63 - index;
+            data[index] = shared[rev];
+        }
+
 
 
         [TestMethod]

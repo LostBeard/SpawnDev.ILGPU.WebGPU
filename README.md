@@ -11,7 +11,7 @@ Write GPU compute shaders in C# and compile them to WGSL automatically.
 - **WGSL transpilation** - C# kernels are automatically compiled to WebGPU Shading Language (WGSL)
 - **64-bit Emulation** - Support for `double` (f64) and `long` (i64) types via emulated WGSL logic
 - **Blazor WebAssembly** - Seamless integration via [SpawnDev.BlazorJS](https://github.com/LostBeard/SpawnDev.BlazorJS)
-- **Shared memory & atomics** - Supports workgroup shared memory, barriers, and atomic operations
+- **Shared memory & atomics** - Supports static and dynamic workgroup shared memory, barriers, and atomic operations
 - **No native dependencies** - Entirely written in C#
 
 ## Installation
@@ -116,6 +116,7 @@ The PlaywrightTestRunner runs tests in a headless browser. To view the browser d
 | **Type Casting** | float↔int, uint, mixed precision | ✅ Complete |
 | **64-bit Emulation** | Support for `double` and `long` via Software Emulation | ✅ Complete |
 | **GPU Patterns** | Stencil, reduction, matrix multiply, lerp, smoothstep | ✅ Complete |
+| **Shared Memory** | Static and Dynamic workgroup memory, length extraction | ✅ Complete |
 | **Synchronization** | Barriers, atomic reduction | ✅ Complete |
 | **Special Values** | NaN, Infinity detection | ✅ Complete |
 | **Scalability** | 65K+ elements, 1M element stress test | ✅ Complete |
@@ -125,7 +126,6 @@ The PlaywrightTestRunner runs tests in a headless browser. To view the browser d
 | Feature | Reason |
 |---------|--------|
 | **Subgroups/Warps** | Browser WebGPU extension not available |
-| **Dynamic Shared Memory** | Requires Pipeline Overridable Constants |
 
 ## Browser Requirements
 
@@ -171,7 +171,6 @@ using var accelerator = await context.CreateWebGPUAcceleratorAsync(0, options);
 ## Known Limitations
 
 - Subgroups extension not available in all browsers
-- Dynamic shared memory requires Pipeline Overridable Constants (not yet implemented)
 - **Deep Zoom Panning**: At extreme zoom levels (beyond ~10^6), panning may feel sluggish due to floating-point precision limitations. This is inherent to 64-bit double arithmetic and affects all Mandelbrot viewers. Advanced implementations use perturbation theory or arbitrary precision arithmetic to overcome this.
 
 ## Async Synchronization
