@@ -32,13 +32,25 @@
 		<None Include="..\README.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
 
+	<PropertyGroup>
+		<TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);AddProjectReferencesToPackage</TargetsForTfmSpecificContentInPackage>
+	</PropertyGroup>
+
 	<ItemGroup>
-		
 		<PackageReference Include="SpawnDev.BlazorJS" Version="2.63.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\ILGPU\ILGPU.csproj" />
+		<ProjectReference Include="..\ILGPU\ILGPU.csproj" PrivateAssets="All" />
+		<ProjectReference Include="..\ILGPU.Algorithms\ILGPU.Algorithms.csproj" PrivateAssets="All" />
 	</ItemGroup>
+
+	<Target Name="AddProjectReferencesToPackage" DependsOnTargets="BuildOnlySettings;ResolveReferences">
+		<ItemGroup>
+			<TfmSpecificPackageFile Include="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.Extension)' == '.dll' or '%(ReferenceCopyLocalPaths.Extension)' == '.xml'">
+				<PackagePath>lib\$(TargetFramework)</PackagePath>
+			</TfmSpecificPackageFile>
+		</ItemGroup>
+	</Target>
 
 </Project>

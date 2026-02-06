@@ -1,5 +1,5 @@
 <Project>
-  <!-- Library Project Configuration for standalone ILGPU build -->
+  <!-- Library Project Configuration -->
   <PropertyGroup>
     <LibraryTargetFrameworks>net10.0</LibraryTargetFrameworks>
     <LibraryLatestTargetFramework>$(LibraryTargetFrameworks)</LibraryLatestTargetFramework>

@@ -14,6 +14,7 @@ using global::ILGPU.IR;
 using global::ILGPU.IR.Analyses;
 using global::ILGPU.IR.Intrinsics;
 using ILGPU.Runtime;
+using ILGPU.Algorithms;
 using System.Reflection;
 using System.Text;
 
@@ -69,6 +70,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             {
                 // Add any WebGPU-specific transformers
             });
+
+            // Hard reference for bundling
+            _ = typeof(XMath);
         }
 
 
