@@ -446,7 +446,11 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             WebGPUBackend.Log("--- GENERATED WGSL ---");
             WebGPUBackend.Log(wgslSource);
             WebGPUBackend.Log("-----------------------");
-            return new WebGPUCompiledKernel(Context, entryPoint, wgslSource);
+            return new WebGPUCompiledKernel(
+                Context,
+                entryPoint,
+                wgslSource,
+                data.DynamicSharedOverrides.Count > 0 ? data.DynamicSharedOverrides : null);
         }
 
         #endregion
@@ -463,12 +467,28 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         public string WGSLSource { get; }
 
         /// <summary>
+        /// Gets the dynamic shared memory override constant metadata.
+        /// Empty list if no dynamic shared memory is used.
+        /// </summary>
+        public IReadOnlyList<DynamicSharedOverrideInfo> DynamicSharedOverrides { get; }
+
+        /// <summary>
+        /// Returns true if this kernel uses dynamic shared memory.
+        /// </summary>
+        public bool HasDynamicSharedMemory => DynamicSharedOverrides.Count > 0;
+
+        /// <summary>
         /// Creates a new compiled WebGPU kernel.
         /// </summary>
-        public WebGPUCompiledKernel(Context context, EntryPoint entryPoint, string wgslSource)
+        public WebGPUCompiledKernel(
+            Context context,
+            EntryPoint entryPoint,
+            string wgslSource,
+            IReadOnlyList<DynamicSharedOverrideInfo>? dynamicSharedOverrides = null)
             : base(context, entryPoint, null)
         {
             WGSLSource = wgslSource;
+            DynamicSharedOverrides = dynamicSharedOverrides ?? Array.Empty<DynamicSharedOverrideInfo>();
         }
     }
 

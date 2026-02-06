@@ -26,17 +26,20 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         private HashSet<Value> _hoistedPrimitives = new HashSet<Value>();
         private HashSet<int> _emulatedF64Params = new HashSet<int>();
         private HashSet<int> _emulatedI64Params = new HashSet<int>();
+        private List<DynamicSharedOverrideInfo> _dynamicSharedOverrides = new List<DynamicSharedOverrideInfo>();
         // Maps variable names to their emulation info (param index, is f64)
         private Dictionary<string, (int ParamIndex, bool IsF64)> _emulatedVarMappings = new Dictionary<string, (int, bool)>();
         private CFG<ReversePostOrder, Forwards> _cfg;
         private Dominators<Backwards> _postDominators;
         private Loops<ReversePostOrder, Forwards> _loops;
+        private GeneratorArgs _generatorArgs;
         public WGSLKernelFunctionGenerator(
             in GeneratorArgs args,
             Method method,
             Allocas allocas)
             : base(args, method, allocas)
         {
+            _generatorArgs = args;
             EntryPoint = args.EntryPoint;
             DynamicSharedAllocations = args.DynamicSharedAllocations;
             _cfg = method.Blocks.CreateCFG();
@@ -93,6 +96,11 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
         public EntryPoint EntryPoint { get; }
         public AllocaKindInformation DynamicSharedAllocations { get; }
+
+        /// <summary>
+        /// Returns the list of dynamic shared memory override constant info generated during code emission.
+        /// </summary>
+        public IReadOnlyList<DynamicSharedOverrideInfo> DynamicSharedOverrides => _dynamicSharedOverrides;
 
         private Value? _indexParameterAddress;
 
@@ -196,7 +204,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
             builder.AppendLine();
 
-            // Emit shared memory allocations
+            // Emit shared memory allocations (static)
             foreach (var alloca in Allocas.SharedAllocations)
             {
                 var variable = Load(alloca.Alloca);
@@ -207,6 +215,38 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
                 var wgslType = TypeGenerator[elementType];
                 builder.AppendLine($"var<workgroup> {variable.Name} : array<{wgslType}, {entryCount}>;");
+            }
+
+            // Emit dynamic shared memory allocations using pipeline-overridable constants
+            if (DynamicSharedAllocations.Length > 0)
+            {
+                builder.AppendLine();
+                builder.AppendLine("// Dynamic shared memory (sized via pipeline override constants)");
+                foreach (var alloca in DynamicSharedAllocations)
+                {
+                    var variable = Load(alloca.Alloca);
+                    declaredVariables.Add(variable.Name);
+
+                    var elementType = alloca.ElementType;
+                    var wgslType = TypeGenerator[elementType];
+                    int elementSize = alloca.ElementSize;
+
+                    // Override constant name — the accelerator will set this at pipeline creation
+                    string overrideConstName = $"DYNAMIC_SHARED_SIZE_{alloca.Index}";
+
+                    // Default to 1 element (will be overridden at pipeline creation)
+                    builder.AppendLine($"override {overrideConstName} : u32 = 1u;");
+                    builder.AppendLine($"var<workgroup> {variable.Name} : array<{wgslType}, {overrideConstName}>;");
+
+                    // Track the override constant info for the compiled kernel
+                    var overrideInfo = new DynamicSharedOverrideInfo(
+                        overrideConstName,
+                        variable.Name,
+                        alloca.Index,
+                        elementSize);
+                    _dynamicSharedOverrides.Add(overrideInfo);
+                    _generatorArgs.DynamicSharedOverrides.Add(overrideInfo);
+                }
             }
 
             builder.AppendLine();
@@ -645,6 +685,27 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
             declaredVariables.Add(target.Name);
             AppendLine($"let {target.Name} = {refPrefix}{source};");
+        }
+
+        public override void GenerateCode(DynamicMemoryLengthValue value)
+        {
+            var target = Load(value);
+            Declare(target);
+
+            // Use the override constant for dynamic shared memory length
+            // The override constant is declared as u32 but DynamicMemoryLengthValue is i32, so cast
+            if (_dynamicSharedOverrides.Count > 0)
+            {
+                // For now, all dynamic shared allocations share the same size from SharedMemoryConfig
+                // Use the first (and typically only) override constant
+                var overrideName = _dynamicSharedOverrides[0].ConstantName;
+                AppendLine($"{target} = i32({overrideName}); // dynamic memory length from override constant");
+            }
+            else
+            {
+                // Fallback: no dynamic shared memory overrides registered
+                AppendLine($"{target} = 0; // dynamic memory length (no override available)");
+            }
         }
 
         public override void GenerateCode(Parameter parameter) { }
@@ -1651,5 +1712,31 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         }
 
 
+    }
+
+    /// <summary>
+    /// Describes a pipeline-overridable constant for dynamic shared memory sizing.
+    /// </summary>
+    public readonly struct DynamicSharedOverrideInfo
+    {
+        /// <summary>The WGSL override constant name (e.g. "DYNAMIC_SHARED_SIZE_0").</summary>
+        public string ConstantName { get; }
+
+        /// <summary>The WGSL variable name for the shared memory array.</summary>
+        public string VariableName { get; }
+
+        /// <summary>The allocation index within ILGPU's dynamic shared allocation list.</summary>
+        public int AllocaIndex { get; }
+
+        /// <summary>The size of one element in bytes.</summary>
+        public int ElementSize { get; }
+
+        public DynamicSharedOverrideInfo(string constantName, string variableName, int allocaIndex, int elementSize)
+        {
+            ConstantName = constantName;
+            VariableName = variableName;
+            AllocaIndex = allocaIndex;
+            ElementSize = elementSize;
+        }
     }
 }

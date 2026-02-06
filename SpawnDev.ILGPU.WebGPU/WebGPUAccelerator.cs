@@ -345,7 +345,30 @@ namespace SpawnDev.ILGPU.WebGPU
             WebGPUBackend.Log("[WebGPU-Debug] ------------------------\n");
             // ------------------------------------
 
-            var shader = nativeAccel.GetOrCreateComputeShader(compiledKernel.WGSLSource);
+            // Build override constants for dynamic shared memory
+            Dictionary<string, object>? overrideConstants = null;
+            if (compiledKernel.HasDynamicSharedMemory && dimension is KernelConfig kernelConfig && kernelConfig.UsesDynamicSharedMemory)
+            {
+                overrideConstants = new Dictionary<string, object>();
+                var sharedMemConfig = kernelConfig.SharedMemoryConfig;
+                foreach (var overrideInfo in compiledKernel.DynamicSharedOverrides)
+                {
+                    // SharedMemoryConfig provides total bytes = NumElements * ElementSize
+                    // The WGSL override sizes the array in elements of the declared type,
+                    // so we need: total bytes / element size of the WGSL type
+                    int numElements = sharedMemConfig.NumElements;
+                    if (sharedMemConfig.ElementSize != overrideInfo.ElementSize && overrideInfo.ElementSize > 0)
+                    {
+                        // The element types may differ between C# request and WGSL declaration.
+                        // Convert from bytes to elements of the WGSL type.
+                        numElements = (sharedMemConfig.NumElements * sharedMemConfig.ElementSize) / overrideInfo.ElementSize;
+                    }
+                    overrideConstants[overrideInfo.ConstantName] = (double)numElements;
+                    WebGPUBackend.Log($"[WebGPU-Debug] Dynamic shared memory override: {overrideInfo.ConstantName} = {numElements}");
+                }
+            }
+
+            var shader = nativeAccel.GetOrCreateComputeShader(compiledKernel.WGSLSource, "main", overrideConstants);
             var device = nativeAccel.NativeDevice!;
 
             // Track scalar buffers for pool return

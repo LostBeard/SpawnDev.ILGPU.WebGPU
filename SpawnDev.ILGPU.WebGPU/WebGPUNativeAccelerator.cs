@@ -7,6 +7,7 @@
 
 using SpawnDev.BlazorJS.JSObjects;
 using SpawnDev.ILGPU.WebGPU.Backend;
+using System.Linq;
 
 namespace SpawnDev.ILGPU.WebGPU
 {
@@ -121,31 +122,46 @@ namespace SpawnDev.ILGPU.WebGPU
         /// <summary>
         /// Creates a compute shader from WGSL source code.
         /// </summary>
-        public WebGPUComputeShader CreateComputeShader(string wgslSource, string entryPoint = "main")
+        public WebGPUComputeShader CreateComputeShader(
+            string wgslSource,
+            string entryPoint = "main",
+            Dictionary<string, object>? overrideConstants = null)
         {
             EnsureInitialized();
-            return new WebGPUComputeShader(this, wgslSource, entryPoint);
+            return new WebGPUComputeShader(this, wgslSource, entryPoint, overrideConstants);
         }
 
         /// <summary>
         /// Gets a cached compute shader or creates a new one.
         /// When caching is enabled, shaders are reused across kernel invocations.
+        /// Override constants are part of the cache key since they affect pipeline creation.
         /// </summary>
-        public WebGPUComputeShader GetOrCreateComputeShader(string wgslSource, string entryPoint = "main")
+        public WebGPUComputeShader GetOrCreateComputeShader(
+            string wgslSource,
+            string entryPoint = "main",
+            Dictionary<string, object>? overrideConstants = null)
         {
             if (!WebGPUBackend.EnableShaderCaching)
-                return CreateComputeShader(wgslSource, entryPoint);
+                return CreateComputeShader(wgslSource, entryPoint, overrideConstants);
 
-            // Use WGSL source as cache key (could also use hash for very large shaders)
-            if (_shaderCache.TryGetValue(wgslSource, out var cached))
+            // Build cache key: WGSL source + sorted override constants
+            string cacheKey = wgslSource;
+            if (overrideConstants != null && overrideConstants.Count > 0)
+            {
+                var constantsKey = string.Join(",",
+                    overrideConstants.OrderBy(kv => kv.Key).Select(kv => $"{kv.Key}={kv.Value}"));
+                cacheKey = $"{wgslSource}\n__CONSTANTS__:{constantsKey}";
+            }
+
+            if (_shaderCache.TryGetValue(cacheKey, out var cached))
             {
                 WebGPUBackend.Log("[WebGPU] Using cached shader");
                 return cached;
             }
 
             WebGPUBackend.Log("[WebGPU] Creating and caching new shader");
-            var shader = CreateComputeShader(wgslSource, entryPoint);
-            _shaderCache[wgslSource] = shader;
+            var shader = CreateComputeShader(wgslSource, entryPoint, overrideConstants);
+            _shaderCache[cacheKey] = shader;
             return shader;
         }
 

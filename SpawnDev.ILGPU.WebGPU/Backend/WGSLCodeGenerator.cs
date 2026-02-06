@@ -46,6 +46,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 EntryPoint = entryPoint;
                 SharedAllocations = sharedAllocations;
                 DynamicSharedAllocations = dynamicSharedAllocations;
+                DynamicSharedOverrides = new List<DynamicSharedOverrideInfo>();
             }
 
             /// <summary>The parent backend.</summary>
@@ -62,6 +63,12 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
             /// <summary>Dynamic shared memory allocations.</summary>
             public AllocaKindInformation DynamicSharedAllocations { get; }
+
+            /// <summary>
+            /// Populated by the kernel code generator during GenerateHeader() with
+            /// the WGSL override constant names for dynamic shared memory.
+            /// </summary>
+            public List<DynamicSharedOverrideInfo> DynamicSharedOverrides { get; }
         }
 
         /// <summary>
@@ -1569,7 +1576,8 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             var target = Load(value);
             Declare(target);
-            AppendLine($"{target} = 0u; // dynamic memory length");
+            // Use i32 literal (not u32) since the target variable is i32
+            AppendLine($"{target} = 0; // dynamic memory length (placeholder)");
         }
 
         public virtual void GenerateCode(AlignTo value)

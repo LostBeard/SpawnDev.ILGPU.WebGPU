@@ -26,7 +26,11 @@ namespace SpawnDev.ILGPU.WebGPU
         /// <summary>
         /// Constructs a new compute shader from WGSL source.
         /// </summary>
-        internal WebGPUComputeShader(WebGPUNativeAccelerator accelerator, string wgslSource, string entryPoint)
+        internal WebGPUComputeShader(
+            WebGPUNativeAccelerator accelerator,
+            string wgslSource,
+            string entryPoint,
+            Dictionary<string, object>? overrideConstants = null)
         {
             Accelerator = accelerator ?? throw new ArgumentNullException(nameof(accelerator));
             WGSLSource = wgslSource ?? throw new ArgumentNullException(nameof(wgslSource));
@@ -43,15 +47,18 @@ namespace SpawnDev.ILGPU.WebGPU
             };
             _shaderModule = device.CreateShaderModule(shaderDescriptor);
 
-            // Create compute pipeline
+            // Create compute pipeline with optional override constants
+            var programmableStage = new GPUProgrammableStage
+            {
+                Module = _shaderModule,
+                EntryPoint = entryPoint,
+                Constants = overrideConstants
+            };
+
             var pipelineDescriptor = new GPUComputePipelineDescriptor
             {
                 Layout = "auto",
-                Compute = new GPUProgrammableStage
-                {
-                    Module = _shaderModule,
-                    EntryPoint = entryPoint
-                }
+                Compute = programmableStage
             };
             _pipeline = device.CreateComputePipeline(pipelineDescriptor);
 

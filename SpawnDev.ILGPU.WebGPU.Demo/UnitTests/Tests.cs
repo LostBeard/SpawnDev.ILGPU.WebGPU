@@ -986,71 +986,8 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
         }
 
         [TestMethod]
-        public async Task WebGPUBroadcastTest()
-        {
-            throw new UnsupportedTestException("Subgroups extension not supported in browser environment");
-            var builder = Context.Create();
-            await builder.WebGPUAsync();
-            using var context = builder.ToContext();
-            var device = context.GetWebGPUDevices()[0];
-            using var accelerator = await device.CreateAcceleratorAsync(context);
-
-            int len = 32; // 1 Warp/Subgroup ideally
-            var data = new int[len];
-            // Init with index
-            for (int i = 0; i < len; i++) data[i] = i;
-
-            using var buffer = accelerator.Allocate1D(data);
-
-            // Broadcast requires explicit grouping usually for "Group" semantics, 
-            // verifying if we alias Group.Broadcast to subgroupBroadcast or fallback
-            // Note: WebGPU subgroup support is currently strictly experimental.
-            // If this fails, we expect a NotSupportedException likely.
-
-            try
-            {
-                var kernel = accelerator.LoadStreamKernel<Index1D, ArrayView<int>>(BroadcastKernel);
-                kernel(new KernelConfig(1, len), (Index1D)len, buffer.View);
-                await accelerator.SynchronizeAsync();
-
-                var result = await buffer.CopyToHostAsync<int>();
-
-                // Expect ALL values to be the value from lane 0 (which was 0)
-                // We use Lane 0 because current WGSL generator uses subgroupBroadcastFirst()
-
-                int expected = 0;
-                for (int i = 0; i < len; i++)
-                {
-                    if (result[i] != expected)
-                        throw new Exception($"Broadcast failed at {i}. Expected {expected}, got {result[i]}");
-                }
-            }
-            catch (Exception ex)
-            {
-                // Check if it's strictly a "Not Supported" in the generator vs a runtime crash
-                if (ex.Message.Contains("NotSupported"))
-                {
-                    Console.WriteLine("Broadcast not supported (Expected for now)");
-                    return;
-                }
-                throw;
-            }
-        }
-
-        static void BroadcastKernel(Index1D index, ArrayView<int> data)
-        {
-            int val = data[index];
-            // Broadcast value from Lane 0 to everyone
-            // ILGPU maps this to SubgroupBroadcastFirst if index is 0 or constant? 
-            // Our generator maps it to subgroupBroadcastFirst regardless of index.
-            int broadcasted = Group.Broadcast(val, 0);
-            data[index] = broadcasted;
-        }
-
-        [TestMethod]
         public async Task WebGPUDynamicSharedMemoryTest()
         {
-            throw new UnsupportedTestException("Dynamic Shared Memory requires Pipeline Overridable Constants support in backend.");
             var builder = Context.Create();
             await builder.WebGPUAsync();
             using var context = builder.ToContext();
@@ -3248,20 +3185,6 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             square[index] = val * val;
         }
 
-        // ===== Additional Coverage Tests =====
-
-        /// <summary>
-        /// Test warp/subgroup shuffle operations (not supported in browser WebGPU)
-        /// </summary>
-        [TestMethod]
-        public async Task WebGPUSubgroupShuffleTest()
-        {
-            // Subgroup operations (warp shuffle, broadcast) are not available in browser WebGPU
-            throw new UnsupportedTestException("Subgroup/Warp operations not supported in browser WebGPU");
-
-            // If ever supported, the test would use Warp.Shuffle, Warp.Broadcast, etc.
-        }
-
         /// <summary>
         /// Test matrix multiplication pattern (common GPU workload)
         /// </summary>
@@ -4078,6 +4001,82 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
         {
             float x = data[index];
             data[index] = ((x * 2 + 3) / 4 - 1) * 5 + x;
+        }
+
+
+
+        [TestMethod]
+        public async Task WebGPUBroadcastTest()
+        {
+            throw new UnsupportedTestException("Subgroups extension not supported in browser environment");
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 32; // 1 Warp/Subgroup ideally
+            var data = new int[len];
+            // Init with index
+            for (int i = 0; i < len; i++) data[i] = i;
+
+            using var buffer = accelerator.Allocate1D(data);
+
+            // Broadcast requires explicit grouping usually for "Group" semantics, 
+            // verifying if we alias Group.Broadcast to subgroupBroadcast or fallback
+            // Note: WebGPU subgroup support is currently strictly experimental.
+            // If this fails, we expect a NotSupportedException likely.
+
+            try
+            {
+                var kernel = accelerator.LoadStreamKernel<Index1D, ArrayView<int>>(BroadcastKernel);
+                kernel(new KernelConfig(1, len), (Index1D)len, buffer.View);
+                await accelerator.SynchronizeAsync();
+
+                var result = await buffer.CopyToHostAsync<int>();
+
+                // Expect ALL values to be the value from lane 0 (which was 0)
+                // We use Lane 0 because current WGSL generator uses subgroupBroadcastFirst()
+
+                int expected = 0;
+                for (int i = 0; i < len; i++)
+                {
+                    if (result[i] != expected)
+                        throw new Exception($"Broadcast failed at {i}. Expected {expected}, got {result[i]}");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Check if it's strictly a "Not Supported" in the generator vs a runtime crash
+                if (ex.Message.Contains("NotSupported"))
+                {
+                    Console.WriteLine("Broadcast not supported (Expected for now)");
+                    return;
+                }
+                throw;
+            }
+        }
+
+        static void BroadcastKernel(Index1D index, ArrayView<int> data)
+        {
+            int val = data[index];
+            // Broadcast value from Lane 0 to everyone
+            // ILGPU maps this to SubgroupBroadcastFirst if index is 0 or constant? 
+            // Our generator maps it to subgroupBroadcastFirst regardless of index.
+            int broadcasted = Group.Broadcast(val, 0);
+            data[index] = broadcasted;
+        }
+
+        /// <summary>
+        /// Test warp/subgroup shuffle operations (not supported in browser WebGPU)
+        /// </summary>
+        [TestMethod]
+        public async Task WebGPUSubgroupShuffleTest()
+        {
+            // Subgroup operations (warp shuffle, broadcast) are not available in browser WebGPU
+            throw new UnsupportedTestException("Subgroup/Warp operations not supported in browser WebGPU");
+
+            // If ever supported, the test would use Warp.Shuffle, Warp.Broadcast, etc.
         }
     }
 }
