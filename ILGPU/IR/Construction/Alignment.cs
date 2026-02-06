@@ -10,7 +10,6 @@
 // Source License. See LICENSE.txt for details.
 // ---------------------------------------------------------------------------------------
 
-using ILGPU.IR.Types;
 using ILGPU.IR.Values;
 using ILGPU.Util;
 

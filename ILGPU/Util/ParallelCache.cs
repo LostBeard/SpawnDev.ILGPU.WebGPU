@@ -185,7 +185,7 @@ namespace ILGPU.Util
         protected override void Dispose(bool disposing)
         {
             // Check whether we need to dispose all elements
-            if (cache.Count >  0 && typeof(IDisposable).IsAssignableFrom(typeof(T)))
+            if (cache.Count > 0 && typeof(IDisposable).IsAssignableFrom(typeof(T)))
             {
                 foreach (var intermediateStates in cache)
                     intermediateStates.AsNotNullCast<IDisposable>().Dispose();

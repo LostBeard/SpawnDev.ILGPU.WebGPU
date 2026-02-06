@@ -43,7 +43,7 @@ namespace ILGPU.Algorithms.Vectors
         /// Returns an invalid vector value used to track invalid number values.
         /// </summary>
         static abstract TSelf Invalid { get; }
-        
+
         /// <summary>
         /// Computes the min value of both.
         /// </summary>
@@ -115,7 +115,7 @@ namespace ILGPU.Algorithms.Vectors
             TElementType min,
             TElementType max)
             where TRandom : struct, IRandomProvider;
-        
+
         /// <summary>
         /// Creates a random vector instance falling into the range of min max.
         /// </summary>
@@ -192,7 +192,7 @@ namespace ILGPU.Algorithms.Vectors
         void ForEach<TIterator>(ref TIterator iterator)
             where TIterator : struct, IVectorElementIterator<TSelf, TElementType>;
     }
-    
+
     /// <summary>
     /// An abstract numeric accumulation vector type with a number of elements.
     /// </summary>
@@ -229,7 +229,7 @@ namespace ILGPU.Algorithms.Vectors
         /// <param name="current">The value to add.</param>
         /// <returns>The accumulated instance.</returns>
         static abstract TSelf operator +(TSelf current, TOther toAccumulate);
-        
+
         /// <summary>
         /// Adds an accumulation instance and a more coarse grained value instance.
         /// </summary>
@@ -237,7 +237,7 @@ namespace ILGPU.Algorithms.Vectors
         /// <param name="current">The value to add.</param>
         /// <returns>The accumulated instance.</returns>
         static abstract TSelf operator +(TOther toAccumulate, TSelf current);
-        
+
         /// <summary>
         /// Subtracts an accumulation instance and a more coarse grained value instance.
         /// </summary>
@@ -245,7 +245,7 @@ namespace ILGPU.Algorithms.Vectors
         /// <param name="current">The value to subtract.</param>
         /// <returns>The accumulated instance.</returns>
         static abstract TSelf operator -(TSelf current, TOther toAccumulate);
-        
+
         /// <summary>
         /// Subtracts an accumulation instance and a more coarse grained value instance.
         /// </summary>
@@ -260,14 +260,14 @@ namespace ILGPU.Algorithms.Vectors
         /// <param name="denominator">The denominator to use.</param>
         /// <returns>The computed average.</returns>
         TSelf ComputeAverage(long denominator);
-        
+
         /// <summary>
         /// Computes the average while using the provided denominator.
         /// </summary>
         /// <param name="denominator">The denominator to use.</param>
         /// <returns>The computed average.</returns>
         TSelf ComputeAverage(TOtherElementType denominator);
-        
+
         /// <summary>
         /// Atomically adds two vectors.
         /// </summary>
@@ -282,7 +282,7 @@ namespace ILGPU.Algorithms.Vectors
         /// <param name="other">The value to convert.</param>
         /// <returns>The converted value.</returns>
         static abstract TSelf ConvertFromBase(TOther other);
-        
+
         /// <summary>
         /// Converts a given fine-grained value instance into its corresponding
         /// raw value.

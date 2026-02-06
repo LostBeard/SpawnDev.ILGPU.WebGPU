@@ -2,7 +2,6 @@ using ILGPU;
 using ILGPU.Runtime;
 using SpawnDev.Blazor.UnitTesting;
 using SpawnDev.ILGPU.WebGPU.Backend;
-using System.Runtime.InteropServices;
 
 namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
 {

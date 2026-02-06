@@ -47,7 +47,7 @@ namespace ILGPU.Algorithms.Optimization
         /// <param name="dimensionIndex">The relative dimension index.</param>
         public (TNumericType Lower, TNumericType Upper) this[Index1D dimensionIndex] =>
             (GetLowerBound(dimensionIndex), GetUpperBound(dimensionIndex));
-        
+
         /// <summary>
         /// Loads a lower bound value of the given relative dimension index.
         /// </summary>
@@ -55,7 +55,7 @@ namespace ILGPU.Algorithms.Optimization
         /// <returns>The loaded bound value.</returns>
         public TNumericType GetLowerBound(Index1D dimensionIndex) =>
             lowerBoundsView[dimensionIndex];
-        
+
         /// <summary>
         /// Loads an upper bound value of the given relative dimension index.
         /// </summary>

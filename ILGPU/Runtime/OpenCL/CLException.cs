@@ -12,7 +12,6 @@
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 
 namespace ILGPU.Runtime.OpenCL
 {

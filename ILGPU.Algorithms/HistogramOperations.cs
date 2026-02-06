@@ -31,8 +31,6 @@
 // Source License. See LICENSE.txt for details.
 // ---------------------------------------------------------------------------------------
 
-using System;
-
 namespace ILGPU.Algorithms.HistogramOperations
 {
     /// <summary>

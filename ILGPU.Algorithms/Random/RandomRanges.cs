@@ -45,7 +45,6 @@
 #if NET7_0_OR_GREATER
 using ILGPU.Algorithms.FixedPrecision;
 #endif
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using System.Runtime.CompilerServices;

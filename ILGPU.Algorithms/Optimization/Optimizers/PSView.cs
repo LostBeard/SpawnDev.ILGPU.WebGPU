@@ -36,22 +36,22 @@ namespace ILGPU.Algorithms.Optimization.Optimizers
             BestPositions = bestPositions;
             Fitness = fitness;
         }
-        
+
         /// <summary>
         /// Returns a view to all position vectors.
         /// </summary>
         public VectorView<TNumericType> Positions { get; }
-        
+
         /// <summary>
         /// Returns a view to all velocity vectors.
         /// </summary>
         public VectorView<TNumericType> Velocities { get; }
-        
+
         /// <summary>
         /// Returns a view to all best-position vectors.
         /// </summary>
         public VectorView<TNumericType> BestPositions { get; }
-        
+
         /// <summary>
         /// Returns a view to all best evaluation values per particle.
         /// </summary>

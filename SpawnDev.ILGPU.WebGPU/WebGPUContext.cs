@@ -1,6 +1,5 @@
 using global::ILGPU;
 using SpawnDev.ILGPU.WebGPU.Backend;
-using System.Threading.Tasks;
 
 namespace SpawnDev.ILGPU.WebGPU
 {

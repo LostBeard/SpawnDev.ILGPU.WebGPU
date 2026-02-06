@@ -13,7 +13,6 @@ using ILGPU.Algorithms.ScanReduceOperations;
 using ILGPU.Algorithms.Vectors;
 using ILGPU.Runtime;
 using ILGPU.Util;
-using ILGPU;
 using System;
 using System.Diagnostics;
 using System.Numerics;
@@ -40,7 +39,7 @@ namespace ILGPU.Algorithms.Optimization
         where TEvalType : unmanaged, IEquatable<TEvalType>
     {
         #region Kernels
-        
+
         /// <summary>
         /// Converts non-vectorized vector views into vectorized ones.
         /// </summary>
@@ -53,7 +52,7 @@ namespace ILGPU.Algorithms.Optimization
                 sourceView,
                 index * TNumericType.Length);
         }
-        
+
         /// <summary>
         /// Converts vectorized vector views into non-vectorized ones.
         /// </summary>
@@ -65,7 +64,7 @@ namespace ILGPU.Algorithms.Optimization
             var sourceValue = sourceView[index];
             sourceValue.ToElementView(targetView, index * TNumericType.Length);
         }
-        
+
         #endregion
 
         #region Instance
@@ -75,13 +74,13 @@ namespace ILGPU.Algorithms.Optimization
         private readonly PageLockedArray2D<TElementType> boundsElementBufferCPU;
         private readonly PageLockedArray1D<TEvalType> resultEvalBufferCPU;
         private readonly PageLockedArray1D<TElementType> parametersCPU;
-        
+
         private readonly MemoryBuffer2D<TNumericType, Stride2D.DenseY> positionsBuffer;
         private readonly MemoryBuffer1D<TEvalType, Stride1D.Dense> evalBuffer;
-        
+
         private readonly MemoryBuffer1D<long, Stride1D.Dense> maskBuffer;
         private readonly MemoryBuffer1D<int, Stride1D.Dense> prefixSumBuffer;
-        
+
         private readonly MemoryBuffer1D<TElementType, Stride1D.Dense> resultBuffer;
         private readonly ArrayView<TElementType> resultElementView;
 
@@ -91,7 +90,7 @@ namespace ILGPU.Algorithms.Optimization
 
         private readonly MemoryBuffer1D<TEvalType, Stride1D.Dense> resultEvalBuffer;
         private readonly VariableView<TEvalType> resultEvalView;
-        
+
         private readonly MemoryBuffer2D<TNumericType, Stride2D.DenseY>
             boundsVectorizedBuffer;
         private readonly MemoryBuffer2D<TElementType, Stride2D.DenseY>
@@ -198,16 +197,16 @@ namespace ILGPU.Algorithms.Optimization
             MaxNumParticles = maxNumParticles;
             NumParameters = numParameters;
         }
-        
+
         #endregion
-        
+
         #region Properties
-        
+
         /// <summary>
         /// Returns the current accelerator.
         /// </summary>
         public Accelerator Accelerator { get; }
-        
+
         /// <summary>
         /// Returns the supported vector dimension of this optimizer.
         /// </summary>
@@ -217,17 +216,17 @@ namespace ILGPU.Algorithms.Optimization
         /// Returns the number of vector elements.
         /// </summary>
         public int VectorDimension => Dimension / TNumericType.Length;
-        
+
         /// <summary>
         /// Returns the number of supported parameters.
         /// </summary>
         public int NumParameters { get; }
-        
+
         /// <summary>
         /// Returns the maximum number of particles.
         /// </summary>
         public LongIndex1D MaxNumParticles { get; }
-        
+
         /// <summary>
         /// Returns the current number of particles.
         /// </summary>
@@ -253,7 +252,7 @@ namespace ILGPU.Algorithms.Optimization
         /// </summary>
         protected internal VectorView<TNumericType> PositionsView =>
             positionsBuffer.View;
-        
+
         /// <summary>
         /// Returns the underlying evaluation view.
         /// </summary>
@@ -264,9 +263,9 @@ namespace ILGPU.Algorithms.Optimization
         /// </summary>
         protected ArrayView<long> MaskView =>
             maskBuffer.View.SubView(0L, MaxNumParticles);
-        
+
         #endregion
-        
+
         #region Methods
 
         /// <summary>
@@ -285,7 +284,7 @@ namespace ILGPU.Algorithms.Optimization
             var linearTarget = targetView.SliceVector(targetIndex);
             ConvertToVectorizedView(stream, sourceView, linearTarget);
         }
-        
+
         /// <summary>
         /// Converts a non-vectorized source view into a vectorized view.
         /// </summary>
@@ -303,10 +302,10 @@ namespace ILGPU.Algorithms.Optimization
                 throw new ArgumentNullException(nameof(targetView));
             if (sourceView.Dimension != targetView.Dimension * TNumericType.Length)
                 throw new ArgumentOutOfRangeException(nameof(targetView));
-            
+
             convertToVectorizedView(stream, targetView.Dimension, sourceView, targetView);
         }
-        
+
         /// <summary>
         /// Converts a vectorized source view into a non-vectorized view.
         /// </summary>
@@ -323,7 +322,7 @@ namespace ILGPU.Algorithms.Optimization
             var linearSource = sourceView.SliceVector(sourceIndex);
             ConvertFromVectorizedView(stream, linearSource, targetView);
         }
-        
+
         /// <summary>
         /// Converts a vectorized source view into a non-vectorized view.
         /// </summary>
@@ -341,14 +340,14 @@ namespace ILGPU.Algorithms.Optimization
                 throw new ArgumentNullException(nameof(targetView));
             if (sourceView.Dimension * TNumericType.Length != targetView.Dimension)
                 throw new ArgumentOutOfRangeException(nameof(targetView));
-            
+
             convertFromVectorizedView(
                 stream,
                 sourceView.Dimension,
                 sourceView,
                 targetView);
         }
-        
+
         /// <summary>
         /// Loads optimization bounds from the given GPU-accessible views.
         /// </summary>
@@ -364,7 +363,7 @@ namespace ILGPU.Algorithms.Optimization
                 throw new ArgumentOutOfRangeException(nameof(lowerBounds));
             if (upperBounds.Length != Dimension)
                 throw new ArgumentOutOfRangeException(nameof(upperBounds));
-            
+
             ConvertToVectorizedView(
                 stream,
                 lowerBounds,
@@ -374,7 +373,7 @@ namespace ILGPU.Algorithms.Optimization
                 upperBounds,
                 boundsVectorizedView.SliceVector(1));
         }
-        
+
         /// <summary>
         /// Loads optimization bounds from the given readonly spans.
         /// </summary>
@@ -396,11 +395,11 @@ namespace ILGPU.Algorithms.Optimization
                 boundsElementBufferCPU[i, 0] = lowerBounds[i];
                 boundsElementBufferCPU[i, 1] = upperBounds[i];
             }
-            
+
             boundsElementView.DataView.BaseView.CopyFrom(
                 stream,
                 boundsElementBufferCPU.ArrayView);
-            
+
             ConvertToVectorizedView(
                 stream,
                 boundsElementView.SliceVector(0),
@@ -469,9 +468,9 @@ namespace ILGPU.Algorithms.Optimization
             AcceleratorStream stream,
             ReadOnlySpan<TElementType> parameters) =>
             parameters.CopyTo(parametersCPU.Span);
-        
+
         #endregion
-        
+
         #region Optimization Methods
 
         /// <summary>
@@ -501,7 +500,7 @@ namespace ILGPU.Algorithms.Optimization
             scan(stream, MaskView, offsetView, prefixSumBuffer.View);
             return offsetView;
         }
-        
+
         /// <summary>
         /// Begins an optimization process.
         /// </summary>
@@ -519,7 +518,7 @@ namespace ILGPU.Algorithms.Optimization
             // Concurrency check
             if (Interlocked.CompareExchange(ref locked, 1, 0) != 0)
                 throw new InvalidOperationException();
-            
+
             stopwatch.Restart();
 
             // Copy to CPU buffers (the first copy is needed to avoid read-write
@@ -550,7 +549,7 @@ namespace ILGPU.Algorithms.Optimization
 
             return stopwatch.Elapsed.TotalMilliseconds;
         }
-        
+
         /// <summary>
         /// Performs a single optimization step.
         /// </summary>
@@ -596,7 +595,7 @@ namespace ILGPU.Algorithms.Optimization
 
             // Free the current optimization pipeline
             Interlocked.Exchange(ref locked, 0);
-            
+
             return new(
                 resultEvalView,
                 resultElementView,
@@ -627,11 +626,11 @@ namespace ILGPU.Algorithms.Optimization
                 resultElementBufferCPU.Span,
                 resultView.ElapsedTime);
         }
-        
+
         #endregion
-        
+
         #region IDisposable
-        
+
         /// <summary>
         /// Frees internal CPU and GPU buffers directly.
         /// </summary>
@@ -643,12 +642,12 @@ namespace ILGPU.Algorithms.Optimization
                 boundsElementBufferCPU.Dispose();
                 resultEvalBufferCPU.Dispose();
                 parametersCPU.Dispose();
-                
+
                 positionsBuffer.Dispose();
                 evalBuffer.Dispose();
                 maskBuffer.Dispose();
                 prefixSumBuffer.Dispose();
-                
+
                 resultBuffer.Dispose();
                 boundsVectorizedBuffer.Dispose();
                 boundsElementBuffer.Dispose();
@@ -657,7 +656,7 @@ namespace ILGPU.Algorithms.Optimization
             }
             base.Dispose(disposing);
         }
-        
+
         #endregion
     }
 }

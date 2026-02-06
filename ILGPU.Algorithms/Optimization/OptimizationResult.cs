@@ -35,23 +35,23 @@ namespace ILGPU.Algorithms.Optimization
             PositionView = positionView;
             ElapsedTime = elapsedTime;
         }
-        
+
         /// <summary>
         /// Returns the actual result value.
         /// </summary>
         public VariableView<TEvalType> ResultView { get; }
-        
+
         /// <summary>
         /// Returns the underlying result view containing the position vector.
         /// </summary>
         public ArrayView<TElementType> PositionView { get; }
-        
+
         /// <summary>
         /// The total elapsed time in milliseconds.
         /// </summary>
         public double ElapsedTime { get; }
     }
-    
+
     /// <summary>
     /// An optimization result in CPU space.
     /// </summary>
@@ -81,12 +81,12 @@ namespace ILGPU.Algorithms.Optimization
         /// Returns the actual result value.
         /// </summary>
         public TEvalType Result => resultSpan[0];
-        
+
         /// <summary>
         /// Returns the best result vector.
         /// </summary>
         public ReadOnlySpan<TElementType> ResultVector { get; }
-        
+
         /// <summary>
         /// The total elapsed time in milliseconds.
         /// </summary>

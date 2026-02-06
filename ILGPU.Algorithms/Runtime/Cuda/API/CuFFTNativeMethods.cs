@@ -381,7 +381,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Plans
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlan1d"
             )]
@@ -393,7 +393,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              int batch);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlan1d"
             )]
@@ -405,7 +405,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] int batch);
 
-        #endif
+#endif
         public sealed override CuFFTResult Plan1D(
             [Out] out IntPtr plan,
             [In] int nx,
@@ -417,7 +417,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 batch);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlan2d"
             )]
@@ -429,7 +429,7 @@ namespace ILGPU.Runtime.Cuda.API
              int ny,
              CuFFTType type);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlan2d"
             )]
@@ -441,7 +441,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int ny,
             [In] CuFFTType type);
 
-        #endif
+#endif
         public sealed override CuFFTResult Plan2D(
             [Out] out IntPtr plan,
             [In] int nx,
@@ -453,7 +453,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ny,
                 type);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlan3d"
             )]
@@ -466,7 +466,7 @@ namespace ILGPU.Runtime.Cuda.API
              int nz,
              CuFFTType type);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlan3d"
             )]
@@ -479,7 +479,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int nz,
             [In] CuFFTType type);
 
-        #endif
+#endif
         public sealed override CuFFTResult Plan3D(
             [Out] out IntPtr plan,
             [In] int nx,
@@ -493,7 +493,7 @@ namespace ILGPU.Runtime.Cuda.API
                 nz,
                 type);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlanMany"
             )]
@@ -512,7 +512,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              int batch);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlanMany"
             )]
@@ -531,7 +531,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] int batch);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult PlanMany(
             [Out] out IntPtr plan,
             [In] int rank,
@@ -561,7 +561,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Extensible Plans
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftCreate"
             )]
@@ -570,7 +570,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftCreate(
              out IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftCreate"
             )]
@@ -579,13 +579,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftCreate(
             [Out] out IntPtr plan);
 
-        #endif
+#endif
         public sealed override CuFFTResult Create(
             [Out] out IntPtr plan) =>
             cufftCreate(
                 out plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlan1d"
             )]
@@ -598,7 +598,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlan1d"
             )]
@@ -611,7 +611,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlan1D(
             [In] IntPtr plan,
             [In] int nx,
@@ -625,7 +625,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlan2d"
             )]
@@ -638,7 +638,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlan2d"
             )]
@@ -651,7 +651,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlan2D(
             [In] IntPtr plan,
             [In] int nx,
@@ -665,7 +665,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlan3d"
             )]
@@ -679,7 +679,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlan3d"
             )]
@@ -693,7 +693,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlan3D(
             [In] IntPtr plan,
             [In] int nx,
@@ -709,7 +709,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlanMany"
             )]
@@ -729,7 +729,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlanMany"
             )]
@@ -749,7 +749,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlanMany(
             [In] IntPtr plan,
             [In] int rank,
@@ -777,7 +777,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlanMany64"
             )]
@@ -797,7 +797,7 @@ namespace ILGPU.Runtime.Cuda.API
              long batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlanMany64"
             )]
@@ -817,7 +817,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] long batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlanMany64(
             [In] IntPtr plan,
             [In] int rank,
@@ -849,7 +849,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Estimated Size Of Work Area
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimate1d"
             )]
@@ -861,7 +861,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimate1d"
             )]
@@ -873,7 +873,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult Estimate1D(
             [In] int nx,
             [In] CuFFTType type,
@@ -885,7 +885,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimate2d"
             )]
@@ -897,7 +897,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimate2d"
             )]
@@ -909,7 +909,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult Estimate2D(
             [In] int nx,
             [In] int ny,
@@ -921,7 +921,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimate3d"
             )]
@@ -934,7 +934,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimate3d"
             )]
@@ -947,7 +947,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult Estimate3D(
             [In] int nx,
             [In] int ny,
@@ -961,7 +961,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimateMany"
             )]
@@ -980,7 +980,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimateMany"
             )]
@@ -999,7 +999,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult EstimateMany(
             [In] int rank,
             [In] int* n,
@@ -1029,7 +1029,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Refined Estimated Size Of Work Area
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize1d"
             )]
@@ -1042,7 +1042,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize1d"
             )]
@@ -1055,7 +1055,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize1D(
             [In] IntPtr plan,
             [In] int nx,
@@ -1069,7 +1069,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize2d"
             )]
@@ -1082,7 +1082,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize2d"
             )]
@@ -1095,7 +1095,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize2D(
             [In] IntPtr plan,
             [In] int nx,
@@ -1109,7 +1109,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize3d"
             )]
@@ -1123,7 +1123,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize3d"
             )]
@@ -1137,7 +1137,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize3D(
             [In] IntPtr plan,
             [In] int nx,
@@ -1153,7 +1153,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSizeMany"
             )]
@@ -1173,7 +1173,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSizeMany"
             )]
@@ -1193,7 +1193,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSizeMany(
             [In] IntPtr plan,
             [In] int rank,
@@ -1221,7 +1221,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSizeMany64"
             )]
@@ -1241,7 +1241,7 @@ namespace ILGPU.Runtime.Cuda.API
              long batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSizeMany64"
             )]
@@ -1261,7 +1261,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] long batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSizeMany64(
             [In] IntPtr plan,
             [In] int rank,
@@ -1289,7 +1289,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize"
             )]
@@ -1299,7 +1299,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              UIntPtr* workArea);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize"
             )]
@@ -1309,7 +1309,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] UIntPtr* workArea);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize(
             [In] IntPtr plan,
             [In] UIntPtr* workArea) =>
@@ -1321,7 +1321,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Caller Allocated Work Area Support
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftSetAutoAllocation"
             )]
@@ -1331,7 +1331,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              int autoAllocate);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftSetAutoAllocation"
             )]
@@ -1341,7 +1341,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] int autoAllocate);
 
-        #endif
+#endif
         public sealed override CuFFTResult SetAutoAllocation(
             [In] IntPtr plan,
             [In] int autoAllocate) =>
@@ -1349,7 +1349,7 @@ namespace ILGPU.Runtime.Cuda.API
                 plan,
                 autoAllocate);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftSetWorkArea"
             )]
@@ -1359,7 +1359,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              IntPtr workArea);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftSetWorkArea"
             )]
@@ -1369,7 +1369,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] IntPtr workArea);
 
-        #endif
+#endif
         public sealed override CuFFTResult SetWorkArea(
             [In] IntPtr plan,
             [In] IntPtr workArea) =>
@@ -1381,7 +1381,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Execution
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecC2C"
             )]
@@ -1393,7 +1393,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr odata,
              CuFFTDirection direction);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecC2C"
             )]
@@ -1405,7 +1405,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr odata,
             [In] CuFFTDirection direction);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecC2C(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -1417,7 +1417,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odata,
                 direction);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecZ2Z"
             )]
@@ -1429,7 +1429,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr odata,
              CuFFTDirection direction);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecZ2Z"
             )]
@@ -1441,7 +1441,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr odata,
             [In] CuFFTDirection direction);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecZ2Z(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -1453,7 +1453,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odata,
                 direction);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecR2C"
             )]
@@ -1464,7 +1464,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecR2C"
             )]
@@ -1475,7 +1475,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecR2C(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -1485,7 +1485,7 @@ namespace ILGPU.Runtime.Cuda.API
                 idata,
                 odata);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecD2Z"
             )]
@@ -1496,7 +1496,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecD2Z"
             )]
@@ -1507,7 +1507,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecD2Z(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -1517,7 +1517,7 @@ namespace ILGPU.Runtime.Cuda.API
                 idata,
                 odata);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecC2R"
             )]
@@ -1528,7 +1528,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecC2R"
             )]
@@ -1539,7 +1539,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecC2R(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -1549,7 +1549,7 @@ namespace ILGPU.Runtime.Cuda.API
                 idata,
                 odata);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecZ2D"
             )]
@@ -1560,7 +1560,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecZ2D"
             )]
@@ -1571,7 +1571,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecZ2D(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -1585,7 +1585,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftSetStream"
             )]
@@ -1595,7 +1595,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftSetStream"
             )]
@@ -1605,7 +1605,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] IntPtr stream);
 
-        #endif
+#endif
         public sealed override CuFFTResult SetStream(
             [In] IntPtr plan,
             [In] IntPtr stream) =>
@@ -1613,7 +1613,7 @@ namespace ILGPU.Runtime.Cuda.API
                 plan,
                 stream);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftDestroy"
             )]
@@ -1622,7 +1622,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftDestroy(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftDestroy"
             )]
@@ -1631,13 +1631,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftDestroy(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override CuFFTResult Destroy(
             [In] IntPtr plan) =>
             cufftDestroy(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetVersion"
             )]
@@ -1646,7 +1646,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftGetVersion(
              out int version);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetVersion"
             )]
@@ -1655,13 +1655,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftGetVersion(
             [Out] out int version);
 
-        #endif
+#endif
         public sealed override CuFFTResult GetVersion(
             [Out] out int version) =>
             cufftGetVersion(
                 out version);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetProperty"
             )]
@@ -1671,7 +1671,7 @@ namespace ILGPU.Runtime.Cuda.API
              LibraryPropertyType type,
              out int value);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetProperty"
             )]
@@ -1681,7 +1681,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] LibraryPropertyType type,
             [Out] out int value);
 
-        #endif
+#endif
         public sealed override CuFFTResult GetProperty(
             [In] LibraryPropertyType type,
             [Out] out int value) =>
@@ -1706,7 +1706,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Plans
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlan1d"
             )]
@@ -1718,7 +1718,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              int batch);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlan1d"
             )]
@@ -1730,7 +1730,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] int batch);
 
-        #endif
+#endif
         public sealed override CuFFTResult Plan1D(
             [Out] out IntPtr plan,
             [In] int nx,
@@ -1742,7 +1742,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 batch);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlan2d"
             )]
@@ -1754,7 +1754,7 @@ namespace ILGPU.Runtime.Cuda.API
              int ny,
              CuFFTType type);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlan2d"
             )]
@@ -1766,7 +1766,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int ny,
             [In] CuFFTType type);
 
-        #endif
+#endif
         public sealed override CuFFTResult Plan2D(
             [Out] out IntPtr plan,
             [In] int nx,
@@ -1778,7 +1778,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ny,
                 type);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlan3d"
             )]
@@ -1791,7 +1791,7 @@ namespace ILGPU.Runtime.Cuda.API
              int nz,
              CuFFTType type);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlan3d"
             )]
@@ -1804,7 +1804,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int nz,
             [In] CuFFTType type);
 
-        #endif
+#endif
         public sealed override CuFFTResult Plan3D(
             [Out] out IntPtr plan,
             [In] int nx,
@@ -1818,7 +1818,7 @@ namespace ILGPU.Runtime.Cuda.API
                 nz,
                 type);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlanMany"
             )]
@@ -1837,7 +1837,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              int batch);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlanMany"
             )]
@@ -1856,7 +1856,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] int batch);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult PlanMany(
             [Out] out IntPtr plan,
             [In] int rank,
@@ -1886,7 +1886,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Extensible Plans
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftCreate"
             )]
@@ -1895,7 +1895,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftCreate(
              out IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftCreate"
             )]
@@ -1904,13 +1904,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftCreate(
             [Out] out IntPtr plan);
 
-        #endif
+#endif
         public sealed override CuFFTResult Create(
             [Out] out IntPtr plan) =>
             cufftCreate(
                 out plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlan1d"
             )]
@@ -1923,7 +1923,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlan1d"
             )]
@@ -1936,7 +1936,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlan1D(
             [In] IntPtr plan,
             [In] int nx,
@@ -1950,7 +1950,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlan2d"
             )]
@@ -1963,7 +1963,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlan2d"
             )]
@@ -1976,7 +1976,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlan2D(
             [In] IntPtr plan,
             [In] int nx,
@@ -1990,7 +1990,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlan3d"
             )]
@@ -2004,7 +2004,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlan3d"
             )]
@@ -2018,7 +2018,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlan3D(
             [In] IntPtr plan,
             [In] int nx,
@@ -2034,7 +2034,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlanMany"
             )]
@@ -2054,7 +2054,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlanMany"
             )]
@@ -2074,7 +2074,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlanMany(
             [In] IntPtr plan,
             [In] int rank,
@@ -2102,7 +2102,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlanMany64"
             )]
@@ -2122,7 +2122,7 @@ namespace ILGPU.Runtime.Cuda.API
              long batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlanMany64"
             )]
@@ -2142,7 +2142,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] long batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlanMany64(
             [In] IntPtr plan,
             [In] int rank,
@@ -2174,7 +2174,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Estimated Size Of Work Area
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimate1d"
             )]
@@ -2186,7 +2186,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimate1d"
             )]
@@ -2198,7 +2198,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult Estimate1D(
             [In] int nx,
             [In] CuFFTType type,
@@ -2210,7 +2210,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimate2d"
             )]
@@ -2222,7 +2222,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimate2d"
             )]
@@ -2234,7 +2234,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult Estimate2D(
             [In] int nx,
             [In] int ny,
@@ -2246,7 +2246,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimate3d"
             )]
@@ -2259,7 +2259,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimate3d"
             )]
@@ -2272,7 +2272,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult Estimate3D(
             [In] int nx,
             [In] int ny,
@@ -2286,7 +2286,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimateMany"
             )]
@@ -2305,7 +2305,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimateMany"
             )]
@@ -2324,7 +2324,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult EstimateMany(
             [In] int rank,
             [In] int* n,
@@ -2354,7 +2354,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Refined Estimated Size Of Work Area
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize1d"
             )]
@@ -2367,7 +2367,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize1d"
             )]
@@ -2380,7 +2380,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize1D(
             [In] IntPtr plan,
             [In] int nx,
@@ -2394,7 +2394,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize2d"
             )]
@@ -2407,7 +2407,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize2d"
             )]
@@ -2420,7 +2420,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize2D(
             [In] IntPtr plan,
             [In] int nx,
@@ -2434,7 +2434,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize3d"
             )]
@@ -2448,7 +2448,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize3d"
             )]
@@ -2462,7 +2462,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize3D(
             [In] IntPtr plan,
             [In] int nx,
@@ -2478,7 +2478,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSizeMany"
             )]
@@ -2498,7 +2498,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSizeMany"
             )]
@@ -2518,7 +2518,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSizeMany(
             [In] IntPtr plan,
             [In] int rank,
@@ -2546,7 +2546,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSizeMany64"
             )]
@@ -2566,7 +2566,7 @@ namespace ILGPU.Runtime.Cuda.API
              long batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSizeMany64"
             )]
@@ -2586,7 +2586,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] long batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSizeMany64(
             [In] IntPtr plan,
             [In] int rank,
@@ -2614,7 +2614,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize"
             )]
@@ -2624,7 +2624,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              UIntPtr* workArea);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize"
             )]
@@ -2634,7 +2634,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] UIntPtr* workArea);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize(
             [In] IntPtr plan,
             [In] UIntPtr* workArea) =>
@@ -2646,7 +2646,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Caller Allocated Work Area Support
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftSetAutoAllocation"
             )]
@@ -2656,7 +2656,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              int autoAllocate);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftSetAutoAllocation"
             )]
@@ -2666,7 +2666,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] int autoAllocate);
 
-        #endif
+#endif
         public sealed override CuFFTResult SetAutoAllocation(
             [In] IntPtr plan,
             [In] int autoAllocate) =>
@@ -2674,7 +2674,7 @@ namespace ILGPU.Runtime.Cuda.API
                 plan,
                 autoAllocate);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftSetWorkArea"
             )]
@@ -2684,7 +2684,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              IntPtr workArea);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftSetWorkArea"
             )]
@@ -2694,7 +2694,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] IntPtr workArea);
 
-        #endif
+#endif
         public sealed override CuFFTResult SetWorkArea(
             [In] IntPtr plan,
             [In] IntPtr workArea) =>
@@ -2706,7 +2706,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Execution
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecC2C"
             )]
@@ -2718,7 +2718,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr odata,
              CuFFTDirection direction);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecC2C"
             )]
@@ -2730,7 +2730,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr odata,
             [In] CuFFTDirection direction);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecC2C(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -2742,7 +2742,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odata,
                 direction);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecZ2Z"
             )]
@@ -2754,7 +2754,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr odata,
              CuFFTDirection direction);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecZ2Z"
             )]
@@ -2766,7 +2766,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr odata,
             [In] CuFFTDirection direction);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecZ2Z(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -2778,7 +2778,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odata,
                 direction);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecR2C"
             )]
@@ -2789,7 +2789,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecR2C"
             )]
@@ -2800,7 +2800,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecR2C(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -2810,7 +2810,7 @@ namespace ILGPU.Runtime.Cuda.API
                 idata,
                 odata);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecD2Z"
             )]
@@ -2821,7 +2821,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecD2Z"
             )]
@@ -2832,7 +2832,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecD2Z(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -2842,7 +2842,7 @@ namespace ILGPU.Runtime.Cuda.API
                 idata,
                 odata);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecC2R"
             )]
@@ -2853,7 +2853,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecC2R"
             )]
@@ -2864,7 +2864,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecC2R(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -2874,7 +2874,7 @@ namespace ILGPU.Runtime.Cuda.API
                 idata,
                 odata);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecZ2D"
             )]
@@ -2885,7 +2885,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecZ2D"
             )]
@@ -2896,7 +2896,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecZ2D(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -2910,7 +2910,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftSetStream"
             )]
@@ -2920,7 +2920,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftSetStream"
             )]
@@ -2930,7 +2930,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] IntPtr stream);
 
-        #endif
+#endif
         public sealed override CuFFTResult SetStream(
             [In] IntPtr plan,
             [In] IntPtr stream) =>
@@ -2938,7 +2938,7 @@ namespace ILGPU.Runtime.Cuda.API
                 plan,
                 stream);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftDestroy"
             )]
@@ -2947,7 +2947,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftDestroy(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftDestroy"
             )]
@@ -2956,13 +2956,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftDestroy(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override CuFFTResult Destroy(
             [In] IntPtr plan) =>
             cufftDestroy(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetVersion"
             )]
@@ -2971,7 +2971,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftGetVersion(
              out int version);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetVersion"
             )]
@@ -2980,13 +2980,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftGetVersion(
             [Out] out int version);
 
-        #endif
+#endif
         public sealed override CuFFTResult GetVersion(
             [Out] out int version) =>
             cufftGetVersion(
                 out version);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetProperty"
             )]
@@ -2996,7 +2996,7 @@ namespace ILGPU.Runtime.Cuda.API
              LibraryPropertyType type,
              out int value);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetProperty"
             )]
@@ -3006,7 +3006,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] LibraryPropertyType type,
             [Out] out int value);
 
-        #endif
+#endif
         public sealed override CuFFTResult GetProperty(
             [In] LibraryPropertyType type,
             [Out] out int value) =>
@@ -3031,7 +3031,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Plans
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlan1d"
             )]
@@ -3043,7 +3043,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              int batch);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlan1d"
             )]
@@ -3055,7 +3055,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] int batch);
 
-        #endif
+#endif
         public sealed override CuFFTResult Plan1D(
             [Out] out IntPtr plan,
             [In] int nx,
@@ -3067,7 +3067,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 batch);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlan2d"
             )]
@@ -3079,7 +3079,7 @@ namespace ILGPU.Runtime.Cuda.API
              int ny,
              CuFFTType type);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlan2d"
             )]
@@ -3091,7 +3091,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int ny,
             [In] CuFFTType type);
 
-        #endif
+#endif
         public sealed override CuFFTResult Plan2D(
             [Out] out IntPtr plan,
             [In] int nx,
@@ -3103,7 +3103,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ny,
                 type);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlan3d"
             )]
@@ -3116,7 +3116,7 @@ namespace ILGPU.Runtime.Cuda.API
              int nz,
              CuFFTType type);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlan3d"
             )]
@@ -3129,7 +3129,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int nz,
             [In] CuFFTType type);
 
-        #endif
+#endif
         public sealed override CuFFTResult Plan3D(
             [Out] out IntPtr plan,
             [In] int nx,
@@ -3143,7 +3143,7 @@ namespace ILGPU.Runtime.Cuda.API
                 nz,
                 type);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlanMany"
             )]
@@ -3162,7 +3162,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              int batch);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlanMany"
             )]
@@ -3181,7 +3181,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] int batch);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult PlanMany(
             [Out] out IntPtr plan,
             [In] int rank,
@@ -3211,7 +3211,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Extensible Plans
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftCreate"
             )]
@@ -3220,7 +3220,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftCreate(
              out IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftCreate"
             )]
@@ -3229,13 +3229,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftCreate(
             [Out] out IntPtr plan);
 
-        #endif
+#endif
         public sealed override CuFFTResult Create(
             [Out] out IntPtr plan) =>
             cufftCreate(
                 out plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlan1d"
             )]
@@ -3248,7 +3248,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlan1d"
             )]
@@ -3261,7 +3261,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlan1D(
             [In] IntPtr plan,
             [In] int nx,
@@ -3275,7 +3275,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlan2d"
             )]
@@ -3288,7 +3288,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlan2d"
             )]
@@ -3301,7 +3301,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlan2D(
             [In] IntPtr plan,
             [In] int nx,
@@ -3315,7 +3315,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlan3d"
             )]
@@ -3329,7 +3329,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlan3d"
             )]
@@ -3343,7 +3343,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlan3D(
             [In] IntPtr plan,
             [In] int nx,
@@ -3359,7 +3359,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlanMany"
             )]
@@ -3379,7 +3379,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlanMany"
             )]
@@ -3399,7 +3399,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlanMany(
             [In] IntPtr plan,
             [In] int rank,
@@ -3427,7 +3427,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlanMany64"
             )]
@@ -3447,7 +3447,7 @@ namespace ILGPU.Runtime.Cuda.API
              long batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlanMany64"
             )]
@@ -3467,7 +3467,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] long batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlanMany64(
             [In] IntPtr plan,
             [In] int rank,
@@ -3499,7 +3499,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Estimated Size Of Work Area
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimate1d"
             )]
@@ -3511,7 +3511,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimate1d"
             )]
@@ -3523,7 +3523,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult Estimate1D(
             [In] int nx,
             [In] CuFFTType type,
@@ -3535,7 +3535,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimate2d"
             )]
@@ -3547,7 +3547,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimate2d"
             )]
@@ -3559,7 +3559,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult Estimate2D(
             [In] int nx,
             [In] int ny,
@@ -3571,7 +3571,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimate3d"
             )]
@@ -3584,7 +3584,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimate3d"
             )]
@@ -3597,7 +3597,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult Estimate3D(
             [In] int nx,
             [In] int ny,
@@ -3611,7 +3611,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimateMany"
             )]
@@ -3630,7 +3630,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimateMany"
             )]
@@ -3649,7 +3649,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult EstimateMany(
             [In] int rank,
             [In] int* n,
@@ -3679,7 +3679,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Refined Estimated Size Of Work Area
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize1d"
             )]
@@ -3692,7 +3692,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize1d"
             )]
@@ -3705,7 +3705,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize1D(
             [In] IntPtr plan,
             [In] int nx,
@@ -3719,7 +3719,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize2d"
             )]
@@ -3732,7 +3732,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize2d"
             )]
@@ -3745,7 +3745,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize2D(
             [In] IntPtr plan,
             [In] int nx,
@@ -3759,7 +3759,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize3d"
             )]
@@ -3773,7 +3773,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize3d"
             )]
@@ -3787,7 +3787,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize3D(
             [In] IntPtr plan,
             [In] int nx,
@@ -3803,7 +3803,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSizeMany"
             )]
@@ -3823,7 +3823,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSizeMany"
             )]
@@ -3843,7 +3843,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSizeMany(
             [In] IntPtr plan,
             [In] int rank,
@@ -3871,7 +3871,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSizeMany64"
             )]
@@ -3891,7 +3891,7 @@ namespace ILGPU.Runtime.Cuda.API
              long batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSizeMany64"
             )]
@@ -3911,7 +3911,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] long batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSizeMany64(
             [In] IntPtr plan,
             [In] int rank,
@@ -3939,7 +3939,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize"
             )]
@@ -3949,7 +3949,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              UIntPtr* workArea);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize"
             )]
@@ -3959,7 +3959,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] UIntPtr* workArea);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize(
             [In] IntPtr plan,
             [In] UIntPtr* workArea) =>
@@ -3971,7 +3971,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Caller Allocated Work Area Support
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftSetAutoAllocation"
             )]
@@ -3981,7 +3981,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              int autoAllocate);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftSetAutoAllocation"
             )]
@@ -3991,7 +3991,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] int autoAllocate);
 
-        #endif
+#endif
         public sealed override CuFFTResult SetAutoAllocation(
             [In] IntPtr plan,
             [In] int autoAllocate) =>
@@ -3999,7 +3999,7 @@ namespace ILGPU.Runtime.Cuda.API
                 plan,
                 autoAllocate);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftSetWorkArea"
             )]
@@ -4009,7 +4009,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              IntPtr workArea);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftSetWorkArea"
             )]
@@ -4019,7 +4019,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] IntPtr workArea);
 
-        #endif
+#endif
         public sealed override CuFFTResult SetWorkArea(
             [In] IntPtr plan,
             [In] IntPtr workArea) =>
@@ -4031,7 +4031,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Execution
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecC2C"
             )]
@@ -4043,7 +4043,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr odata,
              CuFFTDirection direction);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecC2C"
             )]
@@ -4055,7 +4055,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr odata,
             [In] CuFFTDirection direction);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecC2C(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -4067,7 +4067,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odata,
                 direction);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecZ2Z"
             )]
@@ -4079,7 +4079,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr odata,
              CuFFTDirection direction);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecZ2Z"
             )]
@@ -4091,7 +4091,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr odata,
             [In] CuFFTDirection direction);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecZ2Z(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -4103,7 +4103,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odata,
                 direction);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecR2C"
             )]
@@ -4114,7 +4114,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecR2C"
             )]
@@ -4125,7 +4125,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecR2C(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -4135,7 +4135,7 @@ namespace ILGPU.Runtime.Cuda.API
                 idata,
                 odata);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecD2Z"
             )]
@@ -4146,7 +4146,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecD2Z"
             )]
@@ -4157,7 +4157,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecD2Z(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -4167,7 +4167,7 @@ namespace ILGPU.Runtime.Cuda.API
                 idata,
                 odata);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecC2R"
             )]
@@ -4178,7 +4178,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecC2R"
             )]
@@ -4189,7 +4189,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecC2R(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -4199,7 +4199,7 @@ namespace ILGPU.Runtime.Cuda.API
                 idata,
                 odata);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecZ2D"
             )]
@@ -4210,7 +4210,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecZ2D"
             )]
@@ -4221,7 +4221,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecZ2D(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -4235,7 +4235,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftSetStream"
             )]
@@ -4245,7 +4245,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftSetStream"
             )]
@@ -4255,7 +4255,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] IntPtr stream);
 
-        #endif
+#endif
         public sealed override CuFFTResult SetStream(
             [In] IntPtr plan,
             [In] IntPtr stream) =>
@@ -4263,7 +4263,7 @@ namespace ILGPU.Runtime.Cuda.API
                 plan,
                 stream);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftDestroy"
             )]
@@ -4272,7 +4272,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftDestroy(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftDestroy"
             )]
@@ -4281,13 +4281,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftDestroy(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override CuFFTResult Destroy(
             [In] IntPtr plan) =>
             cufftDestroy(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetVersion"
             )]
@@ -4296,7 +4296,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftGetVersion(
              out int version);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetVersion"
             )]
@@ -4305,13 +4305,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftGetVersion(
             [Out] out int version);
 
-        #endif
+#endif
         public sealed override CuFFTResult GetVersion(
             [Out] out int version) =>
             cufftGetVersion(
                 out version);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetProperty"
             )]
@@ -4321,7 +4321,7 @@ namespace ILGPU.Runtime.Cuda.API
              LibraryPropertyType type,
              out int value);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetProperty"
             )]
@@ -4331,7 +4331,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] LibraryPropertyType type,
             [Out] out int value);
 
-        #endif
+#endif
         public sealed override CuFFTResult GetProperty(
             [In] LibraryPropertyType type,
             [Out] out int value) =>
@@ -4356,7 +4356,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Plans
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlan1d"
             )]
@@ -4368,7 +4368,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              int batch);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlan1d"
             )]
@@ -4380,7 +4380,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] int batch);
 
-        #endif
+#endif
         public sealed override CuFFTResult Plan1D(
             [Out] out IntPtr plan,
             [In] int nx,
@@ -4392,7 +4392,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 batch);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlan2d"
             )]
@@ -4404,7 +4404,7 @@ namespace ILGPU.Runtime.Cuda.API
              int ny,
              CuFFTType type);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlan2d"
             )]
@@ -4416,7 +4416,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int ny,
             [In] CuFFTType type);
 
-        #endif
+#endif
         public sealed override CuFFTResult Plan2D(
             [Out] out IntPtr plan,
             [In] int nx,
@@ -4428,7 +4428,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ny,
                 type);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlan3d"
             )]
@@ -4441,7 +4441,7 @@ namespace ILGPU.Runtime.Cuda.API
              int nz,
              CuFFTType type);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlan3d"
             )]
@@ -4454,7 +4454,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int nz,
             [In] CuFFTType type);
 
-        #endif
+#endif
         public sealed override CuFFTResult Plan3D(
             [Out] out IntPtr plan,
             [In] int nx,
@@ -4468,7 +4468,7 @@ namespace ILGPU.Runtime.Cuda.API
                 nz,
                 type);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlanMany"
             )]
@@ -4487,7 +4487,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              int batch);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlanMany"
             )]
@@ -4506,7 +4506,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] int batch);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult PlanMany(
             [Out] out IntPtr plan,
             [In] int rank,
@@ -4536,7 +4536,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Extensible Plans
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftCreate"
             )]
@@ -4545,7 +4545,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftCreate(
              out IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftCreate"
             )]
@@ -4554,13 +4554,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftCreate(
             [Out] out IntPtr plan);
 
-        #endif
+#endif
         public sealed override CuFFTResult Create(
             [Out] out IntPtr plan) =>
             cufftCreate(
                 out plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlan1d"
             )]
@@ -4573,7 +4573,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlan1d"
             )]
@@ -4586,7 +4586,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlan1D(
             [In] IntPtr plan,
             [In] int nx,
@@ -4600,7 +4600,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlan2d"
             )]
@@ -4613,7 +4613,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlan2d"
             )]
@@ -4626,7 +4626,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlan2D(
             [In] IntPtr plan,
             [In] int nx,
@@ -4640,7 +4640,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlan3d"
             )]
@@ -4654,7 +4654,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlan3d"
             )]
@@ -4668,7 +4668,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlan3D(
             [In] IntPtr plan,
             [In] int nx,
@@ -4684,7 +4684,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlanMany"
             )]
@@ -4704,7 +4704,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlanMany"
             )]
@@ -4724,7 +4724,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlanMany(
             [In] IntPtr plan,
             [In] int rank,
@@ -4752,7 +4752,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlanMany64"
             )]
@@ -4772,7 +4772,7 @@ namespace ILGPU.Runtime.Cuda.API
              long batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlanMany64"
             )]
@@ -4792,7 +4792,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] long batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlanMany64(
             [In] IntPtr plan,
             [In] int rank,
@@ -4824,7 +4824,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Estimated Size Of Work Area
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimate1d"
             )]
@@ -4836,7 +4836,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimate1d"
             )]
@@ -4848,7 +4848,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult Estimate1D(
             [In] int nx,
             [In] CuFFTType type,
@@ -4860,7 +4860,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimate2d"
             )]
@@ -4872,7 +4872,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimate2d"
             )]
@@ -4884,7 +4884,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult Estimate2D(
             [In] int nx,
             [In] int ny,
@@ -4896,7 +4896,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimate3d"
             )]
@@ -4909,7 +4909,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimate3d"
             )]
@@ -4922,7 +4922,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult Estimate3D(
             [In] int nx,
             [In] int ny,
@@ -4936,7 +4936,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimateMany"
             )]
@@ -4955,7 +4955,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimateMany"
             )]
@@ -4974,7 +4974,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult EstimateMany(
             [In] int rank,
             [In] int* n,
@@ -5004,7 +5004,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Refined Estimated Size Of Work Area
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize1d"
             )]
@@ -5017,7 +5017,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize1d"
             )]
@@ -5030,7 +5030,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize1D(
             [In] IntPtr plan,
             [In] int nx,
@@ -5044,7 +5044,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize2d"
             )]
@@ -5057,7 +5057,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize2d"
             )]
@@ -5070,7 +5070,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize2D(
             [In] IntPtr plan,
             [In] int nx,
@@ -5084,7 +5084,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize3d"
             )]
@@ -5098,7 +5098,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize3d"
             )]
@@ -5112,7 +5112,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize3D(
             [In] IntPtr plan,
             [In] int nx,
@@ -5128,7 +5128,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSizeMany"
             )]
@@ -5148,7 +5148,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSizeMany"
             )]
@@ -5168,7 +5168,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSizeMany(
             [In] IntPtr plan,
             [In] int rank,
@@ -5196,7 +5196,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSizeMany64"
             )]
@@ -5216,7 +5216,7 @@ namespace ILGPU.Runtime.Cuda.API
              long batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSizeMany64"
             )]
@@ -5236,7 +5236,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] long batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSizeMany64(
             [In] IntPtr plan,
             [In] int rank,
@@ -5264,7 +5264,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize"
             )]
@@ -5274,7 +5274,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              UIntPtr* workArea);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize"
             )]
@@ -5284,7 +5284,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] UIntPtr* workArea);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize(
             [In] IntPtr plan,
             [In] UIntPtr* workArea) =>
@@ -5296,7 +5296,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Caller Allocated Work Area Support
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftSetAutoAllocation"
             )]
@@ -5306,7 +5306,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              int autoAllocate);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftSetAutoAllocation"
             )]
@@ -5316,7 +5316,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] int autoAllocate);
 
-        #endif
+#endif
         public sealed override CuFFTResult SetAutoAllocation(
             [In] IntPtr plan,
             [In] int autoAllocate) =>
@@ -5324,7 +5324,7 @@ namespace ILGPU.Runtime.Cuda.API
                 plan,
                 autoAllocate);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftSetWorkArea"
             )]
@@ -5334,7 +5334,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              IntPtr workArea);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftSetWorkArea"
             )]
@@ -5344,7 +5344,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] IntPtr workArea);
 
-        #endif
+#endif
         public sealed override CuFFTResult SetWorkArea(
             [In] IntPtr plan,
             [In] IntPtr workArea) =>
@@ -5356,7 +5356,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Execution
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecC2C"
             )]
@@ -5368,7 +5368,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr odata,
              CuFFTDirection direction);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecC2C"
             )]
@@ -5380,7 +5380,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr odata,
             [In] CuFFTDirection direction);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecC2C(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -5392,7 +5392,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odata,
                 direction);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecZ2Z"
             )]
@@ -5404,7 +5404,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr odata,
              CuFFTDirection direction);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecZ2Z"
             )]
@@ -5416,7 +5416,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr odata,
             [In] CuFFTDirection direction);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecZ2Z(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -5428,7 +5428,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odata,
                 direction);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecR2C"
             )]
@@ -5439,7 +5439,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecR2C"
             )]
@@ -5450,7 +5450,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecR2C(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -5460,7 +5460,7 @@ namespace ILGPU.Runtime.Cuda.API
                 idata,
                 odata);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecD2Z"
             )]
@@ -5471,7 +5471,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecD2Z"
             )]
@@ -5482,7 +5482,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecD2Z(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -5492,7 +5492,7 @@ namespace ILGPU.Runtime.Cuda.API
                 idata,
                 odata);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecC2R"
             )]
@@ -5503,7 +5503,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecC2R"
             )]
@@ -5514,7 +5514,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecC2R(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -5524,7 +5524,7 @@ namespace ILGPU.Runtime.Cuda.API
                 idata,
                 odata);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecZ2D"
             )]
@@ -5535,7 +5535,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecZ2D"
             )]
@@ -5546,7 +5546,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecZ2D(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -5560,7 +5560,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftSetStream"
             )]
@@ -5570,7 +5570,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftSetStream"
             )]
@@ -5580,7 +5580,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] IntPtr stream);
 
-        #endif
+#endif
         public sealed override CuFFTResult SetStream(
             [In] IntPtr plan,
             [In] IntPtr stream) =>
@@ -5588,7 +5588,7 @@ namespace ILGPU.Runtime.Cuda.API
                 plan,
                 stream);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftDestroy"
             )]
@@ -5597,7 +5597,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftDestroy(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftDestroy"
             )]
@@ -5606,13 +5606,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftDestroy(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override CuFFTResult Destroy(
             [In] IntPtr plan) =>
             cufftDestroy(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetVersion"
             )]
@@ -5621,7 +5621,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftGetVersion(
              out int version);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetVersion"
             )]
@@ -5630,13 +5630,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftGetVersion(
             [Out] out int version);
 
-        #endif
+#endif
         public sealed override CuFFTResult GetVersion(
             [Out] out int version) =>
             cufftGetVersion(
                 out version);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetProperty"
             )]
@@ -5646,7 +5646,7 @@ namespace ILGPU.Runtime.Cuda.API
              LibraryPropertyType type,
              out int value);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetProperty"
             )]
@@ -5656,7 +5656,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] LibraryPropertyType type,
             [Out] out int value);
 
-        #endif
+#endif
         public sealed override CuFFTResult GetProperty(
             [In] LibraryPropertyType type,
             [Out] out int value) =>
@@ -5681,7 +5681,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Plans
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlan1d"
             )]
@@ -5693,7 +5693,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              int batch);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlan1d"
             )]
@@ -5705,7 +5705,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] int batch);
 
-        #endif
+#endif
         public sealed override CuFFTResult Plan1D(
             [Out] out IntPtr plan,
             [In] int nx,
@@ -5717,7 +5717,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 batch);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlan2d"
             )]
@@ -5729,7 +5729,7 @@ namespace ILGPU.Runtime.Cuda.API
              int ny,
              CuFFTType type);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlan2d"
             )]
@@ -5741,7 +5741,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int ny,
             [In] CuFFTType type);
 
-        #endif
+#endif
         public sealed override CuFFTResult Plan2D(
             [Out] out IntPtr plan,
             [In] int nx,
@@ -5753,7 +5753,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ny,
                 type);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlan3d"
             )]
@@ -5766,7 +5766,7 @@ namespace ILGPU.Runtime.Cuda.API
              int nz,
              CuFFTType type);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlan3d"
             )]
@@ -5779,7 +5779,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int nz,
             [In] CuFFTType type);
 
-        #endif
+#endif
         public sealed override CuFFTResult Plan3D(
             [Out] out IntPtr plan,
             [In] int nx,
@@ -5793,7 +5793,7 @@ namespace ILGPU.Runtime.Cuda.API
                 nz,
                 type);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlanMany"
             )]
@@ -5812,7 +5812,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              int batch);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlanMany"
             )]
@@ -5831,7 +5831,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] int batch);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult PlanMany(
             [Out] out IntPtr plan,
             [In] int rank,
@@ -5861,7 +5861,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Extensible Plans
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftCreate"
             )]
@@ -5870,7 +5870,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftCreate(
              out IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftCreate"
             )]
@@ -5879,13 +5879,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftCreate(
             [Out] out IntPtr plan);
 
-        #endif
+#endif
         public sealed override CuFFTResult Create(
             [Out] out IntPtr plan) =>
             cufftCreate(
                 out plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlan1d"
             )]
@@ -5898,7 +5898,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlan1d"
             )]
@@ -5911,7 +5911,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlan1D(
             [In] IntPtr plan,
             [In] int nx,
@@ -5925,7 +5925,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlan2d"
             )]
@@ -5938,7 +5938,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlan2d"
             )]
@@ -5951,7 +5951,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlan2D(
             [In] IntPtr plan,
             [In] int nx,
@@ -5965,7 +5965,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlan3d"
             )]
@@ -5979,7 +5979,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlan3d"
             )]
@@ -5993,7 +5993,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlan3D(
             [In] IntPtr plan,
             [In] int nx,
@@ -6009,7 +6009,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlanMany"
             )]
@@ -6029,7 +6029,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlanMany"
             )]
@@ -6049,7 +6049,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlanMany(
             [In] IntPtr plan,
             [In] int rank,
@@ -6077,7 +6077,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlanMany64"
             )]
@@ -6097,7 +6097,7 @@ namespace ILGPU.Runtime.Cuda.API
              long batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlanMany64"
             )]
@@ -6117,7 +6117,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] long batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlanMany64(
             [In] IntPtr plan,
             [In] int rank,
@@ -6149,7 +6149,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Estimated Size Of Work Area
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimate1d"
             )]
@@ -6161,7 +6161,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimate1d"
             )]
@@ -6173,7 +6173,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult Estimate1D(
             [In] int nx,
             [In] CuFFTType type,
@@ -6185,7 +6185,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimate2d"
             )]
@@ -6197,7 +6197,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimate2d"
             )]
@@ -6209,7 +6209,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult Estimate2D(
             [In] int nx,
             [In] int ny,
@@ -6221,7 +6221,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimate3d"
             )]
@@ -6234,7 +6234,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimate3d"
             )]
@@ -6247,7 +6247,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult Estimate3D(
             [In] int nx,
             [In] int ny,
@@ -6261,7 +6261,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimateMany"
             )]
@@ -6280,7 +6280,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimateMany"
             )]
@@ -6299,7 +6299,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult EstimateMany(
             [In] int rank,
             [In] int* n,
@@ -6329,7 +6329,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Refined Estimated Size Of Work Area
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize1d"
             )]
@@ -6342,7 +6342,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize1d"
             )]
@@ -6355,7 +6355,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize1D(
             [In] IntPtr plan,
             [In] int nx,
@@ -6369,7 +6369,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize2d"
             )]
@@ -6382,7 +6382,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize2d"
             )]
@@ -6395,7 +6395,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize2D(
             [In] IntPtr plan,
             [In] int nx,
@@ -6409,7 +6409,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize3d"
             )]
@@ -6423,7 +6423,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize3d"
             )]
@@ -6437,7 +6437,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize3D(
             [In] IntPtr plan,
             [In] int nx,
@@ -6453,7 +6453,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSizeMany"
             )]
@@ -6473,7 +6473,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSizeMany"
             )]
@@ -6493,7 +6493,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSizeMany(
             [In] IntPtr plan,
             [In] int rank,
@@ -6521,7 +6521,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSizeMany64"
             )]
@@ -6541,7 +6541,7 @@ namespace ILGPU.Runtime.Cuda.API
              long batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSizeMany64"
             )]
@@ -6561,7 +6561,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] long batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSizeMany64(
             [In] IntPtr plan,
             [In] int rank,
@@ -6589,7 +6589,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize"
             )]
@@ -6599,7 +6599,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              UIntPtr* workArea);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize"
             )]
@@ -6609,7 +6609,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] UIntPtr* workArea);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize(
             [In] IntPtr plan,
             [In] UIntPtr* workArea) =>
@@ -6621,7 +6621,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Caller Allocated Work Area Support
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftSetAutoAllocation"
             )]
@@ -6631,7 +6631,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              int autoAllocate);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftSetAutoAllocation"
             )]
@@ -6641,7 +6641,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] int autoAllocate);
 
-        #endif
+#endif
         public sealed override CuFFTResult SetAutoAllocation(
             [In] IntPtr plan,
             [In] int autoAllocate) =>
@@ -6649,7 +6649,7 @@ namespace ILGPU.Runtime.Cuda.API
                 plan,
                 autoAllocate);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftSetWorkArea"
             )]
@@ -6659,7 +6659,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              IntPtr workArea);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftSetWorkArea"
             )]
@@ -6669,7 +6669,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] IntPtr workArea);
 
-        #endif
+#endif
         public sealed override CuFFTResult SetWorkArea(
             [In] IntPtr plan,
             [In] IntPtr workArea) =>
@@ -6681,7 +6681,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Execution
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecC2C"
             )]
@@ -6693,7 +6693,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr odata,
              CuFFTDirection direction);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecC2C"
             )]
@@ -6705,7 +6705,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr odata,
             [In] CuFFTDirection direction);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecC2C(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -6717,7 +6717,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odata,
                 direction);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecZ2Z"
             )]
@@ -6729,7 +6729,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr odata,
              CuFFTDirection direction);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecZ2Z"
             )]
@@ -6741,7 +6741,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr odata,
             [In] CuFFTDirection direction);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecZ2Z(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -6753,7 +6753,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odata,
                 direction);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecR2C"
             )]
@@ -6764,7 +6764,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecR2C"
             )]
@@ -6775,7 +6775,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecR2C(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -6785,7 +6785,7 @@ namespace ILGPU.Runtime.Cuda.API
                 idata,
                 odata);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecD2Z"
             )]
@@ -6796,7 +6796,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecD2Z"
             )]
@@ -6807,7 +6807,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecD2Z(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -6817,7 +6817,7 @@ namespace ILGPU.Runtime.Cuda.API
                 idata,
                 odata);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecC2R"
             )]
@@ -6828,7 +6828,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecC2R"
             )]
@@ -6839,7 +6839,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecC2R(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -6849,7 +6849,7 @@ namespace ILGPU.Runtime.Cuda.API
                 idata,
                 odata);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecZ2D"
             )]
@@ -6860,7 +6860,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecZ2D"
             )]
@@ -6871,7 +6871,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecZ2D(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -6885,7 +6885,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftSetStream"
             )]
@@ -6895,7 +6895,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftSetStream"
             )]
@@ -6905,7 +6905,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] IntPtr stream);
 
-        #endif
+#endif
         public sealed override CuFFTResult SetStream(
             [In] IntPtr plan,
             [In] IntPtr stream) =>
@@ -6913,7 +6913,7 @@ namespace ILGPU.Runtime.Cuda.API
                 plan,
                 stream);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftDestroy"
             )]
@@ -6922,7 +6922,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftDestroy(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftDestroy"
             )]
@@ -6931,13 +6931,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftDestroy(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override CuFFTResult Destroy(
             [In] IntPtr plan) =>
             cufftDestroy(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetVersion"
             )]
@@ -6946,7 +6946,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftGetVersion(
              out int version);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetVersion"
             )]
@@ -6955,13 +6955,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftGetVersion(
             [Out] out int version);
 
-        #endif
+#endif
         public sealed override CuFFTResult GetVersion(
             [Out] out int version) =>
             cufftGetVersion(
                 out version);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetProperty"
             )]
@@ -6971,7 +6971,7 @@ namespace ILGPU.Runtime.Cuda.API
              LibraryPropertyType type,
              out int value);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetProperty"
             )]
@@ -6981,7 +6981,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] LibraryPropertyType type,
             [Out] out int value);
 
-        #endif
+#endif
         public sealed override CuFFTResult GetProperty(
             [In] LibraryPropertyType type,
             [Out] out int value) =>
@@ -7006,7 +7006,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Plans
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlan1d"
             )]
@@ -7018,7 +7018,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              int batch);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlan1d"
             )]
@@ -7030,7 +7030,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] int batch);
 
-        #endif
+#endif
         public sealed override CuFFTResult Plan1D(
             [Out] out IntPtr plan,
             [In] int nx,
@@ -7042,7 +7042,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 batch);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlan2d"
             )]
@@ -7054,7 +7054,7 @@ namespace ILGPU.Runtime.Cuda.API
              int ny,
              CuFFTType type);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlan2d"
             )]
@@ -7066,7 +7066,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int ny,
             [In] CuFFTType type);
 
-        #endif
+#endif
         public sealed override CuFFTResult Plan2D(
             [Out] out IntPtr plan,
             [In] int nx,
@@ -7078,7 +7078,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ny,
                 type);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlan3d"
             )]
@@ -7091,7 +7091,7 @@ namespace ILGPU.Runtime.Cuda.API
              int nz,
              CuFFTType type);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlan3d"
             )]
@@ -7104,7 +7104,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int nz,
             [In] CuFFTType type);
 
-        #endif
+#endif
         public sealed override CuFFTResult Plan3D(
             [Out] out IntPtr plan,
             [In] int nx,
@@ -7118,7 +7118,7 @@ namespace ILGPU.Runtime.Cuda.API
                 nz,
                 type);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlanMany"
             )]
@@ -7137,7 +7137,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              int batch);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlanMany"
             )]
@@ -7156,7 +7156,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] int batch);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult PlanMany(
             [Out] out IntPtr plan,
             [In] int rank,
@@ -7186,7 +7186,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Extensible Plans
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftCreate"
             )]
@@ -7195,7 +7195,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftCreate(
              out IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftCreate"
             )]
@@ -7204,13 +7204,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftCreate(
             [Out] out IntPtr plan);
 
-        #endif
+#endif
         public sealed override CuFFTResult Create(
             [Out] out IntPtr plan) =>
             cufftCreate(
                 out plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlan1d"
             )]
@@ -7223,7 +7223,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlan1d"
             )]
@@ -7236,7 +7236,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlan1D(
             [In] IntPtr plan,
             [In] int nx,
@@ -7250,7 +7250,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlan2d"
             )]
@@ -7263,7 +7263,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlan2d"
             )]
@@ -7276,7 +7276,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlan2D(
             [In] IntPtr plan,
             [In] int nx,
@@ -7290,7 +7290,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlan3d"
             )]
@@ -7304,7 +7304,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlan3d"
             )]
@@ -7318,7 +7318,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlan3D(
             [In] IntPtr plan,
             [In] int nx,
@@ -7334,7 +7334,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlanMany"
             )]
@@ -7354,7 +7354,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlanMany"
             )]
@@ -7374,7 +7374,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlanMany(
             [In] IntPtr plan,
             [In] int rank,
@@ -7402,7 +7402,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlanMany64"
             )]
@@ -7422,7 +7422,7 @@ namespace ILGPU.Runtime.Cuda.API
              long batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlanMany64"
             )]
@@ -7442,7 +7442,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] long batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlanMany64(
             [In] IntPtr plan,
             [In] int rank,
@@ -7474,7 +7474,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Estimated Size Of Work Area
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimate1d"
             )]
@@ -7486,7 +7486,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimate1d"
             )]
@@ -7498,7 +7498,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult Estimate1D(
             [In] int nx,
             [In] CuFFTType type,
@@ -7510,7 +7510,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimate2d"
             )]
@@ -7522,7 +7522,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimate2d"
             )]
@@ -7534,7 +7534,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult Estimate2D(
             [In] int nx,
             [In] int ny,
@@ -7546,7 +7546,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimate3d"
             )]
@@ -7559,7 +7559,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimate3d"
             )]
@@ -7572,7 +7572,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult Estimate3D(
             [In] int nx,
             [In] int ny,
@@ -7586,7 +7586,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimateMany"
             )]
@@ -7605,7 +7605,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimateMany"
             )]
@@ -7624,7 +7624,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult EstimateMany(
             [In] int rank,
             [In] int* n,
@@ -7654,7 +7654,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Refined Estimated Size Of Work Area
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize1d"
             )]
@@ -7667,7 +7667,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize1d"
             )]
@@ -7680,7 +7680,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize1D(
             [In] IntPtr plan,
             [In] int nx,
@@ -7694,7 +7694,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize2d"
             )]
@@ -7707,7 +7707,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize2d"
             )]
@@ -7720,7 +7720,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize2D(
             [In] IntPtr plan,
             [In] int nx,
@@ -7734,7 +7734,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize3d"
             )]
@@ -7748,7 +7748,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize3d"
             )]
@@ -7762,7 +7762,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize3D(
             [In] IntPtr plan,
             [In] int nx,
@@ -7778,7 +7778,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSizeMany"
             )]
@@ -7798,7 +7798,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSizeMany"
             )]
@@ -7818,7 +7818,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSizeMany(
             [In] IntPtr plan,
             [In] int rank,
@@ -7846,7 +7846,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSizeMany64"
             )]
@@ -7866,7 +7866,7 @@ namespace ILGPU.Runtime.Cuda.API
              long batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSizeMany64"
             )]
@@ -7886,7 +7886,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] long batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSizeMany64(
             [In] IntPtr plan,
             [In] int rank,
@@ -7914,7 +7914,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize"
             )]
@@ -7924,7 +7924,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              UIntPtr* workArea);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize"
             )]
@@ -7934,7 +7934,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] UIntPtr* workArea);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize(
             [In] IntPtr plan,
             [In] UIntPtr* workArea) =>
@@ -7946,7 +7946,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Caller Allocated Work Area Support
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftSetAutoAllocation"
             )]
@@ -7956,7 +7956,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              int autoAllocate);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftSetAutoAllocation"
             )]
@@ -7966,7 +7966,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] int autoAllocate);
 
-        #endif
+#endif
         public sealed override CuFFTResult SetAutoAllocation(
             [In] IntPtr plan,
             [In] int autoAllocate) =>
@@ -7974,7 +7974,7 @@ namespace ILGPU.Runtime.Cuda.API
                 plan,
                 autoAllocate);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftSetWorkArea"
             )]
@@ -7984,7 +7984,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              IntPtr workArea);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftSetWorkArea"
             )]
@@ -7994,7 +7994,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] IntPtr workArea);
 
-        #endif
+#endif
         public sealed override CuFFTResult SetWorkArea(
             [In] IntPtr plan,
             [In] IntPtr workArea) =>
@@ -8006,7 +8006,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Execution
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecC2C"
             )]
@@ -8018,7 +8018,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr odata,
              CuFFTDirection direction);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecC2C"
             )]
@@ -8030,7 +8030,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr odata,
             [In] CuFFTDirection direction);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecC2C(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -8042,7 +8042,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odata,
                 direction);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecZ2Z"
             )]
@@ -8054,7 +8054,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr odata,
              CuFFTDirection direction);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecZ2Z"
             )]
@@ -8066,7 +8066,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr odata,
             [In] CuFFTDirection direction);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecZ2Z(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -8078,7 +8078,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odata,
                 direction);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecR2C"
             )]
@@ -8089,7 +8089,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecR2C"
             )]
@@ -8100,7 +8100,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecR2C(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -8110,7 +8110,7 @@ namespace ILGPU.Runtime.Cuda.API
                 idata,
                 odata);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecD2Z"
             )]
@@ -8121,7 +8121,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecD2Z"
             )]
@@ -8132,7 +8132,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecD2Z(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -8142,7 +8142,7 @@ namespace ILGPU.Runtime.Cuda.API
                 idata,
                 odata);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecC2R"
             )]
@@ -8153,7 +8153,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecC2R"
             )]
@@ -8164,7 +8164,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecC2R(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -8174,7 +8174,7 @@ namespace ILGPU.Runtime.Cuda.API
                 idata,
                 odata);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecZ2D"
             )]
@@ -8185,7 +8185,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecZ2D"
             )]
@@ -8196,7 +8196,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecZ2D(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -8210,7 +8210,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftSetStream"
             )]
@@ -8220,7 +8220,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftSetStream"
             )]
@@ -8230,7 +8230,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] IntPtr stream);
 
-        #endif
+#endif
         public sealed override CuFFTResult SetStream(
             [In] IntPtr plan,
             [In] IntPtr stream) =>
@@ -8238,7 +8238,7 @@ namespace ILGPU.Runtime.Cuda.API
                 plan,
                 stream);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftDestroy"
             )]
@@ -8247,7 +8247,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftDestroy(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftDestroy"
             )]
@@ -8256,13 +8256,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftDestroy(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override CuFFTResult Destroy(
             [In] IntPtr plan) =>
             cufftDestroy(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetVersion"
             )]
@@ -8271,7 +8271,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftGetVersion(
              out int version);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetVersion"
             )]
@@ -8280,13 +8280,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftGetVersion(
             [Out] out int version);
 
-        #endif
+#endif
         public sealed override CuFFTResult GetVersion(
             [Out] out int version) =>
             cufftGetVersion(
                 out version);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetProperty"
             )]
@@ -8296,7 +8296,7 @@ namespace ILGPU.Runtime.Cuda.API
              LibraryPropertyType type,
              out int value);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetProperty"
             )]
@@ -8306,7 +8306,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] LibraryPropertyType type,
             [Out] out int value);
 
-        #endif
+#endif
         public sealed override CuFFTResult GetProperty(
             [In] LibraryPropertyType type,
             [Out] out int value) =>
@@ -8331,7 +8331,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Plans
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlan1d"
             )]
@@ -8343,7 +8343,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              int batch);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlan1d"
             )]
@@ -8355,7 +8355,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] int batch);
 
-        #endif
+#endif
         public sealed override CuFFTResult Plan1D(
             [Out] out IntPtr plan,
             [In] int nx,
@@ -8367,7 +8367,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 batch);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlan2d"
             )]
@@ -8379,7 +8379,7 @@ namespace ILGPU.Runtime.Cuda.API
              int ny,
              CuFFTType type);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlan2d"
             )]
@@ -8391,7 +8391,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int ny,
             [In] CuFFTType type);
 
-        #endif
+#endif
         public sealed override CuFFTResult Plan2D(
             [Out] out IntPtr plan,
             [In] int nx,
@@ -8403,7 +8403,7 @@ namespace ILGPU.Runtime.Cuda.API
                 ny,
                 type);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlan3d"
             )]
@@ -8416,7 +8416,7 @@ namespace ILGPU.Runtime.Cuda.API
              int nz,
              CuFFTType type);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlan3d"
             )]
@@ -8429,7 +8429,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int nz,
             [In] CuFFTType type);
 
-        #endif
+#endif
         public sealed override CuFFTResult Plan3D(
             [Out] out IntPtr plan,
             [In] int nx,
@@ -8443,7 +8443,7 @@ namespace ILGPU.Runtime.Cuda.API
                 nz,
                 type);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftPlanMany"
             )]
@@ -8462,7 +8462,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              int batch);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftPlanMany"
             )]
@@ -8481,7 +8481,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] int batch);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult PlanMany(
             [Out] out IntPtr plan,
             [In] int rank,
@@ -8511,7 +8511,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Extensible Plans
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftCreate"
             )]
@@ -8520,7 +8520,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftCreate(
              out IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftCreate"
             )]
@@ -8529,13 +8529,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftCreate(
             [Out] out IntPtr plan);
 
-        #endif
+#endif
         public sealed override CuFFTResult Create(
             [Out] out IntPtr plan) =>
             cufftCreate(
                 out plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlan1d"
             )]
@@ -8548,7 +8548,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlan1d"
             )]
@@ -8561,7 +8561,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlan1D(
             [In] IntPtr plan,
             [In] int nx,
@@ -8575,7 +8575,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlan2d"
             )]
@@ -8588,7 +8588,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlan2d"
             )]
@@ -8601,7 +8601,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlan2D(
             [In] IntPtr plan,
             [In] int nx,
@@ -8615,7 +8615,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlan3d"
             )]
@@ -8629,7 +8629,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlan3d"
             )]
@@ -8643,7 +8643,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlan3D(
             [In] IntPtr plan,
             [In] int nx,
@@ -8659,7 +8659,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlanMany"
             )]
@@ -8679,7 +8679,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlanMany"
             )]
@@ -8699,7 +8699,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlanMany(
             [In] IntPtr plan,
             [In] int rank,
@@ -8727,7 +8727,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftMakePlanMany64"
             )]
@@ -8747,7 +8747,7 @@ namespace ILGPU.Runtime.Cuda.API
              long batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftMakePlanMany64"
             )]
@@ -8767,7 +8767,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] long batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult MakePlanMany64(
             [In] IntPtr plan,
             [In] int rank,
@@ -8799,7 +8799,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Estimated Size Of Work Area
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimate1d"
             )]
@@ -8811,7 +8811,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimate1d"
             )]
@@ -8823,7 +8823,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult Estimate1D(
             [In] int nx,
             [In] CuFFTType type,
@@ -8835,7 +8835,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimate2d"
             )]
@@ -8847,7 +8847,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimate2d"
             )]
@@ -8859,7 +8859,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult Estimate2D(
             [In] int nx,
             [In] int ny,
@@ -8871,7 +8871,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimate3d"
             )]
@@ -8884,7 +8884,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimate3d"
             )]
@@ -8897,7 +8897,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult Estimate3D(
             [In] int nx,
             [In] int ny,
@@ -8911,7 +8911,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftEstimateMany"
             )]
@@ -8930,7 +8930,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftEstimateMany"
             )]
@@ -8949,7 +8949,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult EstimateMany(
             [In] int rank,
             [In] int* n,
@@ -8979,7 +8979,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Refined Estimated Size Of Work Area
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize1d"
             )]
@@ -8992,7 +8992,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize1d"
             )]
@@ -9005,7 +9005,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize1D(
             [In] IntPtr plan,
             [In] int nx,
@@ -9019,7 +9019,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize2d"
             )]
@@ -9032,7 +9032,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize2d"
             )]
@@ -9045,7 +9045,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize2D(
             [In] IntPtr plan,
             [In] int nx,
@@ -9059,7 +9059,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize3d"
             )]
@@ -9073,7 +9073,7 @@ namespace ILGPU.Runtime.Cuda.API
              CuFFTType type,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize3d"
             )]
@@ -9087,7 +9087,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] CuFFTType type,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize3D(
             [In] IntPtr plan,
             [In] int nx,
@@ -9103,7 +9103,7 @@ namespace ILGPU.Runtime.Cuda.API
                 type,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSizeMany"
             )]
@@ -9123,7 +9123,7 @@ namespace ILGPU.Runtime.Cuda.API
              int batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSizeMany"
             )]
@@ -9143,7 +9143,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSizeMany(
             [In] IntPtr plan,
             [In] int rank,
@@ -9171,7 +9171,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSizeMany64"
             )]
@@ -9191,7 +9191,7 @@ namespace ILGPU.Runtime.Cuda.API
              long batch,
              UIntPtr* workSize);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSizeMany64"
             )]
@@ -9211,7 +9211,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] long batch,
             [In] UIntPtr* workSize);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSizeMany64(
             [In] IntPtr plan,
             [In] int rank,
@@ -9239,7 +9239,7 @@ namespace ILGPU.Runtime.Cuda.API
                 batch,
                 workSize);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetSize"
             )]
@@ -9249,7 +9249,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              UIntPtr* workArea);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetSize"
             )]
@@ -9259,7 +9259,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] UIntPtr* workArea);
 
-        #endif
+#endif
         public unsafe sealed override CuFFTResult GetSize(
             [In] IntPtr plan,
             [In] UIntPtr* workArea) =>
@@ -9271,7 +9271,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Caller Allocated Work Area Support
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftSetAutoAllocation"
             )]
@@ -9281,7 +9281,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              int autoAllocate);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftSetAutoAllocation"
             )]
@@ -9291,7 +9291,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] int autoAllocate);
 
-        #endif
+#endif
         public sealed override CuFFTResult SetAutoAllocation(
             [In] IntPtr plan,
             [In] int autoAllocate) =>
@@ -9299,7 +9299,7 @@ namespace ILGPU.Runtime.Cuda.API
                 plan,
                 autoAllocate);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftSetWorkArea"
             )]
@@ -9309,7 +9309,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              IntPtr workArea);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftSetWorkArea"
             )]
@@ -9319,7 +9319,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] IntPtr workArea);
 
-        #endif
+#endif
         public sealed override CuFFTResult SetWorkArea(
             [In] IntPtr plan,
             [In] IntPtr workArea) =>
@@ -9331,7 +9331,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Execution
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecC2C"
             )]
@@ -9343,7 +9343,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr odata,
              CuFFTDirection direction);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecC2C"
             )]
@@ -9355,7 +9355,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr odata,
             [In] CuFFTDirection direction);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecC2C(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -9367,7 +9367,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odata,
                 direction);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecZ2Z"
             )]
@@ -9379,7 +9379,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr odata,
              CuFFTDirection direction);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecZ2Z"
             )]
@@ -9391,7 +9391,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr odata,
             [In] CuFFTDirection direction);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecZ2Z(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -9403,7 +9403,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odata,
                 direction);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecR2C"
             )]
@@ -9414,7 +9414,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecR2C"
             )]
@@ -9425,7 +9425,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecR2C(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -9435,7 +9435,7 @@ namespace ILGPU.Runtime.Cuda.API
                 idata,
                 odata);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecD2Z"
             )]
@@ -9446,7 +9446,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecD2Z"
             )]
@@ -9457,7 +9457,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecD2Z(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -9467,7 +9467,7 @@ namespace ILGPU.Runtime.Cuda.API
                 idata,
                 odata);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecC2R"
             )]
@@ -9478,7 +9478,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecC2R"
             )]
@@ -9489,7 +9489,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecC2R(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -9499,7 +9499,7 @@ namespace ILGPU.Runtime.Cuda.API
                 idata,
                 odata);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftExecZ2D"
             )]
@@ -9510,7 +9510,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr idata,
              IntPtr odata);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftExecZ2D"
             )]
@@ -9521,7 +9521,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr idata,
             [In] IntPtr odata);
 
-        #endif
+#endif
         public sealed override CuFFTResult ExecZ2D(
             [In] IntPtr plan,
             [In] IntPtr idata,
@@ -9535,7 +9535,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftSetStream"
             )]
@@ -9545,7 +9545,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr plan,
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftSetStream"
             )]
@@ -9555,7 +9555,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr plan,
             [In] IntPtr stream);
 
-        #endif
+#endif
         public sealed override CuFFTResult SetStream(
             [In] IntPtr plan,
             [In] IntPtr stream) =>
@@ -9563,7 +9563,7 @@ namespace ILGPU.Runtime.Cuda.API
                 plan,
                 stream);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftDestroy"
             )]
@@ -9572,7 +9572,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftDestroy(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftDestroy"
             )]
@@ -9581,13 +9581,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftDestroy(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override CuFFTResult Destroy(
             [In] IntPtr plan) =>
             cufftDestroy(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetVersion"
             )]
@@ -9596,7 +9596,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftGetVersion(
              out int version);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetVersion"
             )]
@@ -9605,13 +9605,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuFFTResult cufftGetVersion(
             [Out] out int version);
 
-        #endif
+#endif
         public sealed override CuFFTResult GetVersion(
             [Out] out int version) =>
             cufftGetVersion(
                 out version);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "cufftGetProperty"
             )]
@@ -9621,7 +9621,7 @@ namespace ILGPU.Runtime.Cuda.API
              LibraryPropertyType type,
              out int value);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "cufftGetProperty"
             )]
@@ -9631,7 +9631,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] LibraryPropertyType type,
             [Out] out int value);
 
-        #endif
+#endif
         public sealed override CuFFTResult GetProperty(
             [In] LibraryPropertyType type,
             [Out] out int value) =>

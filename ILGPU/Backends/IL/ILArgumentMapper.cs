@@ -12,7 +12,6 @@
 using ILGPU.Backends.EntryPoints;
 using ILGPU.Backends.PointerViews;
 using System.Diagnostics;
-using System.IO;
 
 namespace ILGPU.Backends.IL
 {

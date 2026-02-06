@@ -46,12 +46,12 @@ namespace ILGPU.Algorithms.Vectors
             LongIndex1D vectorIndex)
         {
             dataView = vectorView;
-            
+
             NumVectors = numVectors;
             Dimension = dimension;
             VectorIndex = vectorIndex;
         }
-        
+
         /// <summary>
         /// Constructs a new vector view pointing to a single vector.
         /// </summary>
@@ -67,7 +67,7 @@ namespace ILGPU.Algorithms.Vectors
             LongIndex1D vectorIndex)
         {
             dataView = vectorView.BaseView;
-            
+
             NumVectors = vectorView.Stride.StrideExtent;
             Dimension = dimension;
             VectorIndex = vectorIndex;
@@ -82,12 +82,12 @@ namespace ILGPU.Algorithms.Vectors
         /// Returns the generic stride of this single vector view.
         /// </summary>
         public LongIndex1D NumVectors { get; }
-        
+
         /// <summary>
         /// Returns the general vector index of this vector view
         /// </summary>
         public LongIndex1D VectorIndex { get; }
-        
+
         /// <summary>
         /// Returns the dimension of this vector.
         /// </summary>
@@ -144,7 +144,7 @@ namespace ILGPU.Algorithms.Vectors
             accelerator.Allocate2DDenseY<T>(
                 new LongIndex2D(dimension,
                 numVectors));
-        
+
         /// <summary>
         /// Constructs a multi-vector view from the given 2D dense array view.
         /// </summary>
@@ -153,7 +153,7 @@ namespace ILGPU.Algorithms.Vectors
         {
             DataView = arrayView2D;
         }
-        
+
         /// <summary>
         /// Returns true if this view points to a valid location.
         /// </summary>
@@ -168,7 +168,7 @@ namespace ILGPU.Algorithms.Vectors
         /// Returns the number of the vectors included in this view.
         /// </summary>
         public LongIndex1D NumVectors => DataView.Extent.Y;
-        
+
         /// <summary>
         /// Returns the underlying dense array view.
         /// </summary>

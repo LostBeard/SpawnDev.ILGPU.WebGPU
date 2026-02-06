@@ -16,13 +16,9 @@ using ILGPU.IR.Values;
 using ILGPU.Util;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Loop = ILGPU.IR.Analyses.Loops<
     ILGPU.IR.Analyses.TraversalOrders.ReversePostOrder,
     ILGPU.IR.Analyses.ControlFlowDirection.Forwards>.Node;
-using Loops = ILGPU.IR.Analyses.Loops<
-    ILGPU.IR.Analyses.TraversalOrders.ReversePostOrder,
-    ILGPU.IR.Analyses.ControlFlowDirection.Forwards>;
 
 namespace ILGPU.IR.Transformations
 {

@@ -283,7 +283,8 @@ namespace ILGPU.IR.Construction
 
                         default:
                             throw new NotImplementedException();
-                    };
+                    }
+                    ;
 
                     instanceBuilder.Add(paddingValue);
                     i += paddingValue.PrimitiveType.Size;

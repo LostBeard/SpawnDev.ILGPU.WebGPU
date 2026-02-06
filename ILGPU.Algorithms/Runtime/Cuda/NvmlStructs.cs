@@ -13,7 +13,6 @@
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
-using System;
 using System.Runtime.InteropServices;
 
 namespace ILGPU.Runtime.Cuda

@@ -629,15 +629,15 @@ namespace ILGPU.Algorithms
                     // If digits < 0, fallback to 0 digits.
                     // If digits > 6, fallback to 6.
                     float multiplier = digits switch
-                        {
-                            int d when d <= 0 => 1e0f,
-                            1 => 1e1f,
-                            2 => 1e2f,
-                            3 => 1e3f,
-                            4 => 1e4f,
-                            5 => 1e5f,
-                            _ => 1e6f
-                        };
+                    {
+                        int d when d <= 0 => 1e0f,
+                        1 => 1e1f,
+                        2 => 1e2f,
+                        3 => 1e3f,
+                        4 => 1e4f,
+                        5 => 1e5f,
+                        _ => 1e6f
+                    };
 
                     // NOTE: net471 and netstandard2.1 only support the first two modes:
                     // In order to fully support netcoreapp3.1 and net5.0, we convert
@@ -739,24 +739,24 @@ namespace ILGPU.Algorithms
                     // If digits < 0, fallback to 0 digits.
                     // If digits > 15, fallback to 15.
                     double multiplier = digits switch
-                        {
-                            int d when d <= 0 => 1e0,
-                            1 => 1e1,
-                            2 => 1e2,
-                            3 => 1e3,
-                            4 => 1e4,
-                            5 => 1e5,
-                            6 => 1e6,
-                            7 => 1e7,
-                            8 => 1e8,
-                            9 => 1e9,
-                            10 => 1e10,
-                            11 => 1e11,
-                            12 => 1e12,
-                            13 => 1e13,
-                            14 => 1e14,
-                            _ => 1e15
-                        };
+                    {
+                        int d when d <= 0 => 1e0,
+                        1 => 1e1,
+                        2 => 1e2,
+                        3 => 1e3,
+                        4 => 1e4,
+                        5 => 1e5,
+                        6 => 1e6,
+                        7 => 1e7,
+                        8 => 1e8,
+                        9 => 1e9,
+                        10 => 1e10,
+                        11 => 1e11,
+                        12 => 1e12,
+                        13 => 1e13,
+                        14 => 1e14,
+                        _ => 1e15
+                    };
 
                     // NOTE: net471 and netstandard2.1 only support the first two modes:
                     // In order to fully support netcoreapp3.1 and net5.0, we convert

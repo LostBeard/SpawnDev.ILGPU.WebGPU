@@ -104,7 +104,8 @@ namespace ILGPU.Backends.Velocity
                             // Check for active masks of the target block to test whether
                             // we actually branch back to the loop header
                             Specializer.CheckForAnyActiveLaneMask(Emitter);
-                        }));
+                        }
+                        ));
                     }
                     else
                     {
@@ -162,7 +163,8 @@ namespace ILGPU.Backends.Velocity
 
                             // Check whether all lane masks have been disabled
                             Specializer.CheckForNoActiveLaneMask(Emitter);
-                        }));
+                        }
+                        ));
                     }
                     else
                     {

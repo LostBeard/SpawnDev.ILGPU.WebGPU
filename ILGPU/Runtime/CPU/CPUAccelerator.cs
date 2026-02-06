@@ -12,8 +12,8 @@
 using ILGPU.Backends;
 using ILGPU.Backends.IL;
 using ILGPU.Resources;
-using ILGPU.Util;
 using ILGPU.Runtime.Velocity;
+using ILGPU.Util;
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;

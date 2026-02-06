@@ -231,7 +231,7 @@ namespace ILGPU.IR.Values
                 LengthType);
 
         /// <summary cref="Value.Write{T}(T)"/>
-        protected internal override void Write<T>(T writer) =>        
+        protected internal override void Write<T>(T writer) =>
             writer.Write(nameof(LengthType), LengthType);
 
         /// <summary cref="Value.Accept" />

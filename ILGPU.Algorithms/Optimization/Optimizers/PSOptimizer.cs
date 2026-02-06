@@ -46,7 +46,7 @@ namespace ILGPU.Algorithms.Optimization.Optimizers
         {
             View = view;
         }
-        
+
         /// <summary>
         /// Returns the parent particle swarm view.
         /// </summary>
@@ -69,7 +69,7 @@ namespace ILGPU.Algorithms.Optimization.Optimizers
             if (vectorIndex == 0)
                 View.Fitness[index] = bestResult;
             View.BestPositions[index, vectorIndex] = bestPosition;
-            
+
             // Select a random start position
             var initPosition = TNumericType.GetRandom(
                 ref random,
@@ -96,7 +96,7 @@ namespace ILGPU.Algorithms.Optimization.Optimizers
         /// </summary>
         public SingleVectorView<TNumericType> GetPosition(LongIndex1D index) =>
             View.Positions.SliceVector(index);
-        
+
         /// <summary>
         /// Does not change the internal state as new evaluation results will not modify
         /// PS-based particles.
@@ -108,7 +108,7 @@ namespace ILGPU.Algorithms.Optimization.Optimizers
         {
             // Do not change anything in this case
         }
-        
+
         /// <summary>
         /// As soon as a better result for this particle is available, the local fitness
         /// value is updated and the best-known position for the current particle is
@@ -121,13 +121,13 @@ namespace ILGPU.Algorithms.Optimization.Optimizers
         {
             // Set the main evaluation result of the referenced particle
             View.Fitness[index] = evalValue;
-            
+
             // Copy the current positions vector to the locally best-found view
             for (int i = 0; i < dimension; ++i)
                 View.BestPositions[index, i] = View.Positions[index, i];
         }
     }
-    
+
     /// <summary>
     /// Represents a PS and objective-function specific optimizer instance.
     /// </summary>
@@ -205,10 +205,10 @@ namespace ILGPU.Algorithms.Optimization.Optimizers
                     var sourceVelocityV = view.Velocities[particleIndex, vi];
                     var velocityV = TNumericType.FromScalar(omega) *
                         sourceVelocityV + phiGVec + phiPVec;
-                    
+
                     // Adjust velocity
                     view.Velocities[particleIndex, vi] = velocityV;
-                    
+
                     // Get bounds
                     var (lower, upper) = boundsView[vi];
 
@@ -217,7 +217,7 @@ namespace ILGPU.Algorithms.Optimization.Optimizers
                     var clamped = TNumericType.Clamp(newPositionV, lower, upper);
                     view.Positions[particleIndex, vi] = clamped;
                 }
-                
+
                 // Update random state
                 rngView[particleIndex] = random;
             }
@@ -225,12 +225,12 @@ namespace ILGPU.Algorithms.Optimization.Optimizers
 
         private readonly PSView<TNumericType, TEvalType> view;
         private readonly TFunc optimizationFunction;
-        
+
         private readonly Action<
             AcceleratorStream,
             KernelConfig,
             ArrayView<TRandomProvider>,
-            SingleVectorView<TNumericType> ,
+            SingleVectorView<TNumericType>,
             BoundsView<TNumericType>,
             PSView<TNumericType, TEvalType>,
             LongIndex1D,
@@ -238,7 +238,7 @@ namespace ILGPU.Algorithms.Optimization.Optimizers
             TElementType,
             TElementType,
             SpecializedValue<Index1D>> moveParticles;
-        
+
         /// <summary>
         /// Creates a new PS optimizer.
         /// </summary>
@@ -264,7 +264,7 @@ namespace ILGPU.Algorithms.Optimization.Optimizers
             view = engine.DataView;
 
             Engine = engine;
-            
+
             // Load kernels
             moveParticles = accelerator.LoadKernel<
                 ArrayView<TRandomProvider>,
@@ -277,13 +277,13 @@ namespace ILGPU.Algorithms.Optimization.Optimizers
                 TElementType,
                 SpecializedValue<Index1D>>(MoveParticlesKernel);
         }
-        
+
         /// <summary>
         /// Returns the parent optimization engine.
         /// </summary>
         OptimizationEngine<TNumericType, TElementType, TEvalType>
             IOptimizer<TNumericType, TElementType, TEvalType>.Engine => Engine;
-        
+
         /// <summary>
         /// Returns the parent PSO engine.
         /// </summary>
@@ -321,7 +321,7 @@ namespace ILGPU.Algorithms.Optimization.Optimizers
                 resultView,
                 evalView);
         }
-        
+
         /// <summary>
         /// Implements a single PSO iteration by evaluating all particles, aggregating
         /// all intermediate results, and moving all particles to updated positions.
@@ -337,7 +337,7 @@ namespace ILGPU.Algorithms.Optimization.Optimizers
                 stream,
                 new(view),
                 optimizationFunction);
-            
+
             // Aggregate all evaluations to ensure the best solution is visible for all
             // particles in the optimization domain
             AggregateParticleEvaluations(
@@ -345,7 +345,7 @@ namespace ILGPU.Algorithms.Optimization.Optimizers
                 new(view),
                 resultView,
                 evalView);
-            
+
             // Move all particles
             int gridSize = GetGridSize(out var _);
             moveParticles(
@@ -361,7 +361,7 @@ namespace ILGPU.Algorithms.Optimization.Optimizers
                 PhiG,
                 SpecializedValue.New(VectorDimension));
         }
-        
+
         /// <summary>
         /// Does not perform any operation in the case of PSO.
         /// </summary>

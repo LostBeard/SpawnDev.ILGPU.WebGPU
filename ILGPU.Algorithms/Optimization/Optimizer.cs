@@ -68,7 +68,7 @@ namespace ILGPU.Algorithms.Optimization
         /// <param name="index">The particle index.</param>
         /// <returns>The evaluation result.</returns>
         TEvalType GetEvaluationResult(LongIndex1D index);
-        
+
         /// <summary>
         /// Returns the position vector view of the referenced particle.
         /// </summary>
@@ -86,7 +86,7 @@ namespace ILGPU.Algorithms.Optimization
             LongIndex1D index,
             TEvalType evalValue,
             Index1D dimension);
-        
+
         /// <summary>
         /// Sets a better evaluation result which is better than the current one.
         /// </summary>
@@ -98,7 +98,7 @@ namespace ILGPU.Algorithms.Optimization
             TEvalType evalValue,
             Index1D dimension);
     }
-    
+
     abstract class Optimizer<
         TNumericType,
         TElementType,
@@ -116,7 +116,7 @@ namespace ILGPU.Algorithms.Optimization
         where TRandomProvider : unmanaged, IRandomProvider<TRandomProvider>
     {
         #region Nested Types
-        
+
         /// <summary>
         /// A composed temporary result storing an evaluation value and a source index
         /// from which the evaluation result has been computed.
@@ -127,7 +127,7 @@ namespace ILGPU.Algorithms.Optimization
             /// An invalid temporary result.
             /// </summary>
             public static readonly TempResult Invalid = new(default, LongIndex1D.Zero);
-            
+
             /// <summary>
             /// Constructs a new temporary result.
             /// </summary>
@@ -138,7 +138,7 @@ namespace ILGPU.Algorithms.Optimization
                 Result = result;
                 ParticleIndex = particleIndex;
             }
-            
+
             /// <summary>
             /// Returns the evaluation result.
             /// </summary>
@@ -188,7 +188,7 @@ namespace ILGPU.Algorithms.Optimization
             /// Returns an invalid temp result.
             /// </summary>
             public TempResult Identity => TempResult.Invalid;
-        
+
             /// <summary>
             /// Uses the custom <see cref="TempResult.IsBetterThan(TempResult)"/>
             /// function to determine whether the first or the second result is best.
@@ -205,7 +205,7 @@ namespace ILGPU.Algorithms.Optimization
             public void AtomicApply(ref TempResult target, TempResult value) =>
                 throw new NotSupportedException();
         }
-        
+
         #endregion
 
         #region Kernels
@@ -235,7 +235,7 @@ namespace ILGPU.Algorithms.Optimization
                 {
                     var lowerBoundV = boundsView.GetLowerBound(vi);
                     var upperBoundV = boundsView.GetUpperBound(vi);
-                
+
                     optimizerFunc.Initialize(
                         ref random,
                         particleIndex,
@@ -250,7 +250,7 @@ namespace ILGPU.Algorithms.Optimization
                 rngView[particleIndex] = random;
             }
         }
-        
+
         /// <summary>
         /// Initializes all particles to random positions within given bounds.
         /// </summary>
@@ -276,12 +276,12 @@ namespace ILGPU.Algorithms.Optimization
                     particleIndex,
                     evaluationResult,
                     dimension.Value);
-                
+
                 // Compare the result
                 var currentResult = optimizerFunc.GetEvaluationResult(particleIndex);
                 if (func.CurrentIsBetter(currentResult, evaluationResult))
                     continue;
-                
+
                 // Report a better result if possible
                 optimizerFunc.ReportBetterEvaluationResult(
                     particleIndex,
@@ -322,7 +322,7 @@ namespace ILGPU.Algorithms.Optimization
                     newResult,
                     localBestResult);
             }
-            
+
             // Reduce in each warp
             var warpBestResult = WarpExtensions.Reduce<
                 TempResult,
@@ -347,7 +347,7 @@ namespace ILGPU.Algorithms.Optimization
                     TempResultReduction>(bestResult);
                 if (!Warp.IsFirstLane)
                     continue;
-                
+
                 bool currentIsBetter =
                     currentWarpBestResult.IsBetterThan(globalBestResult);
                 globalBestResult = Utilities.Select(currentIsBetter,
@@ -362,7 +362,7 @@ namespace ILGPU.Algorithms.Optimization
                 intermediateIndicesView[Grid.IdxX] = globalBestResult.ParticleIndex;
             }
         }
-        
+
         /// <summary>
         /// The second pass of the aggregation kernel.
         /// </summary>
@@ -378,7 +378,7 @@ namespace ILGPU.Algorithms.Optimization
             Debug.Assert(
                 sharedBestResult.IntLength % Warp.WarpSize == 0,
                 "Shared memory size not sufficient for reduction");
-            
+
             // Initialize shared memory
             var bestKnownResult = new TempResult(evalView.Value, LongIndex1D.One);
             for (int i = Group.IdxX; i < sharedBestResult.IntLength; i += Group.DimX)
@@ -399,7 +399,7 @@ namespace ILGPU.Algorithms.Optimization
                     result,
                     localBestResult);
             }
-            
+
             // Reduce in each warp
             var warpBestResult = WarpExtensions.Reduce<
                 TempResult,
@@ -407,7 +407,7 @@ namespace ILGPU.Algorithms.Optimization
             if (Warp.IsFirstLane)
                 sharedBestResult[Warp.WarpIdx] = warpBestResult;
             Group.Barrier();
-            
+
             // Reduce in the first warp
             if (Warp.WarpIdx == 0)
             {
@@ -423,21 +423,21 @@ namespace ILGPU.Algorithms.Optimization
                         TempResultReduction>(bestResult);
                     if (!Warp.IsFirstLane)
                         continue;
-                    
+
                     bool currentIsBetter =
                         currentWarpBestResult.IsBetterThan(globalBestResult);
                     globalBestResult = Utilities.Select(currentIsBetter,
                         currentWarpBestResult, globalBestResult);
                 }
                 Warp.Barrier();
-                
+
                 if (Warp.IsFirstLane)
                     sharedBestResult[0] = globalBestResult;
             }
-            
+
             // Wait for all results
             Group.Barrier();
-            
+
             // Validate whether we have successfully achieved an improvement
             var finalResult = sharedBestResult[0];
             if (!finalResult.IsBetterThan(bestKnownResult) |
@@ -457,11 +457,11 @@ namespace ILGPU.Algorithms.Optimization
             if (Group.IsFirstThread)
                 evalView.Value = finalResult.Result;
         }
-        
+
         #endregion
-        
+
         #region Instance
-        
+
         private readonly MemoryBuffer1D<TEvalType, Stride1D.Dense>
             intermediateResultsBuffer;
         private readonly MemoryBuffer1D<LongIndex1D, Stride1D.Dense>
@@ -521,13 +521,13 @@ namespace ILGPU.Algorithms.Optimization
             // Determine group size
             GroupSize = accelerator.MaxNumThreadsPerMultiprocessor / 2;
             MaxGroupSize = accelerator.MaxNumThreadsPerGroup;
-            
+
             // Allocate buffers
             intermediateResultsBuffer = accelerator.Allocate1D<TEvalType>(
                 XMath.DivRoundUp(maxNumParticles, GroupSize));
             intermediateIndicesBuffer = accelerator.Allocate1D<LongIndex1D>(
                 XMath.DivRoundUp(maxNumParticles, GroupSize));
-            
+
             // Load kernels
             initializeParticles = accelerator.LoadKernel<
                 ArrayView<TRandomProvider>,
@@ -553,21 +553,21 @@ namespace ILGPU.Algorithms.Optimization
                 ArrayView<LongIndex1D>,
                 SingleVectorView<TNumericType>,
                 VariableView<TEvalType>>(AggregateEvaluations2Kernel);
-            
+
             MaxNumParticles = maxNumParticles;
             VectorDimension = vectorDimension;
             numParticles = maxNumParticles;
         }
-        
+
         #endregion
-        
+
         #region Properties
 
         /// <summary>
         /// Returns the assigned accelerator.
         /// </summary>
         public Accelerator Accelerator => IntermediateResultsView.GetAccelerator();
-        
+
         /// <summary>
         /// Returns the maximum number of supported particles.
         /// </summary>
@@ -585,7 +585,7 @@ namespace ILGPU.Algorithms.Optimization
                 numParticles = value;
             }
         }
-        
+
         /// <summary>
         /// Returns the vector dimension used.
         /// </summary>
@@ -602,20 +602,20 @@ namespace ILGPU.Algorithms.Optimization
         /// </summary>
         public ArrayView1D<LongIndex1D, Stride1D.Dense> IntermediateIndicesView =>
             intermediateIndicesBuffer.View;
-        
+
         /// <summary>
         /// Returns the group size used for most kernels to achieve max occupancy.
         /// </summary>
         public int GroupSize { get; }
-        
+
         /// <summary>
         /// Returns the maximum group size used for specific kernels to achieve
         /// max occupancy via a single group.
         /// </summary>
         public int MaxGroupSize { get; }
-        
+
         #endregion
-        
+
         #region Methods
 
         /// <summary>
@@ -660,7 +660,7 @@ namespace ILGPU.Algorithms.Optimization
         {
             // Determine kernel config
             int gridSize = GetGridSize(out var _);
-            
+
             // Initialize all particles
             initializeParticles(
                 stream,
@@ -673,7 +673,7 @@ namespace ILGPU.Algorithms.Optimization
                 NumParticles,
                 SpecializedValue.New(VectorDimension));
         }
-        
+
         /// <summary>
         /// Initializes particles defined by the given optimization functions.
         /// </summary>
@@ -688,7 +688,7 @@ namespace ILGPU.Algorithms.Optimization
         {
             // Determine kernel config
             int gridSize = GetGridSize(out var _);
-            
+
             // Initialize all particles
             evaluateParticles(
                 stream,
@@ -698,7 +698,7 @@ namespace ILGPU.Algorithms.Optimization
                 NumParticles,
                 SpecializedValue.New(VectorDimension));
         }
-        
+
         /// <summary>
         /// Aggregates all intermediate particle evaluation results, updates the best
         /// available global result, and propagates particle changes to the 
@@ -719,10 +719,10 @@ namespace ILGPU.Algorithms.Optimization
             // Reset eval results
             IntermediateIndicesView.MemSetToZero(stream);
             IntermediateResultsView.MemSetToZero(stream);
-            
+
             // Determine basic grid config
             int gridSize = GetGridSize(out var _);
-            
+
             // Aggregate all evaluations (pass 1)
             KernelConfig kernelConfigPass1 = (
                 gridSize,
@@ -735,7 +735,7 @@ namespace ILGPU.Algorithms.Optimization
                 IntermediateResultsView,
                 IntermediateIndicesView,
                 NumParticles);
-            
+
             // Aggregate all evaluations (pass 2)
             KernelConfig kernelConfigPass2 = (
                 1,
@@ -752,7 +752,7 @@ namespace ILGPU.Algorithms.Optimization
         }
 
         #endregion
-        
+
         #region IDisposable
 
         /// <summary>

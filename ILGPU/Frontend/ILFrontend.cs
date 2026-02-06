@@ -123,18 +123,18 @@ namespace ILGPU.Frontend
                 throw new ArgumentOutOfRangeException(nameof(numThreads));
             DebugInformationManager = debugInformationManager;
             driverNotifier = new ManualResetEventSlim(false);
-            
+
             // Check for threading support
             bool threadingSupported = true;
-            try 
-            { 
-                 var testThread = new Thread(() => { });
-                 testThread.Start();
-                 testThread.Join();
-            } 
-            catch (PlatformNotSupportedException) 
-            { 
-                 threadingSupported = false; 
+            try
+            {
+                var testThread = new Thread(() => { });
+                testThread.Start();
+                testThread.Join();
+            }
+            catch (PlatformNotSupportedException)
+            {
+                threadingSupported = false;
             }
 
             if (threadingSupported)

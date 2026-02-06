@@ -9,7 +9,6 @@
 // Source License. See LICENSE.txt for details.
 // ---------------------------------------------------------------------------------------
 
-using System;
 using System.Runtime.CompilerServices;
 
 namespace ILGPU.Algorithms

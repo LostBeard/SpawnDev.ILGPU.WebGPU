@@ -10,7 +10,6 @@
 // ---------------------------------------------------------------------------------------
 
 using ILGPU.IR.Values;
-using System;
 using System.Collections.Generic;
 
 // disable: max_line_length

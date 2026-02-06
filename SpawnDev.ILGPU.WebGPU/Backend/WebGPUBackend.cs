@@ -13,8 +13,8 @@ using global::ILGPU.Backends.EntryPoints;
 using global::ILGPU.IR;
 using global::ILGPU.IR.Analyses;
 using global::ILGPU.IR.Intrinsics;
-using ILGPU.Runtime;
 using ILGPU.Algorithms;
+using ILGPU.Runtime;
 using System.Reflection;
 using System.Text;
 
@@ -99,7 +99,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                   new WebGPUArgumentMapper(context))
         {
             Options = options ?? WebGPUBackendOptions.Default;
-            
+
             InitIntrinsicProvider();
             RegisterMathIntrinsics();
 

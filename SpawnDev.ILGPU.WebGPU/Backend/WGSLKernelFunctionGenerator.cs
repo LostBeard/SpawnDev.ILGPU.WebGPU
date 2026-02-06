@@ -140,7 +140,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             {
                 builder.AppendLine("// ============ 64-bit Emulation Library ============");
                 builder.AppendLine(WGSLEmulationLibrary.GetEmulationLibrary(
-                    Backend.Options.EnableF64Emulation, 
+                    Backend.Options.EnableF64Emulation,
                     Backend.Options.EnableI64Emulation));
             }
 
@@ -410,10 +410,10 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             foreach (var param in Method.Parameters)
             {
                 if (param.Index < paramOffset) continue;
-                
+
                 var elementType = GetBufferElementType(param.ParameterType);
                 var wgslType = TypeGenerator[elementType];
-                
+
                 if (Backend.Options.EnableF64Emulation && wgslType == "f64")
                 {
                     _emulatedF64Params.Add(param.Index);
@@ -664,7 +664,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                         bool isF64 = _emulatedF64Params.Contains(param.Index);
                         // Register for Load/Store to know this needs conversion
                         _emulatedVarMappings[target.Name] = (param.Index, isF64);
-                        
+
                         // For emulated buffers, we need to address 2 u32 per element
                         // Store the base index (multiplied by 2) for later use in Load/Store
                         AppendIndent();
@@ -676,7 +676,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                         Builder.AppendLine();
                         return;
                     }
-                    
+
                     AppendIndent();
                     Builder.Append($"let {target.Name} = &param{param.Index}[{offset}];");
                     Builder.AppendLine();
@@ -766,7 +766,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             var address = Load(storeVal.Target);
             var val = Load(storeVal.Value);
-            
+
             // Check for emulated 64-bit buffer store
             if (_emulatedVarMappings.TryGetValue(address.ToString(), out var emulInfo))
             {
@@ -786,7 +786,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 }
                 return;
             }
-            
+
             AppendLine($"*{address} = {val};");
         }
 
@@ -1257,7 +1257,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             // because vec2<f32> doesn't accept i32 as a single argument.
             // We need to convert through f32 first: f64_from_f32(f32(source))
             bool isEmulatedF64Target = Backend.Options.EnableF64Emulation && targetType == "f64";
-            
+
             if (isVectorSource && isScalarTarget)
             {
                 // Extract X component. 

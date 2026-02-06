@@ -9,9 +9,9 @@
 // Source License. See LICENSE.txt for details.
 // ---------------------------------------------------------------------------------------
 
-using ILGPU.Util;
 using ILGPU.IR.Types;
 using ILGPU.IR.Values;
+using ILGPU.Util;
 using System;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -80,7 +80,7 @@ namespace ILGPU.Backends.IL
             int constant)
             where TILEmitter : IILEmitter
         {
-            if (constant >= -1 && constant  < ConstantOpCodes.Length - 1)
+            if (constant >= -1 && constant < ConstantOpCodes.Length - 1)
                 emitter.Emit(ConstantOpCodes[constant + 1]);
             else
                 emitter.EmitConstant(constant);

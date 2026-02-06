@@ -32,9 +32,7 @@
 // ---------------------------------------------------------------------------------------
 
 using ILGPU.Algorithms.HistogramOperations;
-using ILGPU.Algorithms.Resources;
 using ILGPU.Runtime;
-using System;
 
 namespace ILGPU.Algorithms
 {

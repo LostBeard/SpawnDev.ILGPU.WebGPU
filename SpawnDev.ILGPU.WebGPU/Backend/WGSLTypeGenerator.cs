@@ -69,7 +69,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 if (typeNode is PrimitiveType primitiveType)
                 {
                     var basicType = primitiveType.BasicValueType;
-                    if (basicType == BasicValueType.Float64 || 
+                    if (basicType == BasicValueType.Float64 ||
                         basicType == BasicValueType.Int64)
                     {
                         // Return dynamic value based on current emulation flags

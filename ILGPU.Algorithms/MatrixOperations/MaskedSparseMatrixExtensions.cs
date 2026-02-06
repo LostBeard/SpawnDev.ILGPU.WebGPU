@@ -322,7 +322,7 @@ namespace ILGPU.Algorithms.MatrixOperations
             {
                 // Get actual processor
                 TProcessor processor = default;
-                
+
                 // Bounds checks
                 if (view.Extent.X != outView.Extent.X)
                     throw new ArgumentOutOfRangeException(nameof(view));

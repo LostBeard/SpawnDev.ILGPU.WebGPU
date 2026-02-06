@@ -17,7 +17,6 @@ using ILGPU.IR.Intrinsics;
 using ILGPU.IR.Values;
 using ILGPU.Util;
 using System;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace ILGPU.Algorithms.CL

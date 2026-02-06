@@ -215,7 +215,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Creation
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandCreateGenerator"
             )]
@@ -225,7 +225,7 @@ namespace ILGPU.Runtime.Cuda.API
              out IntPtr libHandle,
              CuRandRngType rngType);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandCreateGenerator"
             )]
@@ -235,7 +235,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType);
 
-        #endif
+#endif
         public sealed override CuRandStatus CreateGenerator(
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType) =>
@@ -243,7 +243,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out libHandle,
                 rngType);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandCreateGeneratorHost"
             )]
@@ -253,7 +253,7 @@ namespace ILGPU.Runtime.Cuda.API
              out IntPtr libHandle,
              CuRandRngType rngType);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandCreateGeneratorHost"
             )]
@@ -263,7 +263,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType);
 
-        #endif
+#endif
         public sealed override CuRandStatus CreateGeneratorHost(
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType) =>
@@ -271,7 +271,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out libHandle,
                 rngType);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandDestroyGenerator"
             )]
@@ -280,7 +280,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandDestroyGenerator(
              IntPtr libHandle);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandDestroyGenerator"
             )]
@@ -289,7 +289,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandDestroyGenerator(
             [In] IntPtr libHandle);
 
-        #endif
+#endif
         public sealed override CuRandStatus DestroyGenerator(
             [In] IntPtr libHandle) =>
             curandDestroyGenerator(
@@ -299,7 +299,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Generation
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandSetPseudoRandomGeneratorSeed"
             )]
@@ -309,7 +309,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr libHandle,
              long seed);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandSetPseudoRandomGeneratorSeed"
             )]
@@ -319,7 +319,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr libHandle,
             [In] long seed);
 
-        #endif
+#endif
         public sealed override CuRandStatus SetSeed(
             [In] IntPtr libHandle,
             [In] long seed) =>
@@ -327,7 +327,7 @@ namespace ILGPU.Runtime.Cuda.API
                 libHandle,
                 seed);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateSeeds"
             )]
@@ -336,7 +336,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGenerateSeeds(
              IntPtr libHandle);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateSeeds"
             )]
@@ -345,13 +345,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGenerateSeeds(
             [In] IntPtr libHandle);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateSeeds(
             [In] IntPtr libHandle) =>
             curandGenerateSeeds(
                 libHandle);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerate"
             )]
@@ -362,7 +362,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerate"
             )]
@@ -373,7 +373,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUInt(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -383,7 +383,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateLongLong"
             )]
@@ -394,7 +394,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateLongLong"
             )]
@@ -405,7 +405,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateULong(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -415,7 +415,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateUniform"
             )]
@@ -426,7 +426,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateUniform"
             )]
@@ -437,7 +437,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUniformFloat(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -447,7 +447,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateUniformDouble"
             )]
@@ -458,7 +458,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateUniformDouble"
             )]
@@ -469,7 +469,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUniformDouble(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -479,7 +479,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateNormal"
             )]
@@ -492,7 +492,7 @@ namespace ILGPU.Runtime.Cuda.API
              float mean,
              float stddev);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateNormal"
             )]
@@ -505,7 +505,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float mean,
             [In] float stddev);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateNormalFloat(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -519,7 +519,7 @@ namespace ILGPU.Runtime.Cuda.API
                 mean,
                 stddev);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateNormalDouble"
             )]
@@ -532,7 +532,7 @@ namespace ILGPU.Runtime.Cuda.API
              double mean,
              double stddev);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateNormalDouble"
             )]
@@ -545,7 +545,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double mean,
             [In] double stddev);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateNormalDouble(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -563,7 +563,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGetVersion"
             )]
@@ -572,7 +572,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGetVersion(
              out int version);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGetVersion"
             )]
@@ -581,13 +581,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGetVersion(
             [Out] out int version);
 
-        #endif
+#endif
         public sealed override CuRandStatus GetVersion(
             [Out] out int version) =>
             curandGetVersion(
                 out version);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandSetStream"
             )]
@@ -597,7 +597,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr libHandle,
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandSetStream"
             )]
@@ -607,7 +607,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr libHandle,
             [In] IntPtr stream);
 
-        #endif
+#endif
         public sealed override CuRandStatus SetStream(
             [In] IntPtr libHandle,
             [In] IntPtr stream) =>
@@ -632,7 +632,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Creation
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandCreateGenerator"
             )]
@@ -642,7 +642,7 @@ namespace ILGPU.Runtime.Cuda.API
              out IntPtr libHandle,
              CuRandRngType rngType);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandCreateGenerator"
             )]
@@ -652,7 +652,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType);
 
-        #endif
+#endif
         public sealed override CuRandStatus CreateGenerator(
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType) =>
@@ -660,7 +660,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out libHandle,
                 rngType);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandCreateGeneratorHost"
             )]
@@ -670,7 +670,7 @@ namespace ILGPU.Runtime.Cuda.API
              out IntPtr libHandle,
              CuRandRngType rngType);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandCreateGeneratorHost"
             )]
@@ -680,7 +680,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType);
 
-        #endif
+#endif
         public sealed override CuRandStatus CreateGeneratorHost(
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType) =>
@@ -688,7 +688,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out libHandle,
                 rngType);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandDestroyGenerator"
             )]
@@ -697,7 +697,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandDestroyGenerator(
              IntPtr libHandle);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandDestroyGenerator"
             )]
@@ -706,7 +706,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandDestroyGenerator(
             [In] IntPtr libHandle);
 
-        #endif
+#endif
         public sealed override CuRandStatus DestroyGenerator(
             [In] IntPtr libHandle) =>
             curandDestroyGenerator(
@@ -716,7 +716,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Generation
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandSetPseudoRandomGeneratorSeed"
             )]
@@ -726,7 +726,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr libHandle,
              long seed);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandSetPseudoRandomGeneratorSeed"
             )]
@@ -736,7 +736,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr libHandle,
             [In] long seed);
 
-        #endif
+#endif
         public sealed override CuRandStatus SetSeed(
             [In] IntPtr libHandle,
             [In] long seed) =>
@@ -744,7 +744,7 @@ namespace ILGPU.Runtime.Cuda.API
                 libHandle,
                 seed);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateSeeds"
             )]
@@ -753,7 +753,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGenerateSeeds(
              IntPtr libHandle);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateSeeds"
             )]
@@ -762,13 +762,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGenerateSeeds(
             [In] IntPtr libHandle);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateSeeds(
             [In] IntPtr libHandle) =>
             curandGenerateSeeds(
                 libHandle);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerate"
             )]
@@ -779,7 +779,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerate"
             )]
@@ -790,7 +790,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUInt(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -800,7 +800,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateLongLong"
             )]
@@ -811,7 +811,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateLongLong"
             )]
@@ -822,7 +822,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateULong(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -832,7 +832,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateUniform"
             )]
@@ -843,7 +843,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateUniform"
             )]
@@ -854,7 +854,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUniformFloat(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -864,7 +864,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateUniformDouble"
             )]
@@ -875,7 +875,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateUniformDouble"
             )]
@@ -886,7 +886,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUniformDouble(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -896,7 +896,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateNormal"
             )]
@@ -909,7 +909,7 @@ namespace ILGPU.Runtime.Cuda.API
              float mean,
              float stddev);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateNormal"
             )]
@@ -922,7 +922,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float mean,
             [In] float stddev);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateNormalFloat(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -936,7 +936,7 @@ namespace ILGPU.Runtime.Cuda.API
                 mean,
                 stddev);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateNormalDouble"
             )]
@@ -949,7 +949,7 @@ namespace ILGPU.Runtime.Cuda.API
              double mean,
              double stddev);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateNormalDouble"
             )]
@@ -962,7 +962,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double mean,
             [In] double stddev);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateNormalDouble(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -980,7 +980,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGetVersion"
             )]
@@ -989,7 +989,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGetVersion(
              out int version);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGetVersion"
             )]
@@ -998,13 +998,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGetVersion(
             [Out] out int version);
 
-        #endif
+#endif
         public sealed override CuRandStatus GetVersion(
             [Out] out int version) =>
             curandGetVersion(
                 out version);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandSetStream"
             )]
@@ -1014,7 +1014,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr libHandle,
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandSetStream"
             )]
@@ -1024,7 +1024,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr libHandle,
             [In] IntPtr stream);
 
-        #endif
+#endif
         public sealed override CuRandStatus SetStream(
             [In] IntPtr libHandle,
             [In] IntPtr stream) =>
@@ -1049,7 +1049,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Creation
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandCreateGenerator"
             )]
@@ -1059,7 +1059,7 @@ namespace ILGPU.Runtime.Cuda.API
              out IntPtr libHandle,
              CuRandRngType rngType);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandCreateGenerator"
             )]
@@ -1069,7 +1069,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType);
 
-        #endif
+#endif
         public sealed override CuRandStatus CreateGenerator(
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType) =>
@@ -1077,7 +1077,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out libHandle,
                 rngType);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandCreateGeneratorHost"
             )]
@@ -1087,7 +1087,7 @@ namespace ILGPU.Runtime.Cuda.API
              out IntPtr libHandle,
              CuRandRngType rngType);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandCreateGeneratorHost"
             )]
@@ -1097,7 +1097,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType);
 
-        #endif
+#endif
         public sealed override CuRandStatus CreateGeneratorHost(
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType) =>
@@ -1105,7 +1105,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out libHandle,
                 rngType);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandDestroyGenerator"
             )]
@@ -1114,7 +1114,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandDestroyGenerator(
              IntPtr libHandle);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandDestroyGenerator"
             )]
@@ -1123,7 +1123,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandDestroyGenerator(
             [In] IntPtr libHandle);
 
-        #endif
+#endif
         public sealed override CuRandStatus DestroyGenerator(
             [In] IntPtr libHandle) =>
             curandDestroyGenerator(
@@ -1133,7 +1133,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Generation
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandSetPseudoRandomGeneratorSeed"
             )]
@@ -1143,7 +1143,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr libHandle,
              long seed);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandSetPseudoRandomGeneratorSeed"
             )]
@@ -1153,7 +1153,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr libHandle,
             [In] long seed);
 
-        #endif
+#endif
         public sealed override CuRandStatus SetSeed(
             [In] IntPtr libHandle,
             [In] long seed) =>
@@ -1161,7 +1161,7 @@ namespace ILGPU.Runtime.Cuda.API
                 libHandle,
                 seed);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateSeeds"
             )]
@@ -1170,7 +1170,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGenerateSeeds(
              IntPtr libHandle);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateSeeds"
             )]
@@ -1179,13 +1179,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGenerateSeeds(
             [In] IntPtr libHandle);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateSeeds(
             [In] IntPtr libHandle) =>
             curandGenerateSeeds(
                 libHandle);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerate"
             )]
@@ -1196,7 +1196,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerate"
             )]
@@ -1207,7 +1207,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUInt(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -1217,7 +1217,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateLongLong"
             )]
@@ -1228,7 +1228,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateLongLong"
             )]
@@ -1239,7 +1239,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateULong(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -1249,7 +1249,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateUniform"
             )]
@@ -1260,7 +1260,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateUniform"
             )]
@@ -1271,7 +1271,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUniformFloat(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -1281,7 +1281,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateUniformDouble"
             )]
@@ -1292,7 +1292,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateUniformDouble"
             )]
@@ -1303,7 +1303,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUniformDouble(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -1313,7 +1313,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateNormal"
             )]
@@ -1326,7 +1326,7 @@ namespace ILGPU.Runtime.Cuda.API
              float mean,
              float stddev);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateNormal"
             )]
@@ -1339,7 +1339,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float mean,
             [In] float stddev);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateNormalFloat(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -1353,7 +1353,7 @@ namespace ILGPU.Runtime.Cuda.API
                 mean,
                 stddev);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateNormalDouble"
             )]
@@ -1366,7 +1366,7 @@ namespace ILGPU.Runtime.Cuda.API
              double mean,
              double stddev);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateNormalDouble"
             )]
@@ -1379,7 +1379,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double mean,
             [In] double stddev);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateNormalDouble(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -1397,7 +1397,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGetVersion"
             )]
@@ -1406,7 +1406,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGetVersion(
              out int version);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGetVersion"
             )]
@@ -1415,13 +1415,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGetVersion(
             [Out] out int version);
 
-        #endif
+#endif
         public sealed override CuRandStatus GetVersion(
             [Out] out int version) =>
             curandGetVersion(
                 out version);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandSetStream"
             )]
@@ -1431,7 +1431,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr libHandle,
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandSetStream"
             )]
@@ -1441,7 +1441,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr libHandle,
             [In] IntPtr stream);
 
-        #endif
+#endif
         public sealed override CuRandStatus SetStream(
             [In] IntPtr libHandle,
             [In] IntPtr stream) =>
@@ -1466,7 +1466,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Creation
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandCreateGenerator"
             )]
@@ -1476,7 +1476,7 @@ namespace ILGPU.Runtime.Cuda.API
              out IntPtr libHandle,
              CuRandRngType rngType);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandCreateGenerator"
             )]
@@ -1486,7 +1486,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType);
 
-        #endif
+#endif
         public sealed override CuRandStatus CreateGenerator(
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType) =>
@@ -1494,7 +1494,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out libHandle,
                 rngType);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandCreateGeneratorHost"
             )]
@@ -1504,7 +1504,7 @@ namespace ILGPU.Runtime.Cuda.API
              out IntPtr libHandle,
              CuRandRngType rngType);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandCreateGeneratorHost"
             )]
@@ -1514,7 +1514,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType);
 
-        #endif
+#endif
         public sealed override CuRandStatus CreateGeneratorHost(
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType) =>
@@ -1522,7 +1522,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out libHandle,
                 rngType);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandDestroyGenerator"
             )]
@@ -1531,7 +1531,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandDestroyGenerator(
              IntPtr libHandle);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandDestroyGenerator"
             )]
@@ -1540,7 +1540,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandDestroyGenerator(
             [In] IntPtr libHandle);
 
-        #endif
+#endif
         public sealed override CuRandStatus DestroyGenerator(
             [In] IntPtr libHandle) =>
             curandDestroyGenerator(
@@ -1550,7 +1550,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Generation
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandSetPseudoRandomGeneratorSeed"
             )]
@@ -1560,7 +1560,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr libHandle,
              long seed);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandSetPseudoRandomGeneratorSeed"
             )]
@@ -1570,7 +1570,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr libHandle,
             [In] long seed);
 
-        #endif
+#endif
         public sealed override CuRandStatus SetSeed(
             [In] IntPtr libHandle,
             [In] long seed) =>
@@ -1578,7 +1578,7 @@ namespace ILGPU.Runtime.Cuda.API
                 libHandle,
                 seed);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateSeeds"
             )]
@@ -1587,7 +1587,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGenerateSeeds(
              IntPtr libHandle);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateSeeds"
             )]
@@ -1596,13 +1596,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGenerateSeeds(
             [In] IntPtr libHandle);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateSeeds(
             [In] IntPtr libHandle) =>
             curandGenerateSeeds(
                 libHandle);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerate"
             )]
@@ -1613,7 +1613,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerate"
             )]
@@ -1624,7 +1624,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUInt(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -1634,7 +1634,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateLongLong"
             )]
@@ -1645,7 +1645,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateLongLong"
             )]
@@ -1656,7 +1656,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateULong(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -1666,7 +1666,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateUniform"
             )]
@@ -1677,7 +1677,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateUniform"
             )]
@@ -1688,7 +1688,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUniformFloat(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -1698,7 +1698,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateUniformDouble"
             )]
@@ -1709,7 +1709,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateUniformDouble"
             )]
@@ -1720,7 +1720,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUniformDouble(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -1730,7 +1730,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateNormal"
             )]
@@ -1743,7 +1743,7 @@ namespace ILGPU.Runtime.Cuda.API
              float mean,
              float stddev);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateNormal"
             )]
@@ -1756,7 +1756,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float mean,
             [In] float stddev);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateNormalFloat(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -1770,7 +1770,7 @@ namespace ILGPU.Runtime.Cuda.API
                 mean,
                 stddev);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateNormalDouble"
             )]
@@ -1783,7 +1783,7 @@ namespace ILGPU.Runtime.Cuda.API
              double mean,
              double stddev);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateNormalDouble"
             )]
@@ -1796,7 +1796,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double mean,
             [In] double stddev);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateNormalDouble(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -1814,7 +1814,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGetVersion"
             )]
@@ -1823,7 +1823,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGetVersion(
              out int version);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGetVersion"
             )]
@@ -1832,13 +1832,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGetVersion(
             [Out] out int version);
 
-        #endif
+#endif
         public sealed override CuRandStatus GetVersion(
             [Out] out int version) =>
             curandGetVersion(
                 out version);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandSetStream"
             )]
@@ -1848,7 +1848,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr libHandle,
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandSetStream"
             )]
@@ -1858,7 +1858,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr libHandle,
             [In] IntPtr stream);
 
-        #endif
+#endif
         public sealed override CuRandStatus SetStream(
             [In] IntPtr libHandle,
             [In] IntPtr stream) =>
@@ -1883,7 +1883,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Creation
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandCreateGenerator"
             )]
@@ -1893,7 +1893,7 @@ namespace ILGPU.Runtime.Cuda.API
              out IntPtr libHandle,
              CuRandRngType rngType);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandCreateGenerator"
             )]
@@ -1903,7 +1903,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType);
 
-        #endif
+#endif
         public sealed override CuRandStatus CreateGenerator(
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType) =>
@@ -1911,7 +1911,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out libHandle,
                 rngType);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandCreateGeneratorHost"
             )]
@@ -1921,7 +1921,7 @@ namespace ILGPU.Runtime.Cuda.API
              out IntPtr libHandle,
              CuRandRngType rngType);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandCreateGeneratorHost"
             )]
@@ -1931,7 +1931,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType);
 
-        #endif
+#endif
         public sealed override CuRandStatus CreateGeneratorHost(
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType) =>
@@ -1939,7 +1939,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out libHandle,
                 rngType);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandDestroyGenerator"
             )]
@@ -1948,7 +1948,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandDestroyGenerator(
              IntPtr libHandle);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandDestroyGenerator"
             )]
@@ -1957,7 +1957,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandDestroyGenerator(
             [In] IntPtr libHandle);
 
-        #endif
+#endif
         public sealed override CuRandStatus DestroyGenerator(
             [In] IntPtr libHandle) =>
             curandDestroyGenerator(
@@ -1967,7 +1967,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Generation
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandSetPseudoRandomGeneratorSeed"
             )]
@@ -1977,7 +1977,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr libHandle,
              long seed);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandSetPseudoRandomGeneratorSeed"
             )]
@@ -1987,7 +1987,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr libHandle,
             [In] long seed);
 
-        #endif
+#endif
         public sealed override CuRandStatus SetSeed(
             [In] IntPtr libHandle,
             [In] long seed) =>
@@ -1995,7 +1995,7 @@ namespace ILGPU.Runtime.Cuda.API
                 libHandle,
                 seed);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateSeeds"
             )]
@@ -2004,7 +2004,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGenerateSeeds(
              IntPtr libHandle);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateSeeds"
             )]
@@ -2013,13 +2013,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGenerateSeeds(
             [In] IntPtr libHandle);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateSeeds(
             [In] IntPtr libHandle) =>
             curandGenerateSeeds(
                 libHandle);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerate"
             )]
@@ -2030,7 +2030,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerate"
             )]
@@ -2041,7 +2041,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUInt(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -2051,7 +2051,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateLongLong"
             )]
@@ -2062,7 +2062,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateLongLong"
             )]
@@ -2073,7 +2073,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateULong(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -2083,7 +2083,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateUniform"
             )]
@@ -2094,7 +2094,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateUniform"
             )]
@@ -2105,7 +2105,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUniformFloat(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -2115,7 +2115,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateUniformDouble"
             )]
@@ -2126,7 +2126,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateUniformDouble"
             )]
@@ -2137,7 +2137,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUniformDouble(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -2147,7 +2147,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateNormal"
             )]
@@ -2160,7 +2160,7 @@ namespace ILGPU.Runtime.Cuda.API
              float mean,
              float stddev);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateNormal"
             )]
@@ -2173,7 +2173,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float mean,
             [In] float stddev);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateNormalFloat(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -2187,7 +2187,7 @@ namespace ILGPU.Runtime.Cuda.API
                 mean,
                 stddev);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateNormalDouble"
             )]
@@ -2200,7 +2200,7 @@ namespace ILGPU.Runtime.Cuda.API
              double mean,
              double stddev);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateNormalDouble"
             )]
@@ -2213,7 +2213,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double mean,
             [In] double stddev);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateNormalDouble(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -2231,7 +2231,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGetVersion"
             )]
@@ -2240,7 +2240,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGetVersion(
              out int version);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGetVersion"
             )]
@@ -2249,13 +2249,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGetVersion(
             [Out] out int version);
 
-        #endif
+#endif
         public sealed override CuRandStatus GetVersion(
             [Out] out int version) =>
             curandGetVersion(
                 out version);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandSetStream"
             )]
@@ -2265,7 +2265,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr libHandle,
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandSetStream"
             )]
@@ -2275,7 +2275,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr libHandle,
             [In] IntPtr stream);
 
-        #endif
+#endif
         public sealed override CuRandStatus SetStream(
             [In] IntPtr libHandle,
             [In] IntPtr stream) =>
@@ -2300,7 +2300,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Creation
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandCreateGenerator"
             )]
@@ -2310,7 +2310,7 @@ namespace ILGPU.Runtime.Cuda.API
              out IntPtr libHandle,
              CuRandRngType rngType);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandCreateGenerator"
             )]
@@ -2320,7 +2320,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType);
 
-        #endif
+#endif
         public sealed override CuRandStatus CreateGenerator(
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType) =>
@@ -2328,7 +2328,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out libHandle,
                 rngType);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandCreateGeneratorHost"
             )]
@@ -2338,7 +2338,7 @@ namespace ILGPU.Runtime.Cuda.API
              out IntPtr libHandle,
              CuRandRngType rngType);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandCreateGeneratorHost"
             )]
@@ -2348,7 +2348,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType);
 
-        #endif
+#endif
         public sealed override CuRandStatus CreateGeneratorHost(
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType) =>
@@ -2356,7 +2356,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out libHandle,
                 rngType);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandDestroyGenerator"
             )]
@@ -2365,7 +2365,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandDestroyGenerator(
              IntPtr libHandle);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandDestroyGenerator"
             )]
@@ -2374,7 +2374,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandDestroyGenerator(
             [In] IntPtr libHandle);
 
-        #endif
+#endif
         public sealed override CuRandStatus DestroyGenerator(
             [In] IntPtr libHandle) =>
             curandDestroyGenerator(
@@ -2384,7 +2384,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Generation
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandSetPseudoRandomGeneratorSeed"
             )]
@@ -2394,7 +2394,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr libHandle,
              long seed);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandSetPseudoRandomGeneratorSeed"
             )]
@@ -2404,7 +2404,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr libHandle,
             [In] long seed);
 
-        #endif
+#endif
         public sealed override CuRandStatus SetSeed(
             [In] IntPtr libHandle,
             [In] long seed) =>
@@ -2412,7 +2412,7 @@ namespace ILGPU.Runtime.Cuda.API
                 libHandle,
                 seed);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateSeeds"
             )]
@@ -2421,7 +2421,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGenerateSeeds(
              IntPtr libHandle);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateSeeds"
             )]
@@ -2430,13 +2430,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGenerateSeeds(
             [In] IntPtr libHandle);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateSeeds(
             [In] IntPtr libHandle) =>
             curandGenerateSeeds(
                 libHandle);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerate"
             )]
@@ -2447,7 +2447,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerate"
             )]
@@ -2458,7 +2458,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUInt(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -2468,7 +2468,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateLongLong"
             )]
@@ -2479,7 +2479,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateLongLong"
             )]
@@ -2490,7 +2490,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateULong(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -2500,7 +2500,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateUniform"
             )]
@@ -2511,7 +2511,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateUniform"
             )]
@@ -2522,7 +2522,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUniformFloat(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -2532,7 +2532,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateUniformDouble"
             )]
@@ -2543,7 +2543,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateUniformDouble"
             )]
@@ -2554,7 +2554,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUniformDouble(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -2564,7 +2564,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateNormal"
             )]
@@ -2577,7 +2577,7 @@ namespace ILGPU.Runtime.Cuda.API
              float mean,
              float stddev);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateNormal"
             )]
@@ -2590,7 +2590,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float mean,
             [In] float stddev);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateNormalFloat(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -2604,7 +2604,7 @@ namespace ILGPU.Runtime.Cuda.API
                 mean,
                 stddev);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateNormalDouble"
             )]
@@ -2617,7 +2617,7 @@ namespace ILGPU.Runtime.Cuda.API
              double mean,
              double stddev);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateNormalDouble"
             )]
@@ -2630,7 +2630,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double mean,
             [In] double stddev);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateNormalDouble(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -2648,7 +2648,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGetVersion"
             )]
@@ -2657,7 +2657,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGetVersion(
              out int version);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGetVersion"
             )]
@@ -2666,13 +2666,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGetVersion(
             [Out] out int version);
 
-        #endif
+#endif
         public sealed override CuRandStatus GetVersion(
             [Out] out int version) =>
             curandGetVersion(
                 out version);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandSetStream"
             )]
@@ -2682,7 +2682,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr libHandle,
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandSetStream"
             )]
@@ -2692,7 +2692,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr libHandle,
             [In] IntPtr stream);
 
-        #endif
+#endif
         public sealed override CuRandStatus SetStream(
             [In] IntPtr libHandle,
             [In] IntPtr stream) =>
@@ -2717,7 +2717,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Creation
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandCreateGenerator"
             )]
@@ -2727,7 +2727,7 @@ namespace ILGPU.Runtime.Cuda.API
              out IntPtr libHandle,
              CuRandRngType rngType);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandCreateGenerator"
             )]
@@ -2737,7 +2737,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType);
 
-        #endif
+#endif
         public sealed override CuRandStatus CreateGenerator(
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType) =>
@@ -2745,7 +2745,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out libHandle,
                 rngType);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandCreateGeneratorHost"
             )]
@@ -2755,7 +2755,7 @@ namespace ILGPU.Runtime.Cuda.API
              out IntPtr libHandle,
              CuRandRngType rngType);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandCreateGeneratorHost"
             )]
@@ -2765,7 +2765,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType);
 
-        #endif
+#endif
         public sealed override CuRandStatus CreateGeneratorHost(
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType) =>
@@ -2773,7 +2773,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out libHandle,
                 rngType);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandDestroyGenerator"
             )]
@@ -2782,7 +2782,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandDestroyGenerator(
              IntPtr libHandle);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandDestroyGenerator"
             )]
@@ -2791,7 +2791,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandDestroyGenerator(
             [In] IntPtr libHandle);
 
-        #endif
+#endif
         public sealed override CuRandStatus DestroyGenerator(
             [In] IntPtr libHandle) =>
             curandDestroyGenerator(
@@ -2801,7 +2801,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Generation
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandSetPseudoRandomGeneratorSeed"
             )]
@@ -2811,7 +2811,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr libHandle,
              long seed);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandSetPseudoRandomGeneratorSeed"
             )]
@@ -2821,7 +2821,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr libHandle,
             [In] long seed);
 
-        #endif
+#endif
         public sealed override CuRandStatus SetSeed(
             [In] IntPtr libHandle,
             [In] long seed) =>
@@ -2829,7 +2829,7 @@ namespace ILGPU.Runtime.Cuda.API
                 libHandle,
                 seed);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateSeeds"
             )]
@@ -2838,7 +2838,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGenerateSeeds(
              IntPtr libHandle);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateSeeds"
             )]
@@ -2847,13 +2847,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGenerateSeeds(
             [In] IntPtr libHandle);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateSeeds(
             [In] IntPtr libHandle) =>
             curandGenerateSeeds(
                 libHandle);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerate"
             )]
@@ -2864,7 +2864,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerate"
             )]
@@ -2875,7 +2875,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUInt(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -2885,7 +2885,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateLongLong"
             )]
@@ -2896,7 +2896,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateLongLong"
             )]
@@ -2907,7 +2907,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateULong(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -2917,7 +2917,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateUniform"
             )]
@@ -2928,7 +2928,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateUniform"
             )]
@@ -2939,7 +2939,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUniformFloat(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -2949,7 +2949,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateUniformDouble"
             )]
@@ -2960,7 +2960,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateUniformDouble"
             )]
@@ -2971,7 +2971,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUniformDouble(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -2981,7 +2981,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateNormal"
             )]
@@ -2994,7 +2994,7 @@ namespace ILGPU.Runtime.Cuda.API
              float mean,
              float stddev);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateNormal"
             )]
@@ -3007,7 +3007,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float mean,
             [In] float stddev);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateNormalFloat(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -3021,7 +3021,7 @@ namespace ILGPU.Runtime.Cuda.API
                 mean,
                 stddev);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateNormalDouble"
             )]
@@ -3034,7 +3034,7 @@ namespace ILGPU.Runtime.Cuda.API
              double mean,
              double stddev);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateNormalDouble"
             )]
@@ -3047,7 +3047,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double mean,
             [In] double stddev);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateNormalDouble(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -3065,7 +3065,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGetVersion"
             )]
@@ -3074,7 +3074,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGetVersion(
              out int version);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGetVersion"
             )]
@@ -3083,13 +3083,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGetVersion(
             [Out] out int version);
 
-        #endif
+#endif
         public sealed override CuRandStatus GetVersion(
             [Out] out int version) =>
             curandGetVersion(
                 out version);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandSetStream"
             )]
@@ -3099,7 +3099,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr libHandle,
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandSetStream"
             )]
@@ -3109,7 +3109,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr libHandle,
             [In] IntPtr stream);
 
-        #endif
+#endif
         public sealed override CuRandStatus SetStream(
             [In] IntPtr libHandle,
             [In] IntPtr stream) =>
@@ -3134,7 +3134,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Creation
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandCreateGenerator"
             )]
@@ -3144,7 +3144,7 @@ namespace ILGPU.Runtime.Cuda.API
              out IntPtr libHandle,
              CuRandRngType rngType);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandCreateGenerator"
             )]
@@ -3154,7 +3154,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType);
 
-        #endif
+#endif
         public sealed override CuRandStatus CreateGenerator(
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType) =>
@@ -3162,7 +3162,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out libHandle,
                 rngType);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandCreateGeneratorHost"
             )]
@@ -3172,7 +3172,7 @@ namespace ILGPU.Runtime.Cuda.API
              out IntPtr libHandle,
              CuRandRngType rngType);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandCreateGeneratorHost"
             )]
@@ -3182,7 +3182,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType);
 
-        #endif
+#endif
         public sealed override CuRandStatus CreateGeneratorHost(
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType) =>
@@ -3190,7 +3190,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out libHandle,
                 rngType);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandDestroyGenerator"
             )]
@@ -3199,7 +3199,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandDestroyGenerator(
              IntPtr libHandle);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandDestroyGenerator"
             )]
@@ -3208,7 +3208,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandDestroyGenerator(
             [In] IntPtr libHandle);
 
-        #endif
+#endif
         public sealed override CuRandStatus DestroyGenerator(
             [In] IntPtr libHandle) =>
             curandDestroyGenerator(
@@ -3218,7 +3218,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Generation
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandSetPseudoRandomGeneratorSeed"
             )]
@@ -3228,7 +3228,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr libHandle,
              long seed);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandSetPseudoRandomGeneratorSeed"
             )]
@@ -3238,7 +3238,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr libHandle,
             [In] long seed);
 
-        #endif
+#endif
         public sealed override CuRandStatus SetSeed(
             [In] IntPtr libHandle,
             [In] long seed) =>
@@ -3246,7 +3246,7 @@ namespace ILGPU.Runtime.Cuda.API
                 libHandle,
                 seed);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateSeeds"
             )]
@@ -3255,7 +3255,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGenerateSeeds(
              IntPtr libHandle);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateSeeds"
             )]
@@ -3264,13 +3264,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGenerateSeeds(
             [In] IntPtr libHandle);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateSeeds(
             [In] IntPtr libHandle) =>
             curandGenerateSeeds(
                 libHandle);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerate"
             )]
@@ -3281,7 +3281,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerate"
             )]
@@ -3292,7 +3292,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUInt(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -3302,7 +3302,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateLongLong"
             )]
@@ -3313,7 +3313,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateLongLong"
             )]
@@ -3324,7 +3324,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateULong(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -3334,7 +3334,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateUniform"
             )]
@@ -3345,7 +3345,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateUniform"
             )]
@@ -3356,7 +3356,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUniformFloat(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -3366,7 +3366,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateUniformDouble"
             )]
@@ -3377,7 +3377,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateUniformDouble"
             )]
@@ -3388,7 +3388,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUniformDouble(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -3398,7 +3398,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateNormal"
             )]
@@ -3411,7 +3411,7 @@ namespace ILGPU.Runtime.Cuda.API
              float mean,
              float stddev);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateNormal"
             )]
@@ -3424,7 +3424,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float mean,
             [In] float stddev);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateNormalFloat(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -3438,7 +3438,7 @@ namespace ILGPU.Runtime.Cuda.API
                 mean,
                 stddev);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateNormalDouble"
             )]
@@ -3451,7 +3451,7 @@ namespace ILGPU.Runtime.Cuda.API
              double mean,
              double stddev);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateNormalDouble"
             )]
@@ -3464,7 +3464,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double mean,
             [In] double stddev);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateNormalDouble(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -3482,7 +3482,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGetVersion"
             )]
@@ -3491,7 +3491,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGetVersion(
              out int version);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGetVersion"
             )]
@@ -3500,13 +3500,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGetVersion(
             [Out] out int version);
 
-        #endif
+#endif
         public sealed override CuRandStatus GetVersion(
             [Out] out int version) =>
             curandGetVersion(
                 out version);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandSetStream"
             )]
@@ -3516,7 +3516,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr libHandle,
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandSetStream"
             )]
@@ -3526,7 +3526,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr libHandle,
             [In] IntPtr stream);
 
-        #endif
+#endif
         public sealed override CuRandStatus SetStream(
             [In] IntPtr libHandle,
             [In] IntPtr stream) =>
@@ -3551,7 +3551,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Creation
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandCreateGenerator"
             )]
@@ -3561,7 +3561,7 @@ namespace ILGPU.Runtime.Cuda.API
              out IntPtr libHandle,
              CuRandRngType rngType);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandCreateGenerator"
             )]
@@ -3571,7 +3571,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType);
 
-        #endif
+#endif
         public sealed override CuRandStatus CreateGenerator(
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType) =>
@@ -3579,7 +3579,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out libHandle,
                 rngType);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandCreateGeneratorHost"
             )]
@@ -3589,7 +3589,7 @@ namespace ILGPU.Runtime.Cuda.API
              out IntPtr libHandle,
              CuRandRngType rngType);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandCreateGeneratorHost"
             )]
@@ -3599,7 +3599,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType);
 
-        #endif
+#endif
         public sealed override CuRandStatus CreateGeneratorHost(
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType) =>
@@ -3607,7 +3607,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out libHandle,
                 rngType);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandDestroyGenerator"
             )]
@@ -3616,7 +3616,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandDestroyGenerator(
              IntPtr libHandle);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandDestroyGenerator"
             )]
@@ -3625,7 +3625,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandDestroyGenerator(
             [In] IntPtr libHandle);
 
-        #endif
+#endif
         public sealed override CuRandStatus DestroyGenerator(
             [In] IntPtr libHandle) =>
             curandDestroyGenerator(
@@ -3635,7 +3635,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Generation
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandSetPseudoRandomGeneratorSeed"
             )]
@@ -3645,7 +3645,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr libHandle,
              long seed);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandSetPseudoRandomGeneratorSeed"
             )]
@@ -3655,7 +3655,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr libHandle,
             [In] long seed);
 
-        #endif
+#endif
         public sealed override CuRandStatus SetSeed(
             [In] IntPtr libHandle,
             [In] long seed) =>
@@ -3663,7 +3663,7 @@ namespace ILGPU.Runtime.Cuda.API
                 libHandle,
                 seed);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateSeeds"
             )]
@@ -3672,7 +3672,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGenerateSeeds(
              IntPtr libHandle);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateSeeds"
             )]
@@ -3681,13 +3681,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGenerateSeeds(
             [In] IntPtr libHandle);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateSeeds(
             [In] IntPtr libHandle) =>
             curandGenerateSeeds(
                 libHandle);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerate"
             )]
@@ -3698,7 +3698,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerate"
             )]
@@ -3709,7 +3709,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUInt(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -3719,7 +3719,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateLongLong"
             )]
@@ -3730,7 +3730,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateLongLong"
             )]
@@ -3741,7 +3741,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateULong(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -3751,7 +3751,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateUniform"
             )]
@@ -3762,7 +3762,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateUniform"
             )]
@@ -3773,7 +3773,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUniformFloat(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -3783,7 +3783,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateUniformDouble"
             )]
@@ -3794,7 +3794,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateUniformDouble"
             )]
@@ -3805,7 +3805,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUniformDouble(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -3815,7 +3815,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateNormal"
             )]
@@ -3828,7 +3828,7 @@ namespace ILGPU.Runtime.Cuda.API
              float mean,
              float stddev);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateNormal"
             )]
@@ -3841,7 +3841,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float mean,
             [In] float stddev);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateNormalFloat(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -3855,7 +3855,7 @@ namespace ILGPU.Runtime.Cuda.API
                 mean,
                 stddev);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateNormalDouble"
             )]
@@ -3868,7 +3868,7 @@ namespace ILGPU.Runtime.Cuda.API
              double mean,
              double stddev);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateNormalDouble"
             )]
@@ -3881,7 +3881,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double mean,
             [In] double stddev);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateNormalDouble(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -3899,7 +3899,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGetVersion"
             )]
@@ -3908,7 +3908,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGetVersion(
              out int version);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGetVersion"
             )]
@@ -3917,13 +3917,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGetVersion(
             [Out] out int version);
 
-        #endif
+#endif
         public sealed override CuRandStatus GetVersion(
             [Out] out int version) =>
             curandGetVersion(
                 out version);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandSetStream"
             )]
@@ -3933,7 +3933,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr libHandle,
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandSetStream"
             )]
@@ -3943,7 +3943,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr libHandle,
             [In] IntPtr stream);
 
-        #endif
+#endif
         public sealed override CuRandStatus SetStream(
             [In] IntPtr libHandle,
             [In] IntPtr stream) =>
@@ -3968,7 +3968,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Creation
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandCreateGenerator"
             )]
@@ -3978,7 +3978,7 @@ namespace ILGPU.Runtime.Cuda.API
              out IntPtr libHandle,
              CuRandRngType rngType);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandCreateGenerator"
             )]
@@ -3988,7 +3988,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType);
 
-        #endif
+#endif
         public sealed override CuRandStatus CreateGenerator(
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType) =>
@@ -3996,7 +3996,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out libHandle,
                 rngType);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandCreateGeneratorHost"
             )]
@@ -4006,7 +4006,7 @@ namespace ILGPU.Runtime.Cuda.API
              out IntPtr libHandle,
              CuRandRngType rngType);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandCreateGeneratorHost"
             )]
@@ -4016,7 +4016,7 @@ namespace ILGPU.Runtime.Cuda.API
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType);
 
-        #endif
+#endif
         public sealed override CuRandStatus CreateGeneratorHost(
             [Out] out IntPtr libHandle,
             [In] CuRandRngType rngType) =>
@@ -4024,7 +4024,7 @@ namespace ILGPU.Runtime.Cuda.API
                 out libHandle,
                 rngType);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandDestroyGenerator"
             )]
@@ -4033,7 +4033,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandDestroyGenerator(
              IntPtr libHandle);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandDestroyGenerator"
             )]
@@ -4042,7 +4042,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandDestroyGenerator(
             [In] IntPtr libHandle);
 
-        #endif
+#endif
         public sealed override CuRandStatus DestroyGenerator(
             [In] IntPtr libHandle) =>
             curandDestroyGenerator(
@@ -4052,7 +4052,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Generation
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandSetPseudoRandomGeneratorSeed"
             )]
@@ -4062,7 +4062,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr libHandle,
              long seed);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandSetPseudoRandomGeneratorSeed"
             )]
@@ -4072,7 +4072,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr libHandle,
             [In] long seed);
 
-        #endif
+#endif
         public sealed override CuRandStatus SetSeed(
             [In] IntPtr libHandle,
             [In] long seed) =>
@@ -4080,7 +4080,7 @@ namespace ILGPU.Runtime.Cuda.API
                 libHandle,
                 seed);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateSeeds"
             )]
@@ -4089,7 +4089,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGenerateSeeds(
              IntPtr libHandle);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateSeeds"
             )]
@@ -4098,13 +4098,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGenerateSeeds(
             [In] IntPtr libHandle);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateSeeds(
             [In] IntPtr libHandle) =>
             curandGenerateSeeds(
                 libHandle);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerate"
             )]
@@ -4115,7 +4115,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerate"
             )]
@@ -4126,7 +4126,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUInt(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -4136,7 +4136,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateLongLong"
             )]
@@ -4147,7 +4147,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateLongLong"
             )]
@@ -4158,7 +4158,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateULong(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -4168,7 +4168,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateUniform"
             )]
@@ -4179,7 +4179,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateUniform"
             )]
@@ -4190,7 +4190,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUniformFloat(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -4200,7 +4200,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateUniformDouble"
             )]
@@ -4211,7 +4211,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr outputPtr,
              IntPtr length);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateUniformDouble"
             )]
@@ -4222,7 +4222,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr outputPtr,
             [In] IntPtr length);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateUniformDouble(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -4232,7 +4232,7 @@ namespace ILGPU.Runtime.Cuda.API
                 outputPtr,
                 length);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateNormal"
             )]
@@ -4245,7 +4245,7 @@ namespace ILGPU.Runtime.Cuda.API
              float mean,
              float stddev);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateNormal"
             )]
@@ -4258,7 +4258,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float mean,
             [In] float stddev);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateNormalFloat(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -4272,7 +4272,7 @@ namespace ILGPU.Runtime.Cuda.API
                 mean,
                 stddev);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGenerateNormalDouble"
             )]
@@ -4285,7 +4285,7 @@ namespace ILGPU.Runtime.Cuda.API
              double mean,
              double stddev);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGenerateNormalDouble"
             )]
@@ -4298,7 +4298,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double mean,
             [In] double stddev);
 
-        #endif
+#endif
         public sealed override CuRandStatus GenerateNormalDouble(
             [In] IntPtr libHandle,
             [In] IntPtr outputPtr,
@@ -4316,7 +4316,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandGetVersion"
             )]
@@ -4325,7 +4325,7 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGetVersion(
              out int version);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandGetVersion"
             )]
@@ -4334,13 +4334,13 @@ namespace ILGPU.Runtime.Cuda.API
          CuRandStatus curandGetVersion(
             [Out] out int version);
 
-        #endif
+#endif
         public sealed override CuRandStatus GetVersion(
             [Out] out int version) =>
             curandGetVersion(
                 out version);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "curandSetStream"
             )]
@@ -4350,7 +4350,7 @@ namespace ILGPU.Runtime.Cuda.API
              IntPtr libHandle,
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "curandSetStream"
             )]
@@ -4360,7 +4360,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] IntPtr libHandle,
             [In] IntPtr stream);
 
-        #endif
+#endif
         public sealed override CuRandStatus SetStream(
             [In] IntPtr libHandle,
             [In] IntPtr stream) =>

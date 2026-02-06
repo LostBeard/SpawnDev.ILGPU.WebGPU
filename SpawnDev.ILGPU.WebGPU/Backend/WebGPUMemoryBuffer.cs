@@ -22,16 +22,16 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             if (source.GetAcceleratorType() == AcceleratorType.CPU)
             {
                 var length = (int)source.Length;
-                
+
                 // Use IContiguousArrayView to access internal members
                 var sourceContiguous = (IContiguousArrayView)source;
                 var sourceBuffer = sourceContiguous.Buffer;
                 var srcPtr = sourceBuffer.NativePtr + (int)sourceContiguous.Index;
-                
+
                 // Read from CPU buffer to managed byte array (still required for NativePtr access)
                 var byteArray = new byte[length];
                 Marshal.Copy(srcPtr, byteArray, 0, length);
-                
+
                 // Use TypedArray for efficient transfer to GPU
                 var accelerator = (WebGPUAccelerator)Accelerator;
                 var destContiguous = (IContiguousArrayView)destination;

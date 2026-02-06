@@ -308,7 +308,7 @@ namespace ILGPU.Runtime.Cuda
     {
         #region Native Methods
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuInit"
             )]
@@ -317,7 +317,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuInit_Import(
              int flags);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuInit"
             )]
@@ -326,8 +326,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuInit_Import(
             [In] int flags);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuDriverGetVersion"
             )]
@@ -336,7 +336,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuDriverGetVersion_Import(
              out int driverVersion);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuDriverGetVersion"
             )]
@@ -345,8 +345,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuDriverGetVersion_Import(
             [Out] out int driverVersion);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuDeviceGet"
             )]
@@ -356,7 +356,7 @@ namespace ILGPU.Runtime.Cuda
              out int device,
              int ordinal);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuDeviceGet"
             )]
@@ -366,8 +366,8 @@ namespace ILGPU.Runtime.Cuda
             [Out] out int device,
             [In] int ordinal);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuDeviceGetCount"
             )]
@@ -376,7 +376,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuDeviceGetCount_Import(
              out int count);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuDeviceGetCount"
             )]
@@ -385,8 +385,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuDeviceGetCount_Import(
             [Out] out int count);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuDeviceGetName"
             )]
@@ -397,7 +397,7 @@ namespace ILGPU.Runtime.Cuda
              int length,
              int device);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuDeviceGetName"
             )]
@@ -408,8 +408,8 @@ namespace ILGPU.Runtime.Cuda
             [In] int length,
             [In] int device);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuDeviceTotalMem_v2"
             )]
@@ -419,7 +419,7 @@ namespace ILGPU.Runtime.Cuda
              out IntPtr bytes,
              int device);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuDeviceTotalMem_v2"
             )]
@@ -429,8 +429,8 @@ namespace ILGPU.Runtime.Cuda
             [Out] out IntPtr bytes,
             [In] int device);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuDeviceGetAttribute"
             )]
@@ -441,7 +441,7 @@ namespace ILGPU.Runtime.Cuda
              DeviceAttributeKind attribute,
              int device);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuDeviceGetAttribute"
             )]
@@ -452,8 +452,8 @@ namespace ILGPU.Runtime.Cuda
             [In] DeviceAttributeKind attribute,
             [In] int device);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuCtxCreate_v2"
             )]
@@ -464,7 +464,7 @@ namespace ILGPU.Runtime.Cuda
              CudaAcceleratorFlags flags,
              int device);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuCtxCreate_v2"
             )]
@@ -475,8 +475,8 @@ namespace ILGPU.Runtime.Cuda
             [In] CudaAcceleratorFlags flags,
             [In] int device);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuCtxDestroy_v2"
             )]
@@ -485,7 +485,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxDestroy_v2_Import(
              IntPtr context);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuCtxDestroy_v2"
             )]
@@ -494,8 +494,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxDestroy_v2_Import(
             [In] IntPtr context);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuCtxSetCurrent"
             )]
@@ -504,7 +504,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxSetCurrent_Import(
              IntPtr context);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuCtxSetCurrent"
             )]
@@ -513,8 +513,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxSetCurrent_Import(
             [In] IntPtr context);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuCtxSynchronize"
             )]
@@ -523,7 +523,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxSynchronize_Import(
               );
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuCtxSynchronize"
             )]
@@ -532,8 +532,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxSynchronize_Import(
               );
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuCtxGetCacheConfig"
             )]
@@ -542,7 +542,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxGetCacheConfig_Import(
              out CudaCacheConfiguration pconfig);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuCtxGetCacheConfig"
             )]
@@ -551,8 +551,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxGetCacheConfig_Import(
             [Out] out CudaCacheConfiguration pconfig);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuCtxSetCacheConfig"
             )]
@@ -561,7 +561,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxSetCacheConfig_Import(
              CudaCacheConfiguration config);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuCtxSetCacheConfig"
             )]
@@ -570,8 +570,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxSetCacheConfig_Import(
             [In] CudaCacheConfiguration config);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuCtxGetSharedMemConfig"
             )]
@@ -580,7 +580,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxGetSharedMemConfig_Import(
              out CudaSharedMemoryConfiguration pConfig);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuCtxGetSharedMemConfig"
             )]
@@ -589,8 +589,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxGetSharedMemConfig_Import(
             [Out] out CudaSharedMemoryConfiguration pConfig);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuCtxSetSharedMemConfig"
             )]
@@ -599,7 +599,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxSetSharedMemConfig_Import(
              CudaSharedMemoryConfiguration config);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuCtxSetSharedMemConfig"
             )]
@@ -608,8 +608,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxSetSharedMemConfig_Import(
             [In] CudaSharedMemoryConfiguration config);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuDeviceCanAccessPeer"
             )]
@@ -620,7 +620,7 @@ namespace ILGPU.Runtime.Cuda
              int device,
              int peerDev);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuDeviceCanAccessPeer"
             )]
@@ -631,8 +631,8 @@ namespace ILGPU.Runtime.Cuda
             [In] int device,
             [In] int peerDev);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuCtxEnablePeerAccess"
             )]
@@ -642,7 +642,7 @@ namespace ILGPU.Runtime.Cuda
              IntPtr peerContext,
              int flags);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuCtxEnablePeerAccess"
             )]
@@ -652,8 +652,8 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr peerContext,
             [In] int flags);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuCtxDisablePeerAccess"
             )]
@@ -662,7 +662,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxDisablePeerAccess_Import(
              IntPtr peerContext);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuCtxDisablePeerAccess"
             )]
@@ -671,8 +671,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxDisablePeerAccess_Import(
             [In] IntPtr peerContext);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuDeviceGetP2PAttribute"
             )]
@@ -684,7 +684,7 @@ namespace ILGPU.Runtime.Cuda
              int sourceDevice,
              int destinationDevice);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuDeviceGetP2PAttribute"
             )]
@@ -696,8 +696,8 @@ namespace ILGPU.Runtime.Cuda
             [In] int sourceDevice,
             [In] int destinationDevice);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuPointerGetAttribute"
             )]
@@ -708,7 +708,7 @@ namespace ILGPU.Runtime.Cuda
              PointerAttribute attribute,
              IntPtr devicePtr);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuPointerGetAttribute"
             )]
@@ -719,8 +719,8 @@ namespace ILGPU.Runtime.Cuda
             [In] PointerAttribute attribute,
             [In] IntPtr devicePtr);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuMemGetInfo_v2"
             )]
@@ -730,7 +730,7 @@ namespace ILGPU.Runtime.Cuda
              out IntPtr free,
              out IntPtr total);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuMemGetInfo_v2"
             )]
@@ -740,8 +740,8 @@ namespace ILGPU.Runtime.Cuda
             [Out] out IntPtr free,
             [Out] out IntPtr total);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuMemAlloc_v2"
             )]
@@ -751,7 +751,7 @@ namespace ILGPU.Runtime.Cuda
              out IntPtr devicePtr,
              IntPtr bytesize);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuMemAlloc_v2"
             )]
@@ -761,8 +761,8 @@ namespace ILGPU.Runtime.Cuda
             [Out] out IntPtr devicePtr,
             [In] IntPtr bytesize);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuMemFree_v2"
             )]
@@ -771,7 +771,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuMemFree_v2_Import(
              IntPtr devicePtr);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuMemFree_v2"
             )]
@@ -780,8 +780,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuMemFree_v2_Import(
             [In] IntPtr devicePtr);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuMemAllocHost_v2"
             )]
@@ -791,7 +791,7 @@ namespace ILGPU.Runtime.Cuda
              out IntPtr devicePtr,
              IntPtr bytesize);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuMemAllocHost_v2"
             )]
@@ -801,8 +801,8 @@ namespace ILGPU.Runtime.Cuda
             [Out] out IntPtr devicePtr,
             [In] IntPtr bytesize);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuMemFreeHost"
             )]
@@ -811,7 +811,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuMemFreeHost_Import(
              IntPtr devicePtr);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuMemFreeHost"
             )]
@@ -820,8 +820,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuMemFreeHost_Import(
             [In] IntPtr devicePtr);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuMemcpyAsync"
             )]
@@ -833,7 +833,7 @@ namespace ILGPU.Runtime.Cuda
              IntPtr length,
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuMemcpyAsync"
             )]
@@ -845,8 +845,8 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr length,
             [In] IntPtr stream);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuMemsetD8Async"
             )]
@@ -858,7 +858,7 @@ namespace ILGPU.Runtime.Cuda
              IntPtr length,
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuMemsetD8Async"
             )]
@@ -870,8 +870,8 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr length,
             [In] IntPtr stream);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuMemHostRegister_v2"
             )]
@@ -882,7 +882,7 @@ namespace ILGPU.Runtime.Cuda
              IntPtr bytesize,
              MemHostRegisterFlags flags);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuMemHostRegister_v2"
             )]
@@ -893,8 +893,8 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr bytesize,
             [In] MemHostRegisterFlags flags);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuMemHostUnregister"
             )]
@@ -903,7 +903,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuMemHostUnregister_Import(
              IntPtr hostPtr);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuMemHostUnregister"
             )]
@@ -912,8 +912,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuMemHostUnregister_Import(
             [In] IntPtr hostPtr);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuMemHostGetDevicePointer_v2"
             )]
@@ -924,7 +924,7 @@ namespace ILGPU.Runtime.Cuda
              IntPtr hostPtr,
              int flags);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuMemHostGetDevicePointer_v2"
             )]
@@ -935,8 +935,8 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr hostPtr,
             [In] int flags);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuStreamCreate"
             )]
@@ -946,7 +946,7 @@ namespace ILGPU.Runtime.Cuda
              out IntPtr stream,
              StreamFlags flags);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuStreamCreate"
             )]
@@ -956,8 +956,8 @@ namespace ILGPU.Runtime.Cuda
             [Out] out IntPtr stream,
             [In] StreamFlags flags);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuStreamCreateWithPriority"
             )]
@@ -968,7 +968,7 @@ namespace ILGPU.Runtime.Cuda
              StreamFlags flags,
              int priority);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuStreamCreateWithPriority"
             )]
@@ -979,8 +979,8 @@ namespace ILGPU.Runtime.Cuda
             [In] StreamFlags flags,
             [In] int priority);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuStreamDestroy_v2"
             )]
@@ -989,7 +989,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuStreamDestroy_v2_Import(
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuStreamDestroy_v2"
             )]
@@ -998,8 +998,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuStreamDestroy_v2_Import(
             [In] IntPtr stream);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuStreamSynchronize"
             )]
@@ -1008,7 +1008,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuStreamSynchronize_Import(
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuStreamSynchronize"
             )]
@@ -1017,8 +1017,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuStreamSynchronize_Import(
             [In] IntPtr stream);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuGetErrorString"
             )]
@@ -1028,7 +1028,7 @@ namespace ILGPU.Runtime.Cuda
              CudaError error,
              out IntPtr pStr);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuGetErrorString"
             )]
@@ -1038,8 +1038,8 @@ namespace ILGPU.Runtime.Cuda
             [In] CudaError error,
             [Out] out IntPtr pStr);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuModuleLoadData"
             , StringMarshalling = StringMarshalling.Utf8
@@ -1050,7 +1050,7 @@ namespace ILGPU.Runtime.Cuda
              out IntPtr module,
              string moduleData);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuModuleLoadData"
             , CharSet = CharSet.Ansi
@@ -1063,8 +1063,8 @@ namespace ILGPU.Runtime.Cuda
             [Out] out IntPtr module,
             [In] string moduleData);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuModuleLoadDataEx"
             , StringMarshalling = StringMarshalling.Utf8
@@ -1078,7 +1078,7 @@ namespace ILGPU.Runtime.Cuda
              IntPtr jitOptions,
              IntPtr jitOptionValues);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuModuleLoadDataEx"
             , CharSet = CharSet.Ansi
@@ -1094,8 +1094,8 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr jitOptions,
             [In] IntPtr jitOptionValues);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuModuleUnload"
             )]
@@ -1104,7 +1104,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuModuleUnload_Import(
              IntPtr module);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuModuleUnload"
             )]
@@ -1113,8 +1113,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuModuleUnload_Import(
             [In] IntPtr module);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuModuleGetFunction"
             , StringMarshalling = StringMarshalling.Utf8
@@ -1126,7 +1126,7 @@ namespace ILGPU.Runtime.Cuda
              IntPtr module,
              string functionName);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuModuleGetFunction"
             , CharSet = CharSet.Ansi
@@ -1140,8 +1140,8 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr module,
             [In] string functionName);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuLaunchKernel"
             )]
@@ -1160,7 +1160,7 @@ namespace ILGPU.Runtime.Cuda
              IntPtr args,
              IntPtr kernelArgs);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuLaunchKernel"
             )]
@@ -1179,8 +1179,8 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr args,
             [In] IntPtr kernelArgs);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuOccupancyMaxActiveBlocksPerMultiprocessor"
             )]
@@ -1192,7 +1192,7 @@ namespace ILGPU.Runtime.Cuda
              int blockSize,
              IntPtr dynamicSMemSize);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuOccupancyMaxActiveBlocksPerMultiprocessor"
             )]
@@ -1204,8 +1204,8 @@ namespace ILGPU.Runtime.Cuda
             [In] int blockSize,
             [In] IntPtr dynamicSMemSize);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuOccupancyMaxPotentialBlockSize"
             )]
@@ -1219,7 +1219,7 @@ namespace ILGPU.Runtime.Cuda
              IntPtr dynamicSMemSize,
              int blockSizeLimit);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuOccupancyMaxPotentialBlockSize"
             )]
@@ -1233,8 +1233,8 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr dynamicSMemSize,
             [In] int blockSizeLimit);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuEventCreate"
             )]
@@ -1244,7 +1244,7 @@ namespace ILGPU.Runtime.Cuda
              out IntPtr @event,
              CudaEventFlags flags);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuEventCreate"
             )]
@@ -1254,8 +1254,8 @@ namespace ILGPU.Runtime.Cuda
             [Out] out IntPtr @event,
             [In] CudaEventFlags flags);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuEventDestroy_v2"
             )]
@@ -1264,7 +1264,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuEventDestroy_v2_Import(
              IntPtr @event);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuEventDestroy_v2"
             )]
@@ -1273,8 +1273,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuEventDestroy_v2_Import(
             [In] IntPtr @event);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuEventQuery"
             )]
@@ -1283,7 +1283,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuEventQuery_Import(
              IntPtr @event);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuEventQuery"
             )]
@@ -1292,8 +1292,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuEventQuery_Import(
             [In] IntPtr @event);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuEventElapsedTime"
             )]
@@ -1304,7 +1304,7 @@ namespace ILGPU.Runtime.Cuda
              IntPtr start,
              IntPtr end);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuEventElapsedTime"
             )]
@@ -1315,8 +1315,8 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr start,
             [In] IntPtr end);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuEventRecord"
             )]
@@ -1326,7 +1326,7 @@ namespace ILGPU.Runtime.Cuda
              IntPtr @event,
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuEventRecord"
             )]
@@ -1336,8 +1336,8 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr @event,
             [In] IntPtr stream);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "cuEventSynchronize"
             )]
@@ -1346,7 +1346,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuEventSynchronize_Import(
              IntPtr @event);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "cuEventSynchronize"
             )]
@@ -1355,7 +1355,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuEventSynchronize_Import(
             [In] IntPtr @event);
 
-        #endif
+#endif
         #endregion
 
         #region RuntimeAPI
@@ -1744,7 +1744,7 @@ namespace ILGPU.Runtime.Cuda
     {
         #region Native Methods
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuInit"
             )]
@@ -1753,7 +1753,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuInit_Import(
              int flags);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuInit"
             )]
@@ -1762,8 +1762,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuInit_Import(
             [In] int flags);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuDriverGetVersion"
             )]
@@ -1772,7 +1772,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuDriverGetVersion_Import(
              out int driverVersion);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuDriverGetVersion"
             )]
@@ -1781,8 +1781,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuDriverGetVersion_Import(
             [Out] out int driverVersion);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuDeviceGet"
             )]
@@ -1792,7 +1792,7 @@ namespace ILGPU.Runtime.Cuda
              out int device,
              int ordinal);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuDeviceGet"
             )]
@@ -1802,8 +1802,8 @@ namespace ILGPU.Runtime.Cuda
             [Out] out int device,
             [In] int ordinal);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuDeviceGetCount"
             )]
@@ -1812,7 +1812,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuDeviceGetCount_Import(
              out int count);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuDeviceGetCount"
             )]
@@ -1821,8 +1821,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuDeviceGetCount_Import(
             [Out] out int count);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuDeviceGetName"
             )]
@@ -1833,7 +1833,7 @@ namespace ILGPU.Runtime.Cuda
              int length,
              int device);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuDeviceGetName"
             )]
@@ -1844,8 +1844,8 @@ namespace ILGPU.Runtime.Cuda
             [In] int length,
             [In] int device);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuDeviceTotalMem_v2"
             )]
@@ -1855,7 +1855,7 @@ namespace ILGPU.Runtime.Cuda
              out IntPtr bytes,
              int device);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuDeviceTotalMem_v2"
             )]
@@ -1865,8 +1865,8 @@ namespace ILGPU.Runtime.Cuda
             [Out] out IntPtr bytes,
             [In] int device);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuDeviceGetAttribute"
             )]
@@ -1877,7 +1877,7 @@ namespace ILGPU.Runtime.Cuda
              DeviceAttributeKind attribute,
              int device);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuDeviceGetAttribute"
             )]
@@ -1888,8 +1888,8 @@ namespace ILGPU.Runtime.Cuda
             [In] DeviceAttributeKind attribute,
             [In] int device);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuCtxCreate_v2"
             )]
@@ -1900,7 +1900,7 @@ namespace ILGPU.Runtime.Cuda
              CudaAcceleratorFlags flags,
              int device);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuCtxCreate_v2"
             )]
@@ -1911,8 +1911,8 @@ namespace ILGPU.Runtime.Cuda
             [In] CudaAcceleratorFlags flags,
             [In] int device);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuCtxDestroy_v2"
             )]
@@ -1921,7 +1921,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxDestroy_v2_Import(
              IntPtr context);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuCtxDestroy_v2"
             )]
@@ -1930,8 +1930,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxDestroy_v2_Import(
             [In] IntPtr context);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuCtxSetCurrent"
             )]
@@ -1940,7 +1940,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxSetCurrent_Import(
              IntPtr context);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuCtxSetCurrent"
             )]
@@ -1949,8 +1949,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxSetCurrent_Import(
             [In] IntPtr context);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuCtxSynchronize"
             )]
@@ -1959,7 +1959,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxSynchronize_Import(
               );
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuCtxSynchronize"
             )]
@@ -1968,8 +1968,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxSynchronize_Import(
               );
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuCtxGetCacheConfig"
             )]
@@ -1978,7 +1978,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxGetCacheConfig_Import(
              out CudaCacheConfiguration pconfig);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuCtxGetCacheConfig"
             )]
@@ -1987,8 +1987,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxGetCacheConfig_Import(
             [Out] out CudaCacheConfiguration pconfig);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuCtxSetCacheConfig"
             )]
@@ -1997,7 +1997,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxSetCacheConfig_Import(
              CudaCacheConfiguration config);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuCtxSetCacheConfig"
             )]
@@ -2006,8 +2006,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxSetCacheConfig_Import(
             [In] CudaCacheConfiguration config);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuCtxGetSharedMemConfig"
             )]
@@ -2016,7 +2016,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxGetSharedMemConfig_Import(
              out CudaSharedMemoryConfiguration pConfig);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuCtxGetSharedMemConfig"
             )]
@@ -2025,8 +2025,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxGetSharedMemConfig_Import(
             [Out] out CudaSharedMemoryConfiguration pConfig);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuCtxSetSharedMemConfig"
             )]
@@ -2035,7 +2035,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxSetSharedMemConfig_Import(
              CudaSharedMemoryConfiguration config);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuCtxSetSharedMemConfig"
             )]
@@ -2044,8 +2044,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxSetSharedMemConfig_Import(
             [In] CudaSharedMemoryConfiguration config);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuDeviceCanAccessPeer"
             )]
@@ -2056,7 +2056,7 @@ namespace ILGPU.Runtime.Cuda
              int device,
              int peerDev);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuDeviceCanAccessPeer"
             )]
@@ -2067,8 +2067,8 @@ namespace ILGPU.Runtime.Cuda
             [In] int device,
             [In] int peerDev);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuCtxEnablePeerAccess"
             )]
@@ -2078,7 +2078,7 @@ namespace ILGPU.Runtime.Cuda
              IntPtr peerContext,
              int flags);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuCtxEnablePeerAccess"
             )]
@@ -2088,8 +2088,8 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr peerContext,
             [In] int flags);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuCtxDisablePeerAccess"
             )]
@@ -2098,7 +2098,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxDisablePeerAccess_Import(
              IntPtr peerContext);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuCtxDisablePeerAccess"
             )]
@@ -2107,8 +2107,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuCtxDisablePeerAccess_Import(
             [In] IntPtr peerContext);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuDeviceGetP2PAttribute"
             )]
@@ -2120,7 +2120,7 @@ namespace ILGPU.Runtime.Cuda
              int sourceDevice,
              int destinationDevice);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuDeviceGetP2PAttribute"
             )]
@@ -2132,8 +2132,8 @@ namespace ILGPU.Runtime.Cuda
             [In] int sourceDevice,
             [In] int destinationDevice);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuPointerGetAttribute"
             )]
@@ -2144,7 +2144,7 @@ namespace ILGPU.Runtime.Cuda
              PointerAttribute attribute,
              IntPtr devicePtr);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuPointerGetAttribute"
             )]
@@ -2155,8 +2155,8 @@ namespace ILGPU.Runtime.Cuda
             [In] PointerAttribute attribute,
             [In] IntPtr devicePtr);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuMemGetInfo_v2"
             )]
@@ -2166,7 +2166,7 @@ namespace ILGPU.Runtime.Cuda
              out IntPtr free,
              out IntPtr total);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuMemGetInfo_v2"
             )]
@@ -2176,8 +2176,8 @@ namespace ILGPU.Runtime.Cuda
             [Out] out IntPtr free,
             [Out] out IntPtr total);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuMemAlloc_v2"
             )]
@@ -2187,7 +2187,7 @@ namespace ILGPU.Runtime.Cuda
              out IntPtr devicePtr,
              IntPtr bytesize);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuMemAlloc_v2"
             )]
@@ -2197,8 +2197,8 @@ namespace ILGPU.Runtime.Cuda
             [Out] out IntPtr devicePtr,
             [In] IntPtr bytesize);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuMemFree_v2"
             )]
@@ -2207,7 +2207,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuMemFree_v2_Import(
              IntPtr devicePtr);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuMemFree_v2"
             )]
@@ -2216,8 +2216,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuMemFree_v2_Import(
             [In] IntPtr devicePtr);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuMemAllocHost_v2"
             )]
@@ -2227,7 +2227,7 @@ namespace ILGPU.Runtime.Cuda
              out IntPtr devicePtr,
              IntPtr bytesize);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuMemAllocHost_v2"
             )]
@@ -2237,8 +2237,8 @@ namespace ILGPU.Runtime.Cuda
             [Out] out IntPtr devicePtr,
             [In] IntPtr bytesize);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuMemFreeHost"
             )]
@@ -2247,7 +2247,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuMemFreeHost_Import(
              IntPtr devicePtr);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuMemFreeHost"
             )]
@@ -2256,8 +2256,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuMemFreeHost_Import(
             [In] IntPtr devicePtr);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuMemcpyAsync"
             )]
@@ -2269,7 +2269,7 @@ namespace ILGPU.Runtime.Cuda
              IntPtr length,
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuMemcpyAsync"
             )]
@@ -2281,8 +2281,8 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr length,
             [In] IntPtr stream);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuMemsetD8Async"
             )]
@@ -2294,7 +2294,7 @@ namespace ILGPU.Runtime.Cuda
              IntPtr length,
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuMemsetD8Async"
             )]
@@ -2306,8 +2306,8 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr length,
             [In] IntPtr stream);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuMemHostRegister_v2"
             )]
@@ -2318,7 +2318,7 @@ namespace ILGPU.Runtime.Cuda
              IntPtr bytesize,
              MemHostRegisterFlags flags);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuMemHostRegister_v2"
             )]
@@ -2329,8 +2329,8 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr bytesize,
             [In] MemHostRegisterFlags flags);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuMemHostUnregister"
             )]
@@ -2339,7 +2339,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuMemHostUnregister_Import(
              IntPtr hostPtr);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuMemHostUnregister"
             )]
@@ -2348,8 +2348,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuMemHostUnregister_Import(
             [In] IntPtr hostPtr);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuMemHostGetDevicePointer_v2"
             )]
@@ -2360,7 +2360,7 @@ namespace ILGPU.Runtime.Cuda
              IntPtr hostPtr,
              int flags);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuMemHostGetDevicePointer_v2"
             )]
@@ -2371,8 +2371,8 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr hostPtr,
             [In] int flags);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuStreamCreate"
             )]
@@ -2382,7 +2382,7 @@ namespace ILGPU.Runtime.Cuda
              out IntPtr stream,
              StreamFlags flags);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuStreamCreate"
             )]
@@ -2392,8 +2392,8 @@ namespace ILGPU.Runtime.Cuda
             [Out] out IntPtr stream,
             [In] StreamFlags flags);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuStreamCreateWithPriority"
             )]
@@ -2404,7 +2404,7 @@ namespace ILGPU.Runtime.Cuda
              StreamFlags flags,
              int priority);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuStreamCreateWithPriority"
             )]
@@ -2415,8 +2415,8 @@ namespace ILGPU.Runtime.Cuda
             [In] StreamFlags flags,
             [In] int priority);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuStreamDestroy_v2"
             )]
@@ -2425,7 +2425,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuStreamDestroy_v2_Import(
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuStreamDestroy_v2"
             )]
@@ -2434,8 +2434,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuStreamDestroy_v2_Import(
             [In] IntPtr stream);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuStreamSynchronize"
             )]
@@ -2444,7 +2444,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuStreamSynchronize_Import(
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuStreamSynchronize"
             )]
@@ -2453,8 +2453,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuStreamSynchronize_Import(
             [In] IntPtr stream);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuGetErrorString"
             )]
@@ -2464,7 +2464,7 @@ namespace ILGPU.Runtime.Cuda
              CudaError error,
              out IntPtr pStr);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuGetErrorString"
             )]
@@ -2474,8 +2474,8 @@ namespace ILGPU.Runtime.Cuda
             [In] CudaError error,
             [Out] out IntPtr pStr);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuModuleLoadData"
             , StringMarshalling = StringMarshalling.Utf8
@@ -2486,7 +2486,7 @@ namespace ILGPU.Runtime.Cuda
              out IntPtr module,
              string moduleData);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuModuleLoadData"
             , CharSet = CharSet.Ansi
@@ -2499,8 +2499,8 @@ namespace ILGPU.Runtime.Cuda
             [Out] out IntPtr module,
             [In] string moduleData);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuModuleLoadDataEx"
             , StringMarshalling = StringMarshalling.Utf8
@@ -2514,7 +2514,7 @@ namespace ILGPU.Runtime.Cuda
              IntPtr jitOptions,
              IntPtr jitOptionValues);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuModuleLoadDataEx"
             , CharSet = CharSet.Ansi
@@ -2530,8 +2530,8 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr jitOptions,
             [In] IntPtr jitOptionValues);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuModuleUnload"
             )]
@@ -2540,7 +2540,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuModuleUnload_Import(
              IntPtr module);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuModuleUnload"
             )]
@@ -2549,8 +2549,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuModuleUnload_Import(
             [In] IntPtr module);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuModuleGetFunction"
             , StringMarshalling = StringMarshalling.Utf8
@@ -2562,7 +2562,7 @@ namespace ILGPU.Runtime.Cuda
              IntPtr module,
              string functionName);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuModuleGetFunction"
             , CharSet = CharSet.Ansi
@@ -2576,8 +2576,8 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr module,
             [In] string functionName);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuLaunchKernel"
             )]
@@ -2596,7 +2596,7 @@ namespace ILGPU.Runtime.Cuda
              IntPtr args,
              IntPtr kernelArgs);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuLaunchKernel"
             )]
@@ -2615,8 +2615,8 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr args,
             [In] IntPtr kernelArgs);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuOccupancyMaxActiveBlocksPerMultiprocessor"
             )]
@@ -2628,7 +2628,7 @@ namespace ILGPU.Runtime.Cuda
              int blockSize,
              IntPtr dynamicSMemSize);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuOccupancyMaxActiveBlocksPerMultiprocessor"
             )]
@@ -2640,8 +2640,8 @@ namespace ILGPU.Runtime.Cuda
             [In] int blockSize,
             [In] IntPtr dynamicSMemSize);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuOccupancyMaxPotentialBlockSize"
             )]
@@ -2655,7 +2655,7 @@ namespace ILGPU.Runtime.Cuda
              IntPtr dynamicSMemSize,
              int blockSizeLimit);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuOccupancyMaxPotentialBlockSize"
             )]
@@ -2669,8 +2669,8 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr dynamicSMemSize,
             [In] int blockSizeLimit);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuEventCreate"
             )]
@@ -2680,7 +2680,7 @@ namespace ILGPU.Runtime.Cuda
              out IntPtr @event,
              CudaEventFlags flags);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuEventCreate"
             )]
@@ -2690,8 +2690,8 @@ namespace ILGPU.Runtime.Cuda
             [Out] out IntPtr @event,
             [In] CudaEventFlags flags);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuEventDestroy_v2"
             )]
@@ -2700,7 +2700,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuEventDestroy_v2_Import(
              IntPtr @event);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuEventDestroy_v2"
             )]
@@ -2709,8 +2709,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuEventDestroy_v2_Import(
             [In] IntPtr @event);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuEventQuery"
             )]
@@ -2719,7 +2719,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuEventQuery_Import(
              IntPtr @event);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuEventQuery"
             )]
@@ -2728,8 +2728,8 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuEventQuery_Import(
             [In] IntPtr @event);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuEventElapsedTime"
             )]
@@ -2740,7 +2740,7 @@ namespace ILGPU.Runtime.Cuda
              IntPtr start,
              IntPtr end);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuEventElapsedTime"
             )]
@@ -2751,8 +2751,8 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr start,
             [In] IntPtr end);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuEventRecord"
             )]
@@ -2762,7 +2762,7 @@ namespace ILGPU.Runtime.Cuda
              IntPtr @event,
              IntPtr stream);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuEventRecord"
             )]
@@ -2772,8 +2772,8 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr @event,
             [In] IntPtr stream);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "cuEventSynchronize"
             )]
@@ -2782,7 +2782,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuEventSynchronize_Import(
              IntPtr @event);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "cuEventSynchronize"
             )]
@@ -2791,7 +2791,7 @@ namespace ILGPU.Runtime.Cuda
          CudaError cuEventSynchronize_Import(
             [In] IntPtr @event);
 
-        #endif
+#endif
         #endregion
 
         #region RuntimeAPI
@@ -3192,103 +3192,103 @@ namespace ILGPU.Runtime.Cuda
             cuInit(
             [In] int flags) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuDriverGetVersion(
             [Out] out int driverVersion) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuDeviceGet(
             [Out] out int device,
             [In] int ordinal) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuDeviceGetCount(
             [Out] out int count) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuDeviceGetName(
             [In, Out] byte[] name,
             [In] int length,
             [In] int device) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuDeviceTotalMem_v2(
             [Out] out IntPtr bytes,
             [In] int device) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuDeviceGetAttribute(
             [Out] out int value,
             [In] DeviceAttributeKind attribute,
             [In] int device) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuCtxCreate_v2(
             [Out] out IntPtr context,
             [In] CudaAcceleratorFlags flags,
             [In] int device) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuCtxDestroy_v2(
             [In] IntPtr context) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuCtxSetCurrent(
             [In] IntPtr context) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuCtxSynchronize(
               ) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuCtxGetCacheConfig(
             [Out] out CudaCacheConfiguration pconfig) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuCtxSetCacheConfig(
             [In] CudaCacheConfiguration config) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuCtxGetSharedMemConfig(
             [Out] out CudaSharedMemoryConfiguration pConfig) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuCtxSetSharedMemConfig(
             [In] CudaSharedMemoryConfiguration config) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuDeviceCanAccessPeer(
             [Out] out int canAccess,
             [In] int device,
             [In] int peerDev) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuCtxEnablePeerAccess(
             [In] IntPtr peerContext,
             [In] int flags) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuCtxDisablePeerAccess(
             [In] IntPtr peerContext) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuDeviceGetP2PAttribute(
             [Out] out int value,
@@ -3296,42 +3296,42 @@ namespace ILGPU.Runtime.Cuda
             [In] int sourceDevice,
             [In] int destinationDevice) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuPointerGetAttribute(
             [In] IntPtr targetPtr,
             [In] PointerAttribute attribute,
             [In] IntPtr devicePtr) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuMemGetInfo_v2(
             [Out] out IntPtr free,
             [Out] out IntPtr total) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuMemAlloc_v2(
             [Out] out IntPtr devicePtr,
             [In] IntPtr bytesize) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuMemFree_v2(
             [In] IntPtr devicePtr) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuMemAllocHost_v2(
             [Out] out IntPtr devicePtr,
             [In] IntPtr bytesize) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuMemFreeHost(
             [In] IntPtr devicePtr) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuMemcpyAsync(
             [In] IntPtr destination,
@@ -3339,7 +3339,7 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr length,
             [In] IntPtr stream) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuMemsetD8Async(
             [In] IntPtr destinationDevice,
@@ -3347,61 +3347,61 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr length,
             [In] IntPtr stream) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuMemHostRegister_v2(
             [In] IntPtr hostPtr,
             [In] IntPtr bytesize,
             [In] MemHostRegisterFlags flags) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuMemHostUnregister(
             [In] IntPtr hostPtr) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuMemHostGetDevicePointer_v2(
             [Out] out IntPtr devicePtr,
             [In] IntPtr hostPtr,
             [In] int flags) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuStreamCreate(
             [Out] out IntPtr stream,
             [In] StreamFlags flags) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuStreamCreateWithPriority(
             [Out] out IntPtr stream,
             [In] StreamFlags flags,
             [In] int priority) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuStreamDestroy_v2(
             [In] IntPtr stream) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuStreamSynchronize(
             [In] IntPtr stream) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuGetErrorString(
             [In] CudaError error,
             [Out] out IntPtr pStr) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuModuleLoadData(
             [Out] out IntPtr module,
             [In] string moduleData) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuModuleLoadDataEx(
             [Out] out IntPtr module,
@@ -3410,19 +3410,19 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr jitOptions,
             [In] IntPtr jitOptionValues) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuModuleUnload(
             [In] IntPtr module) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuModuleGetFunction(
             [Out] out IntPtr function,
             [In] IntPtr module,
             [In] string functionName) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuLaunchKernel(
             [In] IntPtr function,
@@ -3437,7 +3437,7 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr args,
             [In] IntPtr kernelArgs) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuOccupancyMaxActiveBlocksPerMultiprocessor(
             [Out] out int numBlocks,
@@ -3445,7 +3445,7 @@ namespace ILGPU.Runtime.Cuda
             [In] int blockSize,
             [In] IntPtr dynamicSMemSize) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuOccupancyMaxPotentialBlockSize(
             [Out] out int minGridSize,
@@ -3455,41 +3455,41 @@ namespace ILGPU.Runtime.Cuda
             [In] IntPtr dynamicSMemSize,
             [In] int blockSizeLimit) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuEventCreate(
             [Out] out IntPtr @event,
             [In] CudaEventFlags flags) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuEventDestroy_v2(
             [In] IntPtr @event) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuEventQuery(
             [In] IntPtr @event) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuEventElapsedTime(
             [Out] out float milliseconds,
             [In] IntPtr start,
             [In] IntPtr end) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuEventRecord(
             [In] IntPtr @event,
             [In] IntPtr stream) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
         internal sealed override CudaError
             cuEventSynchronize(
             [In] IntPtr @event) =>
             throw new NotSupportedException(RuntimeErrorMessages.CudaNotSupported);
-        
+
 
         #endregion
     }
@@ -3760,7 +3760,7 @@ namespace ILGPU.Runtime.OpenCL
     {
         #region Native Methods
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clGetPlatformIDs"
             )]
@@ -3771,7 +3771,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr* platforms,
              out int numPlatforms);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clGetPlatformIDs"
             )]
@@ -3782,8 +3782,8 @@ namespace ILGPU.Runtime.OpenCL
             [Out] IntPtr* platforms,
             [Out] out int numPlatforms);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clGetPlatformInfo"
             )]
@@ -3796,7 +3796,7 @@ namespace ILGPU.Runtime.OpenCL
              void* value,
              IntPtr size);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clGetPlatformInfo"
             )]
@@ -3809,8 +3809,8 @@ namespace ILGPU.Runtime.OpenCL
             [Out] void* value,
             [Out] IntPtr size);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clGetDeviceIDs"
             )]
@@ -3823,7 +3823,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr* devices,
              out int numDevice);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clGetDeviceIDs"
             )]
@@ -3836,8 +3836,8 @@ namespace ILGPU.Runtime.OpenCL
             [Out] IntPtr* devices,
             [Out] out int numDevice);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clReleaseDevice"
             )]
@@ -3846,7 +3846,7 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseDevice_Import(
              IntPtr deviceId);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clReleaseDevice"
             )]
@@ -3855,8 +3855,8 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseDevice_Import(
             [In] IntPtr deviceId);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clGetDeviceInfo"
             )]
@@ -3869,7 +3869,7 @@ namespace ILGPU.Runtime.OpenCL
              void* value,
              IntPtr size);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clGetDeviceInfo"
             )]
@@ -3882,8 +3882,8 @@ namespace ILGPU.Runtime.OpenCL
             [Out] void* value,
             [Out] IntPtr size);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clGetExtensionFunctionAddressForPlatform"
             , StringMarshalling = StringMarshalling.Utf8
@@ -3894,7 +3894,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr platformId,
              string name);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clGetExtensionFunctionAddressForPlatform"
             , CharSet = CharSet.Ansi
@@ -3907,8 +3907,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr platformId,
             [In] string name);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clCreateContext"
             )]
@@ -3922,7 +3922,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr userData,
              out CLError errorCode);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clCreateContext"
             )]
@@ -3936,8 +3936,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr userData,
             [Out] out CLError errorCode);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clReleaseContext"
             )]
@@ -3946,7 +3946,7 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseContext_Import(
              IntPtr context);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clReleaseContext"
             )]
@@ -3955,8 +3955,8 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseContext_Import(
             [In] IntPtr context);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clCreateCommandQueue"
             )]
@@ -3968,7 +3968,7 @@ namespace ILGPU.Runtime.OpenCL
              CLCommandQueueProperties properties,
              out CLError errorCode);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clCreateCommandQueue"
             )]
@@ -3980,8 +3980,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] CLCommandQueueProperties properties,
             [Out] out CLError errorCode);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clCreateCommandQueueWithProperties"
             )]
@@ -3993,7 +3993,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr properties,
              out CLError errorCode);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clCreateCommandQueueWithProperties"
             )]
@@ -4005,8 +4005,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr properties,
             [Out] out CLError errorCode);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clReleaseCommandQueue"
             )]
@@ -4015,7 +4015,7 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseCommandQueue_Import(
              IntPtr queue);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clReleaseCommandQueue"
             )]
@@ -4024,8 +4024,8 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseCommandQueue_Import(
             [In] IntPtr queue);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clFlush"
             )]
@@ -4034,7 +4034,7 @@ namespace ILGPU.Runtime.OpenCL
          CLError clFlush_Import(
              IntPtr queue);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clFlush"
             )]
@@ -4043,8 +4043,8 @@ namespace ILGPU.Runtime.OpenCL
          CLError clFlush_Import(
             [In] IntPtr queue);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clFinish"
             )]
@@ -4053,7 +4053,7 @@ namespace ILGPU.Runtime.OpenCL
          CLError clFinish_Import(
              IntPtr queue);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clFinish"
             )]
@@ -4062,8 +4062,8 @@ namespace ILGPU.Runtime.OpenCL
          CLError clFinish_Import(
             [In] IntPtr queue);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clCreateProgramWithSource"
             , StringMarshalling = StringMarshalling.Utf8
@@ -4077,7 +4077,7 @@ namespace ILGPU.Runtime.OpenCL
              ref IntPtr lengths,
              out CLError errorCode);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clCreateProgramWithSource"
             , CharSet = CharSet.Ansi
@@ -4093,8 +4093,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] ref IntPtr lengths,
             [Out] out CLError errorCode);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clBuildProgram"
             , StringMarshalling = StringMarshalling.Utf8
@@ -4109,7 +4109,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr callback,
              IntPtr userData);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clBuildProgram"
             , CharSet = CharSet.Ansi
@@ -4126,8 +4126,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr callback,
             [In] IntPtr userData);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clReleaseProgram"
             )]
@@ -4136,7 +4136,7 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseProgram_Import(
              IntPtr program);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clReleaseProgram"
             )]
@@ -4145,8 +4145,8 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseProgram_Import(
             [In] IntPtr program);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clGetProgramInfo"
             )]
@@ -4159,7 +4159,7 @@ namespace ILGPU.Runtime.OpenCL
              void* paramValue,
              out IntPtr paramValueSizeRet);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clGetProgramInfo"
             )]
@@ -4172,8 +4172,8 @@ namespace ILGPU.Runtime.OpenCL
             [Out] void* paramValue,
             [Out] out IntPtr paramValueSizeRet);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clGetProgramBuildInfo"
             )]
@@ -4187,7 +4187,7 @@ namespace ILGPU.Runtime.OpenCL
              void* paramValue,
              out IntPtr paramValueSizeRet);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clGetProgramBuildInfo"
             )]
@@ -4201,8 +4201,8 @@ namespace ILGPU.Runtime.OpenCL
             [Out] void* paramValue,
             [Out] out IntPtr paramValueSizeRet);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clCreateKernel"
             , StringMarshalling = StringMarshalling.Utf8
@@ -4214,7 +4214,7 @@ namespace ILGPU.Runtime.OpenCL
              string kernelName,
              out CLError errorCode);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clCreateKernel"
             , CharSet = CharSet.Ansi
@@ -4228,8 +4228,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] string kernelName,
             [Out] out CLError errorCode);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clReleaseKernel"
             )]
@@ -4238,7 +4238,7 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseKernel_Import(
              IntPtr kernel);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clReleaseKernel"
             )]
@@ -4247,8 +4247,8 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseKernel_Import(
             [In] IntPtr kernel);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clSetKernelArg"
             )]
@@ -4260,7 +4260,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr size,
              void* value);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clSetKernelArg"
             )]
@@ -4272,8 +4272,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr size,
             [In] void* value);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clEnqueueNDRangeKernel"
             )]
@@ -4290,7 +4290,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr* events,
              IntPtr* creatingEvent);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clEnqueueNDRangeKernel"
             )]
@@ -4307,8 +4307,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr* events,
             [In, Out] IntPtr* creatingEvent);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clGetKernelWorkGroupInfo"
             )]
@@ -4322,7 +4322,7 @@ namespace ILGPU.Runtime.OpenCL
              void* paramValue,
              IntPtr size);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clGetKernelWorkGroupInfo"
             )]
@@ -4336,8 +4336,8 @@ namespace ILGPU.Runtime.OpenCL
             [Out] void* paramValue,
             [Out] IntPtr size);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clCreateBuffer"
             )]
@@ -4350,7 +4350,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr hostPointer,
              out CLError errorCode);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clCreateBuffer"
             )]
@@ -4363,8 +4363,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr hostPointer,
             [Out] out CLError errorCode);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clReleaseMemObject"
             )]
@@ -4373,7 +4373,7 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseMemObject_Import(
              IntPtr buffer);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clReleaseMemObject"
             )]
@@ -4382,8 +4382,8 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseMemObject_Import(
             [In] IntPtr buffer);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clEnqueueReadBuffer"
             )]
@@ -4400,7 +4400,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr* events,
              IntPtr* resultEvent);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clEnqueueReadBuffer"
             )]
@@ -4417,8 +4417,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr* events,
             [In, Out] IntPtr* resultEvent);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clEnqueueWriteBuffer"
             )]
@@ -4435,7 +4435,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr* events,
              IntPtr* resultEvent);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clEnqueueWriteBuffer"
             )]
@@ -4452,8 +4452,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr* events,
             [In, Out] IntPtr* resultEvent);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clEnqueueFillBuffer"
             )]
@@ -4470,7 +4470,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr* events,
              IntPtr* resultEvent);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clEnqueueFillBuffer"
             )]
@@ -4487,8 +4487,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr* events,
             [In, Out] IntPtr* resultEvent);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clEnqueueCopyBuffer"
             )]
@@ -4505,7 +4505,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr* events,
              IntPtr* resultEvent);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clEnqueueCopyBuffer"
             )]
@@ -4522,8 +4522,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr* events,
             [In, Out] IntPtr* resultEvent);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clReleaseEvent"
             )]
@@ -4532,7 +4532,7 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseEvent_Import(
              IntPtr buffer);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clReleaseEvent"
             )]
@@ -4541,8 +4541,8 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseEvent_Import(
             [In] IntPtr buffer);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clWaitForEvents"
             )]
@@ -4552,7 +4552,7 @@ namespace ILGPU.Runtime.OpenCL
              int numEvents,
              IntPtr* events);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clWaitForEvents"
             )]
@@ -4562,8 +4562,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] int numEvents,
             [In] IntPtr* events);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clGetEventInfo"
             )]
@@ -4576,7 +4576,7 @@ namespace ILGPU.Runtime.OpenCL
              void* param_value,
              IntPtr param_value_size_ret);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clGetEventInfo"
             )]
@@ -4589,8 +4589,8 @@ namespace ILGPU.Runtime.OpenCL
             [Out] void* param_value,
             [Out] IntPtr param_value_size_ret);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clEnqueueBarrierWithWaitList"
             )]
@@ -4602,7 +4602,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr* events,
              IntPtr* resultEvent);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clEnqueueBarrierWithWaitList"
             )]
@@ -4614,8 +4614,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr* events,
             [In, Out] IntPtr* resultEvent);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameWindows,
             EntryPoint = "clGetEventProfilingInfo"
             )]
@@ -4628,7 +4628,7 @@ namespace ILGPU.Runtime.OpenCL
              void* param_value,
              IntPtr param_value_size_ret);
 
-        #else
+#else
         [DllImport(LibNameWindows,
             EntryPoint = "clGetEventProfilingInfo"
             )]
@@ -4641,7 +4641,7 @@ namespace ILGPU.Runtime.OpenCL
             [Out] void* param_value,
             [Out] IntPtr param_value_size_ret);
 
-        #endif
+#endif
         #endregion
 
         #region RuntimeAPI
@@ -5056,7 +5056,7 @@ namespace ILGPU.Runtime.OpenCL
     {
         #region Native Methods
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clGetPlatformIDs"
             )]
@@ -5067,7 +5067,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr* platforms,
              out int numPlatforms);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clGetPlatformIDs"
             )]
@@ -5078,8 +5078,8 @@ namespace ILGPU.Runtime.OpenCL
             [Out] IntPtr* platforms,
             [Out] out int numPlatforms);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clGetPlatformInfo"
             )]
@@ -5092,7 +5092,7 @@ namespace ILGPU.Runtime.OpenCL
              void* value,
              IntPtr size);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clGetPlatformInfo"
             )]
@@ -5105,8 +5105,8 @@ namespace ILGPU.Runtime.OpenCL
             [Out] void* value,
             [Out] IntPtr size);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clGetDeviceIDs"
             )]
@@ -5119,7 +5119,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr* devices,
              out int numDevice);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clGetDeviceIDs"
             )]
@@ -5132,8 +5132,8 @@ namespace ILGPU.Runtime.OpenCL
             [Out] IntPtr* devices,
             [Out] out int numDevice);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clReleaseDevice"
             )]
@@ -5142,7 +5142,7 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseDevice_Import(
              IntPtr deviceId);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clReleaseDevice"
             )]
@@ -5151,8 +5151,8 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseDevice_Import(
             [In] IntPtr deviceId);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clGetDeviceInfo"
             )]
@@ -5165,7 +5165,7 @@ namespace ILGPU.Runtime.OpenCL
              void* value,
              IntPtr size);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clGetDeviceInfo"
             )]
@@ -5178,8 +5178,8 @@ namespace ILGPU.Runtime.OpenCL
             [Out] void* value,
             [Out] IntPtr size);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clGetExtensionFunctionAddressForPlatform"
             , StringMarshalling = StringMarshalling.Utf8
@@ -5190,7 +5190,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr platformId,
              string name);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clGetExtensionFunctionAddressForPlatform"
             , CharSet = CharSet.Ansi
@@ -5203,8 +5203,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr platformId,
             [In] string name);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clCreateContext"
             )]
@@ -5218,7 +5218,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr userData,
              out CLError errorCode);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clCreateContext"
             )]
@@ -5232,8 +5232,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr userData,
             [Out] out CLError errorCode);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clReleaseContext"
             )]
@@ -5242,7 +5242,7 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseContext_Import(
              IntPtr context);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clReleaseContext"
             )]
@@ -5251,8 +5251,8 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseContext_Import(
             [In] IntPtr context);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clCreateCommandQueue"
             )]
@@ -5264,7 +5264,7 @@ namespace ILGPU.Runtime.OpenCL
              CLCommandQueueProperties properties,
              out CLError errorCode);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clCreateCommandQueue"
             )]
@@ -5276,8 +5276,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] CLCommandQueueProperties properties,
             [Out] out CLError errorCode);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clCreateCommandQueueWithProperties"
             )]
@@ -5289,7 +5289,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr properties,
              out CLError errorCode);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clCreateCommandQueueWithProperties"
             )]
@@ -5301,8 +5301,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr properties,
             [Out] out CLError errorCode);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clReleaseCommandQueue"
             )]
@@ -5311,7 +5311,7 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseCommandQueue_Import(
              IntPtr queue);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clReleaseCommandQueue"
             )]
@@ -5320,8 +5320,8 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseCommandQueue_Import(
             [In] IntPtr queue);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clFlush"
             )]
@@ -5330,7 +5330,7 @@ namespace ILGPU.Runtime.OpenCL
          CLError clFlush_Import(
              IntPtr queue);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clFlush"
             )]
@@ -5339,8 +5339,8 @@ namespace ILGPU.Runtime.OpenCL
          CLError clFlush_Import(
             [In] IntPtr queue);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clFinish"
             )]
@@ -5349,7 +5349,7 @@ namespace ILGPU.Runtime.OpenCL
          CLError clFinish_Import(
              IntPtr queue);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clFinish"
             )]
@@ -5358,8 +5358,8 @@ namespace ILGPU.Runtime.OpenCL
          CLError clFinish_Import(
             [In] IntPtr queue);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clCreateProgramWithSource"
             , StringMarshalling = StringMarshalling.Utf8
@@ -5373,7 +5373,7 @@ namespace ILGPU.Runtime.OpenCL
              ref IntPtr lengths,
              out CLError errorCode);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clCreateProgramWithSource"
             , CharSet = CharSet.Ansi
@@ -5389,8 +5389,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] ref IntPtr lengths,
             [Out] out CLError errorCode);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clBuildProgram"
             , StringMarshalling = StringMarshalling.Utf8
@@ -5405,7 +5405,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr callback,
              IntPtr userData);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clBuildProgram"
             , CharSet = CharSet.Ansi
@@ -5422,8 +5422,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr callback,
             [In] IntPtr userData);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clReleaseProgram"
             )]
@@ -5432,7 +5432,7 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseProgram_Import(
              IntPtr program);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clReleaseProgram"
             )]
@@ -5441,8 +5441,8 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseProgram_Import(
             [In] IntPtr program);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clGetProgramInfo"
             )]
@@ -5455,7 +5455,7 @@ namespace ILGPU.Runtime.OpenCL
              void* paramValue,
              out IntPtr paramValueSizeRet);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clGetProgramInfo"
             )]
@@ -5468,8 +5468,8 @@ namespace ILGPU.Runtime.OpenCL
             [Out] void* paramValue,
             [Out] out IntPtr paramValueSizeRet);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clGetProgramBuildInfo"
             )]
@@ -5483,7 +5483,7 @@ namespace ILGPU.Runtime.OpenCL
              void* paramValue,
              out IntPtr paramValueSizeRet);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clGetProgramBuildInfo"
             )]
@@ -5497,8 +5497,8 @@ namespace ILGPU.Runtime.OpenCL
             [Out] void* paramValue,
             [Out] out IntPtr paramValueSizeRet);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clCreateKernel"
             , StringMarshalling = StringMarshalling.Utf8
@@ -5510,7 +5510,7 @@ namespace ILGPU.Runtime.OpenCL
              string kernelName,
              out CLError errorCode);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clCreateKernel"
             , CharSet = CharSet.Ansi
@@ -5524,8 +5524,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] string kernelName,
             [Out] out CLError errorCode);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clReleaseKernel"
             )]
@@ -5534,7 +5534,7 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseKernel_Import(
              IntPtr kernel);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clReleaseKernel"
             )]
@@ -5543,8 +5543,8 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseKernel_Import(
             [In] IntPtr kernel);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clSetKernelArg"
             )]
@@ -5556,7 +5556,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr size,
              void* value);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clSetKernelArg"
             )]
@@ -5568,8 +5568,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr size,
             [In] void* value);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clEnqueueNDRangeKernel"
             )]
@@ -5586,7 +5586,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr* events,
              IntPtr* creatingEvent);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clEnqueueNDRangeKernel"
             )]
@@ -5603,8 +5603,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr* events,
             [In, Out] IntPtr* creatingEvent);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clGetKernelWorkGroupInfo"
             )]
@@ -5618,7 +5618,7 @@ namespace ILGPU.Runtime.OpenCL
              void* paramValue,
              IntPtr size);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clGetKernelWorkGroupInfo"
             )]
@@ -5632,8 +5632,8 @@ namespace ILGPU.Runtime.OpenCL
             [Out] void* paramValue,
             [Out] IntPtr size);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clCreateBuffer"
             )]
@@ -5646,7 +5646,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr hostPointer,
              out CLError errorCode);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clCreateBuffer"
             )]
@@ -5659,8 +5659,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr hostPointer,
             [Out] out CLError errorCode);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clReleaseMemObject"
             )]
@@ -5669,7 +5669,7 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseMemObject_Import(
              IntPtr buffer);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clReleaseMemObject"
             )]
@@ -5678,8 +5678,8 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseMemObject_Import(
             [In] IntPtr buffer);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clEnqueueReadBuffer"
             )]
@@ -5696,7 +5696,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr* events,
              IntPtr* resultEvent);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clEnqueueReadBuffer"
             )]
@@ -5713,8 +5713,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr* events,
             [In, Out] IntPtr* resultEvent);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clEnqueueWriteBuffer"
             )]
@@ -5731,7 +5731,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr* events,
              IntPtr* resultEvent);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clEnqueueWriteBuffer"
             )]
@@ -5748,8 +5748,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr* events,
             [In, Out] IntPtr* resultEvent);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clEnqueueFillBuffer"
             )]
@@ -5766,7 +5766,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr* events,
              IntPtr* resultEvent);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clEnqueueFillBuffer"
             )]
@@ -5783,8 +5783,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr* events,
             [In, Out] IntPtr* resultEvent);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clEnqueueCopyBuffer"
             )]
@@ -5801,7 +5801,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr* events,
              IntPtr* resultEvent);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clEnqueueCopyBuffer"
             )]
@@ -5818,8 +5818,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr* events,
             [In, Out] IntPtr* resultEvent);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clReleaseEvent"
             )]
@@ -5828,7 +5828,7 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseEvent_Import(
              IntPtr buffer);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clReleaseEvent"
             )]
@@ -5837,8 +5837,8 @@ namespace ILGPU.Runtime.OpenCL
          CLError clReleaseEvent_Import(
             [In] IntPtr buffer);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clWaitForEvents"
             )]
@@ -5848,7 +5848,7 @@ namespace ILGPU.Runtime.OpenCL
              int numEvents,
              IntPtr* events);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clWaitForEvents"
             )]
@@ -5858,8 +5858,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] int numEvents,
             [In] IntPtr* events);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clGetEventInfo"
             )]
@@ -5872,7 +5872,7 @@ namespace ILGPU.Runtime.OpenCL
              void* param_value,
              IntPtr param_value_size_ret);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clGetEventInfo"
             )]
@@ -5885,8 +5885,8 @@ namespace ILGPU.Runtime.OpenCL
             [Out] void* param_value,
             [Out] IntPtr param_value_size_ret);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clEnqueueBarrierWithWaitList"
             )]
@@ -5898,7 +5898,7 @@ namespace ILGPU.Runtime.OpenCL
              IntPtr* events,
              IntPtr* resultEvent);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clEnqueueBarrierWithWaitList"
             )]
@@ -5910,8 +5910,8 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr* events,
             [In, Out] IntPtr* resultEvent);
 
-        #endif
-        #if NET7_0_OR_GREATER
+#endif
+#if NET7_0_OR_GREATER
         [LibraryImport(LibNameLinux,
             EntryPoint = "clGetEventProfilingInfo"
             )]
@@ -5924,7 +5924,7 @@ namespace ILGPU.Runtime.OpenCL
              void* param_value,
              IntPtr param_value_size_ret);
 
-        #else
+#else
         [DllImport(LibNameLinux,
             EntryPoint = "clGetEventProfilingInfo"
             )]
@@ -5937,7 +5937,7 @@ namespace ILGPU.Runtime.OpenCL
             [Out] void* param_value,
             [Out] IntPtr param_value_size_ret);
 
-        #endif
+#endif
         #endregion
 
         #region RuntimeAPI
@@ -6366,7 +6366,7 @@ namespace ILGPU.Runtime.OpenCL
             [Out] IntPtr* platforms,
             [Out] out int numPlatforms) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clGetPlatformInfo(
             [In] IntPtr platform,
@@ -6375,7 +6375,7 @@ namespace ILGPU.Runtime.OpenCL
             [Out] void* value,
             [Out] IntPtr size) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clGetDeviceIDs(
             [In] IntPtr platform,
@@ -6384,12 +6384,12 @@ namespace ILGPU.Runtime.OpenCL
             [Out] IntPtr* devices,
             [Out] out int numDevice) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clReleaseDevice(
             [In] IntPtr deviceId) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clGetDeviceInfo(
             [In] IntPtr deviceId,
@@ -6398,13 +6398,13 @@ namespace ILGPU.Runtime.OpenCL
             [Out] void* value,
             [Out] IntPtr size) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override IntPtr
             clGetExtensionFunctionAddressForPlatform(
             [In] IntPtr platformId,
             [In] string name) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override IntPtr
             clCreateContext(
             [In] IntPtr* properties,
@@ -6414,12 +6414,12 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr userData,
             [Out] out CLError errorCode) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clReleaseContext(
             [In] IntPtr context) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override IntPtr
             clCreateCommandQueue(
             [In] IntPtr context,
@@ -6427,7 +6427,7 @@ namespace ILGPU.Runtime.OpenCL
             [In] CLCommandQueueProperties properties,
             [Out] out CLError errorCode) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override IntPtr
             clCreateCommandQueueWithProperties(
             [In] IntPtr context,
@@ -6435,22 +6435,22 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr properties,
             [Out] out CLError errorCode) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clReleaseCommandQueue(
             [In] IntPtr queue) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clFlush(
             [In] IntPtr queue) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clFinish(
             [In] IntPtr queue) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override IntPtr
             clCreateProgramWithSource(
             [In] IntPtr context,
@@ -6459,7 +6459,7 @@ namespace ILGPU.Runtime.OpenCL
             [In] ref IntPtr lengths,
             [Out] out CLError errorCode) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clBuildProgram(
             [In] IntPtr program,
@@ -6469,12 +6469,12 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr callback,
             [In] IntPtr userData) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clReleaseProgram(
             [In] IntPtr program) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clGetProgramInfo(
             [In] IntPtr program,
@@ -6483,7 +6483,7 @@ namespace ILGPU.Runtime.OpenCL
             [Out] void* paramValue,
             [Out] out IntPtr paramValueSizeRet) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clGetProgramBuildInfo(
             [In] IntPtr program,
@@ -6493,19 +6493,19 @@ namespace ILGPU.Runtime.OpenCL
             [Out] void* paramValue,
             [Out] out IntPtr paramValueSizeRet) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override IntPtr
             clCreateKernel(
             [In] IntPtr program,
             [In] string kernelName,
             [Out] out CLError errorCode) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clReleaseKernel(
             [In] IntPtr kernel) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clSetKernelArg(
             [In] IntPtr kernel,
@@ -6513,7 +6513,7 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr size,
             [In] void* value) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clEnqueueNDRangeKernel(
             [In] IntPtr queue,
@@ -6526,7 +6526,7 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr* events,
             [In, Out] IntPtr* creatingEvent) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clGetKernelWorkGroupInfo(
             [In] IntPtr kernel,
@@ -6536,7 +6536,7 @@ namespace ILGPU.Runtime.OpenCL
             [Out] void* paramValue,
             [Out] IntPtr size) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override IntPtr
             clCreateBuffer(
             [In] IntPtr context,
@@ -6545,12 +6545,12 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr hostPointer,
             [Out] out CLError errorCode) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clReleaseMemObject(
             [In] IntPtr buffer) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clEnqueueReadBuffer(
             [In] IntPtr queue,
@@ -6563,7 +6563,7 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr* events,
             [In, Out] IntPtr* resultEvent) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clEnqueueWriteBuffer(
             [In] IntPtr queue,
@@ -6576,7 +6576,7 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr* events,
             [In, Out] IntPtr* resultEvent) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clEnqueueFillBuffer(
             [In] IntPtr queue,
@@ -6589,7 +6589,7 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr* events,
             [In, Out] IntPtr* resultEvent) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clEnqueueCopyBuffer(
             [In] IntPtr queue,
@@ -6602,18 +6602,18 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr* events,
             [In, Out] IntPtr* resultEvent) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clReleaseEvent(
             [In] IntPtr buffer) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clWaitForEvents(
             [In] int numEvents,
             [In] IntPtr* events) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clGetEventInfo(
             [In] IntPtr @event,
@@ -6622,7 +6622,7 @@ namespace ILGPU.Runtime.OpenCL
             [Out] void* param_value,
             [Out] IntPtr param_value_size_ret) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clEnqueueBarrierWithWaitList(
             [In] IntPtr queue,
@@ -6630,7 +6630,7 @@ namespace ILGPU.Runtime.OpenCL
             [In] IntPtr* events,
             [In, Out] IntPtr* resultEvent) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
         internal sealed override CLError
             clGetEventProfilingInfo(
             [In] IntPtr @event,
@@ -6639,7 +6639,7 @@ namespace ILGPU.Runtime.OpenCL
             [Out] void* param_value,
             [Out] IntPtr param_value_size_ret) =>
             throw new NotSupportedException(RuntimeErrorMessages.CLNotSupported);
-        
+
 
         #endregion
     }

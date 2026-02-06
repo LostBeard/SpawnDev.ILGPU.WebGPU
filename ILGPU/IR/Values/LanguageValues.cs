@@ -10,10 +10,8 @@
 // ---------------------------------------------------------------------------------------
 
 using ILGPU.IR.Construction;
-using ILGPU.IR.Serialization;
 using ILGPU.IR.Types;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using DirectionList =
     System.Collections.Immutable.ImmutableArray<

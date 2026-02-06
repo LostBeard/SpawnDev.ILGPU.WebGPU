@@ -633,7 +633,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_1d"
             )]
@@ -646,7 +646,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_1d"
             )]
@@ -659,7 +659,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_1d(
             [In] int nx,
             [In] double* @in,
@@ -673,7 +673,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_2d"
             )]
@@ -687,7 +687,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_2d"
             )]
@@ -701,7 +701,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_2d(
             [In] int nx,
             [In] int ny,
@@ -717,7 +717,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_3d"
             )]
@@ -732,7 +732,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_3d"
             )]
@@ -747,7 +747,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_3d(
             [In] int nx,
             [In] int ny,
@@ -765,7 +765,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft"
             )]
@@ -779,7 +779,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft"
             )]
@@ -793,7 +793,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft(
             [In] int rank,
             [In] int* n,
@@ -813,7 +813,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Real to Complex - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_1d"
             )]
@@ -825,7 +825,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_1d"
             )]
@@ -837,7 +837,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c_1d(
             [In] int nx,
             [In] double* @in,
@@ -849,7 +849,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_2d"
             )]
@@ -862,7 +862,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_2d"
             )]
@@ -875,7 +875,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c_2d(
             [In] int nx,
             [In] int ny,
@@ -889,7 +889,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_3d"
             )]
@@ -903,7 +903,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_3d"
             )]
@@ -917,7 +917,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c_3d(
             [In] int nx,
             [In] int ny,
@@ -933,7 +933,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c"
             )]
@@ -946,7 +946,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c"
             )]
@@ -959,7 +959,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -977,7 +977,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex to Real - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_1d"
             )]
@@ -989,7 +989,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_1d"
             )]
@@ -1001,7 +1001,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r_1d(
             [In] int nx,
             [In] double* @in,
@@ -1013,7 +1013,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_2d"
             )]
@@ -1026,7 +1026,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_2d"
             )]
@@ -1039,7 +1039,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r_2d(
             [In] int nx,
             [In] int ny,
@@ -1053,7 +1053,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_3d"
             )]
@@ -1067,7 +1067,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_3d"
             )]
@@ -1081,7 +1081,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r_3d(
             [In] int nx,
             [In] int ny,
@@ -1097,7 +1097,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r"
             )]
@@ -1110,7 +1110,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r"
             )]
@@ -1123,7 +1123,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -1141,7 +1141,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Advanced Interface - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_many_dft"
             )]
@@ -1162,7 +1162,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_many_dft"
             )]
@@ -1183,7 +1183,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_many_dft(
             [In] int rank,
             [In] int* n,
@@ -1213,7 +1213,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_many_dft_r2c"
             )]
@@ -1233,7 +1233,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_many_dft_r2c"
             )]
@@ -1253,7 +1253,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_many_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -1281,7 +1281,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odist,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_many_dft_c2r"
             )]
@@ -1301,7 +1301,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_many_dft_c2r"
             )]
@@ -1321,7 +1321,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_many_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -1353,7 +1353,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru Interface - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru_dft"
             )]
@@ -1369,7 +1369,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru_dft"
             )]
@@ -1385,7 +1385,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru_dft(
             [In] int rank,
             [In] iodim* dims,
@@ -1405,7 +1405,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_r2c"
             )]
@@ -1420,7 +1420,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_r2c"
             )]
@@ -1435,7 +1435,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru_dft_r2c(
             [In] int rank,
             [In] iodim* dims,
@@ -1453,7 +1453,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_c2r"
             )]
@@ -1468,7 +1468,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_c2r"
             )]
@@ -1483,7 +1483,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru_dft_c2r(
             [In] int rank,
             [In] iodim* dims,
@@ -1505,7 +1505,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru 64-bit Interface - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft"
             )]
@@ -1521,7 +1521,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft"
             )]
@@ -1537,7 +1537,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru64_dft(
             [In] int rank,
             [In] iodim64* dims,
@@ -1557,7 +1557,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_r2c"
             )]
@@ -1572,7 +1572,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_r2c"
             )]
@@ -1587,7 +1587,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru64_dft_r2c(
             [In] int rank,
             [In] iodim64* dims,
@@ -1605,7 +1605,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_c2r"
             )]
@@ -1620,7 +1620,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_c2r"
             )]
@@ -1635,7 +1635,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru64_dft_c2r(
             [In] int rank,
             [In] iodim64* dims,
@@ -1657,7 +1657,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Plan Execution - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute"
             )]
@@ -1666,7 +1666,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_execute_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute"
             )]
@@ -1675,13 +1675,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_execute_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftw_execute(
             [In] IntPtr plan) =>
             fftw_execute_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute_dft"
             )]
@@ -1692,7 +1692,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @in,
              double* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute_dft"
             )]
@@ -1703,7 +1703,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @in,
             [In] double* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftw_execute_dft(
             [In] IntPtr plan,
             [In] double* @in,
@@ -1713,7 +1713,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute_dft_r2c"
             )]
@@ -1724,7 +1724,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @in,
              double* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute_dft_r2c"
             )]
@@ -1735,7 +1735,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @in,
             [In] double* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftw_execute_dft_r2c(
             [In] IntPtr plan,
             [In] double* @in,
@@ -1745,7 +1745,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute_dft_c2r"
             )]
@@ -1756,7 +1756,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @in,
              double* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute_dft_c2r"
             )]
@@ -1767,7 +1767,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @in,
             [In] double* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftw_execute_dft_c2r(
             [In] IntPtr plan,
             [In] double* @in,
@@ -1781,7 +1781,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_destroy_plan"
             )]
@@ -1790,7 +1790,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_destroy_plan_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_destroy_plan"
             )]
@@ -1799,13 +1799,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_destroy_plan_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftw_destroy_plan(
             [In] IntPtr plan) =>
             fftw_destroy_plan_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_set_timelimit"
             )]
@@ -1814,7 +1814,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_set_timelimit_Import(
              double seconds);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_set_timelimit"
             )]
@@ -1823,13 +1823,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_set_timelimit_Import(
             [In] double seconds);
 
-        #endif
+#endif
         public sealed override void fftw_set_timelimit(
             [In] double seconds) =>
             fftw_set_timelimit_Import(
                 seconds);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_cleanup"
             )]
@@ -1838,7 +1838,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_cleanup_Import(
               );
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_cleanup"
             )]
@@ -1847,7 +1847,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_cleanup_Import(
               );
 
-        #endif
+#endif
         public sealed override void fftw_cleanup(
               ) =>
             fftw_cleanup_Import(
@@ -1857,7 +1857,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_1d"
             )]
@@ -1870,7 +1870,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_1d"
             )]
@@ -1883,7 +1883,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_1d(
             [In] int nx,
             [In] float* @in,
@@ -1897,7 +1897,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_2d"
             )]
@@ -1911,7 +1911,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_2d"
             )]
@@ -1925,7 +1925,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_2d(
             [In] int nx,
             [In] int ny,
@@ -1941,7 +1941,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_3d"
             )]
@@ -1956,7 +1956,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_3d"
             )]
@@ -1971,7 +1971,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_3d(
             [In] int nx,
             [In] int ny,
@@ -1989,7 +1989,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft"
             )]
@@ -2003,7 +2003,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft"
             )]
@@ -2017,7 +2017,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft(
             [In] int rank,
             [In] int* n,
@@ -2037,7 +2037,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Real to Complex - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_1d"
             )]
@@ -2049,7 +2049,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_1d"
             )]
@@ -2061,7 +2061,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c_1d(
             [In] int nx,
             [In] float* @in,
@@ -2073,7 +2073,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_2d"
             )]
@@ -2086,7 +2086,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_2d"
             )]
@@ -2099,7 +2099,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c_2d(
             [In] int nx,
             [In] int ny,
@@ -2113,7 +2113,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_3d"
             )]
@@ -2127,7 +2127,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_3d"
             )]
@@ -2141,7 +2141,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c_3d(
             [In] int nx,
             [In] int ny,
@@ -2157,7 +2157,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c"
             )]
@@ -2170,7 +2170,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c"
             )]
@@ -2183,7 +2183,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -2201,7 +2201,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex to Real - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_1d"
             )]
@@ -2213,7 +2213,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_1d"
             )]
@@ -2225,7 +2225,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r_1d(
             [In] int nx,
             [In] float* @in,
@@ -2237,7 +2237,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_2d"
             )]
@@ -2250,7 +2250,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_2d"
             )]
@@ -2263,7 +2263,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r_2d(
             [In] int nx,
             [In] int ny,
@@ -2277,7 +2277,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_3d"
             )]
@@ -2291,7 +2291,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_3d"
             )]
@@ -2305,7 +2305,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r_3d(
             [In] int nx,
             [In] int ny,
@@ -2321,7 +2321,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r"
             )]
@@ -2334,7 +2334,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r"
             )]
@@ -2347,7 +2347,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -2365,7 +2365,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Advanced Interface - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_many_dft"
             )]
@@ -2386,7 +2386,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_many_dft"
             )]
@@ -2407,7 +2407,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_many_dft(
             [In] int rank,
             [In] int* n,
@@ -2437,7 +2437,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_r2c"
             )]
@@ -2457,7 +2457,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_r2c"
             )]
@@ -2477,7 +2477,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_many_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -2505,7 +2505,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odist,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_c2r"
             )]
@@ -2525,7 +2525,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_c2r"
             )]
@@ -2545,7 +2545,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_many_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -2577,7 +2577,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru Interface - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft"
             )]
@@ -2593,7 +2593,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft"
             )]
@@ -2609,7 +2609,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru_dft(
             [In] int rank,
             [In] iodim* dims,
@@ -2629,7 +2629,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_r2c"
             )]
@@ -2644,7 +2644,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_r2c"
             )]
@@ -2659,7 +2659,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru_dft_r2c(
             [In] int rank,
             [In] iodim* dims,
@@ -2677,7 +2677,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_c2r"
             )]
@@ -2692,7 +2692,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_c2r"
             )]
@@ -2707,7 +2707,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru_dft_c2r(
             [In] int rank,
             [In] iodim* dims,
@@ -2729,7 +2729,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru 64-bit Interface - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft"
             )]
@@ -2745,7 +2745,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft"
             )]
@@ -2761,7 +2761,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru64_dft(
             [In] int rank,
             [In] iodim64* dims,
@@ -2781,7 +2781,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_r2c"
             )]
@@ -2796,7 +2796,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_r2c"
             )]
@@ -2811,7 +2811,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru64_dft_r2c(
             [In] int rank,
             [In] iodim64* dims,
@@ -2829,7 +2829,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_c2r"
             )]
@@ -2844,7 +2844,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_c2r"
             )]
@@ -2859,7 +2859,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru64_dft_c2r(
             [In] int rank,
             [In] iodim64* dims,
@@ -2881,7 +2881,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Plan Execution - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute"
             )]
@@ -2890,7 +2890,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_execute_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute"
             )]
@@ -2899,13 +2899,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_execute_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftwf_execute(
             [In] IntPtr plan) =>
             fftwf_execute_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute_dft"
             )]
@@ -2916,7 +2916,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @in,
              float* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute_dft"
             )]
@@ -2927,7 +2927,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @in,
             [In] float* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftwf_execute_dft(
             [In] IntPtr plan,
             [In] float* @in,
@@ -2937,7 +2937,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute_dft_r2c"
             )]
@@ -2948,7 +2948,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @in,
              float* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute_dft_r2c"
             )]
@@ -2959,7 +2959,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @in,
             [In] float* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftwf_execute_dft_r2c(
             [In] IntPtr plan,
             [In] float* @in,
@@ -2969,7 +2969,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute_dft_c2r"
             )]
@@ -2980,7 +2980,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @in,
              float* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute_dft_c2r"
             )]
@@ -2991,7 +2991,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @in,
             [In] float* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftwf_execute_dft_c2r(
             [In] IntPtr plan,
             [In] float* @in,
@@ -3005,7 +3005,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_destroy_plan"
             )]
@@ -3014,7 +3014,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_destroy_plan_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_destroy_plan"
             )]
@@ -3023,13 +3023,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_destroy_plan_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftwf_destroy_plan(
             [In] IntPtr plan) =>
             fftwf_destroy_plan_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_set_timelimit"
             )]
@@ -3038,7 +3038,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_set_timelimit_Import(
              double seconds);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_set_timelimit"
             )]
@@ -3047,13 +3047,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_set_timelimit_Import(
             [In] double seconds);
 
-        #endif
+#endif
         public sealed override void fftwf_set_timelimit(
             [In] double seconds) =>
             fftwf_set_timelimit_Import(
                 seconds);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_cleanup"
             )]
@@ -3062,7 +3062,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_cleanup_Import(
               );
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_cleanup"
             )]
@@ -3071,7 +3071,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_cleanup_Import(
               );
 
-        #endif
+#endif
         public sealed override void fftwf_cleanup(
               ) =>
             fftwf_cleanup_Import(
@@ -3081,7 +3081,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Unsupported
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_malloc"
             )]
@@ -3090,7 +3090,7 @@ namespace ILGPU.Runtime.Cuda.API
          IntPtr fftw_malloc_Import(
              IntPtr size);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_malloc"
             )]
@@ -3099,13 +3099,13 @@ namespace ILGPU.Runtime.Cuda.API
          IntPtr fftw_malloc_Import(
             [In] IntPtr size);
 
-        #endif
+#endif
         internal sealed override IntPtr @malloc(
             [In] IntPtr size) =>
             fftw_malloc_Import(
                 size);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_free"
             )]
@@ -3114,7 +3114,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_free_Import(
              IntPtr size);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_free"
             )]
@@ -3123,7 +3123,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_free_Import(
             [In] IntPtr size);
 
-        #endif
+#endif
         internal sealed override void @free(
             [In] IntPtr size) =>
             fftw_free_Import(
@@ -3146,7 +3146,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_1d"
             )]
@@ -3159,7 +3159,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_1d"
             )]
@@ -3172,7 +3172,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_1d(
             [In] int nx,
             [In] double* @in,
@@ -3186,7 +3186,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_2d"
             )]
@@ -3200,7 +3200,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_2d"
             )]
@@ -3214,7 +3214,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_2d(
             [In] int nx,
             [In] int ny,
@@ -3230,7 +3230,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_3d"
             )]
@@ -3245,7 +3245,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_3d"
             )]
@@ -3260,7 +3260,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_3d(
             [In] int nx,
             [In] int ny,
@@ -3278,7 +3278,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft"
             )]
@@ -3292,7 +3292,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft"
             )]
@@ -3306,7 +3306,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft(
             [In] int rank,
             [In] int* n,
@@ -3326,7 +3326,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Real to Complex - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_1d"
             )]
@@ -3338,7 +3338,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_1d"
             )]
@@ -3350,7 +3350,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c_1d(
             [In] int nx,
             [In] double* @in,
@@ -3362,7 +3362,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_2d"
             )]
@@ -3375,7 +3375,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_2d"
             )]
@@ -3388,7 +3388,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c_2d(
             [In] int nx,
             [In] int ny,
@@ -3402,7 +3402,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_3d"
             )]
@@ -3416,7 +3416,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_3d"
             )]
@@ -3430,7 +3430,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c_3d(
             [In] int nx,
             [In] int ny,
@@ -3446,7 +3446,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c"
             )]
@@ -3459,7 +3459,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c"
             )]
@@ -3472,7 +3472,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -3490,7 +3490,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex to Real - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_1d"
             )]
@@ -3502,7 +3502,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_1d"
             )]
@@ -3514,7 +3514,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r_1d(
             [In] int nx,
             [In] double* @in,
@@ -3526,7 +3526,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_2d"
             )]
@@ -3539,7 +3539,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_2d"
             )]
@@ -3552,7 +3552,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r_2d(
             [In] int nx,
             [In] int ny,
@@ -3566,7 +3566,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_3d"
             )]
@@ -3580,7 +3580,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_3d"
             )]
@@ -3594,7 +3594,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r_3d(
             [In] int nx,
             [In] int ny,
@@ -3610,7 +3610,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r"
             )]
@@ -3623,7 +3623,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r"
             )]
@@ -3636,7 +3636,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -3654,7 +3654,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Advanced Interface - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_many_dft"
             )]
@@ -3675,7 +3675,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_many_dft"
             )]
@@ -3696,7 +3696,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_many_dft(
             [In] int rank,
             [In] int* n,
@@ -3726,7 +3726,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_many_dft_r2c"
             )]
@@ -3746,7 +3746,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_many_dft_r2c"
             )]
@@ -3766,7 +3766,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_many_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -3794,7 +3794,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odist,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_many_dft_c2r"
             )]
@@ -3814,7 +3814,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_many_dft_c2r"
             )]
@@ -3834,7 +3834,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_many_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -3866,7 +3866,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru Interface - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru_dft"
             )]
@@ -3882,7 +3882,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru_dft"
             )]
@@ -3898,7 +3898,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru_dft(
             [In] int rank,
             [In] iodim* dims,
@@ -3918,7 +3918,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_r2c"
             )]
@@ -3933,7 +3933,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_r2c"
             )]
@@ -3948,7 +3948,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru_dft_r2c(
             [In] int rank,
             [In] iodim* dims,
@@ -3966,7 +3966,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_c2r"
             )]
@@ -3981,7 +3981,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_c2r"
             )]
@@ -3996,7 +3996,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru_dft_c2r(
             [In] int rank,
             [In] iodim* dims,
@@ -4018,7 +4018,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru 64-bit Interface - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft"
             )]
@@ -4034,7 +4034,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft"
             )]
@@ -4050,7 +4050,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru64_dft(
             [In] int rank,
             [In] iodim64* dims,
@@ -4070,7 +4070,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_r2c"
             )]
@@ -4085,7 +4085,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_r2c"
             )]
@@ -4100,7 +4100,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru64_dft_r2c(
             [In] int rank,
             [In] iodim64* dims,
@@ -4118,7 +4118,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_c2r"
             )]
@@ -4133,7 +4133,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_c2r"
             )]
@@ -4148,7 +4148,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru64_dft_c2r(
             [In] int rank,
             [In] iodim64* dims,
@@ -4170,7 +4170,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Plan Execution - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute"
             )]
@@ -4179,7 +4179,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_execute_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute"
             )]
@@ -4188,13 +4188,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_execute_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftw_execute(
             [In] IntPtr plan) =>
             fftw_execute_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute_dft"
             )]
@@ -4205,7 +4205,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @in,
              double* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute_dft"
             )]
@@ -4216,7 +4216,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @in,
             [In] double* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftw_execute_dft(
             [In] IntPtr plan,
             [In] double* @in,
@@ -4226,7 +4226,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute_dft_r2c"
             )]
@@ -4237,7 +4237,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @in,
              double* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute_dft_r2c"
             )]
@@ -4248,7 +4248,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @in,
             [In] double* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftw_execute_dft_r2c(
             [In] IntPtr plan,
             [In] double* @in,
@@ -4258,7 +4258,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute_dft_c2r"
             )]
@@ -4269,7 +4269,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @in,
              double* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute_dft_c2r"
             )]
@@ -4280,7 +4280,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @in,
             [In] double* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftw_execute_dft_c2r(
             [In] IntPtr plan,
             [In] double* @in,
@@ -4294,7 +4294,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_destroy_plan"
             )]
@@ -4303,7 +4303,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_destroy_plan_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_destroy_plan"
             )]
@@ -4312,13 +4312,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_destroy_plan_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftw_destroy_plan(
             [In] IntPtr plan) =>
             fftw_destroy_plan_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_set_timelimit"
             )]
@@ -4327,7 +4327,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_set_timelimit_Import(
              double seconds);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_set_timelimit"
             )]
@@ -4336,13 +4336,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_set_timelimit_Import(
             [In] double seconds);
 
-        #endif
+#endif
         public sealed override void fftw_set_timelimit(
             [In] double seconds) =>
             fftw_set_timelimit_Import(
                 seconds);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_cleanup"
             )]
@@ -4351,7 +4351,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_cleanup_Import(
               );
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_cleanup"
             )]
@@ -4360,7 +4360,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_cleanup_Import(
               );
 
-        #endif
+#endif
         public sealed override void fftw_cleanup(
               ) =>
             fftw_cleanup_Import(
@@ -4370,7 +4370,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_1d"
             )]
@@ -4383,7 +4383,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_1d"
             )]
@@ -4396,7 +4396,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_1d(
             [In] int nx,
             [In] float* @in,
@@ -4410,7 +4410,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_2d"
             )]
@@ -4424,7 +4424,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_2d"
             )]
@@ -4438,7 +4438,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_2d(
             [In] int nx,
             [In] int ny,
@@ -4454,7 +4454,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_3d"
             )]
@@ -4469,7 +4469,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_3d"
             )]
@@ -4484,7 +4484,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_3d(
             [In] int nx,
             [In] int ny,
@@ -4502,7 +4502,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft"
             )]
@@ -4516,7 +4516,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft"
             )]
@@ -4530,7 +4530,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft(
             [In] int rank,
             [In] int* n,
@@ -4550,7 +4550,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Real to Complex - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_1d"
             )]
@@ -4562,7 +4562,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_1d"
             )]
@@ -4574,7 +4574,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c_1d(
             [In] int nx,
             [In] float* @in,
@@ -4586,7 +4586,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_2d"
             )]
@@ -4599,7 +4599,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_2d"
             )]
@@ -4612,7 +4612,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c_2d(
             [In] int nx,
             [In] int ny,
@@ -4626,7 +4626,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_3d"
             )]
@@ -4640,7 +4640,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_3d"
             )]
@@ -4654,7 +4654,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c_3d(
             [In] int nx,
             [In] int ny,
@@ -4670,7 +4670,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c"
             )]
@@ -4683,7 +4683,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c"
             )]
@@ -4696,7 +4696,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -4714,7 +4714,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex to Real - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_1d"
             )]
@@ -4726,7 +4726,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_1d"
             )]
@@ -4738,7 +4738,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r_1d(
             [In] int nx,
             [In] float* @in,
@@ -4750,7 +4750,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_2d"
             )]
@@ -4763,7 +4763,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_2d"
             )]
@@ -4776,7 +4776,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r_2d(
             [In] int nx,
             [In] int ny,
@@ -4790,7 +4790,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_3d"
             )]
@@ -4804,7 +4804,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_3d"
             )]
@@ -4818,7 +4818,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r_3d(
             [In] int nx,
             [In] int ny,
@@ -4834,7 +4834,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r"
             )]
@@ -4847,7 +4847,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r"
             )]
@@ -4860,7 +4860,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -4878,7 +4878,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Advanced Interface - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_many_dft"
             )]
@@ -4899,7 +4899,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_many_dft"
             )]
@@ -4920,7 +4920,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_many_dft(
             [In] int rank,
             [In] int* n,
@@ -4950,7 +4950,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_r2c"
             )]
@@ -4970,7 +4970,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_r2c"
             )]
@@ -4990,7 +4990,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_many_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -5018,7 +5018,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odist,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_c2r"
             )]
@@ -5038,7 +5038,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_c2r"
             )]
@@ -5058,7 +5058,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_many_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -5090,7 +5090,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru Interface - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft"
             )]
@@ -5106,7 +5106,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft"
             )]
@@ -5122,7 +5122,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru_dft(
             [In] int rank,
             [In] iodim* dims,
@@ -5142,7 +5142,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_r2c"
             )]
@@ -5157,7 +5157,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_r2c"
             )]
@@ -5172,7 +5172,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru_dft_r2c(
             [In] int rank,
             [In] iodim* dims,
@@ -5190,7 +5190,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_c2r"
             )]
@@ -5205,7 +5205,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_c2r"
             )]
@@ -5220,7 +5220,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru_dft_c2r(
             [In] int rank,
             [In] iodim* dims,
@@ -5242,7 +5242,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru 64-bit Interface - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft"
             )]
@@ -5258,7 +5258,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft"
             )]
@@ -5274,7 +5274,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru64_dft(
             [In] int rank,
             [In] iodim64* dims,
@@ -5294,7 +5294,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_r2c"
             )]
@@ -5309,7 +5309,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_r2c"
             )]
@@ -5324,7 +5324,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru64_dft_r2c(
             [In] int rank,
             [In] iodim64* dims,
@@ -5342,7 +5342,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_c2r"
             )]
@@ -5357,7 +5357,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_c2r"
             )]
@@ -5372,7 +5372,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru64_dft_c2r(
             [In] int rank,
             [In] iodim64* dims,
@@ -5394,7 +5394,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Plan Execution - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute"
             )]
@@ -5403,7 +5403,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_execute_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute"
             )]
@@ -5412,13 +5412,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_execute_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftwf_execute(
             [In] IntPtr plan) =>
             fftwf_execute_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute_dft"
             )]
@@ -5429,7 +5429,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @in,
              float* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute_dft"
             )]
@@ -5440,7 +5440,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @in,
             [In] float* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftwf_execute_dft(
             [In] IntPtr plan,
             [In] float* @in,
@@ -5450,7 +5450,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute_dft_r2c"
             )]
@@ -5461,7 +5461,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @in,
              float* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute_dft_r2c"
             )]
@@ -5472,7 +5472,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @in,
             [In] float* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftwf_execute_dft_r2c(
             [In] IntPtr plan,
             [In] float* @in,
@@ -5482,7 +5482,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute_dft_c2r"
             )]
@@ -5493,7 +5493,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @in,
              float* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute_dft_c2r"
             )]
@@ -5504,7 +5504,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @in,
             [In] float* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftwf_execute_dft_c2r(
             [In] IntPtr plan,
             [In] float* @in,
@@ -5518,7 +5518,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_destroy_plan"
             )]
@@ -5527,7 +5527,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_destroy_plan_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_destroy_plan"
             )]
@@ -5536,13 +5536,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_destroy_plan_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftwf_destroy_plan(
             [In] IntPtr plan) =>
             fftwf_destroy_plan_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_set_timelimit"
             )]
@@ -5551,7 +5551,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_set_timelimit_Import(
              double seconds);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_set_timelimit"
             )]
@@ -5560,13 +5560,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_set_timelimit_Import(
             [In] double seconds);
 
-        #endif
+#endif
         public sealed override void fftwf_set_timelimit(
             [In] double seconds) =>
             fftwf_set_timelimit_Import(
                 seconds);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_cleanup"
             )]
@@ -5575,7 +5575,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_cleanup_Import(
               );
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_cleanup"
             )]
@@ -5584,7 +5584,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_cleanup_Import(
               );
 
-        #endif
+#endif
         public sealed override void fftwf_cleanup(
               ) =>
             fftwf_cleanup_Import(
@@ -5594,7 +5594,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Unsupported
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_malloc"
             )]
@@ -5603,7 +5603,7 @@ namespace ILGPU.Runtime.Cuda.API
          IntPtr fftw_malloc_Import(
              IntPtr size);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_malloc"
             )]
@@ -5612,13 +5612,13 @@ namespace ILGPU.Runtime.Cuda.API
          IntPtr fftw_malloc_Import(
             [In] IntPtr size);
 
-        #endif
+#endif
         internal sealed override IntPtr @malloc(
             [In] IntPtr size) =>
             fftw_malloc_Import(
                 size);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_free"
             )]
@@ -5627,7 +5627,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_free_Import(
              IntPtr size);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_free"
             )]
@@ -5636,7 +5636,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_free_Import(
             [In] IntPtr size);
 
-        #endif
+#endif
         internal sealed override void @free(
             [In] IntPtr size) =>
             fftw_free_Import(
@@ -5659,7 +5659,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_1d"
             )]
@@ -5672,7 +5672,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_1d"
             )]
@@ -5685,7 +5685,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_1d(
             [In] int nx,
             [In] double* @in,
@@ -5699,7 +5699,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_2d"
             )]
@@ -5713,7 +5713,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_2d"
             )]
@@ -5727,7 +5727,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_2d(
             [In] int nx,
             [In] int ny,
@@ -5743,7 +5743,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_3d"
             )]
@@ -5758,7 +5758,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_3d"
             )]
@@ -5773,7 +5773,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_3d(
             [In] int nx,
             [In] int ny,
@@ -5791,7 +5791,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft"
             )]
@@ -5805,7 +5805,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft"
             )]
@@ -5819,7 +5819,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft(
             [In] int rank,
             [In] int* n,
@@ -5839,7 +5839,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Real to Complex - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_1d"
             )]
@@ -5851,7 +5851,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_1d"
             )]
@@ -5863,7 +5863,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c_1d(
             [In] int nx,
             [In] double* @in,
@@ -5875,7 +5875,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_2d"
             )]
@@ -5888,7 +5888,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_2d"
             )]
@@ -5901,7 +5901,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c_2d(
             [In] int nx,
             [In] int ny,
@@ -5915,7 +5915,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_3d"
             )]
@@ -5929,7 +5929,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_3d"
             )]
@@ -5943,7 +5943,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c_3d(
             [In] int nx,
             [In] int ny,
@@ -5959,7 +5959,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c"
             )]
@@ -5972,7 +5972,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c"
             )]
@@ -5985,7 +5985,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -6003,7 +6003,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex to Real - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_1d"
             )]
@@ -6015,7 +6015,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_1d"
             )]
@@ -6027,7 +6027,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r_1d(
             [In] int nx,
             [In] double* @in,
@@ -6039,7 +6039,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_2d"
             )]
@@ -6052,7 +6052,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_2d"
             )]
@@ -6065,7 +6065,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r_2d(
             [In] int nx,
             [In] int ny,
@@ -6079,7 +6079,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_3d"
             )]
@@ -6093,7 +6093,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_3d"
             )]
@@ -6107,7 +6107,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r_3d(
             [In] int nx,
             [In] int ny,
@@ -6123,7 +6123,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r"
             )]
@@ -6136,7 +6136,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r"
             )]
@@ -6149,7 +6149,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -6167,7 +6167,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Advanced Interface - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_many_dft"
             )]
@@ -6188,7 +6188,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_many_dft"
             )]
@@ -6209,7 +6209,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_many_dft(
             [In] int rank,
             [In] int* n,
@@ -6239,7 +6239,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_many_dft_r2c"
             )]
@@ -6259,7 +6259,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_many_dft_r2c"
             )]
@@ -6279,7 +6279,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_many_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -6307,7 +6307,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odist,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_many_dft_c2r"
             )]
@@ -6327,7 +6327,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_many_dft_c2r"
             )]
@@ -6347,7 +6347,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_many_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -6379,7 +6379,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru Interface - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru_dft"
             )]
@@ -6395,7 +6395,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru_dft"
             )]
@@ -6411,7 +6411,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru_dft(
             [In] int rank,
             [In] iodim* dims,
@@ -6431,7 +6431,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_r2c"
             )]
@@ -6446,7 +6446,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_r2c"
             )]
@@ -6461,7 +6461,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru_dft_r2c(
             [In] int rank,
             [In] iodim* dims,
@@ -6479,7 +6479,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_c2r"
             )]
@@ -6494,7 +6494,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_c2r"
             )]
@@ -6509,7 +6509,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru_dft_c2r(
             [In] int rank,
             [In] iodim* dims,
@@ -6531,7 +6531,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru 64-bit Interface - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft"
             )]
@@ -6547,7 +6547,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft"
             )]
@@ -6563,7 +6563,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru64_dft(
             [In] int rank,
             [In] iodim64* dims,
@@ -6583,7 +6583,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_r2c"
             )]
@@ -6598,7 +6598,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_r2c"
             )]
@@ -6613,7 +6613,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru64_dft_r2c(
             [In] int rank,
             [In] iodim64* dims,
@@ -6631,7 +6631,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_c2r"
             )]
@@ -6646,7 +6646,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_c2r"
             )]
@@ -6661,7 +6661,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru64_dft_c2r(
             [In] int rank,
             [In] iodim64* dims,
@@ -6683,7 +6683,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Plan Execution - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute"
             )]
@@ -6692,7 +6692,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_execute_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute"
             )]
@@ -6701,13 +6701,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_execute_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftw_execute(
             [In] IntPtr plan) =>
             fftw_execute_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute_dft"
             )]
@@ -6718,7 +6718,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @in,
              double* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute_dft"
             )]
@@ -6729,7 +6729,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @in,
             [In] double* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftw_execute_dft(
             [In] IntPtr plan,
             [In] double* @in,
@@ -6739,7 +6739,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute_dft_r2c"
             )]
@@ -6750,7 +6750,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @in,
              double* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute_dft_r2c"
             )]
@@ -6761,7 +6761,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @in,
             [In] double* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftw_execute_dft_r2c(
             [In] IntPtr plan,
             [In] double* @in,
@@ -6771,7 +6771,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute_dft_c2r"
             )]
@@ -6782,7 +6782,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @in,
              double* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute_dft_c2r"
             )]
@@ -6793,7 +6793,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @in,
             [In] double* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftw_execute_dft_c2r(
             [In] IntPtr plan,
             [In] double* @in,
@@ -6807,7 +6807,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_destroy_plan"
             )]
@@ -6816,7 +6816,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_destroy_plan_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_destroy_plan"
             )]
@@ -6825,13 +6825,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_destroy_plan_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftw_destroy_plan(
             [In] IntPtr plan) =>
             fftw_destroy_plan_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_set_timelimit"
             )]
@@ -6840,7 +6840,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_set_timelimit_Import(
              double seconds);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_set_timelimit"
             )]
@@ -6849,13 +6849,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_set_timelimit_Import(
             [In] double seconds);
 
-        #endif
+#endif
         public sealed override void fftw_set_timelimit(
             [In] double seconds) =>
             fftw_set_timelimit_Import(
                 seconds);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_cleanup"
             )]
@@ -6864,7 +6864,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_cleanup_Import(
               );
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_cleanup"
             )]
@@ -6873,7 +6873,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_cleanup_Import(
               );
 
-        #endif
+#endif
         public sealed override void fftw_cleanup(
               ) =>
             fftw_cleanup_Import(
@@ -6883,7 +6883,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_1d"
             )]
@@ -6896,7 +6896,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_1d"
             )]
@@ -6909,7 +6909,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_1d(
             [In] int nx,
             [In] float* @in,
@@ -6923,7 +6923,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_2d"
             )]
@@ -6937,7 +6937,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_2d"
             )]
@@ -6951,7 +6951,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_2d(
             [In] int nx,
             [In] int ny,
@@ -6967,7 +6967,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_3d"
             )]
@@ -6982,7 +6982,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_3d"
             )]
@@ -6997,7 +6997,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_3d(
             [In] int nx,
             [In] int ny,
@@ -7015,7 +7015,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft"
             )]
@@ -7029,7 +7029,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft"
             )]
@@ -7043,7 +7043,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft(
             [In] int rank,
             [In] int* n,
@@ -7063,7 +7063,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Real to Complex - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_1d"
             )]
@@ -7075,7 +7075,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_1d"
             )]
@@ -7087,7 +7087,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c_1d(
             [In] int nx,
             [In] float* @in,
@@ -7099,7 +7099,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_2d"
             )]
@@ -7112,7 +7112,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_2d"
             )]
@@ -7125,7 +7125,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c_2d(
             [In] int nx,
             [In] int ny,
@@ -7139,7 +7139,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_3d"
             )]
@@ -7153,7 +7153,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_3d"
             )]
@@ -7167,7 +7167,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c_3d(
             [In] int nx,
             [In] int ny,
@@ -7183,7 +7183,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c"
             )]
@@ -7196,7 +7196,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c"
             )]
@@ -7209,7 +7209,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -7227,7 +7227,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex to Real - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_1d"
             )]
@@ -7239,7 +7239,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_1d"
             )]
@@ -7251,7 +7251,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r_1d(
             [In] int nx,
             [In] float* @in,
@@ -7263,7 +7263,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_2d"
             )]
@@ -7276,7 +7276,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_2d"
             )]
@@ -7289,7 +7289,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r_2d(
             [In] int nx,
             [In] int ny,
@@ -7303,7 +7303,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_3d"
             )]
@@ -7317,7 +7317,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_3d"
             )]
@@ -7331,7 +7331,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r_3d(
             [In] int nx,
             [In] int ny,
@@ -7347,7 +7347,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r"
             )]
@@ -7360,7 +7360,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r"
             )]
@@ -7373,7 +7373,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -7391,7 +7391,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Advanced Interface - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_many_dft"
             )]
@@ -7412,7 +7412,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_many_dft"
             )]
@@ -7433,7 +7433,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_many_dft(
             [In] int rank,
             [In] int* n,
@@ -7463,7 +7463,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_r2c"
             )]
@@ -7483,7 +7483,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_r2c"
             )]
@@ -7503,7 +7503,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_many_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -7531,7 +7531,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odist,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_c2r"
             )]
@@ -7551,7 +7551,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_c2r"
             )]
@@ -7571,7 +7571,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_many_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -7603,7 +7603,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru Interface - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft"
             )]
@@ -7619,7 +7619,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft"
             )]
@@ -7635,7 +7635,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru_dft(
             [In] int rank,
             [In] iodim* dims,
@@ -7655,7 +7655,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_r2c"
             )]
@@ -7670,7 +7670,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_r2c"
             )]
@@ -7685,7 +7685,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru_dft_r2c(
             [In] int rank,
             [In] iodim* dims,
@@ -7703,7 +7703,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_c2r"
             )]
@@ -7718,7 +7718,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_c2r"
             )]
@@ -7733,7 +7733,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru_dft_c2r(
             [In] int rank,
             [In] iodim* dims,
@@ -7755,7 +7755,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru 64-bit Interface - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft"
             )]
@@ -7771,7 +7771,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft"
             )]
@@ -7787,7 +7787,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru64_dft(
             [In] int rank,
             [In] iodim64* dims,
@@ -7807,7 +7807,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_r2c"
             )]
@@ -7822,7 +7822,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_r2c"
             )]
@@ -7837,7 +7837,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru64_dft_r2c(
             [In] int rank,
             [In] iodim64* dims,
@@ -7855,7 +7855,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_c2r"
             )]
@@ -7870,7 +7870,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_c2r"
             )]
@@ -7885,7 +7885,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru64_dft_c2r(
             [In] int rank,
             [In] iodim64* dims,
@@ -7907,7 +7907,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Plan Execution - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute"
             )]
@@ -7916,7 +7916,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_execute_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute"
             )]
@@ -7925,13 +7925,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_execute_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftwf_execute(
             [In] IntPtr plan) =>
             fftwf_execute_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute_dft"
             )]
@@ -7942,7 +7942,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @in,
              float* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute_dft"
             )]
@@ -7953,7 +7953,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @in,
             [In] float* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftwf_execute_dft(
             [In] IntPtr plan,
             [In] float* @in,
@@ -7963,7 +7963,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute_dft_r2c"
             )]
@@ -7974,7 +7974,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @in,
              float* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute_dft_r2c"
             )]
@@ -7985,7 +7985,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @in,
             [In] float* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftwf_execute_dft_r2c(
             [In] IntPtr plan,
             [In] float* @in,
@@ -7995,7 +7995,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute_dft_c2r"
             )]
@@ -8006,7 +8006,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @in,
              float* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute_dft_c2r"
             )]
@@ -8017,7 +8017,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @in,
             [In] float* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftwf_execute_dft_c2r(
             [In] IntPtr plan,
             [In] float* @in,
@@ -8031,7 +8031,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_destroy_plan"
             )]
@@ -8040,7 +8040,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_destroy_plan_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_destroy_plan"
             )]
@@ -8049,13 +8049,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_destroy_plan_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftwf_destroy_plan(
             [In] IntPtr plan) =>
             fftwf_destroy_plan_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_set_timelimit"
             )]
@@ -8064,7 +8064,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_set_timelimit_Import(
              double seconds);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_set_timelimit"
             )]
@@ -8073,13 +8073,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_set_timelimit_Import(
             [In] double seconds);
 
-        #endif
+#endif
         public sealed override void fftwf_set_timelimit(
             [In] double seconds) =>
             fftwf_set_timelimit_Import(
                 seconds);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_cleanup"
             )]
@@ -8088,7 +8088,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_cleanup_Import(
               );
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_cleanup"
             )]
@@ -8097,7 +8097,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_cleanup_Import(
               );
 
-        #endif
+#endif
         public sealed override void fftwf_cleanup(
               ) =>
             fftwf_cleanup_Import(
@@ -8107,7 +8107,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Unsupported
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_malloc"
             )]
@@ -8116,7 +8116,7 @@ namespace ILGPU.Runtime.Cuda.API
          IntPtr fftw_malloc_Import(
              IntPtr size);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_malloc"
             )]
@@ -8125,13 +8125,13 @@ namespace ILGPU.Runtime.Cuda.API
          IntPtr fftw_malloc_Import(
             [In] IntPtr size);
 
-        #endif
+#endif
         internal sealed override IntPtr @malloc(
             [In] IntPtr size) =>
             fftw_malloc_Import(
                 size);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_free"
             )]
@@ -8140,7 +8140,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_free_Import(
              IntPtr size);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_free"
             )]
@@ -8149,7 +8149,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_free_Import(
             [In] IntPtr size);
 
-        #endif
+#endif
         internal sealed override void @free(
             [In] IntPtr size) =>
             fftw_free_Import(
@@ -8172,7 +8172,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_1d"
             )]
@@ -8185,7 +8185,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_1d"
             )]
@@ -8198,7 +8198,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_1d(
             [In] int nx,
             [In] double* @in,
@@ -8212,7 +8212,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_2d"
             )]
@@ -8226,7 +8226,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_2d"
             )]
@@ -8240,7 +8240,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_2d(
             [In] int nx,
             [In] int ny,
@@ -8256,7 +8256,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_3d"
             )]
@@ -8271,7 +8271,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_3d"
             )]
@@ -8286,7 +8286,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_3d(
             [In] int nx,
             [In] int ny,
@@ -8304,7 +8304,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft"
             )]
@@ -8318,7 +8318,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft"
             )]
@@ -8332,7 +8332,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft(
             [In] int rank,
             [In] int* n,
@@ -8352,7 +8352,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Real to Complex - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_1d"
             )]
@@ -8364,7 +8364,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_1d"
             )]
@@ -8376,7 +8376,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c_1d(
             [In] int nx,
             [In] double* @in,
@@ -8388,7 +8388,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_2d"
             )]
@@ -8401,7 +8401,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_2d"
             )]
@@ -8414,7 +8414,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c_2d(
             [In] int nx,
             [In] int ny,
@@ -8428,7 +8428,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_3d"
             )]
@@ -8442,7 +8442,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_3d"
             )]
@@ -8456,7 +8456,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c_3d(
             [In] int nx,
             [In] int ny,
@@ -8472,7 +8472,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c"
             )]
@@ -8485,7 +8485,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c"
             )]
@@ -8498,7 +8498,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -8516,7 +8516,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex to Real - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_1d"
             )]
@@ -8528,7 +8528,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_1d"
             )]
@@ -8540,7 +8540,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r_1d(
             [In] int nx,
             [In] double* @in,
@@ -8552,7 +8552,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_2d"
             )]
@@ -8565,7 +8565,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_2d"
             )]
@@ -8578,7 +8578,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r_2d(
             [In] int nx,
             [In] int ny,
@@ -8592,7 +8592,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_3d"
             )]
@@ -8606,7 +8606,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_3d"
             )]
@@ -8620,7 +8620,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r_3d(
             [In] int nx,
             [In] int ny,
@@ -8636,7 +8636,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r"
             )]
@@ -8649,7 +8649,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r"
             )]
@@ -8662,7 +8662,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -8680,7 +8680,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Advanced Interface - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_many_dft"
             )]
@@ -8701,7 +8701,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_many_dft"
             )]
@@ -8722,7 +8722,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_many_dft(
             [In] int rank,
             [In] int* n,
@@ -8752,7 +8752,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_many_dft_r2c"
             )]
@@ -8772,7 +8772,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_many_dft_r2c"
             )]
@@ -8792,7 +8792,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_many_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -8820,7 +8820,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odist,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_many_dft_c2r"
             )]
@@ -8840,7 +8840,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_many_dft_c2r"
             )]
@@ -8860,7 +8860,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_many_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -8892,7 +8892,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru Interface - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru_dft"
             )]
@@ -8908,7 +8908,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru_dft"
             )]
@@ -8924,7 +8924,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru_dft(
             [In] int rank,
             [In] iodim* dims,
@@ -8944,7 +8944,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_r2c"
             )]
@@ -8959,7 +8959,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_r2c"
             )]
@@ -8974,7 +8974,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru_dft_r2c(
             [In] int rank,
             [In] iodim* dims,
@@ -8992,7 +8992,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_c2r"
             )]
@@ -9007,7 +9007,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_c2r"
             )]
@@ -9022,7 +9022,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru_dft_c2r(
             [In] int rank,
             [In] iodim* dims,
@@ -9044,7 +9044,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru 64-bit Interface - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft"
             )]
@@ -9060,7 +9060,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft"
             )]
@@ -9076,7 +9076,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru64_dft(
             [In] int rank,
             [In] iodim64* dims,
@@ -9096,7 +9096,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_r2c"
             )]
@@ -9111,7 +9111,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_r2c"
             )]
@@ -9126,7 +9126,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru64_dft_r2c(
             [In] int rank,
             [In] iodim64* dims,
@@ -9144,7 +9144,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_c2r"
             )]
@@ -9159,7 +9159,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_c2r"
             )]
@@ -9174,7 +9174,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru64_dft_c2r(
             [In] int rank,
             [In] iodim64* dims,
@@ -9196,7 +9196,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Plan Execution - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute"
             )]
@@ -9205,7 +9205,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_execute_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute"
             )]
@@ -9214,13 +9214,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_execute_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftw_execute(
             [In] IntPtr plan) =>
             fftw_execute_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute_dft"
             )]
@@ -9231,7 +9231,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @in,
              double* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute_dft"
             )]
@@ -9242,7 +9242,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @in,
             [In] double* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftw_execute_dft(
             [In] IntPtr plan,
             [In] double* @in,
@@ -9252,7 +9252,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute_dft_r2c"
             )]
@@ -9263,7 +9263,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @in,
              double* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute_dft_r2c"
             )]
@@ -9274,7 +9274,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @in,
             [In] double* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftw_execute_dft_r2c(
             [In] IntPtr plan,
             [In] double* @in,
@@ -9284,7 +9284,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute_dft_c2r"
             )]
@@ -9295,7 +9295,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @in,
              double* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute_dft_c2r"
             )]
@@ -9306,7 +9306,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @in,
             [In] double* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftw_execute_dft_c2r(
             [In] IntPtr plan,
             [In] double* @in,
@@ -9320,7 +9320,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_destroy_plan"
             )]
@@ -9329,7 +9329,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_destroy_plan_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_destroy_plan"
             )]
@@ -9338,13 +9338,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_destroy_plan_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftw_destroy_plan(
             [In] IntPtr plan) =>
             fftw_destroy_plan_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_set_timelimit"
             )]
@@ -9353,7 +9353,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_set_timelimit_Import(
              double seconds);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_set_timelimit"
             )]
@@ -9362,13 +9362,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_set_timelimit_Import(
             [In] double seconds);
 
-        #endif
+#endif
         public sealed override void fftw_set_timelimit(
             [In] double seconds) =>
             fftw_set_timelimit_Import(
                 seconds);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_cleanup"
             )]
@@ -9377,7 +9377,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_cleanup_Import(
               );
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_cleanup"
             )]
@@ -9386,7 +9386,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_cleanup_Import(
               );
 
-        #endif
+#endif
         public sealed override void fftw_cleanup(
               ) =>
             fftw_cleanup_Import(
@@ -9396,7 +9396,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_1d"
             )]
@@ -9409,7 +9409,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_1d"
             )]
@@ -9422,7 +9422,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_1d(
             [In] int nx,
             [In] float* @in,
@@ -9436,7 +9436,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_2d"
             )]
@@ -9450,7 +9450,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_2d"
             )]
@@ -9464,7 +9464,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_2d(
             [In] int nx,
             [In] int ny,
@@ -9480,7 +9480,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_3d"
             )]
@@ -9495,7 +9495,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_3d"
             )]
@@ -9510,7 +9510,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_3d(
             [In] int nx,
             [In] int ny,
@@ -9528,7 +9528,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft"
             )]
@@ -9542,7 +9542,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft"
             )]
@@ -9556,7 +9556,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft(
             [In] int rank,
             [In] int* n,
@@ -9576,7 +9576,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Real to Complex - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_1d"
             )]
@@ -9588,7 +9588,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_1d"
             )]
@@ -9600,7 +9600,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c_1d(
             [In] int nx,
             [In] float* @in,
@@ -9612,7 +9612,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_2d"
             )]
@@ -9625,7 +9625,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_2d"
             )]
@@ -9638,7 +9638,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c_2d(
             [In] int nx,
             [In] int ny,
@@ -9652,7 +9652,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_3d"
             )]
@@ -9666,7 +9666,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_3d"
             )]
@@ -9680,7 +9680,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c_3d(
             [In] int nx,
             [In] int ny,
@@ -9696,7 +9696,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c"
             )]
@@ -9709,7 +9709,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c"
             )]
@@ -9722,7 +9722,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -9740,7 +9740,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex to Real - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_1d"
             )]
@@ -9752,7 +9752,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_1d"
             )]
@@ -9764,7 +9764,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r_1d(
             [In] int nx,
             [In] float* @in,
@@ -9776,7 +9776,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_2d"
             )]
@@ -9789,7 +9789,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_2d"
             )]
@@ -9802,7 +9802,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r_2d(
             [In] int nx,
             [In] int ny,
@@ -9816,7 +9816,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_3d"
             )]
@@ -9830,7 +9830,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_3d"
             )]
@@ -9844,7 +9844,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r_3d(
             [In] int nx,
             [In] int ny,
@@ -9860,7 +9860,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r"
             )]
@@ -9873,7 +9873,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r"
             )]
@@ -9886,7 +9886,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -9904,7 +9904,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Advanced Interface - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_many_dft"
             )]
@@ -9925,7 +9925,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_many_dft"
             )]
@@ -9946,7 +9946,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_many_dft(
             [In] int rank,
             [In] int* n,
@@ -9976,7 +9976,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_r2c"
             )]
@@ -9996,7 +9996,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_r2c"
             )]
@@ -10016,7 +10016,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_many_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -10044,7 +10044,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odist,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_c2r"
             )]
@@ -10064,7 +10064,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_c2r"
             )]
@@ -10084,7 +10084,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_many_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -10116,7 +10116,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru Interface - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft"
             )]
@@ -10132,7 +10132,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft"
             )]
@@ -10148,7 +10148,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru_dft(
             [In] int rank,
             [In] iodim* dims,
@@ -10168,7 +10168,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_r2c"
             )]
@@ -10183,7 +10183,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_r2c"
             )]
@@ -10198,7 +10198,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru_dft_r2c(
             [In] int rank,
             [In] iodim* dims,
@@ -10216,7 +10216,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_c2r"
             )]
@@ -10231,7 +10231,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_c2r"
             )]
@@ -10246,7 +10246,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru_dft_c2r(
             [In] int rank,
             [In] iodim* dims,
@@ -10268,7 +10268,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru 64-bit Interface - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft"
             )]
@@ -10284,7 +10284,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft"
             )]
@@ -10300,7 +10300,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru64_dft(
             [In] int rank,
             [In] iodim64* dims,
@@ -10320,7 +10320,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_r2c"
             )]
@@ -10335,7 +10335,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_r2c"
             )]
@@ -10350,7 +10350,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru64_dft_r2c(
             [In] int rank,
             [In] iodim64* dims,
@@ -10368,7 +10368,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_c2r"
             )]
@@ -10383,7 +10383,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_c2r"
             )]
@@ -10398,7 +10398,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru64_dft_c2r(
             [In] int rank,
             [In] iodim64* dims,
@@ -10420,7 +10420,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Plan Execution - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute"
             )]
@@ -10429,7 +10429,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_execute_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute"
             )]
@@ -10438,13 +10438,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_execute_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftwf_execute(
             [In] IntPtr plan) =>
             fftwf_execute_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute_dft"
             )]
@@ -10455,7 +10455,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @in,
              float* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute_dft"
             )]
@@ -10466,7 +10466,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @in,
             [In] float* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftwf_execute_dft(
             [In] IntPtr plan,
             [In] float* @in,
@@ -10476,7 +10476,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute_dft_r2c"
             )]
@@ -10487,7 +10487,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @in,
              float* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute_dft_r2c"
             )]
@@ -10498,7 +10498,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @in,
             [In] float* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftwf_execute_dft_r2c(
             [In] IntPtr plan,
             [In] float* @in,
@@ -10508,7 +10508,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute_dft_c2r"
             )]
@@ -10519,7 +10519,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @in,
              float* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute_dft_c2r"
             )]
@@ -10530,7 +10530,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @in,
             [In] float* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftwf_execute_dft_c2r(
             [In] IntPtr plan,
             [In] float* @in,
@@ -10544,7 +10544,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_destroy_plan"
             )]
@@ -10553,7 +10553,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_destroy_plan_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_destroy_plan"
             )]
@@ -10562,13 +10562,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_destroy_plan_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftwf_destroy_plan(
             [In] IntPtr plan) =>
             fftwf_destroy_plan_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_set_timelimit"
             )]
@@ -10577,7 +10577,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_set_timelimit_Import(
              double seconds);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_set_timelimit"
             )]
@@ -10586,13 +10586,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_set_timelimit_Import(
             [In] double seconds);
 
-        #endif
+#endif
         public sealed override void fftwf_set_timelimit(
             [In] double seconds) =>
             fftwf_set_timelimit_Import(
                 seconds);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_cleanup"
             )]
@@ -10601,7 +10601,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_cleanup_Import(
               );
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_cleanup"
             )]
@@ -10610,7 +10610,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_cleanup_Import(
               );
 
-        #endif
+#endif
         public sealed override void fftwf_cleanup(
               ) =>
             fftwf_cleanup_Import(
@@ -10620,7 +10620,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Unsupported
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_malloc"
             )]
@@ -10629,7 +10629,7 @@ namespace ILGPU.Runtime.Cuda.API
          IntPtr fftw_malloc_Import(
              IntPtr size);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_malloc"
             )]
@@ -10638,13 +10638,13 @@ namespace ILGPU.Runtime.Cuda.API
          IntPtr fftw_malloc_Import(
             [In] IntPtr size);
 
-        #endif
+#endif
         internal sealed override IntPtr @malloc(
             [In] IntPtr size) =>
             fftw_malloc_Import(
                 size);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_free"
             )]
@@ -10653,7 +10653,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_free_Import(
              IntPtr size);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_free"
             )]
@@ -10662,7 +10662,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_free_Import(
             [In] IntPtr size);
 
-        #endif
+#endif
         internal sealed override void @free(
             [In] IntPtr size) =>
             fftw_free_Import(
@@ -10685,7 +10685,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_1d"
             )]
@@ -10698,7 +10698,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_1d"
             )]
@@ -10711,7 +10711,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_1d(
             [In] int nx,
             [In] double* @in,
@@ -10725,7 +10725,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_2d"
             )]
@@ -10739,7 +10739,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_2d"
             )]
@@ -10753,7 +10753,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_2d(
             [In] int nx,
             [In] int ny,
@@ -10769,7 +10769,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_3d"
             )]
@@ -10784,7 +10784,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_3d"
             )]
@@ -10799,7 +10799,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_3d(
             [In] int nx,
             [In] int ny,
@@ -10817,7 +10817,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft"
             )]
@@ -10831,7 +10831,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft"
             )]
@@ -10845,7 +10845,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft(
             [In] int rank,
             [In] int* n,
@@ -10865,7 +10865,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Real to Complex - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_1d"
             )]
@@ -10877,7 +10877,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_1d"
             )]
@@ -10889,7 +10889,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c_1d(
             [In] int nx,
             [In] double* @in,
@@ -10901,7 +10901,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_2d"
             )]
@@ -10914,7 +10914,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_2d"
             )]
@@ -10927,7 +10927,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c_2d(
             [In] int nx,
             [In] int ny,
@@ -10941,7 +10941,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_3d"
             )]
@@ -10955,7 +10955,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_3d"
             )]
@@ -10969,7 +10969,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c_3d(
             [In] int nx,
             [In] int ny,
@@ -10985,7 +10985,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c"
             )]
@@ -10998,7 +10998,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c"
             )]
@@ -11011,7 +11011,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -11029,7 +11029,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex to Real - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_1d"
             )]
@@ -11041,7 +11041,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_1d"
             )]
@@ -11053,7 +11053,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r_1d(
             [In] int nx,
             [In] double* @in,
@@ -11065,7 +11065,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_2d"
             )]
@@ -11078,7 +11078,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_2d"
             )]
@@ -11091,7 +11091,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r_2d(
             [In] int nx,
             [In] int ny,
@@ -11105,7 +11105,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_3d"
             )]
@@ -11119,7 +11119,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_3d"
             )]
@@ -11133,7 +11133,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r_3d(
             [In] int nx,
             [In] int ny,
@@ -11149,7 +11149,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r"
             )]
@@ -11162,7 +11162,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r"
             )]
@@ -11175,7 +11175,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -11193,7 +11193,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Advanced Interface - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_many_dft"
             )]
@@ -11214,7 +11214,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_many_dft"
             )]
@@ -11235,7 +11235,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_many_dft(
             [In] int rank,
             [In] int* n,
@@ -11265,7 +11265,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_many_dft_r2c"
             )]
@@ -11285,7 +11285,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_many_dft_r2c"
             )]
@@ -11305,7 +11305,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_many_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -11333,7 +11333,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odist,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_many_dft_c2r"
             )]
@@ -11353,7 +11353,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_many_dft_c2r"
             )]
@@ -11373,7 +11373,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_many_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -11405,7 +11405,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru Interface - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru_dft"
             )]
@@ -11421,7 +11421,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru_dft"
             )]
@@ -11437,7 +11437,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru_dft(
             [In] int rank,
             [In] iodim* dims,
@@ -11457,7 +11457,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_r2c"
             )]
@@ -11472,7 +11472,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_r2c"
             )]
@@ -11487,7 +11487,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru_dft_r2c(
             [In] int rank,
             [In] iodim* dims,
@@ -11505,7 +11505,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_c2r"
             )]
@@ -11520,7 +11520,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_c2r"
             )]
@@ -11535,7 +11535,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru_dft_c2r(
             [In] int rank,
             [In] iodim* dims,
@@ -11557,7 +11557,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru 64-bit Interface - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft"
             )]
@@ -11573,7 +11573,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft"
             )]
@@ -11589,7 +11589,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru64_dft(
             [In] int rank,
             [In] iodim64* dims,
@@ -11609,7 +11609,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_r2c"
             )]
@@ -11624,7 +11624,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_r2c"
             )]
@@ -11639,7 +11639,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru64_dft_r2c(
             [In] int rank,
             [In] iodim64* dims,
@@ -11657,7 +11657,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_c2r"
             )]
@@ -11672,7 +11672,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_c2r"
             )]
@@ -11687,7 +11687,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru64_dft_c2r(
             [In] int rank,
             [In] iodim64* dims,
@@ -11709,7 +11709,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Plan Execution - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute"
             )]
@@ -11718,7 +11718,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_execute_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute"
             )]
@@ -11727,13 +11727,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_execute_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftw_execute(
             [In] IntPtr plan) =>
             fftw_execute_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute_dft"
             )]
@@ -11744,7 +11744,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @in,
              double* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute_dft"
             )]
@@ -11755,7 +11755,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @in,
             [In] double* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftw_execute_dft(
             [In] IntPtr plan,
             [In] double* @in,
@@ -11765,7 +11765,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute_dft_r2c"
             )]
@@ -11776,7 +11776,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @in,
              double* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute_dft_r2c"
             )]
@@ -11787,7 +11787,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @in,
             [In] double* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftw_execute_dft_r2c(
             [In] IntPtr plan,
             [In] double* @in,
@@ -11797,7 +11797,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute_dft_c2r"
             )]
@@ -11808,7 +11808,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @in,
              double* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute_dft_c2r"
             )]
@@ -11819,7 +11819,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @in,
             [In] double* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftw_execute_dft_c2r(
             [In] IntPtr plan,
             [In] double* @in,
@@ -11833,7 +11833,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_destroy_plan"
             )]
@@ -11842,7 +11842,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_destroy_plan_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_destroy_plan"
             )]
@@ -11851,13 +11851,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_destroy_plan_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftw_destroy_plan(
             [In] IntPtr plan) =>
             fftw_destroy_plan_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_set_timelimit"
             )]
@@ -11866,7 +11866,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_set_timelimit_Import(
              double seconds);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_set_timelimit"
             )]
@@ -11875,13 +11875,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_set_timelimit_Import(
             [In] double seconds);
 
-        #endif
+#endif
         public sealed override void fftw_set_timelimit(
             [In] double seconds) =>
             fftw_set_timelimit_Import(
                 seconds);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_cleanup"
             )]
@@ -11890,7 +11890,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_cleanup_Import(
               );
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_cleanup"
             )]
@@ -11899,7 +11899,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_cleanup_Import(
               );
 
-        #endif
+#endif
         public sealed override void fftw_cleanup(
               ) =>
             fftw_cleanup_Import(
@@ -11909,7 +11909,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_1d"
             )]
@@ -11922,7 +11922,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_1d"
             )]
@@ -11935,7 +11935,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_1d(
             [In] int nx,
             [In] float* @in,
@@ -11949,7 +11949,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_2d"
             )]
@@ -11963,7 +11963,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_2d"
             )]
@@ -11977,7 +11977,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_2d(
             [In] int nx,
             [In] int ny,
@@ -11993,7 +11993,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_3d"
             )]
@@ -12008,7 +12008,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_3d"
             )]
@@ -12023,7 +12023,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_3d(
             [In] int nx,
             [In] int ny,
@@ -12041,7 +12041,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft"
             )]
@@ -12055,7 +12055,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft"
             )]
@@ -12069,7 +12069,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft(
             [In] int rank,
             [In] int* n,
@@ -12089,7 +12089,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Real to Complex - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_1d"
             )]
@@ -12101,7 +12101,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_1d"
             )]
@@ -12113,7 +12113,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c_1d(
             [In] int nx,
             [In] float* @in,
@@ -12125,7 +12125,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_2d"
             )]
@@ -12138,7 +12138,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_2d"
             )]
@@ -12151,7 +12151,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c_2d(
             [In] int nx,
             [In] int ny,
@@ -12165,7 +12165,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_3d"
             )]
@@ -12179,7 +12179,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_3d"
             )]
@@ -12193,7 +12193,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c_3d(
             [In] int nx,
             [In] int ny,
@@ -12209,7 +12209,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c"
             )]
@@ -12222,7 +12222,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c"
             )]
@@ -12235,7 +12235,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -12253,7 +12253,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex to Real - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_1d"
             )]
@@ -12265,7 +12265,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_1d"
             )]
@@ -12277,7 +12277,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r_1d(
             [In] int nx,
             [In] float* @in,
@@ -12289,7 +12289,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_2d"
             )]
@@ -12302,7 +12302,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_2d"
             )]
@@ -12315,7 +12315,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r_2d(
             [In] int nx,
             [In] int ny,
@@ -12329,7 +12329,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_3d"
             )]
@@ -12343,7 +12343,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_3d"
             )]
@@ -12357,7 +12357,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r_3d(
             [In] int nx,
             [In] int ny,
@@ -12373,7 +12373,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r"
             )]
@@ -12386,7 +12386,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r"
             )]
@@ -12399,7 +12399,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -12417,7 +12417,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Advanced Interface - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_many_dft"
             )]
@@ -12438,7 +12438,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_many_dft"
             )]
@@ -12459,7 +12459,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_many_dft(
             [In] int rank,
             [In] int* n,
@@ -12489,7 +12489,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_r2c"
             )]
@@ -12509,7 +12509,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_r2c"
             )]
@@ -12529,7 +12529,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_many_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -12557,7 +12557,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odist,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_c2r"
             )]
@@ -12577,7 +12577,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_c2r"
             )]
@@ -12597,7 +12597,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_many_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -12629,7 +12629,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru Interface - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft"
             )]
@@ -12645,7 +12645,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft"
             )]
@@ -12661,7 +12661,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru_dft(
             [In] int rank,
             [In] iodim* dims,
@@ -12681,7 +12681,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_r2c"
             )]
@@ -12696,7 +12696,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_r2c"
             )]
@@ -12711,7 +12711,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru_dft_r2c(
             [In] int rank,
             [In] iodim* dims,
@@ -12729,7 +12729,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_c2r"
             )]
@@ -12744,7 +12744,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_c2r"
             )]
@@ -12759,7 +12759,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru_dft_c2r(
             [In] int rank,
             [In] iodim* dims,
@@ -12781,7 +12781,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru 64-bit Interface - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft"
             )]
@@ -12797,7 +12797,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft"
             )]
@@ -12813,7 +12813,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru64_dft(
             [In] int rank,
             [In] iodim64* dims,
@@ -12833,7 +12833,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_r2c"
             )]
@@ -12848,7 +12848,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_r2c"
             )]
@@ -12863,7 +12863,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru64_dft_r2c(
             [In] int rank,
             [In] iodim64* dims,
@@ -12881,7 +12881,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_c2r"
             )]
@@ -12896,7 +12896,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_c2r"
             )]
@@ -12911,7 +12911,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru64_dft_c2r(
             [In] int rank,
             [In] iodim64* dims,
@@ -12933,7 +12933,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Plan Execution - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute"
             )]
@@ -12942,7 +12942,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_execute_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute"
             )]
@@ -12951,13 +12951,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_execute_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftwf_execute(
             [In] IntPtr plan) =>
             fftwf_execute_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute_dft"
             )]
@@ -12968,7 +12968,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @in,
              float* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute_dft"
             )]
@@ -12979,7 +12979,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @in,
             [In] float* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftwf_execute_dft(
             [In] IntPtr plan,
             [In] float* @in,
@@ -12989,7 +12989,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute_dft_r2c"
             )]
@@ -13000,7 +13000,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @in,
              float* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute_dft_r2c"
             )]
@@ -13011,7 +13011,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @in,
             [In] float* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftwf_execute_dft_r2c(
             [In] IntPtr plan,
             [In] float* @in,
@@ -13021,7 +13021,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute_dft_c2r"
             )]
@@ -13032,7 +13032,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @in,
              float* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute_dft_c2r"
             )]
@@ -13043,7 +13043,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @in,
             [In] float* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftwf_execute_dft_c2r(
             [In] IntPtr plan,
             [In] float* @in,
@@ -13057,7 +13057,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_destroy_plan"
             )]
@@ -13066,7 +13066,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_destroy_plan_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_destroy_plan"
             )]
@@ -13075,13 +13075,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_destroy_plan_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftwf_destroy_plan(
             [In] IntPtr plan) =>
             fftwf_destroy_plan_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_set_timelimit"
             )]
@@ -13090,7 +13090,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_set_timelimit_Import(
              double seconds);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_set_timelimit"
             )]
@@ -13099,13 +13099,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_set_timelimit_Import(
             [In] double seconds);
 
-        #endif
+#endif
         public sealed override void fftwf_set_timelimit(
             [In] double seconds) =>
             fftwf_set_timelimit_Import(
                 seconds);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_cleanup"
             )]
@@ -13114,7 +13114,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_cleanup_Import(
               );
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_cleanup"
             )]
@@ -13123,7 +13123,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_cleanup_Import(
               );
 
-        #endif
+#endif
         public sealed override void fftwf_cleanup(
               ) =>
             fftwf_cleanup_Import(
@@ -13133,7 +13133,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Unsupported
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_malloc"
             )]
@@ -13142,7 +13142,7 @@ namespace ILGPU.Runtime.Cuda.API
          IntPtr fftw_malloc_Import(
              IntPtr size);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_malloc"
             )]
@@ -13151,13 +13151,13 @@ namespace ILGPU.Runtime.Cuda.API
          IntPtr fftw_malloc_Import(
             [In] IntPtr size);
 
-        #endif
+#endif
         internal sealed override IntPtr @malloc(
             [In] IntPtr size) =>
             fftw_malloc_Import(
                 size);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_free"
             )]
@@ -13166,7 +13166,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_free_Import(
              IntPtr size);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_free"
             )]
@@ -13175,7 +13175,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_free_Import(
             [In] IntPtr size);
 
-        #endif
+#endif
         internal sealed override void @free(
             [In] IntPtr size) =>
             fftw_free_Import(
@@ -13198,7 +13198,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_1d"
             )]
@@ -13211,7 +13211,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_1d"
             )]
@@ -13224,7 +13224,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_1d(
             [In] int nx,
             [In] double* @in,
@@ -13238,7 +13238,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_2d"
             )]
@@ -13252,7 +13252,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_2d"
             )]
@@ -13266,7 +13266,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_2d(
             [In] int nx,
             [In] int ny,
@@ -13282,7 +13282,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_3d"
             )]
@@ -13297,7 +13297,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_3d"
             )]
@@ -13312,7 +13312,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_3d(
             [In] int nx,
             [In] int ny,
@@ -13330,7 +13330,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft"
             )]
@@ -13344,7 +13344,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft"
             )]
@@ -13358,7 +13358,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft(
             [In] int rank,
             [In] int* n,
@@ -13378,7 +13378,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Real to Complex - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_1d"
             )]
@@ -13390,7 +13390,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_1d"
             )]
@@ -13402,7 +13402,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c_1d(
             [In] int nx,
             [In] double* @in,
@@ -13414,7 +13414,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_2d"
             )]
@@ -13427,7 +13427,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_2d"
             )]
@@ -13440,7 +13440,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c_2d(
             [In] int nx,
             [In] int ny,
@@ -13454,7 +13454,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_3d"
             )]
@@ -13468,7 +13468,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_3d"
             )]
@@ -13482,7 +13482,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c_3d(
             [In] int nx,
             [In] int ny,
@@ -13498,7 +13498,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c"
             )]
@@ -13511,7 +13511,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c"
             )]
@@ -13524,7 +13524,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -13542,7 +13542,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex to Real - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_1d"
             )]
@@ -13554,7 +13554,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_1d"
             )]
@@ -13566,7 +13566,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r_1d(
             [In] int nx,
             [In] double* @in,
@@ -13578,7 +13578,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_2d"
             )]
@@ -13591,7 +13591,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_2d"
             )]
@@ -13604,7 +13604,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r_2d(
             [In] int nx,
             [In] int ny,
@@ -13618,7 +13618,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_3d"
             )]
@@ -13632,7 +13632,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_3d"
             )]
@@ -13646,7 +13646,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r_3d(
             [In] int nx,
             [In] int ny,
@@ -13662,7 +13662,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r"
             )]
@@ -13675,7 +13675,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r"
             )]
@@ -13688,7 +13688,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -13706,7 +13706,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Advanced Interface - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_many_dft"
             )]
@@ -13727,7 +13727,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_many_dft"
             )]
@@ -13748,7 +13748,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_many_dft(
             [In] int rank,
             [In] int* n,
@@ -13778,7 +13778,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_many_dft_r2c"
             )]
@@ -13798,7 +13798,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_many_dft_r2c"
             )]
@@ -13818,7 +13818,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_many_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -13846,7 +13846,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odist,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_many_dft_c2r"
             )]
@@ -13866,7 +13866,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_many_dft_c2r"
             )]
@@ -13886,7 +13886,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_many_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -13918,7 +13918,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru Interface - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru_dft"
             )]
@@ -13934,7 +13934,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru_dft"
             )]
@@ -13950,7 +13950,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru_dft(
             [In] int rank,
             [In] iodim* dims,
@@ -13970,7 +13970,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_r2c"
             )]
@@ -13985,7 +13985,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_r2c"
             )]
@@ -14000,7 +14000,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru_dft_r2c(
             [In] int rank,
             [In] iodim* dims,
@@ -14018,7 +14018,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_c2r"
             )]
@@ -14033,7 +14033,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_c2r"
             )]
@@ -14048,7 +14048,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru_dft_c2r(
             [In] int rank,
             [In] iodim* dims,
@@ -14070,7 +14070,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru 64-bit Interface - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft"
             )]
@@ -14086,7 +14086,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft"
             )]
@@ -14102,7 +14102,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru64_dft(
             [In] int rank,
             [In] iodim64* dims,
@@ -14122,7 +14122,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_r2c"
             )]
@@ -14137,7 +14137,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_r2c"
             )]
@@ -14152,7 +14152,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru64_dft_r2c(
             [In] int rank,
             [In] iodim64* dims,
@@ -14170,7 +14170,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_c2r"
             )]
@@ -14185,7 +14185,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_c2r"
             )]
@@ -14200,7 +14200,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru64_dft_c2r(
             [In] int rank,
             [In] iodim64* dims,
@@ -14222,7 +14222,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Plan Execution - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute"
             )]
@@ -14231,7 +14231,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_execute_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute"
             )]
@@ -14240,13 +14240,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_execute_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftw_execute(
             [In] IntPtr plan) =>
             fftw_execute_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute_dft"
             )]
@@ -14257,7 +14257,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @in,
              double* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute_dft"
             )]
@@ -14268,7 +14268,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @in,
             [In] double* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftw_execute_dft(
             [In] IntPtr plan,
             [In] double* @in,
@@ -14278,7 +14278,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute_dft_r2c"
             )]
@@ -14289,7 +14289,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @in,
              double* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute_dft_r2c"
             )]
@@ -14300,7 +14300,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @in,
             [In] double* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftw_execute_dft_r2c(
             [In] IntPtr plan,
             [In] double* @in,
@@ -14310,7 +14310,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute_dft_c2r"
             )]
@@ -14321,7 +14321,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @in,
              double* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute_dft_c2r"
             )]
@@ -14332,7 +14332,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @in,
             [In] double* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftw_execute_dft_c2r(
             [In] IntPtr plan,
             [In] double* @in,
@@ -14346,7 +14346,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_destroy_plan"
             )]
@@ -14355,7 +14355,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_destroy_plan_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_destroy_plan"
             )]
@@ -14364,13 +14364,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_destroy_plan_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftw_destroy_plan(
             [In] IntPtr plan) =>
             fftw_destroy_plan_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_set_timelimit"
             )]
@@ -14379,7 +14379,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_set_timelimit_Import(
              double seconds);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_set_timelimit"
             )]
@@ -14388,13 +14388,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_set_timelimit_Import(
             [In] double seconds);
 
-        #endif
+#endif
         public sealed override void fftw_set_timelimit(
             [In] double seconds) =>
             fftw_set_timelimit_Import(
                 seconds);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_cleanup"
             )]
@@ -14403,7 +14403,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_cleanup_Import(
               );
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_cleanup"
             )]
@@ -14412,7 +14412,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_cleanup_Import(
               );
 
-        #endif
+#endif
         public sealed override void fftw_cleanup(
               ) =>
             fftw_cleanup_Import(
@@ -14422,7 +14422,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_1d"
             )]
@@ -14435,7 +14435,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_1d"
             )]
@@ -14448,7 +14448,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_1d(
             [In] int nx,
             [In] float* @in,
@@ -14462,7 +14462,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_2d"
             )]
@@ -14476,7 +14476,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_2d"
             )]
@@ -14490,7 +14490,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_2d(
             [In] int nx,
             [In] int ny,
@@ -14506,7 +14506,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_3d"
             )]
@@ -14521,7 +14521,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_3d"
             )]
@@ -14536,7 +14536,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_3d(
             [In] int nx,
             [In] int ny,
@@ -14554,7 +14554,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft"
             )]
@@ -14568,7 +14568,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft"
             )]
@@ -14582,7 +14582,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft(
             [In] int rank,
             [In] int* n,
@@ -14602,7 +14602,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Real to Complex - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_1d"
             )]
@@ -14614,7 +14614,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_1d"
             )]
@@ -14626,7 +14626,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c_1d(
             [In] int nx,
             [In] float* @in,
@@ -14638,7 +14638,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_2d"
             )]
@@ -14651,7 +14651,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_2d"
             )]
@@ -14664,7 +14664,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c_2d(
             [In] int nx,
             [In] int ny,
@@ -14678,7 +14678,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_3d"
             )]
@@ -14692,7 +14692,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_3d"
             )]
@@ -14706,7 +14706,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c_3d(
             [In] int nx,
             [In] int ny,
@@ -14722,7 +14722,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c"
             )]
@@ -14735,7 +14735,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c"
             )]
@@ -14748,7 +14748,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -14766,7 +14766,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex to Real - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_1d"
             )]
@@ -14778,7 +14778,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_1d"
             )]
@@ -14790,7 +14790,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r_1d(
             [In] int nx,
             [In] float* @in,
@@ -14802,7 +14802,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_2d"
             )]
@@ -14815,7 +14815,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_2d"
             )]
@@ -14828,7 +14828,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r_2d(
             [In] int nx,
             [In] int ny,
@@ -14842,7 +14842,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_3d"
             )]
@@ -14856,7 +14856,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_3d"
             )]
@@ -14870,7 +14870,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r_3d(
             [In] int nx,
             [In] int ny,
@@ -14886,7 +14886,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r"
             )]
@@ -14899,7 +14899,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r"
             )]
@@ -14912,7 +14912,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -14930,7 +14930,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Advanced Interface - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_many_dft"
             )]
@@ -14951,7 +14951,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_many_dft"
             )]
@@ -14972,7 +14972,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_many_dft(
             [In] int rank,
             [In] int* n,
@@ -15002,7 +15002,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_r2c"
             )]
@@ -15022,7 +15022,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_r2c"
             )]
@@ -15042,7 +15042,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_many_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -15070,7 +15070,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odist,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_c2r"
             )]
@@ -15090,7 +15090,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_c2r"
             )]
@@ -15110,7 +15110,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_many_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -15142,7 +15142,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru Interface - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft"
             )]
@@ -15158,7 +15158,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft"
             )]
@@ -15174,7 +15174,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru_dft(
             [In] int rank,
             [In] iodim* dims,
@@ -15194,7 +15194,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_r2c"
             )]
@@ -15209,7 +15209,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_r2c"
             )]
@@ -15224,7 +15224,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru_dft_r2c(
             [In] int rank,
             [In] iodim* dims,
@@ -15242,7 +15242,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_c2r"
             )]
@@ -15257,7 +15257,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_c2r"
             )]
@@ -15272,7 +15272,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru_dft_c2r(
             [In] int rank,
             [In] iodim* dims,
@@ -15294,7 +15294,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru 64-bit Interface - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft"
             )]
@@ -15310,7 +15310,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft"
             )]
@@ -15326,7 +15326,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru64_dft(
             [In] int rank,
             [In] iodim64* dims,
@@ -15346,7 +15346,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_r2c"
             )]
@@ -15361,7 +15361,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_r2c"
             )]
@@ -15376,7 +15376,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru64_dft_r2c(
             [In] int rank,
             [In] iodim64* dims,
@@ -15394,7 +15394,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_c2r"
             )]
@@ -15409,7 +15409,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_c2r"
             )]
@@ -15424,7 +15424,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru64_dft_c2r(
             [In] int rank,
             [In] iodim64* dims,
@@ -15446,7 +15446,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Plan Execution - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute"
             )]
@@ -15455,7 +15455,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_execute_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute"
             )]
@@ -15464,13 +15464,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_execute_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftwf_execute(
             [In] IntPtr plan) =>
             fftwf_execute_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute_dft"
             )]
@@ -15481,7 +15481,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @in,
              float* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute_dft"
             )]
@@ -15492,7 +15492,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @in,
             [In] float* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftwf_execute_dft(
             [In] IntPtr plan,
             [In] float* @in,
@@ -15502,7 +15502,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute_dft_r2c"
             )]
@@ -15513,7 +15513,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @in,
              float* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute_dft_r2c"
             )]
@@ -15524,7 +15524,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @in,
             [In] float* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftwf_execute_dft_r2c(
             [In] IntPtr plan,
             [In] float* @in,
@@ -15534,7 +15534,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute_dft_c2r"
             )]
@@ -15545,7 +15545,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @in,
              float* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute_dft_c2r"
             )]
@@ -15556,7 +15556,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @in,
             [In] float* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftwf_execute_dft_c2r(
             [In] IntPtr plan,
             [In] float* @in,
@@ -15570,7 +15570,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_destroy_plan"
             )]
@@ -15579,7 +15579,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_destroy_plan_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_destroy_plan"
             )]
@@ -15588,13 +15588,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_destroy_plan_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftwf_destroy_plan(
             [In] IntPtr plan) =>
             fftwf_destroy_plan_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_set_timelimit"
             )]
@@ -15603,7 +15603,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_set_timelimit_Import(
              double seconds);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_set_timelimit"
             )]
@@ -15612,13 +15612,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_set_timelimit_Import(
             [In] double seconds);
 
-        #endif
+#endif
         public sealed override void fftwf_set_timelimit(
             [In] double seconds) =>
             fftwf_set_timelimit_Import(
                 seconds);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_cleanup"
             )]
@@ -15627,7 +15627,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_cleanup_Import(
               );
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_cleanup"
             )]
@@ -15636,7 +15636,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_cleanup_Import(
               );
 
-        #endif
+#endif
         public sealed override void fftwf_cleanup(
               ) =>
             fftwf_cleanup_Import(
@@ -15646,7 +15646,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Unsupported
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_malloc"
             )]
@@ -15655,7 +15655,7 @@ namespace ILGPU.Runtime.Cuda.API
          IntPtr fftw_malloc_Import(
              IntPtr size);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_malloc"
             )]
@@ -15664,13 +15664,13 @@ namespace ILGPU.Runtime.Cuda.API
          IntPtr fftw_malloc_Import(
             [In] IntPtr size);
 
-        #endif
+#endif
         internal sealed override IntPtr @malloc(
             [In] IntPtr size) =>
             fftw_malloc_Import(
                 size);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_free"
             )]
@@ -15679,7 +15679,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_free_Import(
              IntPtr size);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_free"
             )]
@@ -15688,7 +15688,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_free_Import(
             [In] IntPtr size);
 
-        #endif
+#endif
         internal sealed override void @free(
             [In] IntPtr size) =>
             fftw_free_Import(
@@ -15711,7 +15711,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_1d"
             )]
@@ -15724,7 +15724,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_1d"
             )]
@@ -15737,7 +15737,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_1d(
             [In] int nx,
             [In] double* @in,
@@ -15751,7 +15751,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_2d"
             )]
@@ -15765,7 +15765,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_2d"
             )]
@@ -15779,7 +15779,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_2d(
             [In] int nx,
             [In] int ny,
@@ -15795,7 +15795,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_3d"
             )]
@@ -15810,7 +15810,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_3d"
             )]
@@ -15825,7 +15825,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_3d(
             [In] int nx,
             [In] int ny,
@@ -15843,7 +15843,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft"
             )]
@@ -15857,7 +15857,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft"
             )]
@@ -15871,7 +15871,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft(
             [In] int rank,
             [In] int* n,
@@ -15891,7 +15891,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Real to Complex - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_1d"
             )]
@@ -15903,7 +15903,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_1d"
             )]
@@ -15915,7 +15915,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c_1d(
             [In] int nx,
             [In] double* @in,
@@ -15927,7 +15927,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_2d"
             )]
@@ -15940,7 +15940,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_2d"
             )]
@@ -15953,7 +15953,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c_2d(
             [In] int nx,
             [In] int ny,
@@ -15967,7 +15967,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_3d"
             )]
@@ -15981,7 +15981,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c_3d"
             )]
@@ -15995,7 +15995,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c_3d(
             [In] int nx,
             [In] int ny,
@@ -16011,7 +16011,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c"
             )]
@@ -16024,7 +16024,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_r2c"
             )]
@@ -16037,7 +16037,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -16055,7 +16055,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex to Real - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_1d"
             )]
@@ -16067,7 +16067,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_1d"
             )]
@@ -16079,7 +16079,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r_1d(
             [In] int nx,
             [In] double* @in,
@@ -16091,7 +16091,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_2d"
             )]
@@ -16104,7 +16104,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_2d"
             )]
@@ -16117,7 +16117,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r_2d(
             [In] int nx,
             [In] int ny,
@@ -16131,7 +16131,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_3d"
             )]
@@ -16145,7 +16145,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r_3d"
             )]
@@ -16159,7 +16159,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r_3d(
             [In] int nx,
             [In] int ny,
@@ -16175,7 +16175,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r"
             )]
@@ -16188,7 +16188,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_dft_c2r"
             )]
@@ -16201,7 +16201,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -16219,7 +16219,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Advanced Interface - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_many_dft"
             )]
@@ -16240,7 +16240,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_many_dft"
             )]
@@ -16261,7 +16261,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_many_dft(
             [In] int rank,
             [In] int* n,
@@ -16291,7 +16291,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_many_dft_r2c"
             )]
@@ -16311,7 +16311,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_many_dft_r2c"
             )]
@@ -16331,7 +16331,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_many_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -16359,7 +16359,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odist,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_many_dft_c2r"
             )]
@@ -16379,7 +16379,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_many_dft_c2r"
             )]
@@ -16399,7 +16399,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_many_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -16431,7 +16431,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru Interface - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru_dft"
             )]
@@ -16447,7 +16447,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru_dft"
             )]
@@ -16463,7 +16463,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru_dft(
             [In] int rank,
             [In] iodim* dims,
@@ -16483,7 +16483,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_r2c"
             )]
@@ -16498,7 +16498,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_r2c"
             )]
@@ -16513,7 +16513,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru_dft_r2c(
             [In] int rank,
             [In] iodim* dims,
@@ -16531,7 +16531,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_c2r"
             )]
@@ -16546,7 +16546,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru_dft_c2r"
             )]
@@ -16561,7 +16561,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru_dft_c2r(
             [In] int rank,
             [In] iodim* dims,
@@ -16583,7 +16583,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru 64-bit Interface - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft"
             )]
@@ -16599,7 +16599,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft"
             )]
@@ -16615,7 +16615,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru64_dft(
             [In] int rank,
             [In] iodim64* dims,
@@ -16635,7 +16635,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_r2c"
             )]
@@ -16650,7 +16650,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_r2c"
             )]
@@ -16665,7 +16665,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru64_dft_r2c(
             [In] int rank,
             [In] iodim64* dims,
@@ -16683,7 +16683,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_c2r"
             )]
@@ -16698,7 +16698,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_plan_guru64_dft_c2r"
             )]
@@ -16713,7 +16713,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftw_plan_guru64_dft_c2r(
             [In] int rank,
             [In] iodim64* dims,
@@ -16735,7 +16735,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Plan Execution - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute"
             )]
@@ -16744,7 +16744,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_execute_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute"
             )]
@@ -16753,13 +16753,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_execute_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftw_execute(
             [In] IntPtr plan) =>
             fftw_execute_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute_dft"
             )]
@@ -16770,7 +16770,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @in,
              double* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute_dft"
             )]
@@ -16781,7 +16781,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @in,
             [In] double* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftw_execute_dft(
             [In] IntPtr plan,
             [In] double* @in,
@@ -16791,7 +16791,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute_dft_r2c"
             )]
@@ -16802,7 +16802,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @in,
              double* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute_dft_r2c"
             )]
@@ -16813,7 +16813,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @in,
             [In] double* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftw_execute_dft_r2c(
             [In] IntPtr plan,
             [In] double* @in,
@@ -16823,7 +16823,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_execute_dft_c2r"
             )]
@@ -16834,7 +16834,7 @@ namespace ILGPU.Runtime.Cuda.API
              double* @in,
              double* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_execute_dft_c2r"
             )]
@@ -16845,7 +16845,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] double* @in,
             [In] double* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftw_execute_dft_c2r(
             [In] IntPtr plan,
             [In] double* @in,
@@ -16859,7 +16859,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities - Double Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_destroy_plan"
             )]
@@ -16868,7 +16868,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_destroy_plan_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_destroy_plan"
             )]
@@ -16877,13 +16877,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_destroy_plan_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftw_destroy_plan(
             [In] IntPtr plan) =>
             fftw_destroy_plan_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_set_timelimit"
             )]
@@ -16892,7 +16892,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_set_timelimit_Import(
              double seconds);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_set_timelimit"
             )]
@@ -16901,13 +16901,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_set_timelimit_Import(
             [In] double seconds);
 
-        #endif
+#endif
         public sealed override void fftw_set_timelimit(
             [In] double seconds) =>
             fftw_set_timelimit_Import(
                 seconds);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_cleanup"
             )]
@@ -16916,7 +16916,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_cleanup_Import(
               );
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_cleanup"
             )]
@@ -16925,7 +16925,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_cleanup_Import(
               );
 
-        #endif
+#endif
         public sealed override void fftw_cleanup(
               ) =>
             fftw_cleanup_Import(
@@ -16935,7 +16935,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_1d"
             )]
@@ -16948,7 +16948,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_1d"
             )]
@@ -16961,7 +16961,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_1d(
             [In] int nx,
             [In] float* @in,
@@ -16975,7 +16975,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_2d"
             )]
@@ -16989,7 +16989,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_2d"
             )]
@@ -17003,7 +17003,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_2d(
             [In] int nx,
             [In] int ny,
@@ -17019,7 +17019,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_3d"
             )]
@@ -17034,7 +17034,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_3d"
             )]
@@ -17049,7 +17049,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_3d(
             [In] int nx,
             [In] int ny,
@@ -17067,7 +17067,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft"
             )]
@@ -17081,7 +17081,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft"
             )]
@@ -17095,7 +17095,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft(
             [In] int rank,
             [In] int* n,
@@ -17115,7 +17115,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Real to Complex - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_1d"
             )]
@@ -17127,7 +17127,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_1d"
             )]
@@ -17139,7 +17139,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c_1d(
             [In] int nx,
             [In] float* @in,
@@ -17151,7 +17151,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_2d"
             )]
@@ -17164,7 +17164,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_2d"
             )]
@@ -17177,7 +17177,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c_2d(
             [In] int nx,
             [In] int ny,
@@ -17191,7 +17191,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_3d"
             )]
@@ -17205,7 +17205,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c_3d"
             )]
@@ -17219,7 +17219,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c_3d(
             [In] int nx,
             [In] int ny,
@@ -17235,7 +17235,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c"
             )]
@@ -17248,7 +17248,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_r2c"
             )]
@@ -17261,7 +17261,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -17279,7 +17279,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Basic Interface - Complex to Real - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_1d"
             )]
@@ -17291,7 +17291,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_1d"
             )]
@@ -17303,7 +17303,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r_1d(
             [In] int nx,
             [In] float* @in,
@@ -17315,7 +17315,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_2d"
             )]
@@ -17328,7 +17328,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_2d"
             )]
@@ -17341,7 +17341,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r_2d(
             [In] int nx,
             [In] int ny,
@@ -17355,7 +17355,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_3d"
             )]
@@ -17369,7 +17369,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r_3d"
             )]
@@ -17383,7 +17383,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r_3d(
             [In] int nx,
             [In] int ny,
@@ -17399,7 +17399,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r"
             )]
@@ -17412,7 +17412,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_dft_c2r"
             )]
@@ -17425,7 +17425,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -17443,7 +17443,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Advanced Interface - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_many_dft"
             )]
@@ -17464,7 +17464,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_many_dft"
             )]
@@ -17485,7 +17485,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_many_dft(
             [In] int rank,
             [In] int* n,
@@ -17515,7 +17515,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_r2c"
             )]
@@ -17535,7 +17535,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_r2c"
             )]
@@ -17555,7 +17555,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_many_dft_r2c(
             [In] int rank,
             [In] int* n,
@@ -17583,7 +17583,7 @@ namespace ILGPU.Runtime.Cuda.API
                 odist,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_c2r"
             )]
@@ -17603,7 +17603,7 @@ namespace ILGPU.Runtime.Cuda.API
              int odist,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_many_dft_c2r"
             )]
@@ -17623,7 +17623,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int odist,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_many_dft_c2r(
             [In] int rank,
             [In] int* n,
@@ -17655,7 +17655,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru Interface - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft"
             )]
@@ -17671,7 +17671,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft"
             )]
@@ -17687,7 +17687,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru_dft(
             [In] int rank,
             [In] iodim* dims,
@@ -17707,7 +17707,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_r2c"
             )]
@@ -17722,7 +17722,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_r2c"
             )]
@@ -17737,7 +17737,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru_dft_r2c(
             [In] int rank,
             [In] iodim* dims,
@@ -17755,7 +17755,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_c2r"
             )]
@@ -17770,7 +17770,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru_dft_c2r"
             )]
@@ -17785,7 +17785,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru_dft_c2r(
             [In] int rank,
             [In] iodim* dims,
@@ -17807,7 +17807,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Guru 64-bit Interface - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft"
             )]
@@ -17823,7 +17823,7 @@ namespace ILGPU.Runtime.Cuda.API
              int sign,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft"
             )]
@@ -17839,7 +17839,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] int sign,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru64_dft(
             [In] int rank,
             [In] iodim64* dims,
@@ -17859,7 +17859,7 @@ namespace ILGPU.Runtime.Cuda.API
                 sign,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_r2c"
             )]
@@ -17874,7 +17874,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_r2c"
             )]
@@ -17889,7 +17889,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru64_dft_r2c(
             [In] int rank,
             [In] iodim64* dims,
@@ -17907,7 +17907,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @out,
                 flags);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_c2r"
             )]
@@ -17922,7 +17922,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @out,
              uint flags);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_plan_guru64_dft_c2r"
             )]
@@ -17937,7 +17937,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @out,
             [In] uint flags);
 
-        #endif
+#endif
         public unsafe sealed override IntPtr fftwf_plan_guru64_dft_c2r(
             [In] int rank,
             [In] iodim64* dims,
@@ -17959,7 +17959,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Plan Execution - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute"
             )]
@@ -17968,7 +17968,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_execute_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute"
             )]
@@ -17977,13 +17977,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_execute_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftwf_execute(
             [In] IntPtr plan) =>
             fftwf_execute_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute_dft"
             )]
@@ -17994,7 +17994,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @in,
              float* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute_dft"
             )]
@@ -18005,7 +18005,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @in,
             [In] float* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftwf_execute_dft(
             [In] IntPtr plan,
             [In] float* @in,
@@ -18015,7 +18015,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute_dft_r2c"
             )]
@@ -18026,7 +18026,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @in,
              float* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute_dft_r2c"
             )]
@@ -18037,7 +18037,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @in,
             [In] float* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftwf_execute_dft_r2c(
             [In] IntPtr plan,
             [In] float* @in,
@@ -18047,7 +18047,7 @@ namespace ILGPU.Runtime.Cuda.API
                 @in,
                 @out);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_execute_dft_c2r"
             )]
@@ -18058,7 +18058,7 @@ namespace ILGPU.Runtime.Cuda.API
              float* @in,
              float* @out);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_execute_dft_c2r"
             )]
@@ -18069,7 +18069,7 @@ namespace ILGPU.Runtime.Cuda.API
             [In] float* @in,
             [In] float* @out);
 
-        #endif
+#endif
         public unsafe sealed override void fftwf_execute_dft_c2r(
             [In] IntPtr plan,
             [In] float* @in,
@@ -18083,7 +18083,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Utilities - Single Precision
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_destroy_plan"
             )]
@@ -18092,7 +18092,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_destroy_plan_Import(
              IntPtr plan);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_destroy_plan"
             )]
@@ -18101,13 +18101,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_destroy_plan_Import(
             [In] IntPtr plan);
 
-        #endif
+#endif
         public sealed override void fftwf_destroy_plan(
             [In] IntPtr plan) =>
             fftwf_destroy_plan_Import(
                 plan);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_set_timelimit"
             )]
@@ -18116,7 +18116,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_set_timelimit_Import(
              double seconds);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_set_timelimit"
             )]
@@ -18125,13 +18125,13 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_set_timelimit_Import(
             [In] double seconds);
 
-        #endif
+#endif
         public sealed override void fftwf_set_timelimit(
             [In] double seconds) =>
             fftwf_set_timelimit_Import(
                 seconds);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftwf_cleanup"
             )]
@@ -18140,7 +18140,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_cleanup_Import(
               );
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftwf_cleanup"
             )]
@@ -18149,7 +18149,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftwf_cleanup_Import(
               );
 
-        #endif
+#endif
         public sealed override void fftwf_cleanup(
               ) =>
             fftwf_cleanup_Import(
@@ -18159,7 +18159,7 @@ namespace ILGPU.Runtime.Cuda.API
 
         #region Unsupported
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_malloc"
             )]
@@ -18168,7 +18168,7 @@ namespace ILGPU.Runtime.Cuda.API
          IntPtr fftw_malloc_Import(
              IntPtr size);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_malloc"
             )]
@@ -18177,13 +18177,13 @@ namespace ILGPU.Runtime.Cuda.API
          IntPtr fftw_malloc_Import(
             [In] IntPtr size);
 
-        #endif
+#endif
         internal sealed override IntPtr @malloc(
             [In] IntPtr size) =>
             fftw_malloc_Import(
                 size);
 
-        #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
         [LibraryImport(LibName,
             EntryPoint = "fftw_free"
             )]
@@ -18192,7 +18192,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_free_Import(
              IntPtr size);
 
-        #else
+#else
         [DllImport(LibName,
             EntryPoint = "fftw_free"
             )]
@@ -18201,7 +18201,7 @@ namespace ILGPU.Runtime.Cuda.API
          void fftw_free_Import(
             [In] IntPtr size);
 
-        #endif
+#endif
         internal sealed override void @free(
             [In] IntPtr size) =>
             fftw_free_Import(

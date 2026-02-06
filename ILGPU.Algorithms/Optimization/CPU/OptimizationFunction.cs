@@ -11,7 +11,6 @@
 
 using ILGPU.Util;
 using System;
-using System.Numerics;
 using System.Threading.Tasks;
 
 namespace ILGPU.Algorithms.Optimization.CPU

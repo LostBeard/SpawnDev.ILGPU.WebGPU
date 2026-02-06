@@ -11,9 +11,7 @@
 
 using ILGPU.Algorithms.RadixSortOperations;
 using ILGPU.Algorithms.Random;
-using ILGPU.IR.Values;
 using ILGPU.Runtime;
-using ILGPU.Runtime.Cuda;
 using ILGPU.Util;
 using System;
 using System.Diagnostics.CodeAnalysis;

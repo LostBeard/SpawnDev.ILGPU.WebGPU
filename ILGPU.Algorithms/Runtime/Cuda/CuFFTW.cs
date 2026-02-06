@@ -10,7 +10,6 @@
 // ---------------------------------------------------------------------------------------
 
 using ILGPU.Runtime.Cuda.API;
-using System;
 
 namespace ILGPU.Runtime.Cuda
 {

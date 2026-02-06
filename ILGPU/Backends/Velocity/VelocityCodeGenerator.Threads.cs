@@ -37,7 +37,7 @@ namespace ILGPU.Backends.Velocity
             if (!atomic.Uses.HasAny)
                 Emitter.Emit(OpCodes.Pop);
             else
-               Store(atomic);
+                Store(atomic);
         }
 
         /// <inheritdoc />

@@ -17,7 +17,6 @@ using ILGPU.IR.Values;
 using ILGPU.Util;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Loop = ILGPU.IR.Analyses.Loops<
     ILGPU.IR.Analyses.TraversalOrders.ReversePostOrder,
     ILGPU.IR.Analyses.ControlFlowDirection.Forwards>.Node;
@@ -25,9 +24,6 @@ using LoopInfo = ILGPU.IR.Analyses.LoopInfo<
     ILGPU.IR.Analyses.TraversalOrders.ReversePostOrder,
     ILGPU.IR.Analyses.ControlFlowDirection.Forwards>;
 using LoopInfos = ILGPU.IR.Analyses.LoopInfos<
-    ILGPU.IR.Analyses.TraversalOrders.ReversePostOrder,
-    ILGPU.IR.Analyses.ControlFlowDirection.Forwards>;
-using Loops = ILGPU.IR.Analyses.Loops<
     ILGPU.IR.Analyses.TraversalOrders.ReversePostOrder,
     ILGPU.IR.Analyses.ControlFlowDirection.Forwards>;
 

@@ -16,7 +16,7 @@ using System;
 namespace ILGPU.Algorithms.MatrixOperations
 {
     #region Sparse Matrix Types
-        
+
     /// <summary>
     /// A generic target to compute sparse matrix information.
     /// </summary>
@@ -28,7 +28,7 @@ namespace ILGPU.Algorithms.MatrixOperations
         /// <param name="rowIndex">The absolute row index.</param>
         /// <param name="numRowEntries">The number of row entries.</param>
         void OutputNumNeighbors(int rowIndex, int numRowEntries);
-        
+
         /// <summary>
         /// Atomically computes the maximum of all local num neighbors.
         /// </summary>
@@ -81,7 +81,7 @@ namespace ILGPU.Algorithms.MatrixOperations
         where T : unmanaged
         where TPredicate : struct, InlineList.IPredicate<Index2D>
         where TStride : struct, IStride2D;
-    
+
     /// <summary>
     /// A sparse matrix converter that translates a sparse shape view and a dense matrix
     /// into its sparse view representation.
@@ -97,7 +97,7 @@ namespace ILGPU.Algorithms.MatrixOperations
         where TStride : struct, IStride2D;
 
     #endregion
-    
+
     /// <summary>
     /// Sparse matrix extensions to convert dense matrices into sparse versions.
     /// </summary>
@@ -123,29 +123,29 @@ namespace ILGPU.Algorithms.MatrixOperations
             if (Group.IsFirstThread)
                 sharedMax = 0;
             Group.Barrier();
-            
+
             // Get the actual row index and reject out-of-bounds reads
             int rowIndex = Grid.GlobalLinearIndex;
             if (rowIndex >= matrixExtent.X)
                 return;
-            
+
             int numRowEntries = 0;
             for (int i = 0, numColumns = (int)matrixExtent.Y; i < numColumns; ++i)
             {
                 if (predicate.Apply(new Index2D(rowIndex, i)))
                     ++numRowEntries;
             }
-            
+
             // Store number of neighbors per row and adjust shared max row counter
             target.OutputNumNeighbors(rowIndex, numRowEntries);
             Atomic.Max(ref sharedMax, numRowEntries);
-            
+
             // Wait for all threads and adjust global max-non-zero counter
             Group.Barrier();
             if (Group.IsFirstThread)
                 target.ComputeAtomicMaxNumNeighbors(sharedMax);
         }
-        
+
         /// <summary>
         /// A generic sparse matrix converter kernel to convert a given dense input matrix
         /// into its sparse shape representation.
@@ -171,7 +171,7 @@ namespace ILGPU.Algorithms.MatrixOperations
                 neighbors[index, columnIndex] = i;
             }
         }
-        
+
         /// <summary>
         /// A generic sparse matrix converter kernel to convert a given dense input matrix
         /// into its sparse data representation.
@@ -193,7 +193,7 @@ namespace ILGPU.Algorithms.MatrixOperations
                 edgeWeights[index, i] = inputMatrix[index, columnIndex];
             }
         }
-        
+
         /// <summary>
         /// Creates a new sparse matrix shape info provider.
         /// </summary>
@@ -223,7 +223,7 @@ namespace ILGPU.Algorithms.MatrixOperations
                 kernel(stream, (numGroups, groupSize), extent, predicate, target);
             };
         }
-        
+
         /// <summary>
         /// A specific sparse view target.
         /// </summary>
@@ -246,7 +246,7 @@ namespace ILGPU.Algorithms.MatrixOperations
                 numNeighbors = numNeighborsView;
                 maxNumNeighbors = maxNumNeighborsView;
             }
-            
+
             /// <summary>
             /// Stores the given number of row entries as number of neighbors.
             /// </summary>
@@ -259,7 +259,7 @@ namespace ILGPU.Algorithms.MatrixOperations
             public void ComputeAtomicMaxNumNeighbors(int maxNumLocalNeighbors) =>
                 Atomic.Max(ref maxNumNeighbors.Value, maxNumLocalNeighbors);
         }
-        
+
         /// <summary>
         /// Creates a new sparse matrix shape info provider.
         /// </summary>
@@ -289,7 +289,7 @@ namespace ILGPU.Algorithms.MatrixOperations
                     "Temp view needs to have at least a single element");
             }
             var internalView = tempView.SubView(0, 1);
-            
+
             // Return custom wrapper
             return (stream, extent, predicate, numNeighborsView) =>
             {
@@ -301,7 +301,7 @@ namespace ILGPU.Algorithms.MatrixOperations
 
                 // Get info
                 infoProvider(stream, extent, predicate, sparseTarget);
-                
+
                 // Fetch max count
                 int maxCount = 0;
                 internalView.CopyToCPU(stream, ref maxCount, 1);
@@ -339,7 +339,7 @@ namespace ILGPU.Algorithms.MatrixOperations
             // Compute actual sparsity information
             return provider(stream, matrixExtent, predicate, numNeighbors);
         }
-        
+
         /// <summary>
         /// Creates a new sparse matrix shape provider.
         /// </summary>
@@ -366,17 +366,17 @@ namespace ILGPU.Algorithms.MatrixOperations
                 ArrayView2D<T, TStride>,
                 TPredicate,
                 ArrayView2D<int, TStride>>(SparseMatrixShapeConverterKernel);
-            
+
             // Load basic info provider
             var infoProvider = accelerator.CreateSparseMatrixInfoProvider<TPredicate>(
                 tempView);
-            
+
             // Returns new launcher delegate
             return (stream, matrix, predicate, numNeighbors, getNeighborsFunc) =>
             {
                 // Determine an info value
                 int max = infoProvider(stream, matrix.Extent, predicate, numNeighbors);
-                
+
                 // Convert the actual neighbor information
                 var neighbors = getNeighborsFunc(max);
                 kernel(stream, (int)matrix.Extent.X, matrix, predicate, neighbors);
@@ -423,7 +423,7 @@ namespace ILGPU.Algorithms.MatrixOperations
                 T,
                 TPredicate,
                 TStride>(tempView);
-            
+
             // Convert to the resulting shape shape view
             return converter(
                 stream,
@@ -451,7 +451,7 @@ namespace ILGPU.Algorithms.MatrixOperations
                 ArrayView2D<T, TStride>,
                 SparseMatrixShapeView<TStride>,
                 ArrayView2D<T, TStride>>(SparseMatrixConverterKernel);
-            
+
             // Returns new launcher delegate
             return (stream, matrix, shapeView, edgeView) =>
             {
@@ -459,7 +459,7 @@ namespace ILGPU.Algorithms.MatrixOperations
                 return new SparseMatrixView<T, TStride>(edgeView, shapeView);
             };
         }
-        
+
         /// <summary>
         /// Computes a new sparse matrix view.
         /// </summary>
@@ -481,7 +481,7 @@ namespace ILGPU.Algorithms.MatrixOperations
         {
             // Get or create provider
             var converter = accelerator.CreateSparseMatrixConverter<T, TStride>();
-            
+
             // Convert our dense matrix
             return converter(stream, inputMatrix, shapeView, dataView);
         }

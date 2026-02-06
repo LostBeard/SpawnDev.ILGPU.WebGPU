@@ -33,7 +33,6 @@
 
 using ILGPU.Algorithms.ComparisonOperations;
 using ILGPU.Runtime;
-using System;
 
 namespace ILGPU.Algorithms
 {

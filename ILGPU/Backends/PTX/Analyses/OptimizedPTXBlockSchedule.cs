@@ -15,7 +15,6 @@ using ILGPU.IR.Analyses.TraversalOrders;
 using ILGPU.IR.Values;
 using ILGPU.Util;
 using System;
-using System.Runtime.CompilerServices;
 
 namespace ILGPU.Backends.PTX.Analyses
 {

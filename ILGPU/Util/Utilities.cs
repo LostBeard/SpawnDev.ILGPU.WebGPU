@@ -10,7 +10,6 @@
 // ---------------------------------------------------------------------------------------
 
 using ILGPU.Frontend.Intrinsic;
-using System;
 using System.Runtime.CompilerServices;
 
 namespace ILGPU.Util

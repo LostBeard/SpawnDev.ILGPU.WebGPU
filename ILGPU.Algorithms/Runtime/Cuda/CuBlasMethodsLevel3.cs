@@ -36,7 +36,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Gemm(
             CuBlasOperation transa,
             CuBlasOperation transb,
-            int m, 
+            int m,
             int n,
             int k,
             float alpha,
@@ -75,7 +75,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Gemm(
             CuBlasOperation transa,
             CuBlasOperation transb,
-            int m, 
+            int m,
             int n,
             int k,
             ArrayView<float> alpha,
@@ -114,7 +114,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Gemm(
             CuBlasOperation transa,
             CuBlasOperation transb,
-            int m, 
+            int m,
             int n,
             int k,
             double alpha,
@@ -153,7 +153,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Gemm(
             CuBlasOperation transa,
             CuBlasOperation transb,
-            int m, 
+            int m,
             int n,
             int k,
             ArrayView<double> alpha,
@@ -192,7 +192,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Gemm(
             CuBlasOperation transa,
             CuBlasOperation transb,
-            int m, 
+            int m,
             int n,
             int k,
             Float2 alpha,
@@ -231,7 +231,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Gemm(
             CuBlasOperation transa,
             CuBlasOperation transb,
-            int m, 
+            int m,
             int n,
             int k,
             ArrayView<Float2> alpha,
@@ -270,7 +270,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Gemm(
             CuBlasOperation transa,
             CuBlasOperation transb,
-            int m, 
+            int m,
             int n,
             int k,
             Double2 alpha,
@@ -309,7 +309,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Gemm(
             CuBlasOperation transa,
             CuBlasOperation transb,
-            int m, 
+            int m,
             int n,
             int k,
             ArrayView<Double2> alpha,
@@ -348,7 +348,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Gemm(
             CuBlasOperation transa,
             CuBlasOperation transb,
-            int m, 
+            int m,
             int n,
             int k,
             Half alpha,
@@ -387,7 +387,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Gemm(
             CuBlasOperation transa,
             CuBlasOperation transb,
-            int m, 
+            int m,
             int n,
             int k,
             ArrayView<Half> alpha,
@@ -427,7 +427,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Symm(
             CuBlasSideMode side,
             CuBlasFillMode uplo,
-            int m, 
+            int m,
             int n,
             float alpha,
             ArrayView<float> a,
@@ -464,7 +464,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Symm(
             CuBlasSideMode side,
             CuBlasFillMode uplo,
-            int m, 
+            int m,
             int n,
             ArrayView<float> alpha,
             ArrayView<float> a,
@@ -501,7 +501,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Symm(
             CuBlasSideMode side,
             CuBlasFillMode uplo,
-            int m, 
+            int m,
             int n,
             double alpha,
             ArrayView<double> a,
@@ -538,7 +538,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Symm(
             CuBlasSideMode side,
             CuBlasFillMode uplo,
-            int m, 
+            int m,
             int n,
             ArrayView<double> alpha,
             ArrayView<double> a,
@@ -575,7 +575,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Symm(
             CuBlasSideMode side,
             CuBlasFillMode uplo,
-            int m, 
+            int m,
             int n,
             Float2 alpha,
             ArrayView<Float2> a,
@@ -612,7 +612,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Symm(
             CuBlasSideMode side,
             CuBlasFillMode uplo,
-            int m, 
+            int m,
             int n,
             ArrayView<Float2> alpha,
             ArrayView<Float2> a,
@@ -649,7 +649,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Symm(
             CuBlasSideMode side,
             CuBlasFillMode uplo,
-            int m, 
+            int m,
             int n,
             Double2 alpha,
             ArrayView<Double2> a,
@@ -686,7 +686,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Symm(
             CuBlasSideMode side,
             CuBlasFillMode uplo,
-            int m, 
+            int m,
             int n,
             ArrayView<Double2> alpha,
             ArrayView<Double2> a,
@@ -724,7 +724,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Syrk(
             CuBlasFillMode uplo,
             CuBlasOperation trans,
-            int m, 
+            int m,
             int n,
             float alpha,
             ArrayView<float> a,
@@ -757,7 +757,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Syrk(
             CuBlasFillMode uplo,
             CuBlasOperation trans,
-            int m, 
+            int m,
             int n,
             ArrayView<float> alpha,
             ArrayView<float> a,
@@ -790,7 +790,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Syrk(
             CuBlasFillMode uplo,
             CuBlasOperation trans,
-            int m, 
+            int m,
             int n,
             double alpha,
             ArrayView<double> a,
@@ -823,7 +823,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Syrk(
             CuBlasFillMode uplo,
             CuBlasOperation trans,
-            int m, 
+            int m,
             int n,
             ArrayView<double> alpha,
             ArrayView<double> a,
@@ -856,7 +856,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Syrk(
             CuBlasFillMode uplo,
             CuBlasOperation trans,
-            int m, 
+            int m,
             int n,
             Float2 alpha,
             ArrayView<Float2> a,
@@ -889,7 +889,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Syrk(
             CuBlasFillMode uplo,
             CuBlasOperation trans,
-            int m, 
+            int m,
             int n,
             ArrayView<Float2> alpha,
             ArrayView<Float2> a,
@@ -922,7 +922,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Syrk(
             CuBlasFillMode uplo,
             CuBlasOperation trans,
-            int m, 
+            int m,
             int n,
             Double2 alpha,
             ArrayView<Double2> a,
@@ -955,7 +955,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Syrk(
             CuBlasFillMode uplo,
             CuBlasOperation trans,
-            int m, 
+            int m,
             int n,
             ArrayView<Double2> alpha,
             ArrayView<Double2> a,
@@ -989,7 +989,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Syr2k(
             CuBlasFillMode uplo,
             CuBlasOperation trans,
-            int n, 
+            int n,
             int k,
             float alpha,
             ArrayView<float> a,
@@ -1026,7 +1026,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Syr2k(
             CuBlasFillMode uplo,
             CuBlasOperation trans,
-            int n, 
+            int n,
             int k,
             ArrayView<float> alpha,
             ArrayView<float> a,
@@ -1063,7 +1063,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Syr2k(
             CuBlasFillMode uplo,
             CuBlasOperation trans,
-            int n, 
+            int n,
             int k,
             double alpha,
             ArrayView<double> a,
@@ -1100,7 +1100,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Syr2k(
             CuBlasFillMode uplo,
             CuBlasOperation trans,
-            int n, 
+            int n,
             int k,
             ArrayView<double> alpha,
             ArrayView<double> a,
@@ -1137,7 +1137,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Syr2k(
             CuBlasFillMode uplo,
             CuBlasOperation trans,
-            int n, 
+            int n,
             int k,
             Float2 alpha,
             ArrayView<Float2> a,
@@ -1174,7 +1174,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Syr2k(
             CuBlasFillMode uplo,
             CuBlasOperation trans,
-            int n, 
+            int n,
             int k,
             ArrayView<Float2> alpha,
             ArrayView<Float2> a,
@@ -1211,7 +1211,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Syr2k(
             CuBlasFillMode uplo,
             CuBlasOperation trans,
-            int n, 
+            int n,
             int k,
             Double2 alpha,
             ArrayView<Double2> a,
@@ -1248,7 +1248,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Syr2k(
             CuBlasFillMode uplo,
             CuBlasOperation trans,
-            int n, 
+            int n,
             int k,
             ArrayView<Double2> alpha,
             ArrayView<Double2> a,
@@ -1285,7 +1285,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Syrkx(
             CuBlasFillMode uplo,
             CuBlasOperation trans,
-            int n, 
+            int n,
             int k,
             float alpha,
             ArrayView<float> a,
@@ -1322,7 +1322,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Syrkx(
             CuBlasFillMode uplo,
             CuBlasOperation trans,
-            int n, 
+            int n,
             int k,
             ArrayView<float> alpha,
             ArrayView<float> a,
@@ -1359,7 +1359,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Syrkx(
             CuBlasFillMode uplo,
             CuBlasOperation trans,
-            int n, 
+            int n,
             int k,
             double alpha,
             ArrayView<double> a,
@@ -1396,7 +1396,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Syrkx(
             CuBlasFillMode uplo,
             CuBlasOperation trans,
-            int n, 
+            int n,
             int k,
             ArrayView<double> alpha,
             ArrayView<double> a,
@@ -1433,7 +1433,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Syrkx(
             CuBlasFillMode uplo,
             CuBlasOperation trans,
-            int n, 
+            int n,
             int k,
             Float2 alpha,
             ArrayView<Float2> a,
@@ -1470,7 +1470,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Syrkx(
             CuBlasFillMode uplo,
             CuBlasOperation trans,
-            int n, 
+            int n,
             int k,
             ArrayView<Float2> alpha,
             ArrayView<Float2> a,
@@ -1507,7 +1507,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Syrkx(
             CuBlasFillMode uplo,
             CuBlasOperation trans,
-            int n, 
+            int n,
             int k,
             Double2 alpha,
             ArrayView<Double2> a,
@@ -1544,7 +1544,7 @@ namespace ILGPU.Runtime.Cuda
         public unsafe void Syrkx(
             CuBlasFillMode uplo,
             CuBlasOperation trans,
-            int n, 
+            int n,
             int k,
             ArrayView<Double2> alpha,
             ArrayView<Double2> a,

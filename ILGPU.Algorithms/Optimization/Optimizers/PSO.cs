@@ -27,7 +27,7 @@ namespace ILGPU.Algorithms.Optimization.Optimizers
         /// <summary>
         /// A common choice for Omega.
         /// </summary>
-        public const float Omega  = 0.8f;
+        public const float Omega = 0.8f;
 
         /// <summary>
         /// A common choice for PhiG.
