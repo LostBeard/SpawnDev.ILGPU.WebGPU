@@ -1001,7 +1001,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
         [TestMethod]
         public async Task WebGPUBroadcastTest()
         {
-            throw new UnsupportedTestException("subgroups extension not supported in browser environment");
+            throw new UnsupportedTestException("Subgroups extension not supported in browser environment");
             var builder = Context.Create();
             await builder.WebGPUAsync();
             using var context = builder.ToContext();
