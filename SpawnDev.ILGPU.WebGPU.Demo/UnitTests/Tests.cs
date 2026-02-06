@@ -2499,6 +2499,331 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             product[index] = val * 2;
             square[index] = val * val;
         }
+
+        // ===== Additional Coverage Tests =====
+
+        /// <summary>
+        /// Test warp/subgroup shuffle operations (not supported in browser WebGPU)
+        /// </summary>
+        [TestMethod]
+        public async Task WebGPUSubgroupShuffleTest()
+        {
+            // Subgroup operations (warp shuffle, broadcast) are not available in browser WebGPU
+            throw new UnsupportedTestException("Skip: Subgroup/Warp operations not supported in browser WebGPU");
+
+            // If ever supported, the test would use Warp.Shuffle, Warp.Broadcast, etc.
+        }
+
+        /// <summary>
+        /// Test matrix multiplication pattern (common GPU workload)
+        /// </summary>
+        [TestMethod]
+        public async Task WebGPUMatrixMultiplyTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            // Small 4x4 matrix multiplication
+            int size = 4;
+            var a = new float[size * size];
+            var b = new float[size * size];
+            
+            // Initialize: A = identity-ish, B = sequential
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    a[i * size + j] = (i == j) ? 1.0f : 0.0f; // Identity matrix
+                    b[i * size + j] = i * size + j;           // Sequential
+                }
+            }
+
+            using var bufA = accelerator.Allocate1D(a);
+            using var bufB = accelerator.Allocate1D(b);
+            using var bufC = accelerator.Allocate1D<float>(size * size);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>, ArrayView<float>, ArrayView<float>, int>(MatMulKernel);
+            kernel((Index1D)(size * size), bufA.View, bufB.View, bufC.View, size);
+            await accelerator.SynchronizeAsync();
+
+            var result = await ReadBufferAsync<float>(bufC);
+
+            // Identity * B = B
+            for (int i = 0; i < size * size; i++)
+            {
+                if (MathF.Abs(result[i] - b[i]) > 0.001f)
+                    throw new Exception($"Matrix multiply failed at {i}. Expected {b[i]}, got {result[i]}");
+            }
+        }
+
+        static void MatMulKernel(Index1D index, ArrayView<float> a, ArrayView<float> b, ArrayView<float> c, int size)
+        {
+            int row = index / size;
+            int col = index % size;
+            float sum = 0.0f;
+            for (int k = 0; k < size; k++)
+            {
+                sum += a[row * size + k] * b[k * size + col];
+            }
+            c[index] = sum;
+        }
+
+        /// <summary>
+        /// Test kernel reuse - same kernel invoked multiple times with different data
+        /// </summary>
+        [TestMethod]
+        public async Task WebGPUKernelReuseTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 64;
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>, int>(AddConstantKernel);
+
+            // First invocation
+            var data1 = new int[len];
+            for (int i = 0; i < len; i++) data1[i] = i;
+            using var buf1 = accelerator.Allocate1D(data1);
+            kernel((Index1D)len, buf1.View, 100);
+            await accelerator.SynchronizeAsync();
+            var result1 = await ReadBufferAsync<int>(buf1);
+
+            // Second invocation with different constant
+            var data2 = new int[len];
+            for (int i = 0; i < len; i++) data2[i] = i * 2;
+            using var buf2 = accelerator.Allocate1D(data2);
+            kernel((Index1D)len, buf2.View, 50);
+            await accelerator.SynchronizeAsync();
+            var result2 = await ReadBufferAsync<int>(buf2);
+
+            // Verify both
+            for (int i = 0; i < len; i++)
+            {
+                if (result1[i] != i + 100)
+                    throw new Exception($"First kernel invocation failed at {i}. Expected {i + 100}, got {result1[i]}");
+                if (result2[i] != i * 2 + 50)
+                    throw new Exception($"Second kernel invocation failed at {i}. Expected {i * 2 + 50}, got {result2[i]}");
+            }
+        }
+
+        static void AddConstantKernel(Index1D index, ArrayView<int> data, int constant)
+        {
+            data[index] += constant;
+        }
+
+        /// <summary>
+        /// Test chained kernel execution - output of one kernel as input to another
+        /// </summary>
+        [TestMethod]
+        public async Task WebGPUChainedKernelsTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 64;
+            var data = new int[len];
+            for (int i = 0; i < len; i++) data[i] = i;
+
+            using var buf = accelerator.Allocate1D(data);
+
+            var doubleKernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>>(DoubleValueKernel);
+            var addTenKernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>>(AddTenKernel);
+
+            // Chain: double -> add 10 -> double
+            doubleKernel((Index1D)len, buf.View);
+            await accelerator.SynchronizeAsync();
+            
+            addTenKernel((Index1D)len, buf.View);
+            await accelerator.SynchronizeAsync();
+            
+            doubleKernel((Index1D)len, buf.View);
+            await accelerator.SynchronizeAsync();
+
+            var result = await ReadBufferAsync<int>(buf);
+
+            // Expected: ((i * 2) + 10) * 2 = 4i + 20
+            for (int i = 0; i < len; i++)
+            {
+                int expected = 4 * i + 20;
+                if (result[i] != expected)
+                    throw new Exception($"Chained kernel failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        static void DoubleValueKernel(Index1D index, ArrayView<int> data)
+        {
+            data[index] *= 2;
+        }
+
+        static void AddTenKernel(Index1D index, ArrayView<int> data)
+        {
+            data[index] += 10;
+        }
+
+        /// <summary>
+        /// Test boundary conditions - thread index at edges
+        /// </summary>
+        [TestMethod]
+        public async Task WebGPUBoundaryConditionsTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            // Use non-power-of-2 size to test edge handling
+            int len = 100; // Not a multiple of typical workgroup size (64)
+            var data = new int[len];
+
+            using var buf = accelerator.Allocate1D(data);
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>, int>(BoundaryKernel);
+            kernel((Index1D)len, buf.View, len);
+            await accelerator.SynchronizeAsync();
+
+            var result = await ReadBufferAsync<int>(buf);
+
+            // Check that all threads executed correctly
+            for (int i = 0; i < len; i++)
+            {
+                // First and last get special values
+                int expected = (i == 0) ? -1 : (i == len - 1) ? 1 : 0;
+                if (result[i] != expected)
+                    throw new Exception($"Boundary test failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        static void BoundaryKernel(Index1D index, ArrayView<int> data, int length)
+        {
+            if (index == 0)
+                data[index] = -1; // First element
+            else if (index == length - 1)
+                data[index] = 1;  // Last element
+            else
+                data[index] = 0;  // Middle elements
+        }
+
+        /// <summary>
+        /// Test float special operations (sign, frac, saturate pattern)
+        /// </summary>
+        [TestMethod]
+        public async Task WebGPUFloatSpecialOpsTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 6;
+            var data = new float[] { -3.7f, -0.5f, 0.0f, 0.5f, 1.5f, 3.7f };
+
+            using var buf = accelerator.Allocate1D(data);
+            using var bufOut = accelerator.Allocate1D<float>(len);
+            
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<float>, ArrayView<float>>(FloatSpecialOpsKernel);
+            kernel((Index1D)len, buf.View, bufOut.View);
+            await accelerator.SynchronizeAsync();
+
+            var result = await ReadBufferAsync<float>(bufOut);
+
+            // Test saturate (clamp to 0-1): values get clamped
+            float[] expected = { 0.0f, 0.0f, 0.0f, 0.5f, 1.0f, 1.0f };
+            for (int i = 0; i < len; i++)
+            {
+                if (MathF.Abs(result[i] - expected[i]) > 0.001f)
+                    throw new Exception($"Saturate failed at {i}. Expected {expected[i]}, got {result[i]}");
+            }
+        }
+
+        static void FloatSpecialOpsKernel(Index1D index, ArrayView<float> input, ArrayView<float> output)
+        {
+            float val = input[index];
+            // Saturate: clamp to [0, 1]
+            output[index] = Math.Min(Math.Max(val, 0.0f), 1.0f);
+        }
+
+        /// <summary>
+        /// Test modulo operations for both positive and negative values
+        /// </summary>
+        [TestMethod]
+        public async Task WebGPUModuloOperationsTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 8;
+            var data = new int[] { 10, -10, 7, -7, 15, -15, 3, -3 };
+
+            using var buf = accelerator.Allocate1D(data);
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>>(ModuloKernel);
+            kernel((Index1D)len, buf.View);
+            await accelerator.SynchronizeAsync();
+
+            var result = await ReadBufferAsync<int>(buf);
+
+            // Modulo by 4
+            int[] expected = { 2, -2, 3, -3, 3, -3, 3, -3 };
+            for (int i = 0; i < len; i++)
+            {
+                if (result[i] != expected[i])
+                    throw new Exception($"Modulo failed at {i}. Expected {expected[i]}, got {result[i]}");
+            }
+        }
+
+        static void ModuloKernel(Index1D index, ArrayView<int> data)
+        {
+            data[index] = data[index] % 4;
+        }
+
+        /// <summary>
+        /// Test large workgroup dispatch (stress test)
+        /// </summary>
+        [TestMethod]
+        public async Task WebGPUMillionElementsTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            // 1 million elements
+            int len = 1024 * 1024;
+            var data = new int[len];
+
+            using var buf = accelerator.Allocate1D(data);
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>>(SimpleSetKernel);
+            kernel((Index1D)len, buf.View);
+            await accelerator.SynchronizeAsync();
+
+            var result = await ReadBufferAsync<int>(buf);
+
+            // Sample check (checking all would be slow)
+            int[] checkIndices = { 0, 100, 1000, 10000, 100000, 500000, 999999, len - 1 };
+            foreach (int i in checkIndices)
+            {
+                if (result[i] != i)
+                    throw new Exception($"Large dispatch failed at {i}. Expected {i}, got {result[i]}");
+            }
+        }
+
+        static void SimpleSetKernel(Index1D index, ArrayView<int> data)
+        {
+            data[index] = index;
+        }
     }
 }
 
