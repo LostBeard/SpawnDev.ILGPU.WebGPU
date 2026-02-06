@@ -154,6 +154,24 @@ await accelerator.SynchronizeAsync();
 
 The standard `Synchronize()` method will log a warning and return immediately without waiting.
 
+## Blazor WebAssembly Configuration
+
+When publishing your Blazor WebAssembly application, specific MSBuild properties are required in your `.csproj` to ensure ILGPU functions correctly in a production environment:
+
+```xml
+<PropertyGroup>
+  <!-- Disable IL trimming to preserve ILGPU kernel methods and reflection metadata -->
+  <PublishTrimmed>false</PublishTrimmed>
+  <!-- Disable AOT compilation - ILGPU requires IL reflection to work -->
+  <RunAOTCompilation>false</RunAOTCompilation>
+</PropertyGroup>
+```
+
+### Why are these required?
+
+- **`PublishTrimmed = false`**: ILGPU uses reflection-like techniques to extract information from kernel methods at runtime. The standard .NET IL Linker (trimmer) may remove essential methods or metadata if it cannot statically determine their usage, leading to `MissingMethodException`.
+- **`RunAOTCompilation = false`**: The ILGPU frontend performs dynamic analysis of IL code which is currently incompatible with Blazor WebAssembly AOT compilation.
+
 ## License
 
 This project is licensed under the same terms as ILGPU. See [LICENSE](LICENSE) for details.
