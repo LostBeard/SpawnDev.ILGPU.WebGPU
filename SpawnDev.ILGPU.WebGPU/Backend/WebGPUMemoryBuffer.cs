@@ -1,5 +1,6 @@
 using global::ILGPU;
 using global::ILGPU.Runtime;
+using SpawnDev.BlazorJS.JSObjects;
 using System.Runtime.InteropServices;
 
 namespace SpawnDev.ILGPU.WebGPU.Backend
@@ -20,18 +21,22 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             if (source.GetAcceleratorType() == AcceleratorType.CPU)
             {
-                var length = source.Length;
-                var byteArray = new byte[length];
-
+                var length = (int)source.Length;
+                
                 // Use IContiguousArrayView to access internal members
                 var sourceContiguous = (IContiguousArrayView)source;
                 var sourceBuffer = sourceContiguous.Buffer;
                 var srcPtr = sourceBuffer.NativePtr + (int)sourceContiguous.Index;
-                Marshal.Copy(srcPtr, byteArray, 0, (int)length);
-
+                
+                // Read from CPU buffer to managed byte array (still required for NativePtr access)
+                var byteArray = new byte[length];
+                Marshal.Copy(srcPtr, byteArray, 0, length);
+                
+                // Use TypedArray for efficient transfer to GPU
                 var accelerator = (WebGPUAccelerator)Accelerator;
                 var destContiguous = (IContiguousArrayView)destination;
-                accelerator.NativeAccelerator.Queue!.WriteBuffer(_buffer.NativeBuffer!, (long)destContiguous.Index, byteArray);
+                using var typedArray = new Uint8Array(byteArray);
+                accelerator.NativeAccelerator.Queue!.WriteBuffer(_buffer.NativeBuffer!, (long)destContiguous.Index, typedArray);
             }
             else
             {
@@ -51,7 +56,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             // Use GPU queue ClearBuffer if available or WriteBuffer with filled array
             var data = new byte[view.Length];
-            if (value != 0) Array.Fill(data, value);
+            if (value != 0) global::System.Array.Fill(data, value);
             var accelerator = (WebGPUAccelerator)Accelerator;
             var viewContiguous = (IContiguousArrayView)view;
             accelerator.NativeAccelerator.Queue!.WriteBuffer(_buffer.NativeBuffer!, (long)viewContiguous.Index, data);

@@ -93,19 +93,10 @@ namespace SpawnDev.ILGPU.WebGPU
             if (queue == null)
                 throw new InvalidOperationException("GPU queue not available");
 
-            // Convert to bytes
-            var byteArray = new byte[sourceArray.Length * ElementSize];
-            var handle = GCHandle.Alloc(sourceArray, GCHandleType.Pinned);
-            try
-            {
-                Marshal.Copy(handle.AddrOfPinnedObject(), byteArray, 0, byteArray.Length);
-            }
-            finally
-            {
-                handle.Free();
-            }
-
-            queue.WriteBuffer(_buffer, (long)(targetOffset * ElementSize), byteArray);
+            // Use Uint8Array.Write<T> for direct transfer without Marshal.Copy overhead
+            using var uint8Array = new Uint8Array(sourceArray.Length * ElementSize);
+            uint8Array.Write(sourceArray);
+            queue.WriteBuffer(_buffer, (long)(targetOffset * ElementSize), uint8Array);
         }
 
         /// <summary>
@@ -117,13 +108,15 @@ namespace SpawnDev.ILGPU.WebGPU
                 throw new ObjectDisposedException(nameof(WebGPUBuffer<T>));
 
             var copyLength = length ?? Length - sourceOffset;
-            var result = new T[copyLength];
 
             WebGPUBackend.Log($"[WebGPU] CopyToHostAsync: SourceOffset={sourceOffset}, Length={copyLength} elements");
 
             var device = Accelerator.NativeDevice;
             if (device == null)
                 throw new InvalidOperationException("GPU device not initialized");
+
+            // Prepare result array
+            T[] result;
 
             // Create a staging buffer for reading
             var stagingSize = copyLength * ElementSize;
@@ -153,18 +146,12 @@ namespace SpawnDev.ILGPU.WebGPU
             var mappedRange = stagingBuffer.GetMappedRange();
             if (mappedRange != null)
             {
-                var byteArray = mappedRange.ReadBytes();
-
-                // Convert from bytes
-                var handle = GCHandle.Alloc(result, GCHandleType.Pinned);
-                try
-                {
-                    Marshal.Copy(byteArray, 0, handle.AddrOfPinnedObject(), byteArray.Length);
-                }
-                finally
-                {
-                    handle.Free();
-                }
+                using var uint8Array = new Uint8Array(mappedRange);
+                result = uint8Array.Read<T>();
+            }
+            else
+            {
+                result = [];
             }
             stagingBuffer.Unmap();
 
