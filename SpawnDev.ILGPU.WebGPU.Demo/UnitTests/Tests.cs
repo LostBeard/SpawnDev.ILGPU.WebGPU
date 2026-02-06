@@ -1935,7 +1935,224 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
         {
             data[index] = data[index] + 1;
         }
+
+        // ============= ADDITIONAL COVERAGE TESTS =============
+
+        [TestMethod]
+        public async Task WebGPUGridGroupDimensionTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            // WebGPU backend uses fixed 64-thread workgroups
+            int groupSize = 64;
+            int numGroups = 2;
+            int totalSize = groupSize * numGroups;
+
+            var output = new int[totalSize * 4]; // Store: globalId, localId, groupId, groupDim
+
+            using var buf = accelerator.Allocate1D(output);
+            var kernel = accelerator.LoadStreamKernel<Index1D, ArrayView<int>>(GridGroupDimensionKernel);
+            kernel(new KernelConfig(numGroups, groupSize), (Index1D)groupSize, buf.View);
+            await accelerator.SynchronizeAsync();
+
+            var result = await ReadBufferAsync<int>(buf);
+
+            // Verify first few threads
+            for (int g = 0; g < numGroups; g++)
+            {
+                for (int t = 0; t < groupSize; t++)
+                {
+                    int globalId = g * groupSize + t;
+                    int baseIdx = globalId * 4;
+
+                    int expectedGlobalId = globalId;
+                    int expectedLocalId = t;
+                    int expectedGroupId = g;
+                    int expectedGroupDim = groupSize;
+
+                    if (result[baseIdx] != expectedGlobalId)
+                        throw new Exception($"GlobalId mismatch at {globalId}. Expected {expectedGlobalId}, got {result[baseIdx]}");
+                    if (result[baseIdx + 1] != expectedLocalId)
+                        throw new Exception($"LocalId mismatch at {globalId}. Expected {expectedLocalId}, got {result[baseIdx + 1]}");
+                    if (result[baseIdx + 2] != expectedGroupId)
+                        throw new Exception($"GroupId mismatch at {globalId}. Expected {expectedGroupId}, got {result[baseIdx + 2]}");
+                    if (result[baseIdx + 3] != expectedGroupDim)
+                        throw new Exception($"GroupDim mismatch at {globalId}. Expected {expectedGroupDim}, got {result[baseIdx + 3]}");
+                }
+            }
+        }
+
+        static void GridGroupDimensionKernel(Index1D index, ArrayView<int> output)
+        {
+            int globalId = Grid.GlobalIndex.X;
+            int localId = Group.IdxX;
+            int groupId = Grid.IdxX;
+            int groupDim = Group.DimX;
+
+            int baseIdx = globalId * 4;
+            output[baseIdx] = globalId;
+            output[baseIdx + 1] = localId;
+            output[baseIdx + 2] = groupId;
+            output[baseIdx + 3] = groupDim;
+        }
+
+        [TestMethod]
+        public async Task WebGPULongIntegerTest()
+        {
+            // i64 (long) is not supported in current browser WebGPU implementations
+            throw new UnsupportedTestException("Skip: i64 (long) not supported in browser WebGPU");
+
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 4;
+            var data = new long[len];
+            data[0] = 1000000000L;
+            data[1] = -1000000000L;
+            data[2] = long.MaxValue / 2;
+            data[3] = 0L;
+
+            try
+            {
+                using var buf = accelerator.Allocate1D(data);
+                var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<long>>(LongIntegerKernel);
+                kernel((Index1D)len, buf.View);
+                await accelerator.SynchronizeAsync();
+
+                var result = await ReadBufferAsync<long>(buf);
+                for (int i = 0; i < len; i++)
+                {
+                    long expected = data[i] * 2 + 1;
+                    if (result[i] != expected)
+                        throw new Exception($"Long integer failed at {i}. Expected {expected}, got {result[i]}");
+                }
+            }
+            catch (Exception ex) when (ex.Message.Contains("NotSupported") || ex.Message.Contains("i64"))
+            {
+                throw new UnsupportedTestException("Skip: i64 (long) not fully supported in browser WebGPU");
+            }
+        }
+
+        static void LongIntegerKernel(Index1D index, ArrayView<long> data)
+        {
+            long val = data[index];
+            data[index] = val * 2 + 1;
+        }
+
+        [TestMethod]
+        public async Task WebGPUMixedTypeBuffersTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            int len = 16;
+            var intData = new int[len];
+            var floatData = new float[len];
+            for (int i = 0; i < len; i++)
+            {
+                intData[i] = i;
+                floatData[i] = i * 0.5f;
+            }
+
+            using var bufInt = accelerator.Allocate1D(intData);
+            using var bufFloat = accelerator.Allocate1D(floatData);
+            using var bufResult = accelerator.Allocate1D<float>(len);
+
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>, ArrayView<float>, ArrayView<float>>(MixedTypeKernel);
+            kernel((Index1D)len, bufInt.View, bufFloat.View, bufResult.View);
+            await accelerator.SynchronizeAsync();
+
+            var result = await ReadBufferAsync<float>(bufResult);
+            for (int i = 0; i < len; i++)
+            {
+                float expected = intData[i] + floatData[i];
+                if (MathF.Abs(result[i] - expected) > 0.001f)
+                    throw new Exception($"Mixed type failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        static void MixedTypeKernel(Index1D index, ArrayView<int> intData, ArrayView<float> floatData, ArrayView<float> result)
+        {
+            result[index] = (float)intData[index] + floatData[index];
+        }
+
+        [TestMethod]
+        public async Task WebGPUEmptyBufferTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            // Test with minimal size (WGSL doesn't allow truly empty buffers)
+            int len = 1;
+            var data = new int[len];
+            data[0] = 42;
+
+            using var buf = accelerator.Allocate1D(data);
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>>(EmptyBufferKernel);
+            kernel((Index1D)len, buf.View);
+            await accelerator.SynchronizeAsync();
+
+            var result = await ReadBufferAsync<int>(buf);
+            if (result[0] != 84)
+                throw new Exception($"Single element buffer failed. Expected 84, got {result[0]}");
+        }
+
+        static void EmptyBufferKernel(Index1D index, ArrayView<int> data)
+        {
+            data[index] = data[index] * 2;
+        }
+
+        [TestMethod]
+        public async Task WebGPULargeDispatchTest()
+        {
+            var builder = Context.Create();
+            await builder.WebGPUAsync();
+            using var context = builder.ToContext();
+            var device = context.GetWebGPUDevices()[0];
+            using var accelerator = await device.CreateAcceleratorAsync(context);
+
+            // Test near-maximum dispatch size (WebGPU limit is 65535 per dimension)
+            int len = 65536; // 2^16
+            var data = new int[len];
+            for (int i = 0; i < len; i++) data[i] = i;
+
+            using var buf = accelerator.Allocate1D(data);
+            var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<int>>(LargeDispatchKernel);
+            kernel((Index1D)len, buf.View);
+            await accelerator.SynchronizeAsync();
+
+            var result = await ReadBufferAsync<int>(buf);
+
+            // Spot check
+            int[] checkIndices = { 0, 1000, 32768, 65535 };
+            foreach (int i in checkIndices)
+            {
+                int expected = i + 1;
+                if (result[i] != expected)
+                    throw new Exception($"Large dispatch failed at {i}. Expected {expected}, got {result[i]}");
+            }
+        }
+
+        static void LargeDispatchKernel(Index1D index, ArrayView<int> data)
+        {
+            data[index] = data[index] + 1;
+        }
     }
 }
+
+
 
 
