@@ -318,11 +318,9 @@
         // The emulation flags were NOT part of the cache key with static properties.
         // Now we pass options to the accelerator constructor for proper instance-scoped configuration.
         
-        Console.WriteLine($"[Mandelbrot] Reloading kernel with EnableF64Emulation={enableF64}");
-        
-        // Enable verbose logging to see the generated WGSL
+        // Keep verbose logging off for production
         var originalVerbose = WebGPUBackend.VerboseLogging;
-        WebGPUBackend.VerboseLogging = true;
+        WebGPUBackend.VerboseLogging = false;
         
         try
         {
@@ -353,8 +351,6 @@
             
             _ilgpuKernel = _ilgpuAccelerator.LoadAutoGroupedStreamKernel<Index2D, ArrayView2D<uint, Stride2D.DenseX>, int, int, int, double, double, double>(MandelbrotKernel);
             _ilgpuBuffer = _ilgpuAccelerator.Allocate2DDenseX<uint>(new Index2D(_width, _height));
-            
-            Console.WriteLine($"[Mandelbrot] Kernel reloaded with fresh accelerator, f64 emulation: {enableF64}");
         }
         finally
         {
