@@ -752,6 +752,14 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             var operand = Load(value.Value);
             Declare(target);
 
+            // Handle emulated i64/u64 negation
+            var operandType = TypeGenerator[value.Value.Type];
+            if (WebGPUBackend.EnableI64Emulation && (operandType == "i64" || operandType == "u64") && value.Kind == UnaryArithmeticKind.Neg)
+            {
+                AppendLine($"{target} = i64_neg({operand});");
+                return;
+            }
+
             string result = value.Kind switch
             {
                 UnaryArithmeticKind.Neg => $"-{operand}",

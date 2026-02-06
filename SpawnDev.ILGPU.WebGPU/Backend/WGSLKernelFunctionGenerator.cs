@@ -932,6 +932,14 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 return;
             }
 
+            // Handle emulated i64/u64 negation
+            var sourceType = TypeGenerator[value.Value.Type];
+            if (WebGPUBackend.EnableI64Emulation && (sourceType == "i64" || sourceType == "u64") && value.Kind == UnaryArithmeticKind.Neg)
+            {
+                AppendLine($"{prefix}{target} = i64_neg({source});");
+                return;
+            }
+
             // Handle simple unary operators
             string op = value.Kind switch
             {
