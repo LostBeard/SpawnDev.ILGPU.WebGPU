@@ -62,6 +62,20 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         public static bool EnableBufferPooling { get; set; } = false;
 
         /// <summary>
+        /// Enables f64 (double) emulation using two f32 values (double-float technique).
+        /// When enabled, f64 operations use vec2&lt;f32&gt; with software emulation.
+        /// When disabled, f64 is promoted to f32 (default behavior, loses precision).
+        /// </summary>
+        public static bool EnableF64Emulation { get; set; } = false;
+
+        /// <summary>
+        /// Enables i64 (long) emulation using two u32 values (double-word technique).
+        /// When enabled, i64 operations use vec2&lt;u32&gt; with software emulation.
+        /// When disabled, i64 is promoted to i32 (default behavior, loses range).
+        /// </summary>
+        public static bool EnableI64Emulation { get; set; } = false;
+
+        /// <summary>
         /// Logs a message to the console if VerboseLogging is enabled.
         /// </summary>
         public static void Log(string message)

@@ -1641,8 +1641,10 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
         [TestMethod]
         public async Task WebGPUDoublePrecisionTest()
         {
-            // f64 (double) support in WebGPU is experimental and not available in most browsers
-            throw new UnsupportedTestException("f64 (double precision) not supported in browser WebGPU");
+            // Enable f64 emulation for this test
+            WebGPUBackend.EnableF64Emulation = true;
+            try
+            {
 
             var builder = Context.Create();
             await builder.WebGPUAsync();
@@ -1668,6 +1670,11 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
                 double expected = val * 2.0 + 1.0;
                 if (Math.Abs(result[i] - expected) > 0.0001)
                     throw new Exception($"Double precision failed at {i}. Expected {expected}, got {result[i]}");
+            }
+            }
+            finally
+            {
+                WebGPUBackend.EnableF64Emulation = false;
             }
         }
 
@@ -1987,24 +1994,23 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
         [TestMethod]
         public async Task WebGPULongIntegerTest()
         {
-            // i64 (long) is not supported in current browser WebGPU implementations
-            throw new UnsupportedTestException("i64 (long) not supported in browser WebGPU");
-
-            var builder = Context.Create();
-            await builder.WebGPUAsync();
-            using var context = builder.ToContext();
-            var device = context.GetWebGPUDevices()[0];
-            using var accelerator = await device.CreateAcceleratorAsync(context);
-
-            int len = 4;
-            var data = new long[len];
-            data[0] = 1000000000L;
-            data[1] = -1000000000L;
-            data[2] = long.MaxValue / 2;
-            data[3] = 0L;
-
+            // Enable i64 emulation for this test
+            WebGPUBackend.EnableI64Emulation = true;
             try
             {
+                var builder = Context.Create();
+                await builder.WebGPUAsync();
+                using var context = builder.ToContext();
+                var device = context.GetWebGPUDevices()[0];
+                using var accelerator = await device.CreateAcceleratorAsync(context);
+
+                int len = 4;
+                var data = new long[len];
+                data[0] = 1000000000L;
+                data[1] = -1000000000L;
+                data[2] = long.MaxValue / 2;
+                data[3] = 0L;
+
                 using var buf = accelerator.Allocate1D(data);
                 var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<long>>(LongIntegerKernel);
                 kernel((Index1D)len, buf.View);
@@ -2018,9 +2024,9 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
                         throw new Exception($"Long integer failed at {i}. Expected {expected}, got {result[i]}");
                 }
             }
-            catch (Exception ex) when (ex.Message.Contains("NotSupported") || ex.Message.Contains("i64"))
+            finally
             {
-                throw new UnsupportedTestException("i64 (long) not fully supported in browser WebGPU");
+                WebGPUBackend.EnableI64Emulation = false;
             }
         }
 
@@ -2029,6 +2035,380 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             long val = data[index];
             data[index] = val * 2 + 1;
         }
+
+        #region Additional 64-bit Emulation Tests
+
+        // ============================================
+        // i64 (Long Integer) Emulation Tests
+        // ============================================
+
+        [TestMethod]
+        public async Task WebGPULongArithmeticTest()
+        {
+            WebGPUBackend.EnableI64Emulation = true;
+            try
+            {
+                var builder = Context.Create();
+                await builder.WebGPUAsync();
+                using var context = builder.ToContext();
+                var device = context.GetWebGPUDevices()[0];
+                using var accelerator = await device.CreateAcceleratorAsync(context);
+
+                int len = 8;
+                var a = new long[] { 100, -50, 1000000000L, -999999999L, 0L, 1L, -1L, long.MaxValue / 4 };
+                var b = new long[] { 200, 50, 500000000L, 1L, 0L, 1L, 1L, long.MaxValue / 4 };
+
+                using var bufA = accelerator.Allocate1D(a);
+                using var bufB = accelerator.Allocate1D(b);
+                using var bufOut = accelerator.Allocate1D<long>(len);
+
+                var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<long>, ArrayView<long>, ArrayView<long>>(LongArithmeticKernel);
+                kernel((Index1D)len, bufA.View, bufB.View, bufOut.View);
+                await accelerator.SynchronizeAsync();
+
+                var result = await bufOut.CopyToHostAsync<long>();
+                for (int i = 0; i < len; i++)
+                {
+                    // (a + b) - (a * 2)  simplifies to b - a
+                    long expected = b[i] - a[i];
+                    if (result[i] != expected)
+                        throw new Exception($"Long arithmetic failed at {i}. Expected {expected}, got {result[i]}");
+                }
+            }
+            finally
+            {
+                WebGPUBackend.EnableI64Emulation = false;
+            }
+        }
+
+        static void LongArithmeticKernel(Index1D index, ArrayView<long> a, ArrayView<long> b, ArrayView<long> output)
+        {
+            long valA = a[index];
+            long valB = b[index];
+            output[index] = (valA + valB) - (valA * 2);
+        }
+
+        [TestMethod]
+        public async Task WebGPULongBitwiseTest()
+        {
+            WebGPUBackend.EnableI64Emulation = true;
+            try
+            {
+                var builder = Context.Create();
+                await builder.WebGPUAsync();
+                using var context = builder.ToContext();
+                var device = context.GetWebGPUDevices()[0];
+                using var accelerator = await device.CreateAcceleratorAsync(context);
+
+                int len = 4;
+                var data = new long[] { 0x00FF00FF00FF00FFL, 0x123456789ABCDEF0L, -1L, 0L };
+
+                using var bufIn = accelerator.Allocate1D(data);
+                using var bufOut = accelerator.Allocate1D<long>(len);
+
+                var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<long>, ArrayView<long>>(LongBitwiseKernel);
+                kernel((Index1D)len, bufIn.View, bufOut.View);
+                await accelerator.SynchronizeAsync();
+
+                var result = await bufOut.CopyToHostAsync<long>();
+                for (int i = 0; i < len; i++)
+                {
+                    long val = data[i];
+                    long expected = (val & 0x0F0F0F0F0F0F0F0FL) | ((val >> 4) & 0x0F0F0F0F0F0F0F0FL);
+                    if (result[i] != expected)
+                        throw new Exception($"Long bitwise failed at {i}. Expected 0x{expected:X16}, got 0x{result[i]:X16}");
+                }
+            }
+            finally
+            {
+                WebGPUBackend.EnableI64Emulation = false;
+            }
+        }
+
+        static void LongBitwiseKernel(Index1D index, ArrayView<long> input, ArrayView<long> output)
+        {
+            long val = input[index];
+            // Extract lower nibbles and upper nibbles shifted
+            long mask = 0x0F0F0F0F0F0F0F0FL;
+            output[index] = (val & mask) | ((val >> 4) & mask);
+        }
+
+        [TestMethod]
+        public async Task WebGPULongComparisonTest()
+        {
+            WebGPUBackend.EnableI64Emulation = true;
+            try
+            {
+                var builder = Context.Create();
+                await builder.WebGPUAsync();
+                using var context = builder.ToContext();
+                var device = context.GetWebGPUDevices()[0];
+                using var accelerator = await device.CreateAcceleratorAsync(context);
+
+                int len = 6;
+                var a = new long[] { 10, -10, 1000000000L, -999999999L, 0L, 5L };
+                var b = new long[] { 5, -20, 500000000L, 1L, 0L, 5L };
+
+                using var bufA = accelerator.Allocate1D(a);
+                using var bufB = accelerator.Allocate1D(b);
+                using var bufOut = accelerator.Allocate1D<long>(len);
+
+                var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<long>, ArrayView<long>, ArrayView<long>>(LongComparisonKernel);
+                kernel((Index1D)len, bufA.View, bufB.View, bufOut.View);
+                await accelerator.SynchronizeAsync();
+
+                var result = await bufOut.CopyToHostAsync<long>();
+                for (int i = 0; i < len; i++)
+                {
+                    long expected = Math.Max(a[i], b[i]);
+                    if (result[i] != expected)
+                        throw new Exception($"Long comparison failed at {i}. Expected {expected}, got {result[i]}");
+                }
+            }
+            finally
+            {
+                WebGPUBackend.EnableI64Emulation = false;
+            }
+        }
+
+        static void LongComparisonKernel(Index1D index, ArrayView<long> a, ArrayView<long> b, ArrayView<long> output)
+        {
+            long valA = a[index];
+            long valB = b[index];
+            // Manual max to avoid Math.Max which might throw
+            output[index] = valA > valB ? valA : valB;
+        }
+
+        [TestMethod]
+        public async Task WebGPULongEdgeCasesTest()
+        {
+            WebGPUBackend.EnableI64Emulation = true;
+            try
+            {
+                var builder = Context.Create();
+                await builder.WebGPUAsync();
+                using var context = builder.ToContext();
+                var device = context.GetWebGPUDevices()[0];
+                using var accelerator = await device.CreateAcceleratorAsync(context);
+
+                // Test edge values: 0, -1, large positive, large negative
+                var data = new long[] { 0L, -1L, long.MaxValue / 2, long.MinValue / 2 + 1 };
+                int len = data.Length;
+
+                using var buf = accelerator.Allocate1D(data);
+
+                var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<long>>(LongEdgeCasesKernel);
+                kernel((Index1D)len, buf.View);
+                await accelerator.SynchronizeAsync();
+
+                var result = await buf.CopyToHostAsync<long>();
+                for (int i = 0; i < len; i++)
+                {
+                    // Kernel does: val + 1 - 1 (identity with potential overflow check)
+                    long expected = data[i];
+                    if (result[i] != expected)
+                        throw new Exception($"Long edge case failed at {i}. Expected {expected}, got {result[i]}");
+                }
+            }
+            finally
+            {
+                WebGPUBackend.EnableI64Emulation = false;
+            }
+        }
+
+        static void LongEdgeCasesKernel(Index1D index, ArrayView<long> data)
+        {
+            long val = data[index];
+            // Identity operation that exercises the emulation
+            data[index] = val + 1L - 1L;
+        }
+
+        // ============================================
+        // f64 (Double Precision) Emulation Tests
+        // ============================================
+
+        [TestMethod]
+        public async Task WebGPUDoubleMathTest()
+        {
+            WebGPUBackend.EnableF64Emulation = true;
+            try
+            {
+                var builder = Context.Create();
+                await builder.WebGPUAsync();
+                using var context = builder.ToContext();
+                var device = context.GetWebGPUDevices()[0];
+                using var accelerator = await device.CreateAcceleratorAsync(context);
+
+                int len = 6;
+                var input = new double[] { 4.0, 9.0, 16.0, 1.0, 0.25, 100.0 };
+
+                using var bufIn = accelerator.Allocate1D(input);
+                using var bufOut = accelerator.Allocate1D<double>(len);
+
+                var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<double>, ArrayView<double>>(DoubleMathKernel);
+                kernel((Index1D)len, bufIn.View, bufOut.View);
+                await accelerator.SynchronizeAsync();
+
+                var result = await bufOut.CopyToHostAsync<double>();
+                for (int i = 0; i < len; i++)
+                {
+                    double val = input[i];
+                    double expected = Math.Sqrt(val) * 2.0;
+                    if (Math.Abs(result[i] - expected) > 0.001)
+                        throw new Exception($"Double math failed at {i}. Expected {expected}, got {result[i]}");
+                }
+            }
+            finally
+            {
+                WebGPUBackend.EnableF64Emulation = false;
+            }
+        }
+
+        static void DoubleMathKernel(Index1D index, ArrayView<double> input, ArrayView<double> output)
+        {
+            double val = input[index];
+            // Use sqrt which should use the f64 emulated intrinsic
+            output[index] = Math.Sqrt(val) * 2.0;
+        }
+
+
+        [TestMethod]
+        public async Task WebGPUDoubleEdgeCasesTest()
+        {
+            WebGPUBackend.EnableF64Emulation = true;
+            try
+            {
+                var builder = Context.Create();
+                await builder.WebGPUAsync();
+                using var context = builder.ToContext();
+                var device = context.GetWebGPUDevices()[0];
+                using var accelerator = await device.CreateAcceleratorAsync(context);
+
+                // Test edge values: zero, small, large
+                var data = new double[] { 0.0, 1e-10, 1e10, -0.0, -1e-10, -1e10 };
+                int len = data.Length;
+
+                using var buf = accelerator.Allocate1D(data);
+
+                var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<double>>(DoubleEdgeCasesKernel);
+                kernel((Index1D)len, buf.View);
+                await accelerator.SynchronizeAsync();
+
+                var result = await buf.CopyToHostAsync<double>();
+                for (int i = 0; i < len; i++)
+                {
+                    // Kernel does: val * 1.0 (identity)
+                    // Note: f64 emulation loses precision - allow up to 1% relative error
+                    double expected = data[i] * 1.0;
+                    double tolerance = Math.Max(Math.Abs(expected * 0.01), 1e-6);
+                    if (Math.Abs(result[i] - expected) > tolerance)
+                        throw new Exception($"Double edge case failed at {i}. Expected {expected}, got {result[i]}");
+                }
+            }
+            finally
+            {
+                WebGPUBackend.EnableF64Emulation = false;
+            }
+        }
+
+        static void DoubleEdgeCasesKernel(Index1D index, ArrayView<double> data)
+        {
+            double val = data[index];
+            // Identity operation
+            data[index] = val * 1.0;
+        }
+
+        // ============================================
+        // Multi-Buffer Tests
+        // ============================================
+
+        [TestMethod]
+        public async Task WebGPULongMultiBufferTest()
+        {
+            WebGPUBackend.EnableI64Emulation = true;
+            try
+            {
+                var builder = Context.Create();
+                await builder.WebGPUAsync();
+                using var context = builder.ToContext();
+                var device = context.GetWebGPUDevices()[0];
+                using var accelerator = await device.CreateAcceleratorAsync(context);
+
+                int len = 8;
+                var input = new long[len];
+                for (int i = 0; i < len; i++) input[i] = (long)i * 1000000000L;
+
+                using var bufIn = accelerator.Allocate1D(input);
+                using var bufOut = accelerator.Allocate1D<long>(len);
+
+                var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<long>, ArrayView<long>>(LongMultiBufferKernel);
+                kernel((Index1D)len, bufIn.View, bufOut.View);
+                await accelerator.SynchronizeAsync();
+
+                var result = await bufOut.CopyToHostAsync<long>();
+                for (int i = 0; i < len; i++)
+                {
+                    long expected = input[i] * 3 + 7;
+                    if (result[i] != expected)
+                        throw new Exception($"Long multi-buffer failed at {i}. Expected {expected}, got {result[i]}");
+                }
+            }
+            finally
+            {
+                WebGPUBackend.EnableI64Emulation = false;
+            }
+        }
+
+        static void LongMultiBufferKernel(Index1D index, ArrayView<long> input, ArrayView<long> output)
+        {
+            long val = input[index];
+            output[index] = val * 3 + 7;
+        }
+
+        [TestMethod]
+        public async Task WebGPUDoubleMultiBufferTest()
+        {
+            WebGPUBackend.EnableF64Emulation = true;
+            try
+            {
+                var builder = Context.Create();
+                await builder.WebGPUAsync();
+                using var context = builder.ToContext();
+                var device = context.GetWebGPUDevices()[0];
+                using var accelerator = await device.CreateAcceleratorAsync(context);
+
+                int len = 10;
+                var input = new double[len];
+                for (int i = 0; i < len; i++) input[i] = i * 0.123456789;
+
+                using var bufIn = accelerator.Allocate1D(input);
+                using var bufOut = accelerator.Allocate1D<double>(len);
+
+                var kernel = accelerator.LoadAutoGroupedStreamKernel<Index1D, ArrayView<double>, ArrayView<double>>(DoubleMultiBufferKernel);
+                kernel((Index1D)len, bufIn.View, bufOut.View);
+                await accelerator.SynchronizeAsync();
+
+                var result = await bufOut.CopyToHostAsync<double>();
+                for (int i = 0; i < len; i++)
+                {
+                    double expected = input[i] * 3.0 + 0.5;
+                    if (Math.Abs(result[i] - expected) > 0.0001)
+                        throw new Exception($"Double multi-buffer failed at {i}. Expected {expected}, got {result[i]}");
+                }
+            }
+            finally
+            {
+                WebGPUBackend.EnableF64Emulation = false;
+            }
+        }
+
+        static void DoubleMultiBufferKernel(Index1D index, ArrayView<double> input, ArrayView<double> output)
+        {
+            double val = input[index];
+            output[index] = val * 3.0 + 0.5;
+        }
+
+        #endregion
 
         [TestMethod]
         public async Task WebGPUMixedTypeBuffersTest()

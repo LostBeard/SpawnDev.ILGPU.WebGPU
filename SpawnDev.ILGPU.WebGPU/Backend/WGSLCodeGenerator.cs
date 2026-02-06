@@ -958,7 +958,29 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             var type = TypeGenerator[value.Type];
             Declare(target);
 
-            string valStr = value.BasicValueType switch
+            // Check if we need emulation for this constant
+            bool isEmulatedF64 = WebGPUBackend.EnableF64Emulation && value.BasicValueType == BasicValueType.Float64;
+            bool isEmulatedI64 = WebGPUBackend.EnableI64Emulation && value.BasicValueType == BasicValueType.Int64;
+
+            if (isEmulatedF64)
+            {
+                // Use f64_from_f32 conversion function for f64 constants
+                string valStr = FormatFloat((float)value.Float64Value);
+                AppendLine($"{target} = f64_from_f32({valStr});");
+                return;
+            }
+
+            if (isEmulatedI64)
+            {
+                // For i64 emulation, we need to split the 64-bit value into two 32-bit parts
+                long longVal = value.Int64Value;
+                uint lo = (uint)(longVal & 0xFFFFFFFF);
+                uint hi = (uint)((ulong)longVal >> 32);
+                AppendLine($"{target} = vec2<u32>({lo}u, {hi}u);");
+                return;
+            }
+
+            string valStrStd = value.BasicValueType switch
             {
                 BasicValueType.Int1 => value.Int1Value ? "true" : "false",
                 BasicValueType.Int8 => value.Int8Value.ToString(),
@@ -973,11 +995,11 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
             if (value.BasicValueType != BasicValueType.Int1)
             {
-                AppendLine($"{target} = {type}({valStr});");
+                AppendLine($"{target} = {type}({valStrStd});");
             }
             else
             {
-                AppendLine($"{target} = {valStr};");
+                AppendLine($"{target} = {valStrStd};");
             }
         }
 

@@ -24,6 +24,10 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
         private HashSet<int> _atomicParameters = new HashSet<int>();
         private HashSet<Value> _hoistedPrimitives = new HashSet<Value>();
+        private HashSet<int> _emulatedF64Params = new HashSet<int>();
+        private HashSet<int> _emulatedI64Params = new HashSet<int>();
+        // Maps variable names to their emulation info (param index, is f64)
+        private Dictionary<string, (int ParamIndex, bool IsF64)> _emulatedVarMappings = new Dictionary<string, (int, bool)>();
         private CFG<ReversePostOrder, Forwards> _cfg;
         private Dominators<Backwards> _postDominators;
         private Loops<ReversePostOrder, Forwards> _loops;
@@ -131,6 +135,15 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             // Emit struct definitions first
             TypeGenerator.GenerateTypeDefinitions(builder);
 
+            // Emit emulation library if needed
+            if (WebGPUBackend.EnableF64Emulation || WebGPUBackend.EnableI64Emulation)
+            {
+                builder.AppendLine("// ============ 64-bit Emulation Library ============");
+                builder.AppendLine(WGSLEmulationLibrary.GetEmulationLibrary(
+                    WebGPUBackend.EnableF64Emulation, 
+                    WebGPUBackend.EnableI64Emulation));
+            }
+
             int bindingIdx = 0;
             int paramOffset = KernelParamOffset;
 
@@ -144,6 +157,21 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
                 // Debug info
                 builder.AppendLine($"// Param {param.Index}: {param.ParameterType} (Element: {elementType})");
+
+                // Track if this is an emulated 64-bit buffer
+                bool isEmulated64Bit = false;
+                if (WebGPUBackend.EnableF64Emulation && wgslType == "f64")
+                {
+                    wgslType = "u32"; // Raw bits storage (2 u32 per f64)
+                    isEmulated64Bit = true;
+                    _emulatedF64Params.Add(param.Index);
+                }
+                else if (WebGPUBackend.EnableI64Emulation && (wgslType == "i64" || wgslType == "u64"))
+                {
+                    wgslType = "u32"; // Raw bits storage (2 u32 per i64)
+                    isEmulated64Bit = true;
+                    _emulatedI64Params.Add(param.Index);
+                }
 
                 if (_atomicParameters.Contains(param.Index))
                 {
@@ -201,6 +229,10 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 _ => "64, 1, 1"
             };
             AppendLine($"let workgroup_size = vec3<u32>({wgDims});");
+
+            // 0. Pre-scan parameters to identify emulated 64-bit types
+            // This MUST happen before hoisting so that Load/Store know which buffers are emulated
+            PreScanEmulatedParameters();
 
             // 1. Scan and declare hoisted variables
             HoistCrossBlockVariables();
@@ -367,6 +399,32 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             }
         }
 
+        /// <summary>
+        /// Pre-scans parameters to identify which buffers use emulated 64-bit types.
+        /// This MUST run before HoistCrossBlockVariables and body generation so that
+        /// LoadElementAddress and Load/Store can check if a param needs emulation.
+        /// </summary>
+        private void PreScanEmulatedParameters()
+        {
+            int paramOffset = KernelParamOffset;
+            foreach (var param in Method.Parameters)
+            {
+                if (param.Index < paramOffset) continue;
+                
+                var elementType = GetBufferElementType(param.ParameterType);
+                var wgslType = TypeGenerator[elementType];
+                
+                if (WebGPUBackend.EnableF64Emulation && wgslType == "f64")
+                {
+                    _emulatedF64Params.Add(param.Index);
+                }
+                else if (WebGPUBackend.EnableI64Emulation && (wgslType == "i64" || wgslType == "u64"))
+                {
+                    _emulatedI64Params.Add(param.Index);
+                }
+            }
+        }
+
         private void HoistCrossBlockVariables()
         {
             var defBlocks = new Dictionary<Value, BasicBlock>();
@@ -421,7 +479,23 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
                 string init = " = 0";
                 if (basicType == BasicValueType.Int1) init = " = false";
-                else if (basicType == BasicValueType.Float16 || basicType == BasicValueType.Float32 || basicType == BasicValueType.Float64) init = " = 0.0";
+                else if (basicType == BasicValueType.Float16 || basicType == BasicValueType.Float32) init = " = 0.0";
+                else if (basicType == BasicValueType.Float64)
+                {
+                    // f64 is emulated as vec2<f32> when emulation is enabled
+                    if (WebGPUBackend.EnableF64Emulation)
+                        init = " = f64(0.0, 0.0)";
+                    else
+                        init = " = 0.0";
+                }
+                else if (basicType == BasicValueType.Int64)
+                {
+                    // i64 is emulated as vec2<u32> when emulation is enabled
+                    if (WebGPUBackend.EnableI64Emulation)
+                        init = " = i64(0u, 0u)";
+                    else
+                        init = " = 0";
+                }
 
                 AppendLine($"var {variable.Name} : {wgslType}{init};");
                 declaredVariables.Add(variable.Name);
@@ -570,6 +644,25 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 int paramOffset = KernelParamOffset;
                 if (param.Index >= paramOffset)
                 {
+                    // Check if this is an emulated 64-bit buffer
+                    if (_emulatedF64Params.Contains(param.Index) || _emulatedI64Params.Contains(param.Index))
+                    {
+                        bool isF64 = _emulatedF64Params.Contains(param.Index);
+                        // Register for Load/Store to know this needs conversion
+                        _emulatedVarMappings[target.Name] = (param.Index, isF64);
+                        
+                        // For emulated buffers, we need to address 2 u32 per element
+                        // Store the base index (multiplied by 2) for later use in Load/Store
+                        AppendIndent();
+                        Builder.Append($"let {target.Name}_base_idx = i32({offset}) * 2;");
+                        Builder.AppendLine();
+                        // Also create an alias for compatibility
+                        AppendIndent();
+                        Builder.Append($"let {target.Name} = &param{param.Index};");
+                        Builder.AppendLine();
+                        return;
+                    }
+                    
                     AppendIndent();
                     Builder.Append($"let {target.Name} = &param{param.Index}[{offset}];");
                     Builder.AppendLine();
@@ -622,6 +715,26 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 }
             }
 
+            // Check for emulated 64-bit buffer access
+            if (_emulatedVarMappings.TryGetValue(source.ToString(), out var emulInfo))
+            {
+                // This is loading from an emulated buffer - need to read 2 u32 values and convert
+                string baseIdxVar = $"{source}_base_idx";
+                if (emulInfo.IsF64)
+                {
+                    // f64: convert IEEE 754 bits to double-float
+                    Declare(target);
+                    AppendLine($"{target} = f64_from_ieee754_bits((*{source})[u32({baseIdxVar})], (*{source})[u32({baseIdxVar}) + 1u]);");
+                }
+                else
+                {
+                    // i64: just combine two u32 into vec2<u32>
+                    Declare(target);
+                    AppendLine($"{target} = i64((*{source})[u32({baseIdxVar})], (*{source})[u32({baseIdxVar}) + 1u]);");
+                }
+                return;
+            }
+
             // Check if we already declared this at the top
             if (_hoistedPrimitives.Contains(loadVal))
             {
@@ -639,6 +752,27 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             var address = Load(storeVal.Target);
             var val = Load(storeVal.Value);
+            
+            // Check for emulated 64-bit buffer store
+            if (_emulatedVarMappings.TryGetValue(address.ToString(), out var emulInfo))
+            {
+                string baseIdxVar = $"{address}_base_idx";
+                if (emulInfo.IsF64)
+                {
+                    // f64: convert double-float back to IEEE 754 bits
+                    AppendLine($"let _bits_{address} = f64_to_ieee754_bits({val});");
+                    AppendLine($"(*{address})[u32({baseIdxVar})] = _bits_{address}.x;");
+                    AppendLine($"(*{address})[u32({baseIdxVar}) + 1u] = _bits_{address}.y;");
+                }
+                else
+                {
+                    // i64: split vec2<u32> into two u32 values
+                    AppendLine($"(*{address})[u32({baseIdxVar})] = {val}.x;");
+                    AppendLine($"(*{address})[u32({baseIdxVar}) + 1u] = {val}.y;");
+                }
+                return;
+            }
+            
             AppendLine($"*{address} = {val};");
         }
 
@@ -651,6 +785,68 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             var right = Load(value.Right);
             string prefix = GetPrefix(value);
 
+            // Check if this is an emulated 64-bit operation
+            var leftType = TypeGenerator[value.Left.Type];
+            var rightType = TypeGenerator[value.Right.Type];
+            bool isEmulatedF64 = WebGPUBackend.EnableF64Emulation && (leftType == "f64" || rightType == "f64");
+            bool isEmulatedI64 = WebGPUBackend.EnableI64Emulation && (leftType == "i64" || leftType == "u64" || rightType == "i64" || rightType == "u64");
+
+            if (isEmulatedF64)
+            {
+                // Use f64 emulation functions
+                string? emulFunc = value.Kind switch
+                {
+                    BinaryArithmeticKind.Add => "f64_add",
+                    BinaryArithmeticKind.Sub => "f64_sub",
+                    BinaryArithmeticKind.Mul => "f64_mul",
+                    BinaryArithmeticKind.Div => "f64_div",
+                    BinaryArithmeticKind.Min => "f64_min",
+                    BinaryArithmeticKind.Max => "f64_max",
+                    _ => null
+                };
+
+                if (emulFunc != null)
+                {
+                    AppendLine($"{prefix}{target} = {emulFunc}({left}, {right});");
+                    return;
+                }
+                // Fall through to standard ops for unsupported kinds
+            }
+
+            if (isEmulatedI64)
+            {
+                // Use i64 emulation functions
+                bool isUnsigned = leftType == "u64" || rightType == "u64";
+                string? emulFunc = value.Kind switch
+                {
+                    BinaryArithmeticKind.Add => "i64_add",
+                    BinaryArithmeticKind.Sub => "i64_sub",
+                    BinaryArithmeticKind.Mul => isUnsigned ? "u64_mul" : "i64_mul",
+                    BinaryArithmeticKind.And => "i64_and",
+                    BinaryArithmeticKind.Or => "i64_or",
+                    BinaryArithmeticKind.Xor => "i64_xor",
+                    BinaryArithmeticKind.Shl => "i64_shl",
+                    BinaryArithmeticKind.Shr => isUnsigned ? "u64_shr" : "i64_shr",
+                    _ => null
+                };
+
+                if (emulFunc != null)
+                {
+                    if (value.Kind == BinaryArithmeticKind.Shl || value.Kind == BinaryArithmeticKind.Shr)
+                    {
+                        // Shift amount should be u32
+                        AppendLine($"{prefix}{target} = {emulFunc}({left}, u32({right}));");
+                    }
+                    else
+                    {
+                        AppendLine($"{prefix}{target} = {emulFunc}({left}, {right});");
+                    }
+                    return;
+                }
+                // Fall through to standard ops for unsupported kinds
+            }
+
+            // Standard (non-emulated) path
             if (value.Kind == BinaryArithmeticKind.Min || value.Kind == BinaryArithmeticKind.Max || value.Kind == BinaryArithmeticKind.PowF)
             {
                 string func = value.Kind switch
@@ -956,6 +1152,52 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             string leftType = TypeGenerator[value.Left.Type];
             string rightType = TypeGenerator[value.Right.Type];
 
+            // Check for emulated 64-bit compare
+            bool isEmulatedF64 = WebGPUBackend.EnableF64Emulation && (leftType == "f64" || rightType == "f64");
+            bool isEmulatedI64 = WebGPUBackend.EnableI64Emulation && (leftType == "i64" || leftType == "u64" || rightType == "i64" || rightType == "u64");
+
+            if (isEmulatedF64)
+            {
+                string? emulFunc = value.Kind switch
+                {
+                    CompareKind.LessThan => "f64_lt",
+                    CompareKind.LessEqual => "f64_le",
+                    CompareKind.GreaterThan => "f64_gt",
+                    CompareKind.GreaterEqual => "f64_ge",
+                    CompareKind.Equal => "f64_eq",
+                    CompareKind.NotEqual => "f64_ne",
+                    _ => null
+                };
+
+                if (emulFunc != null)
+                {
+                    AppendLine($"{prefix}{target} = {emulFunc}({left}, {right});");
+                    return;
+                }
+            }
+
+            if (isEmulatedI64)
+            {
+                bool isUnsigned = leftType == "u64" || rightType == "u64";
+                string? emulFunc = value.Kind switch
+                {
+                    CompareKind.LessThan => isUnsigned ? "u64_lt" : "i64_lt",
+                    CompareKind.LessEqual => isUnsigned ? "u64_le" : "i64_le",
+                    CompareKind.GreaterThan => isUnsigned ? "u64_gt" : "i64_gt",
+                    CompareKind.GreaterEqual => isUnsigned ? "u64_ge" : "i64_ge",
+                    CompareKind.Equal => "i64_eq",
+                    CompareKind.NotEqual => "i64_ne",
+                    _ => null
+                };
+
+                if (emulFunc != null)
+                {
+                    AppendLine($"{prefix}{target} = {emulFunc}({left}, {right});");
+                    return;
+                }
+            }
+
+            // Standard comparison:
             bool leftIsVec = leftType.StartsWith("vec");
             bool rightIsVec = rightType.StartsWith("vec");
 
