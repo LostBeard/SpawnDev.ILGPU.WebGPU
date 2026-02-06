@@ -10,8 +10,9 @@ Write GPU compute shaders in C# and compile them to WGSL automatically.
 - **ILGPU-compatible** - Use familiar ILGPU APIs (`ArrayView`, `Index1D/2D/3D`, math intrinsics, etc.)
 - **WGSL transpilation** - C# kernels are automatically compiled to WebGPU Shading Language (WGSL)
 - **64-bit Emulation** - Support for `double` (f64) and `long` (i64) types via emulated WGSL logic
+- **Perturbation Theory** - Support for ultra-deep Mandelbrot zooms (~10^26) using hybrid CPU/GPU algorithms
 - **Blazor WebAssembly** - Seamless integration via [SpawnDev.BlazorJS](https://github.com/LostBeard/SpawnDev.BlazorJS)
-- **Shared memory & atomics** - Supports static and dynamic workgroup shared memory, barriers, and atomic operations
+- **Shared memory & atomics** - Supports static/dynamic workgroup memory, barriers, and atomic operations
 - **No native dependencies** - Entirely written in C#
 
 ## Installation
@@ -20,7 +21,24 @@ Write GPU compute shaders in C# and compile them to WGSL automatically.
 dotnet add package SpawnDev.ILGPU.WebGPU
 ```
 
-## Quick Start
+### 1. Configure Program.cs
+
+SpawnDev.ILGPU.WebGPU requires [SpawnDev.BlazorJS](https://github.com/LostBeard/SpawnDev.BlazorJS) for WebGPU interop.
+
+```csharp
+using SpawnDev.BlazorJS;
+
+var builder = WebAssemblyHostBuilder.CreateDefault(args);
+builder.RootComponents.Add<App>("#app");
+builder.RootComponents.Add<HeadOutlet>("head::after");
+
+// Add BlazorJS services
+builder.Services.AddBlazorJSRuntime();
+
+await builder.Build().BlazorJSRunAsync();
+```
+
+### 2. Using ILGPU with WebGPU
 
 ```csharp
 using ILGPU;
@@ -35,7 +53,7 @@ using var context = builder.ToContext();
 // Get WebGPU device and create accelerator
 var devices = context.GetWebGPUDevices();
 var device = devices[0];
-using var accelerator = await device.CreateAcceleratorAsync(context);
+using var accelerator = await device.CreateWebGPUAcceleratorAsync(0);
 
 // Allocate buffers
 int length = 64;
@@ -171,7 +189,7 @@ using var accelerator = await context.CreateWebGPUAcceleratorAsync(0, options);
 ## Known Limitations
 
 - Subgroups extension not available in all browsers
-- **Deep Zoom Panning**: At extreme zoom levels (beyond ~10^6), panning may feel sluggish due to floating-point precision limitations. This is inherent to 64-bit double arithmetic and affects all Mandelbrot viewers. Advanced implementations use perturbation theory or arbitrary precision arithmetic to overcome this.
+- **FP64 Precision**: Native FP64 (`double`) is not supported by most WebGPU hardware. While this library provides emulation, extreme zoom levels (beyond ~10^12) may require **Perturbation Theory** to avoid artifacts. This library includes built-in support for hybrid CPU/GPU perturbation rendering in the demo.
 
 ## Async Synchronization
 
