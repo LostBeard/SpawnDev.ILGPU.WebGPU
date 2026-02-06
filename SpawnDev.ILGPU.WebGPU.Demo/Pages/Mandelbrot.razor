@@ -17,26 +17,22 @@
 <div class="row mb-3">
     <div class="col-md-8">
         <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <span>Controls</span>
-                <span class="badge bg-secondary">@_statusMessage</span>
+            <div class="card-header">
+                <span>Performance Comparison</span>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-4">
-                        <label class="form-label">Renderer</label>
-                        <select class="form-select" @bind="_rendererMode" @bind:after="OnRendererChanged">
-                            <option value="ILGPU">ILGPU</option>
-                            <option value="RawWebGPU">Raw WebGPU</option>
-                        </select>
+                        <label class="form-label">ILGPU Time</label>
+                        <div class="form-control-plaintext"><strong class="text-primary">@_ilgpuRenderTime</strong></div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Raw WebGPU Time</label>
+                        <div class="form-control-plaintext"><strong class="text-success">@_webgpuRenderTime</strong></div>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Max Iterations</label>
-                        <input type="number" class="form-control" @bind="_maxIterations" @bind:after="RenderMandelbrot" min="50" max="5000" step="50" />
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label">Render Time</label>
-                        <div class="form-control-plaintext"><strong>@_renderTime</strong></div>
+                        <input type="number" class="form-control" @bind="_maxIterations" min="50" max="5000" step="50" />
                     </div>
                 </div>
                 <div class="row mt-2">
@@ -59,6 +55,8 @@
                     <li><strong>Pan:</strong> Click and drag</li>
                     <li><strong>Reset:</strong> Double-click</li>
                 </ul>
+                <hr />
+                <small class="text-muted">Alternates between ILGPU and Raw WebGPU each frame for comparison.</small>
             </div>
         </div>
     </div>
@@ -97,14 +95,19 @@
     private double _zoom = 1.0;
     private int _maxIterations = 500;
 
-    // Renderer mode
-    private string _rendererMode = "ILGPU";
-    private string _activeRenderer = "";
+    // Alternating renderer state
+    private bool _useILGPU = true;
+    private int _frameCount = 0;
 
     // Status
     private bool _isRunning = false;
-    private string _statusMessage = "Ready";
-    private string _renderTime = "-";
+    private bool _disposed = false;
+    private string _ilgpuRenderTime = "-";
+    private string _webgpuRenderTime = "-";
+
+    // UI update throttling
+    private DateTime _lastUiUpdate = DateTime.MinValue;
+    private const int UI_UPDATE_INTERVAL_MS = 100; // 10 updates per second max
 
     // Mouse drag tracking
     private bool _isDragging = false;
@@ -130,62 +133,62 @@
     {
         if (firstRender)
         {
-            await RenderMandelbrot();
+            // Start continuous render loop
+            _ = RenderLoop();
         }
     }
 
-    private async Task OnRendererChanged()
+    private async Task RenderLoop()
     {
-        // Dispose old renderer resources when switching
-        if (_activeRenderer != _rendererMode)
+        try
         {
-            await DisposeCurrentRenderer();
+            // Initialize both renderers
+            await InitializeILGPU();
+            await InitializeRawWebGPU();
+
+            // Continuous render loop
+            while (!_disposed)
+            {
+                if (_isRunning)
+                {
+                    await Task.Delay(10);
+                    continue;
+                }
+
+                _frameCount++;
+                
+                // Alternate between renderers each frame
+                if (_useILGPU)
+                {
+                    await RenderWithILGPU();
+                }
+                else
+                {
+                    await RenderWithWebGPU();
+                }
+
+                _useILGPU = !_useILGPU;
+                
+                // Throttled UI update
+                ThrottledStateHasChanged();
+                
+                // Small delay to allow UI updates
+                await Task.Delay(1);
+            }
         }
-        await RenderMandelbrot();
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
     }
 
-    private async Task DisposeCurrentRenderer()
+    private void ThrottledStateHasChanged()
     {
-        if (_activeRenderer == "ILGPU")
+        var now = DateTime.UtcNow;
+        if ((now - _lastUiUpdate).TotalMilliseconds >= UI_UPDATE_INTERVAL_MS)
         {
-            _ilgpuBuffer?.Dispose();
-            _ilgpuBuffer = null;
-            _ilgpuAccelerator?.Dispose();
-            _ilgpuAccelerator = null;
-            _ilgpuContext?.Dispose();
-            _ilgpuContext = null;
-            _ilgpuKernel = null;
-        }
-        else if (_activeRenderer == "RawWebGPU")
-        {
-            _webgpuReadBuffer?.Dispose();
-            _webgpuReadBuffer = null;
-            _webgpuOutputBuffer?.Dispose();
-            _webgpuOutputBuffer = null;
-            _webgpuUniformBuffer?.Dispose();
-            _webgpuUniformBuffer = null;
-            _webgpuBindGroup?.Dispose();
-            _webgpuBindGroup = null;
-            _webgpuPipeline?.Dispose();
-            _webgpuPipeline = null;
-            _webgpuDevice?.Dispose();
-            _webgpuDevice = null;
-            _webgpuBindGroupLayout = null;
-        }
-        _activeRenderer = "";
-    }
-
-    private async Task RenderMandelbrot()
-    {
-        if (_isRunning) return;
-
-        if (_rendererMode == "ILGPU")
-        {
-            await RunILGPU();
-        }
-        else
-        {
-            await RunRawWebGPU();
+            _lastUiUpdate = now;
+            StateHasChanged();
         }
     }
 
@@ -205,8 +208,6 @@
         double newScale = 4.0 / _zoom;
         _centerX = mouseRealBefore - (mouseX - _width / 2.0) * newScale / _width;
         _centerY = mouseImagBefore - (mouseY - _height / 2.0) * newScale / _height;
-
-        _ = RenderMandelbrot();
     }
 
     private void OnMouseDown(MouseEventArgs e)
@@ -229,8 +230,6 @@
 
         _lastMouseX = e.OffsetX;
         _lastMouseY = e.OffsetY;
-
-        _ = RenderMandelbrot();
     }
 
     private void OnMouseUp(MouseEventArgs e)
@@ -243,7 +242,6 @@
         _centerX = -0.5;
         _centerY = 0.0;
         _zoom = 1.0;
-        _ = RenderMandelbrot();
     }
 
     private async Task InitializeILGPU()
@@ -258,20 +256,14 @@
         _ilgpuAccelerator = await ilgpuDevice.CreateAcceleratorAsync(_ilgpuContext);
         _ilgpuKernel = _ilgpuAccelerator.LoadAutoGroupedStreamKernel<Index2D, ArrayView2D<uint, Stride2D.DenseX>, int, int, int, double, double, double>(MandelbrotKernel);
         _ilgpuBuffer = _ilgpuAccelerator.Allocate2DDenseX<uint>(new Index2D(_width, _height));
-        _activeRenderer = "ILGPU";
     }
 
-    private async Task RunILGPU()
+    private async Task RenderWithILGPU()
     {
         _isRunning = true;
-        _statusMessage = "Rendering (ILGPU)...";
-        StateHasChanged();
-        await Task.Delay(1);
 
         try
         {
-            await InitializeILGPU();
-
             var sw = Stopwatch.StartNew();
 
             _ilgpuKernel!(_ilgpuBuffer!.IntExtent, _ilgpuBuffer.View, _width, _height, _maxIterations, _centerX, _centerY, _zoom);
@@ -285,20 +277,13 @@
             Buffer.BlockCopy(bytes, 0, result, 0, bytes.Length);
 
             sw.Stop();
-            _renderTime = $"{sw.ElapsedMilliseconds} ms";
-            _statusMessage = "Ready";
+            _ilgpuRenderTime = $"{sw.ElapsedMilliseconds} ms";
 
             await DrawToCanvas(result);
-        }
-        catch (Exception ex)
-        {
-            _statusMessage = $"Error: {ex.Message}";
-            Console.WriteLine(ex);
         }
         finally
         {
             _isRunning = false;
-            StateHasChanged();
         }
     }
 
@@ -470,21 +455,14 @@ fn main(@builtin(global_invocation_id) global_id : vec3<u32>) {
                 new GPUBindGroupEntry { Binding = 1, Resource = new GPUBufferBinding { Buffer = _webgpuUniformBuffer } }
             }
         });
-
-        _activeRenderer = "RawWebGPU";
     }
 
-    private async Task RunRawWebGPU()
+    private async Task RenderWithWebGPU()
     {
         _isRunning = true;
-        _statusMessage = "Rendering (Raw WebGPU)...";
-        StateHasChanged();
-        await Task.Delay(1);
 
         try
         {
-            await InitializeRawWebGPU();
-
             var sw = Stopwatch.StartNew();
 
             // Update uniforms
@@ -524,28 +502,31 @@ fn main(@builtin(global_invocation_id) global_id : vec3<u32>) {
             _webgpuReadBuffer.Unmap();
 
             sw.Stop();
-            _renderTime = $"{sw.ElapsedMilliseconds} ms";
-            _statusMessage = "Ready";
+            _webgpuRenderTime = $"{sw.ElapsedMilliseconds} ms";
 
             await DrawToCanvas(pixels);
-        }
-        catch (Exception ex)
-        {
-            _statusMessage = $"Error: {ex.Message}";
-            Console.WriteLine(ex);
         }
         finally
         {
             _isRunning = false;
-            StateHasChanged();
         }
     }
 
     public async ValueTask DisposeAsync()
     {
-        _activeRenderer = "ILGPU";
-        await DisposeCurrentRenderer();
-        _activeRenderer = "RawWebGPU";
-        await DisposeCurrentRenderer();
+        _disposed = true;
+
+        // Dispose ILGPU resources
+        _ilgpuBuffer?.Dispose();
+        _ilgpuAccelerator?.Dispose();
+        _ilgpuContext?.Dispose();
+
+        // Dispose WebGPU resources
+        _webgpuReadBuffer?.Dispose();
+        _webgpuOutputBuffer?.Dispose();
+        _webgpuUniformBuffer?.Dispose();
+        _webgpuBindGroup?.Dispose();
+        _webgpuPipeline?.Dispose();
+        _webgpuDevice?.Dispose();
     }
 }
