@@ -3,6 +3,7 @@ using global::ILGPU.Backends;
 using global::ILGPU.Runtime;
 using SpawnDev.BlazorJS.JSObjects;
 using SpawnDev.ILGPU.WebGPU.Backend;
+using System.Collections.Concurrent;
 using System.Reflection;
 using System.Reflection.Emit;
 using Array = System.Array;
@@ -31,6 +32,108 @@ namespace SpawnDev.ILGPU.WebGPU
         public static readonly MethodInfo RunKernelMethod = typeof(WebGPUAccelerator).GetMethod(
             nameof(RunKernel),
             BindingFlags.Public | BindingFlags.Static)!;
+
+        #region Caching Infrastructure
+
+        // Reflection cache: caches PropertyInfo/FieldInfo for dimension extraction per type
+        private static readonly ConcurrentDictionary<Type, ReflectionMetadataCache> _reflectionCache = new();
+
+        // Buffer pool for scalar arguments (per-device pools would require instance field)
+        [ThreadStatic]
+        private static List<GPUBuffer>? _scalarBufferPool;
+
+        private class ReflectionMetadataCache
+        {
+            public PropertyInfo? BaseViewProperty { get; set; }
+            public PropertyInfo? IntLengthProperty { get; set; }
+            public PropertyInfo? LengthProperty { get; set; }
+            public PropertyInfo? WidthProperty { get; set; }
+            public FieldInfo? XField { get; set; }
+            public FieldInfo? YField { get; set; }
+            public FieldInfo? ZField { get; set; }
+            public PropertyInfo? XProperty { get; set; }
+            public PropertyInfo? YProperty { get; set; }
+            public PropertyInfo? ZProperty { get; set; }
+        }
+
+        private static ReflectionMetadataCache GetOrCreateReflectionCache(Type type)
+        {
+            if (!WebGPUBackend.EnableReflectionCaching)
+                return BuildReflectionCache(type);
+
+            return _reflectionCache.GetOrAdd(type, BuildReflectionCache);
+        }
+
+        private static ReflectionMetadataCache BuildReflectionCache(Type type)
+        {
+            var flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+            return new ReflectionMetadataCache
+            {
+                BaseViewProperty = type.GetProperty("BaseView", flags),
+                IntLengthProperty = type.GetProperty("IntLength", flags),
+                LengthProperty = type.GetProperty("Length", flags),
+                WidthProperty = type.GetProperty("Width", flags),
+                XField = type.GetField("X", flags),
+                YField = type.GetField("Y", flags),
+                ZField = type.GetField("Z", flags),
+                XProperty = type.GetProperty("X", flags),
+                YProperty = type.GetProperty("Y", flags),
+                ZProperty = type.GetProperty("Z", flags)
+            };
+        }
+
+        private static GPUBuffer GetPooledScalarBuffer(GPUDevice device)
+        {
+            if (!WebGPUBackend.EnableBufferPooling)
+                return CreateScalarBuffer(device);
+
+            _scalarBufferPool ??= new List<GPUBuffer>();
+
+            // Try to find a reusable buffer
+            if (_scalarBufferPool.Count > 0)
+            {
+                var buffer = _scalarBufferPool[_scalarBufferPool.Count - 1];
+                _scalarBufferPool.RemoveAt(_scalarBufferPool.Count - 1);
+                return buffer;
+            }
+
+            return CreateScalarBuffer(device);
+        }
+
+        private static void ReturnPooledScalarBuffer(GPUBuffer buffer)
+        {
+            if (!WebGPUBackend.EnableBufferPooling)
+            {
+                buffer.Destroy();
+                buffer.Dispose();
+                return;
+            }
+
+            _scalarBufferPool ??= new List<GPUBuffer>();
+            // Limit pool size to prevent memory bloat
+            if (_scalarBufferPool.Count < 32)
+            {
+                _scalarBufferPool.Add(buffer);
+            }
+            else
+            {
+                buffer.Destroy();
+                buffer.Dispose();
+            }
+        }
+
+        private static GPUBuffer CreateScalarBuffer(GPUDevice device)
+        {
+            return device.CreateBuffer(new GPUBufferDescriptor
+            {
+                Label = "PooledScalar",
+                Size = 256,
+                Usage = GPUBufferUsage.Storage | GPUBufferUsage.CopyDst,
+                MappedAtCreation = false
+            });
+        }
+
+        #endregion
 
         private WebGPUAccelerator(Context context, Device device) : base(context, device) { }
 
@@ -232,8 +335,11 @@ namespace SpawnDev.ILGPU.WebGPU
             WebGPUBackend.Log("[WebGPU-Debug] ------------------------\n");
             // ------------------------------------
 
-            var shader = nativeAccel.CreateComputeShader(compiledKernel.WGSLSource);
+            var shader = nativeAccel.GetOrCreateComputeShader(compiledKernel.WGSLSource);
             var device = nativeAccel.NativeDevice!;
+
+            // Track scalar buffers for pool return
+            var scalarBuffersToReturn = new List<GPUBuffer>();
 
             try
             {
@@ -299,14 +405,8 @@ namespace SpawnDev.ILGPU.WebGPU
                     else
                     {
                         var size = 256;
-                        var bufferDesc = new GPUBufferDescriptor
-                        {
-                            Label = $"ScalarArg_{i}",
-                            Size = (ulong)size,
-                            Usage = GPUBufferUsage.Storage | GPUBufferUsage.CopyDst,
-                            MappedAtCreation = false
-                        };
-                        var uBuffer = device.CreateBuffer(bufferDesc);
+                        var uBuffer = GetPooledScalarBuffer(device);
+                        scalarBuffersToReturn.Add(uBuffer);
 
                         // DEBUG LOG
                         WebGPUBackend.Log($"[WebGPU-Debug] Arg {i}: Binding Scalar. Value={arg}");
@@ -332,14 +432,8 @@ namespace SpawnDev.ILGPU.WebGPU
                         WebGPUBackend.Log($"[WebGPU-Debug] Arg {i}: Binding Stride Buffer. Values=[{string.Join(", ", dims)}]");
 
                         var strideSize = 256;
-                        var strideDesc = new GPUBufferDescriptor
-                        {
-                            Label = $"StrideArg_{i}",
-                            Size = (ulong)strideSize,
-                            Usage = GPUBufferUsage.Storage | GPUBufferUsage.CopyDst,
-                            MappedAtCreation = false
-                        };
-                        var strideBuffer = device.CreateBuffer(strideDesc);
+                        var strideBuffer = GetPooledScalarBuffer(device);
+                        scalarBuffersToReturn.Add(strideBuffer);
 
                         var strideData = new int[dims.Length];
                         Array.Copy(dims, strideData, dims.Length);
@@ -395,6 +489,14 @@ namespace SpawnDev.ILGPU.WebGPU
             {
                 WebGPUBackend.Log($"[WebGPU] Error running kernel: {ex}");
                 throw;
+            }
+            finally
+            {
+                // Return scalar buffers to pool
+                foreach (var buffer in scalarBuffersToReturn)
+                {
+                    ReturnPooledScalarBuffer(buffer);
+                }
             }
         }
 

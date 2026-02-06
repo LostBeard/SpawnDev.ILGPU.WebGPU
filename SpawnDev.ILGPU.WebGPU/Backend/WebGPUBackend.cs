@@ -42,6 +42,26 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         public static bool VerboseLogging { get; set; } = false;
 
         /// <summary>
+        /// Enables shader pipeline caching. Disable for debugging shader compilation issues.
+        /// When enabled, compiled shaders are cached and reused across kernel invocations.
+        /// </summary>
+        public static bool EnableShaderCaching { get; set; } = true;
+
+        /// <summary>
+        /// Enables reflection metadata caching for parameter types.
+        /// When enabled, PropertyInfo/FieldInfo lookups are cached to avoid per-call reflection.
+        /// </summary>
+        public static bool EnableReflectionCaching { get; set; } = true;
+
+        /// <summary>
+        /// Enables scalar buffer pooling.
+        /// WARNING: Disabled by default because WebGPU Queue.Submit is asynchronous.
+        /// Pooled buffers may be reused before the GPU finishes reading from them.
+        /// Enable only if you implement explicit synchronization.
+        /// </summary>
+        public static bool EnableBufferPooling { get; set; } = false;
+
+        /// <summary>
         /// Logs a message to the console if VerboseLogging is enabled.
         /// </summary>
         public static void Log(string message)

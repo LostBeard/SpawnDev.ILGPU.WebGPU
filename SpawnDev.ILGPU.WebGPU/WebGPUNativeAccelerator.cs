@@ -6,6 +6,7 @@
 // ---------------------------------------------------------------------------------------
 
 using SpawnDev.BlazorJS.JSObjects;
+using SpawnDev.ILGPU.WebGPU.Backend;
 
 namespace SpawnDev.ILGPU.WebGPU
 {
@@ -34,6 +35,9 @@ namespace SpawnDev.ILGPU.WebGPU
         private GPUQueue? _queue;
         private bool _isInitialized;
         private bool _disposed;
+
+        // Shader cache: key is WGSL source, value is compiled shader
+        private readonly Dictionary<string, WebGPUComputeShader> _shaderCache = new();
 
         /// <summary>
         /// Constructs a new WebGPU accelerator.
@@ -124,6 +128,28 @@ namespace SpawnDev.ILGPU.WebGPU
         }
 
         /// <summary>
+        /// Gets a cached compute shader or creates a new one.
+        /// When caching is enabled, shaders are reused across kernel invocations.
+        /// </summary>
+        public WebGPUComputeShader GetOrCreateComputeShader(string wgslSource, string entryPoint = "main")
+        {
+            if (!WebGPUBackend.EnableShaderCaching)
+                return CreateComputeShader(wgslSource, entryPoint);
+
+            // Use WGSL source as cache key (could also use hash for very large shaders)
+            if (_shaderCache.TryGetValue(wgslSource, out var cached))
+            {
+                WebGPUBackend.Log("[WebGPU] Using cached shader");
+                return cached;
+            }
+
+            WebGPUBackend.Log("[WebGPU] Creating and caching new shader");
+            var shader = CreateComputeShader(wgslSource, entryPoint);
+            _shaderCache[wgslSource] = shader;
+            return shader;
+        }
+
+        /// <summary>
         /// Runs a compute shader with the specified dispatch size.
         /// </summary>
         public void Dispatch(WebGPUComputeShader shader, uint workgroupCountX, uint workgroupCountY = 1, uint workgroupCountZ = 1)
@@ -168,6 +194,13 @@ namespace SpawnDev.ILGPU.WebGPU
         {
             if (_disposed) return;
             _disposed = true;
+
+            // Dispose cached shaders
+            foreach (var shader in _shaderCache.Values)
+            {
+                shader.Dispose();
+            }
+            _shaderCache.Clear();
 
             _gpuDevice?.Destroy();
             _gpuDevice?.Dispose();
