@@ -1004,7 +1004,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
         [TestMethod]
         public async Task WebGPUBroadcastTest()
         {
-            throw new UnsupportedTestException("Skip: subgroups extension not supported in browser environment");
+            throw new UnsupportedTestException("subgroups extension not supported in browser environment");
             var builder = Context.Create();
             await builder.WebGPUAsync();
             using var context = builder.ToContext();
@@ -1066,7 +1066,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
         [TestMethod]
         public async Task WebGPUDynamicSharedMemoryTest()
         {
-            throw new UnsupportedTestException("Skip: Dynamic Shared Memory requires Pipeline Overridable Constants support in backend.");
+            throw new UnsupportedTestException("Dynamic Shared Memory requires Pipeline Overridable Constants support in backend.");
             var builder = Context.Create();
             await builder.WebGPUAsync();
             using var context = builder.ToContext();
@@ -1657,7 +1657,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
         public async Task WebGPUDoublePrecisionTest()
         {
             // f64 (double) support in WebGPU is experimental and not available in most browsers
-            throw new UnsupportedTestException("Skip: f64 (double precision) not supported in browser WebGPU");
+            throw new UnsupportedTestException("f64 (double precision) not supported in browser WebGPU");
             
             var builder = Context.Create();
             await builder.WebGPUAsync();
@@ -2003,7 +2003,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
         public async Task WebGPULongIntegerTest()
         {
             // i64 (long) is not supported in current browser WebGPU implementations
-            throw new UnsupportedTestException("Skip: i64 (long) not supported in browser WebGPU");
+            throw new UnsupportedTestException("i64 (long) not supported in browser WebGPU");
 
             var builder = Context.Create();
             await builder.WebGPUAsync();
@@ -2035,7 +2035,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             }
             catch (Exception ex) when (ex.Message.Contains("NotSupported") || ex.Message.Contains("i64"))
             {
-                throw new UnsupportedTestException("Skip: i64 (long) not fully supported in browser WebGPU");
+                throw new UnsupportedTestException("i64 (long) not fully supported in browser WebGPU");
             }
         }
 
@@ -2509,7 +2509,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
         public async Task WebGPUSubgroupShuffleTest()
         {
             // Subgroup operations (warp shuffle, broadcast) are not available in browser WebGPU
-            throw new UnsupportedTestException("Skip: Subgroup/Warp operations not supported in browser WebGPU");
+            throw new UnsupportedTestException("Subgroup/Warp operations not supported in browser WebGPU");
 
             // If ever supported, the test would use Warp.Shuffle, Warp.Broadcast, etc.
         }
