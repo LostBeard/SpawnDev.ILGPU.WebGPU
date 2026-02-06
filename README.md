@@ -94,6 +94,38 @@ _test.bat
 
 The PlaywrightTestRunner runs tests in a headless browser. To view the browser during tests, uncomment `Environment.SetEnvironmentVariable("HEADED", "1");` in `PlaywrightTestRunner/GlobalSetup.cs`.
 
+## Test Coverage
+
+**75 tests** covering all core ILGPU features supported by WebGPU.
+
+### Coverage by Area
+
+| Area | What's Tested | Status |
+|------|---------------|--------|
+| **Memory** | Allocation, transfer, copy, views | ✅ Complete |
+| **Indexing** | 1D, 2D, 3D kernels, boundary conditions | ✅ Complete |
+| **Arithmetic** | +, -, *, /, %, negation, complex expressions | ✅ Complete |
+| **Bitwise** | AND, OR, XOR, NOT, shifts (<<, >>) | ✅ Complete |
+| **Math Functions** | sin, cos, tan, exp, log, sqrt, pow, abs, min, max | ✅ Complete |
+| **Trigonometric** | sin, cos, tan, asin, acos, atan, sinh, cosh, tanh | ✅ Complete |
+| **Atomics** | Add, Min, Max, CompareExchange, Xor | ✅ Complete |
+| **Control Flow** | if/else, loops, nested, short-circuit | ✅ Complete |
+| **Structs** | Simple, nested, with arrays | ✅ Complete |
+| **Type Casting** | float↔int, uint, mixed precision | ✅ Complete |
+| **GPU Patterns** | Stencil, reduction, matrix multiply, lerp, smoothstep | ✅ Complete |
+| **Synchronization** | Barriers, atomic reduction | ✅ Complete |
+| **Special Values** | NaN, Infinity detection | ✅ Complete |
+| **Scalability** | 65K+ elements, 1M element stress test | ✅ Complete |
+
+### Not Supported (Hardware/Spec Limitations)
+
+| Feature | Reason |
+|---------|--------|
+| **f64 (double)** | WebGPU WGSL doesn't support f64 in most browsers |
+| **i64 (long)** | WebGPU WGSL doesn't support i64 |
+| **Subgroups/Warps** | Browser WebGPU extension not available |
+| **Dynamic Shared Memory** | Requires Pipeline Overridable Constants |
+
 ## Browser Requirements
 
 WebGPU is required. Supported browsers:
