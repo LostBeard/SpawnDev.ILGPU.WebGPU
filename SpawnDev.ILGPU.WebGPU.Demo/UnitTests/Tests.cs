@@ -1,4 +1,4 @@
-﻿using ILGPU;
+using ILGPU;
 using ILGPU.Runtime;
 using SpawnDev.Blazor.UnitTesting;
 using SpawnDev.ILGPU.WebGPU.Backend;
@@ -76,7 +76,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
 
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(buffer);
+            var result = await buffer.CopyToHostAsync<int>();
 
             for (int i = 0; i < data.Length; i++)
             {
@@ -110,7 +110,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
 
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<float>(bufC);
+            var result = await bufC.CopyToHostAsync<float>();
 
             for (int i = 0; i < length; i++)
             {
@@ -139,7 +139,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
 
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<float>(buffer);
+            var result = await buffer.CopyToHostAsync<float>();
 
             for (int y = 0; y < extent.Y; y++)
             {
@@ -172,7 +172,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
 
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<float>(buffer);
+            var result = await buffer.CopyToHostAsync<float>();
 
             for (int i = 0; i < length; i++)
             {
@@ -201,7 +201,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
 
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(buffer);
+            var result = await buffer.CopyToHostAsync<int>();
 
             for (int i = 0; i < length; i++)
             {
@@ -209,18 +209,6 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
                 if (result[i] != expected)
                     throw new Exception($"Multi-scalar kernel failed at {i}. Expected {expected}, got {result[i]}");
             }
-        }
-
-        private async Task<T[]> ReadBufferAsync<T>(MemoryBuffer buffer) where T : unmanaged
-        {
-            var iView = (IArrayView)buffer;
-            var internalBuffer = iView.Buffer as WebGPUMemoryBuffer;
-            if (internalBuffer == null) throw new Exception("Could not get WebGPUMemoryBuffer");
-
-            var byteResults = await internalBuffer.NativeBuffer.CopyToHostAsync();
-            var result = new T[buffer.Length];
-            MemoryMarshal.Cast<byte, T>(byteResults).CopyTo(new Span<T>(result));
-            return result;
         }
 
         [TestMethod]
@@ -242,7 +230,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
 
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<float>(buffer);
+            var result = await buffer.CopyToHostAsync<float>();
 
             for (int z = 0; z < extent.Z; z++)
             {
@@ -360,7 +348,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, buf.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<MyPoint>(buf);
+            var result = await buf.CopyToHostAsync<MyPoint>();
             for (int i = 0; i < len; i++)
             {
                 if (result[i].X != i + 1.0f || result[i].Y != i * 2.0f)
@@ -388,7 +376,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, bufIn.View, bufOut.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<float>(bufOut);
+            var result = await bufOut.CopyToHostAsync<float>();
             for (int i = 0; i < len; i++)
             {
                 float val = input[i];
@@ -444,7 +432,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             expected[6] = MathF.Sign(-5.0f);
             expected[7] = IntrinsicMathHelper(0.5f);
 
-            var dataResult = await ReadBufferAsync<float>(buffer);
+            var dataResult = await buffer.CopyToHostAsync<float>();
             for (int i = 0; i < len; i++)
             {
                 // Skip Round (3), Turncate (4), Sign (6) due to Throw issues
@@ -474,7 +462,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, buf.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(buf);
+            var result = await buf.CopyToHostAsync<int>();
             for (int i = 0; i < len; i++)
             {
                 int expected = (i % 2 == 0) ? 10 : -1;
@@ -503,8 +491,8 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, bufData.View, bufAtomic.View);
             await accelerator.SynchronizeAsync();
 
-            var resData = await ReadBufferAsync<int>(bufData);
-            var resAtomic = await ReadBufferAsync<Index1D>(bufAtomic);
+            var resData = await bufData.CopyToHostAsync<int>();
+            var resAtomic = await bufAtomic.CopyToHostAsync<Index1D>();
 
             // Verify Data
             for (int i = 0; i < len; i++) if (resData[i] != i + 1) throw new Exception("Atomic Kernel: Data Write Failed");
@@ -584,7 +572,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, bufIn.View, bufOut.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<float>(bufOut);
+            var result = await bufOut.CopyToHostAsync<float>();
             for (int i = 0; i < len; i++)
             {
                 float val = input[i];
@@ -613,7 +601,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, buf.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(buf);
+            var result = await buf.CopyToHostAsync<int>();
             for (int i = 0; i < len; i++)
             {
                 int val = i + 1;
@@ -656,7 +644,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, buf.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<float>(buf);
+            var result = await buf.CopyToHostAsync<float>();
             for (int i = 0; i < len; i++)
             {
                 // (int)(i + 0.5f) -> i
@@ -685,7 +673,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel(new KernelConfig(len / 64, 64), (Index1D)len, buf.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(buf);
+            var result = await buf.CopyToHostAsync<int>();
             for (int i = 0; i < len; i++)
             {
                 // Each thread reads neighbor (i+1)%64
@@ -712,7 +700,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, buf.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(buf);
+            var result = await buf.CopyToHostAsync<int>();
             for (int i = 0; i < len; i++)
             {
                 // Logic:
@@ -748,7 +736,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, buf.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(buf);
+            var result = await buf.CopyToHostAsync<int>();
             for (int i = 0; i < len; i++)
             {
                 // MyAdd(i, 100) -> i + 100
@@ -824,7 +812,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
 
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(buffer);
+            var result = await buffer.CopyToHostAsync<int>();
 
             // Verification: The kernel reverses the data using shared memory
             for (int i = 0; i < len; i++)
@@ -892,7 +880,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, buffer.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<OuterStruct>(buffer);
+            var result = await buffer.CopyToHostAsync<OuterStruct>();
 
             for (int i = 0; i < len; i++)
             {
@@ -939,7 +927,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel(new KernelConfig(1, len), (Index1D)len, buffer.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(buffer);
+            var result = await buffer.CopyToHostAsync<int>();
             for (int i = 0; i < len; i++)
             {
                 // Initial 0. Compare(0, i, i+100)
@@ -976,7 +964,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, buffer.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<float>(buffer);
+            var result = await buffer.CopyToHostAsync<float>();
             for (int i = 0; i < len; i++)
             {
                 float a = i;
@@ -1026,7 +1014,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
                 kernel(new KernelConfig(1, len), (Index1D)len, buffer.View);
                 await accelerator.SynchronizeAsync();
 
-                var result = await ReadBufferAsync<int>(buffer);
+                var result = await buffer.CopyToHostAsync<int>();
 
                 // Expect ALL values to be the value from lane 0 (which was 0)
                 // We use Lane 0 because current WGSL generator uses subgroupBroadcastFirst()
@@ -1082,7 +1070,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel(config, (Index1D)len, buffer.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(buffer);
+            var result = await buffer.CopyToHostAsync<int>();
             for (int i = 0; i < len; i++)
             {
                 var expected = len - 1 - i;
@@ -1130,7 +1118,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, bufIn.View, bufOut.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(bufOut);
+            var result = await bufOut.CopyToHostAsync<int>();
             for (int i = 0; i < len; i++)
             {
                 int val = input[i];
@@ -1198,7 +1186,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel(new Index2D(size, size), bufA.View, bufB.View, bufC.View, size);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<float>(bufC);
+            var result = await bufC.CopyToHostAsync<float>();
 
             // Verification
             // C = A * B
@@ -1261,7 +1249,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, bufIn.View, bufOut.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<float>(bufOut);
+            var result = await bufOut.CopyToHostAsync<float>();
 
             for (int i = 0; i < len; i++)
             {
@@ -1314,7 +1302,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, bufIn.View, bufOut.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(bufOut);
+            var result = await bufOut.CopyToHostAsync<int>();
 
             // Expected
             // 0: PopCount(15) = 4
@@ -1364,7 +1352,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)numItems, bufData.View, bufBins.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(bufBins);
+            var result = await bufBins.CopyToHostAsync<int>();
 
             int expectedCount = numItems / numBins; // 1024/16 = 64
             for (int i = 0; i < numBins; i++)
@@ -1398,7 +1386,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)size, bufOut.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(bufOut);
+            var result = await bufOut.CopyToHostAsync<int>();
 
             for (int i = 0; i < size; i++)
             {
@@ -1452,7 +1440,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, bufIn.View, bufOut.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<float>(bufOut);
+            var result = await bufOut.CopyToHostAsync<float>();
 
             for (int i = 0; i < len; i++)
             {
@@ -1496,7 +1484,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel(new KernelConfig(numGroups, groupSize), (Index1D)groupSize, buf.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(buf);
+            var result = await buf.CopyToHostAsync<int>();
 
             // Expected logic:
             // Threads 0..31 write to shared[0..31].
@@ -1567,7 +1555,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, bufIn.View, bufOut.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(bufOut);
+            var result = await bufOut.CopyToHostAsync<int>();
 
             for (int i = 0; i < len; i++)
             {
@@ -1610,7 +1598,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel(new KernelConfig(numGroups, groupSize), (Index1D)groupSize, buf.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(buf);
+            var result = await buf.CopyToHostAsync<int>();
 
             for (int i = 0; i < totalSize; i++)
             {
@@ -1673,7 +1661,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, bufIn.View, bufOut.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<double>(bufOut);
+            var result = await bufOut.CopyToHostAsync<double>();
             for (int i = 0; i < len; i++)
             {
                 double val = input[i];
@@ -1711,7 +1699,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, bufIn.View, bufOut.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<float>(bufOut);
+            var result = await bufOut.CopyToHostAsync<float>();
 
             float[] expected = new float[len];
             expected[0] = MathF.Asin(0.5f);
@@ -1751,7 +1739,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, buf.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(buf);
+            var result = await buf.CopyToHostAsync<int>();
 
             // Spot check a few values
             int[] checkIndices = { 0, 100, 1000, 50000, 99999 };
@@ -1793,7 +1781,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel2((Index1D)len, buf.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(buf);
+            var result = await buf.CopyToHostAsync<int>();
             for (int i = 0; i < len; i++)
             {
                 int expected = i * 2 + 10;
@@ -1833,7 +1821,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, buf.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<uint>(buf);
+            var result = await buf.CopyToHostAsync<uint>();
 
             uint[] expected = new uint[len];
             expected[0] = 100 / 3;          // 33
@@ -1877,8 +1865,8 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)numThreads, bufMin.View, bufMax.View);
             await accelerator.SynchronizeAsync();
 
-            var resultMin = await ReadBufferAsync<int>(bufMin);
-            var resultMax = await ReadBufferAsync<int>(bufMax);
+            var resultMin = await bufMin.CopyToHostAsync<int>();
+            var resultMax = await bufMax.CopyToHostAsync<int>();
 
             // Threads write their index (0..63)
             // Min should be 0, Max should be 63
@@ -1917,7 +1905,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
                 await accelerator.SynchronizeAsync();
             }
 
-            var result = await ReadBufferAsync<int>(buf);
+            var result = await buf.CopyToHostAsync<int>();
             for (int i = 0; i < len; i++)
             {
                 // Each iteration adds 1, so after 5 rounds: i + 5
@@ -1955,7 +1943,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel(new KernelConfig(numGroups, groupSize), (Index1D)groupSize, buf.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(buf);
+            var result = await buf.CopyToHostAsync<int>();
 
             // Verify first few threads
             for (int g = 0; g < numGroups; g++)
@@ -2022,7 +2010,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
                 kernel((Index1D)len, buf.View);
                 await accelerator.SynchronizeAsync();
 
-                var result = await ReadBufferAsync<long>(buf);
+                var result = await buf.CopyToHostAsync<long>();
                 for (int i = 0; i < len; i++)
                 {
                     long expected = data[i] * 2 + 1;
@@ -2068,7 +2056,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, bufInt.View, bufFloat.View, bufResult.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<float>(bufResult);
+            var result = await bufResult.CopyToHostAsync<float>();
             for (int i = 0; i < len; i++)
             {
                 float expected = intData[i] + floatData[i];
@@ -2101,7 +2089,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, buf.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(buf);
+            var result = await buf.CopyToHostAsync<int>();
             if (result[0] != 84)
                 throw new Exception($"Single element buffer failed. Expected 84, got {result[0]}");
         }
@@ -2130,7 +2118,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, buf.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(buf);
+            var result = await buf.CopyToHostAsync<int>();
 
             // Spot check
             int[] checkIndices = { 0, 1000, 32768, 65535 };
@@ -2170,7 +2158,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, bufA.View, bufB.View, bufOut.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(bufOut);
+            var result = await bufOut.CopyToHostAsync<int>();
 
             // Expected: [0]: a > b (5>3=1), [1]: a < b (5<7=1), [2]: a >= b (3>=5=0), 
             //           [3]: a <= b (7<=5=0), [4]: a == b (5==5=1), [5]: a != b (5!=6=1)
@@ -2214,7 +2202,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, bufA.View, bufB.View, bufOut.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(bufOut);
+            var result = await bufOut.CopyToHostAsync<int>();
 
             // [0]: 0 && 0 = false, [1]: 1 && 0 = false, [2]: 0 || 1 = true, [3]: 1 || 1 = true
             int[] expected = { 0, 0, 1, 1 };
@@ -2260,7 +2248,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, buf.View, bufOut.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(bufOut);
+            var result = await bufOut.CopyToHostAsync<int>();
 
             // [0]: 1/0 > 0 (inf > 0) = true, [1]: -1/0 < 0 (-inf < 0) = true, 
             // [2]: 0/0 == 0/0 (NaN == NaN) = false, [3]: 0/0 is NaN = true
@@ -2319,7 +2307,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, bufData.View, bufSum.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(bufSum);
+            var result = await bufSum.CopyToHostAsync<int>();
             if (result[0] != 64)
                 throw new Exception($"Reduction failed. Expected 64, got {result[0]}");
         }
@@ -2350,7 +2338,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, bufData.View, bufIndices.View, bufOut.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(bufOut);
+            var result = await bufOut.CopyToHostAsync<int>();
             int[] expected = { 80, 60, 40, 20, 70, 50, 30, 10 }; // Gathered values
             for (int i = 0; i < len; i++)
             {
@@ -2382,7 +2370,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, buf.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(buf);
+            var result = await buf.CopyToHostAsync<int>();
             for (int i = 0; i < len; i++)
             {
                 // 5-deep nesting: if(if(if(if(if(true)))))
@@ -2435,7 +2423,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, buf.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(buf);
+            var result = await buf.CopyToHostAsync<int>();
             // Loop runs 0 times, so value should be unchanged
             for (int i = 0; i < len; i++)
             {
@@ -2474,9 +2462,9 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, bufIn.View, bufSum.View, bufProduct.View, bufSquare.View);
             await accelerator.SynchronizeAsync();
 
-            var sumResult = await ReadBufferAsync<int>(bufSum);
-            var prodResult = await ReadBufferAsync<int>(bufProduct);
-            var sqResult = await ReadBufferAsync<int>(bufSquare);
+            var sumResult = await bufSum.CopyToHostAsync<int>();
+            var prodResult = await bufProduct.CopyToHostAsync<int>();
+            var sqResult = await bufSquare.CopyToHostAsync<int>();
 
             for (int i = 0; i < len; i++)
             {
@@ -2546,7 +2534,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)(size * size), bufA.View, bufB.View, bufC.View, size);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<float>(bufC);
+            var result = await bufC.CopyToHostAsync<float>();
 
             // Identity * B = B
             for (int i = 0; i < size * size; i++)
@@ -2589,7 +2577,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             using var buf1 = accelerator.Allocate1D(data1);
             kernel((Index1D)len, buf1.View, 100);
             await accelerator.SynchronizeAsync();
-            var result1 = await ReadBufferAsync<int>(buf1);
+            var result1 = await buf1.CopyToHostAsync<int>();
 
             // Second invocation with different constant
             var data2 = new int[len];
@@ -2597,7 +2585,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             using var buf2 = accelerator.Allocate1D(data2);
             kernel((Index1D)len, buf2.View, 50);
             await accelerator.SynchronizeAsync();
-            var result2 = await ReadBufferAsync<int>(buf2);
+            var result2 = await buf2.CopyToHostAsync<int>();
 
             // Verify both
             for (int i = 0; i < len; i++)
@@ -2645,7 +2633,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             doubleKernel((Index1D)len, buf.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(buf);
+            var result = await buf.CopyToHostAsync<int>();
 
             // Expected: ((i * 2) + 10) * 2 = 4i + 20
             for (int i = 0; i < len; i++)
@@ -2687,7 +2675,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, buf.View, len);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(buf);
+            var result = await buf.CopyToHostAsync<int>();
 
             // Check that all threads executed correctly
             for (int i = 0; i < len; i++)
@@ -2731,7 +2719,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, buf.View, bufOut.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<float>(bufOut);
+            var result = await bufOut.CopyToHostAsync<float>();
 
             // Test saturate (clamp to 0-1): values get clamped
             float[] expected = { 0.0f, 0.0f, 0.0f, 0.5f, 1.0f, 1.0f };
@@ -2769,7 +2757,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, buf.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(buf);
+            var result = await buf.CopyToHostAsync<int>();
 
             // Modulo by 4
             int[] expected = { 2, -2, 3, -3, 3, -3, 3, -3 };
@@ -2806,7 +2794,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, buf.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(buf);
+            var result = await buf.CopyToHostAsync<int>();
 
             // Sample check (checking all would be slow)
             int[] checkIndices = { 0, 100, 1000, 10000, 100000, 500000, 999999, len - 1 };
@@ -2847,7 +2835,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, bufIn.View, bufOut.View, len);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<float>(bufOut);
+            var result = await bufOut.CopyToHostAsync<float>();
 
             // 3-point average: (left + center + right) / 3
             for (int i = 1; i < len - 1; i++)
@@ -2908,7 +2896,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, buf.View, bufResult.View, len);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(bufResult);
+            var result = await bufResult.CopyToHostAsync<int>();
 
             if (result[0] != expectedSum)
                 throw new Exception($"Parallel sum failed. Expected {expectedSum}, got {result[0]}");
@@ -2943,8 +2931,8 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, bufFloat.View, bufInt.View, bufBack.View);
             await accelerator.SynchronizeAsync();
 
-            var intResult = await ReadBufferAsync<int>(bufInt);
-            var floatResult = await ReadBufferAsync<float>(bufBack);
+            var intResult = await bufInt.CopyToHostAsync<int>();
+            var floatResult = await bufBack.CopyToHostAsync<float>();
 
             // Verify float -> int truncation
             int[] expectedInt = { 1, 2, -3, 0, 100, -50, 0, 0 };
@@ -2990,8 +2978,8 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             rightKernel((Index1D)len, bufRight.View);
             await accelerator.SynchronizeAsync();
 
-            var leftResult = await ReadBufferAsync<int>(bufLeft);
-            var rightResult = await ReadBufferAsync<int>(bufRight);
+            var leftResult = await bufLeft.CopyToHostAsync<int>();
+            var rightResult = await bufRight.CopyToHostAsync<int>();
 
             // Left shift by 2
             int[] expectedLeft = { 4, 8, 16, 32, 64, 1020, 4096, -32 };
@@ -3059,7 +3047,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, buf.View, bufResult.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(bufResult);
+            var result = await bufResult.CopyToHostAsync<int>();
 
             // Result = Inner.A + Inner.B + (int)Value
             for (int i = 0; i < len; i++)
@@ -3099,7 +3087,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, bufSrc.View, bufDst.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<int>(bufDst);
+            var result = await bufDst.CopyToHostAsync<int>();
 
             for (int i = 0; i < len; i++)
             {
@@ -3139,8 +3127,8 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             floatKernel((Index1D)len, bufFloat.View);
             await accelerator.SynchronizeAsync();
 
-            var intResult = await ReadBufferAsync<int>(bufInt);
-            var floatResult = await ReadBufferAsync<float>(bufFloat);
+            var intResult = await bufInt.CopyToHostAsync<int>();
+            var floatResult = await bufFloat.CopyToHostAsync<float>();
 
             // verify: ~(-x) = x - 1 (for int), -x for float
             for (int i = 0; i < len; i++)
@@ -3187,7 +3175,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, buf.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<float>(buf);
+            var result = await buf.CopyToHostAsync<float>();
 
             // Verify smoothstep: 3x² - 2x³
             for (int i = 0; i < len; i++)
@@ -3232,7 +3220,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, bufT.View, bufOut.View, a, b);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<float>(bufOut);
+            var result = await bufOut.CopyToHostAsync<float>();
 
             for (int i = 0; i < len; i++)
             {
@@ -3274,7 +3262,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, bufInt.View, bufUint.View, bufFloat.View, bufResult.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<float>(bufResult);
+            var result = await bufResult.CopyToHostAsync<float>();
 
             for (int i = 0; i < len; i++)
             {
@@ -3311,7 +3299,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
             kernel((Index1D)len, buf.View);
             await accelerator.SynchronizeAsync();
 
-            var result = await ReadBufferAsync<float>(buf);
+            var result = await buf.CopyToHostAsync<float>();
 
             for (int i = 0; i < len; i++)
             {
@@ -3330,6 +3318,7 @@ namespace SpawnDev.ILGPU.WebGPU.Demo.UnitTests
         }
     }
 }
+
 
 
 
