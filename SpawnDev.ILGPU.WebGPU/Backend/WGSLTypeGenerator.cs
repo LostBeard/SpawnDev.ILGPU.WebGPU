@@ -57,6 +57,19 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             get
             {
+                // CRITICAL FIX: For Float64/Int64 primitives, always compute the type dynamically
+                // to respect the current emulation flag state, not the cached value from construction.
+                if (typeNode is PrimitiveType primitiveType)
+                {
+                    var basicType = primitiveType.BasicValueType;
+                    if (basicType == BasicValueType.Float64 || 
+                        basicType == BasicValueType.Int64)
+                    {
+                        // Return dynamic value based on current emulation flags
+                        return GetBasicValueType(basicType);
+                    }
+                }
+
                 using var readWriteScope = readerWriterLock.EnterUpgradeableReadScope();
                 if (mapping.TryGetValue(typeNode, out string? typeName))
                     return typeName;

@@ -972,9 +972,14 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
             if (isEmulatedF64)
             {
-                // Use f64_from_f32 conversion function for f64 constants
-                string valStr = FormatFloat((float)value.Float64Value);
-                AppendLine($"{target} = f64_from_f32({valStr});");
+                // CRITICAL FIX: Use IEEE-754 bits to preserve full 64-bit precision!
+                // Casting to float loses precision (24-bit mantissa vs 52-bit)
+                // Instead, we pass the raw 64-bit representation as two u32 values
+                double doubleVal = value.Float64Value;
+                ulong bits = BitConverter.DoubleToUInt64Bits(doubleVal);
+                uint lo = (uint)(bits & 0xFFFFFFFF);
+                uint hi = (uint)(bits >> 32);
+                AppendLine($"{target} = f64_from_ieee754_bits({lo}u, {hi}u);");
                 return;
             }
 

@@ -595,8 +595,22 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     }
                     else
                     {
-                        // Scalar load
-                        AppendLine($"var {variable.Name} = param{param.Index}[0];");
+                        // Scalar load - check for emulated f64/i64
+                        if (_emulatedF64Params.Contains(param.Index))
+                        {
+                            // f64 emulation: read 2 u32 values and convert to emulated f64
+                            AppendLine($"var {variable.Name} = f64_from_ieee754_bits(param{param.Index}[0], param{param.Index}[1]);");
+                        }
+                        else if (_emulatedI64Params.Contains(param.Index))
+                        {
+                            // i64 emulation: combine 2 u32 values into vec2<u32>
+                            AppendLine($"var {variable.Name} = i64(param{param.Index}[0], param{param.Index}[1]);");
+                        }
+                        else
+                        {
+                            // Standard scalar load
+                            AppendLine($"var {variable.Name} = param{param.Index}[0];");
+                        }
                     }
                 }
                 else
@@ -1239,10 +1253,42 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             bool isVectorSource = sourceType.StartsWith("vec");
             bool isScalarTarget = !targetType.StartsWith("vec") && !targetType.StartsWith("mat") && !targetType.StartsWith("array");
 
+            // CRITICAL FIX: When target is emulated f64 (vec2<f32>), we can't just do f64(i32)
+            // because vec2<f32> doesn't accept i32 as a single argument.
+            // We need to convert through f32 first: f64_from_f32(f32(source))
+            bool isEmulatedF64Target = WebGPUBackend.EnableF64Emulation && targetType == "f64";
+            
             if (isVectorSource && isScalarTarget)
             {
                 // Extract X component. 
-                AppendLine($"{prefix}{target} = {targetType}({source}.x);");
+                if (isEmulatedF64Target)
+                {
+                    // Convert to f64 from extracted scalar
+                    AppendLine($"{prefix}{target} = f64_from_f32(f32({source}.x));");
+                }
+                else
+                {
+                    AppendLine($"{prefix}{target} = {targetType}({source}.x);");
+                }
+            }
+            else if (isEmulatedF64Target)
+            {
+                // Source is scalar but target is emulated f64
+                // Need to convert source to f32 first, then to f64 via f64_from_f32
+                if (sourceType == "f32")
+                {
+                    AppendLine($"{prefix}{target} = f64_from_f32({source});");
+                }
+                else if (sourceType == "f64")
+                {
+                    // f64 to f64 - just assign
+                    AppendLine($"{prefix}{target} = {source};");
+                }
+                else
+                {
+                    // Integer or other type - convert to f32 first
+                    AppendLine($"{prefix}{target} = f64_from_f32(f32({source}));");
+                }
             }
             else
             {

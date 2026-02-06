@@ -81,7 +81,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         public static void Log(string message)
         {
             if (VerboseLogging)
-                WebGPUBackend.Log(message);
+                Console.WriteLine(message);
         }
 
         #region Instance

@@ -416,7 +416,20 @@ namespace SpawnDev.ILGPU.WebGPU
                         else if (arg is uint uiVal) device.Queue.WriteBuffer(uBuffer, 0, BitConverter.GetBytes(uiVal));
                         else if (arg is long lVal) device.Queue.WriteBuffer(uBuffer, 0, BitConverter.GetBytes((int)lVal));
                         else if (arg is ulong ulVal) device.Queue.WriteBuffer(uBuffer, 0, BitConverter.GetBytes((uint)ulVal));
-                        else if (arg is double dVal) device.Queue.WriteBuffer(uBuffer, 0, BitConverter.GetBytes((float)dVal));
+                        else if (arg is double dVal)
+                        {
+                            if (WebGPUBackend.EnableF64Emulation)
+                            {
+                                // CRITICAL: For f64 emulation, write full 64-bit IEEE-754 representation as 2 u32 values
+                                // The shader will read these as (lo, hi) and convert using f64_from_ieee754_bits
+                                device.Queue.WriteBuffer(uBuffer, 0, BitConverter.GetBytes(dVal));
+                            }
+                            else
+                            {
+                                // Without emulation, truncate to float (loses precision but matches shader expectation)
+                                device.Queue.WriteBuffer(uBuffer, 0, BitConverter.GetBytes((float)dVal));
+                            }
+                        }
                         else if (arg is byte bVal) device.Queue.WriteBuffer(uBuffer, 0, new byte[] { bVal });
                         else if (arg is bool blVal) device.Queue.WriteBuffer(uBuffer, 0, BitConverter.GetBytes(blVal ? 1u : 0u));
                         else throw new NotSupportedException($"Unsupported scalar argument type: {arg.GetType()}");

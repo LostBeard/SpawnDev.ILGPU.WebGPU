@@ -17,8 +17,12 @@
 <div class="row mb-3">
     <div class="col-md-8">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <span>Performance Comparison</span>
+                <div class="form-check form-switch mb-0">
+                    <input class="form-check-input" type="checkbox" id="mode64bit" @bind="_use64BitMode" />
+                    <label class="form-check-label" for="mode64bit">64-bit Precision (ILGPU Only)</label>
+                </div>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -56,7 +60,16 @@
                     <li><strong>Reset:</strong> Double-click</li>
                 </ul>
                 <hr />
-                <small class="text-muted">Alternates between ILGPU and Raw WebGPU each frame for comparison.</small>
+                <small class="text-muted">
+                    @if (_use64BitMode)
+                    {
+                        <span><strong>64-bit Mode:</strong> Uses emulated f64 precision for deeper zooms (ILGPU only).</span>
+                    }
+                    else
+                    {
+                        <span>Alternates between ILGPU and Raw WebGPU each frame for comparison.</span>
+                    }
+                </small>
             </div>
         </div>
     </div>
@@ -98,6 +111,10 @@
     // Alternating renderer state
     private bool _useILGPU = true;
     private int _frameCount = 0;
+
+    // 64-bit mode toggle
+    private bool _use64BitMode = false;
+    private bool _currentKernelUsesF64 = false; // Track what mode the kernel was compiled with
 
     // Status
     private bool _isRunning = false;
@@ -156,22 +173,43 @@
                 }
 
                 _frameCount++;
-                
-                // Alternate between renderers each frame
-                if (_useILGPU)
+
+                if (_use64BitMode)
                 {
+                    // 64-bit mode: ILGPU only with f64 emulation
+                    if (!_currentKernelUsesF64)
+                    {
+                        // Need to reload kernel with f64 emulation enabled
+                        WebGPUBackend.EnableF64Emulation = true;
+                        await ReloadKernel();
+                        _currentKernelUsesF64 = true;
+                    }
                     await RenderWithILGPU();
                 }
                 else
                 {
-                    await RenderWithWebGPU();
+                    // Comparison mode: alternate between renderers each frame
+                    if (_currentKernelUsesF64)
+                    {
+                        // Need to reload kernel with f64 emulation disabled
+                        WebGPUBackend.EnableF64Emulation = false;
+                        await ReloadKernel();
+                        _currentKernelUsesF64 = false;
+                    }
+                    if (_useILGPU)
+                    {
+                        await RenderWithILGPU();
+                    }
+                    else
+                    {
+                        await RenderWithWebGPU();
+                    }
+                    _useILGPU = !_useILGPU;
                 }
 
-                _useILGPU = !_useILGPU;
-                
                 // Throttled UI update
                 ThrottledStateHasChanged();
-                
+
                 // Small delay to allow UI updates
                 await Task.Delay(1);
             }
@@ -256,6 +294,52 @@
         _ilgpuAccelerator = await ilgpuDevice.CreateAcceleratorAsync(_ilgpuContext);
         _ilgpuKernel = _ilgpuAccelerator.LoadAutoGroupedStreamKernel<Index2D, ArrayView2D<uint, Stride2D.DenseX>, int, int, int, double, double, double>(MandelbrotKernel);
         _ilgpuBuffer = _ilgpuAccelerator.Allocate2DDenseX<uint>(new Index2D(_width, _height));
+    }
+
+    private async Task ReloadKernel()
+    {
+        // CRITICAL: ILGPU caches compiled kernels by method signature. 
+        // The emulation flags (EnableF64Emulation) are NOT part of the cache key.
+        // So we MUST dispose the old accelerator and create a new one to get a fresh cache.
+        
+        Console.WriteLine($"[Mandelbrot] Reloading kernel with EnableF64Emulation={WebGPUBackend.EnableF64Emulation}");
+        
+        // Enable verbose logging to see the generated WGSL
+        var originalVerbose = WebGPUBackend.VerboseLogging;
+        WebGPUBackend.VerboseLogging = true;
+        
+        try
+        {
+            // Dispose old resources
+            if (_ilgpuAccelerator != null)
+            {
+                await _ilgpuAccelerator.SynchronizeAsync();
+            }
+            
+            _ilgpuKernel = null;
+            _ilgpuBuffer?.Dispose();
+            _ilgpuBuffer = null;
+            _ilgpuAccelerator?.Dispose();
+            _ilgpuAccelerator = null;
+            _ilgpuContext?.Dispose();
+            _ilgpuContext = null;
+            
+            // Recreate everything with fresh kernel cache
+            var webGpuDevice = await WebGPUDevice.GetDefaultDeviceAsync();
+            if (webGpuDevice == null) throw new Exception("No WebGPU device found");
+            
+            _ilgpuContext = Context.Create(builder => builder.Default());
+            var ilgpuDevice = new WebGPUILGPUDevice(webGpuDevice, 0);
+            _ilgpuAccelerator = await ilgpuDevice.CreateAcceleratorAsync(_ilgpuContext);
+            _ilgpuKernel = _ilgpuAccelerator.LoadAutoGroupedStreamKernel<Index2D, ArrayView2D<uint, Stride2D.DenseX>, int, int, int, double, double, double>(MandelbrotKernel);
+            _ilgpuBuffer = _ilgpuAccelerator.Allocate2DDenseX<uint>(new Index2D(_width, _height));
+            
+            Console.WriteLine($"[Mandelbrot] Kernel reloaded with fresh accelerator, f64 emulation: {WebGPUBackend.EnableF64Emulation}");
+        }
+        finally
+        {
+            WebGPUBackend.VerboseLogging = originalVerbose;
+        }
     }
 
     private async Task RenderWithILGPU()
