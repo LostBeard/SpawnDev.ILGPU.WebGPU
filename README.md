@@ -189,7 +189,6 @@ using var accelerator = await context.CreateWebGPUAcceleratorAsync(0, options);
 ## Known Limitations
 
 - Subgroups extension not available in all browsers
-- **FP64 Precision**: Native FP64 (`double`) is not supported by most WebGPU hardware. While this library provides emulation, extreme zoom levels (beyond ~10^12) may require **Perturbation Theory** to avoid artifacts. This library includes built-in support for hybrid CPU/GPU perturbation rendering in the demo.
 
 ## Async Synchronization
 
