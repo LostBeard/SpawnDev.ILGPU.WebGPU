@@ -27,7 +27,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         private HashSet<int> _emulatedF64Params = new HashSet<int>();
         private HashSet<int> _emulatedI64Params = new HashSet<int>();
         private List<DynamicSharedOverrideInfo> _dynamicSharedOverrides = new List<DynamicSharedOverrideInfo>();
-        // Maps variable names to their emulation info (param index, is f64)
+        // Maps variable names to their emulation info (param index, is emu_f64)
         private Dictionary<string, (int ParamIndex, bool IsF64)> _emulatedVarMappings = new Dictionary<string, (int, bool)>();
         // Maps cross-block pointer variable names to inline expressions (e.g. "param1[v_3_idx]")
         // This fixes WGSL scoping: pointers declared in one switch case are not visible in another.
@@ -173,15 +173,15 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
                 // Track if this is an emulated 64-bit buffer
                 bool isEmulated64Bit = false;
-                if (Backend.Options.EnableF64Emulation && wgslType == "f64")
+                if (Backend.Options.EnableF64Emulation && wgslType == "emu_f64")
                 {
-                    wgslType = "u32"; // Raw bits storage (2 u32 per f64)
+                    wgslType = "u32"; // Raw bits storage (2 u32 per emu_f64)
                     isEmulated64Bit = true;
                     _emulatedF64Params.Add(param.Index);
                 }
-                else if (Backend.Options.EnableI64Emulation && (wgslType == "i64" || wgslType == "u64"))
+                else if (Backend.Options.EnableI64Emulation && (wgslType == "emu_i64" || wgslType == "emu_u64"))
                 {
-                    wgslType = "u32"; // Raw bits storage (2 u32 per i64)
+                    wgslType = "u32"; // Raw bits storage (2 u32 per emu_i64)
                     isEmulated64Bit = true;
                     _emulatedI64Params.Add(param.Index);
                 }
@@ -286,8 +286,10 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             SetupIndexVariables();
             SetupParameterBindings();
 
-            // 3. START THE STATE MACHINE
             // 3. START CONTROL FLOW
+            // Save position before code generation for post-processing
+            int codeGenStartPosition = Builder.Length;
+
             if (Method.Blocks.Count == 1)
             {
                 GenerateCodeInternal();
@@ -295,11 +297,6 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             else if (_loops.Count == 0) // No Loops -> Acyclic
             {
                 // ACYCLIC KERNEL: Use Structured Control Flow (Nested IFs)
-                // This ensures uniformity for Barries.
-                // ACYCLIC KERNEL: Use Structured Control Flow (Nested IFs)
-                // This ensures uniformity for Barries.
-                // ACYCLIC KERNEL: Use Structured Control Flow (Nested IFs)
-                // This ensures uniformity for Barries.
                 var pd = global::ILGPU.IR.Analyses.Dominators.CreatePostDominators(Method.Blocks);
                 GenerateStructuredCode(Method.EntryBlock, null, pd);
             }
@@ -324,6 +321,75 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 AppendLine("}"); // End Loop
             }
 
+            // CRITICAL: Post-process to fix variable scoping issues.
+            // HoistCrossBlockVariables() declares cross-block vars at function scope, but its
+            // analysis may miss variables used by terminators in other blocks (e.g., CompareValue
+            // used as IfBranch condition). Code generators also emit "let v_N = expr;" which creates
+            // block-scoped bindings that shadow hoisted vars. Fix: unconditionally convert ALL
+            // "let v_N = expr;" to assignments, and add missing var declarations at function scope.
+            // Pointer references (&param, &temp_) must remain as 'let' since they're immutable bindings.
+            if (Method.Blocks.Count > 1)
+            {
+                string generatedCode = Builder.ToString(codeGenStartPosition, Builder.Length - codeGenStartPosition);
+                var letPattern = new System.Text.RegularExpressions.Regex(
+                    @"^(\s*)let\s+(v_\d+(?:_\w+)?)\s*=\s*(.+);",
+                    System.Text.RegularExpressions.RegexOptions.Multiline);
+                var missingDeclarations = new List<string>(); // var declarations to add
+                bool anyReplacements = false;
+                string processed = letPattern.Replace(generatedCode, match =>
+                {
+                    string indent = match.Groups[1].Value;
+                    string varName = match.Groups[2].Value;
+                    string expr = match.Groups[3].Value;
+
+                    // Keep pointer aliases as 'let' (they can't be var)
+                    // This includes &param (buffer refs), &temp_ (temporaries), 
+                    // and &v_N (shared memory refs like &v_18)
+                    if (expr.TrimStart().StartsWith("&"))
+                        return match.Value;
+
+                    anyReplacements = true;
+
+                    // If this variable wasn't already declared by HoistCrossBlockVariables,
+                    // we need to add a var declaration at function scope
+                    if (!declaredVariables.Contains(varName))
+                    {
+                        // Infer type from expression patterns
+                        string inferredType = InferWgslType(expr);
+
+                        // Try valueVariables lookup for more accurate type
+                        foreach (var kvp in valueVariables)
+                        {
+                            if (kvp.Value.Name == varName)
+                            {
+                                inferredType = kvp.Value.Type;
+                                break;
+                            }
+                        }
+
+                        missingDeclarations.Add($"    var {varName} : {inferredType};");
+                        declaredVariables.Add(varName);
+                    }
+
+                    // Convert "let v_N = expr;" to "v_N = expr;" (assignment only)
+                    return $"{indent}{varName} = {expr};";
+                });
+
+                if (anyReplacements)
+                {
+                    Builder.Remove(codeGenStartPosition, Builder.Length - codeGenStartPosition);
+
+                    // Insert missing var declarations at the function scope (before generated code)
+                    if (missingDeclarations.Count > 0)
+                    {
+                        foreach (var decl in missingDeclarations)
+                            Builder.AppendLine(decl);
+                    }
+
+                    Builder.Append(processed);
+                }
+            }
+
             PopIndent();
             Builder.AppendLine("}"); // End Function
         }
@@ -333,6 +399,31 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             // and we must use a direct assignment (no prefix).
             // Otherwise, we use 'let ' to declare it locally.
             return _hoistedPrimitives.Contains(value) ? "" : "let ";
+        }
+
+        /// <summary>
+        /// Infers the WGSL type from an expression string for post-processing var declarations.
+        /// </summary>
+        private static string InferWgslType(string expr)
+        {
+            // Comparison operators produce bool
+            if (expr.Contains(" != ") || expr.Contains(" == ") || expr.Contains(" >= ") ||
+                expr.Contains(" <= ") || expr.Contains(" > ") || expr.Contains(" < ") ||
+                expr.Contains(" | ") || expr.Contains(" & "))
+                return "bool";
+            // emu_f64 emulation functions return vec2<f32>
+            if (expr.Contains("f64_from_f32") || expr.Contains("f64_add") || expr.Contains("f64_sub") ||
+                expr.Contains("f64_mul") || expr.Contains("f64_div") || expr.Contains("f64_neg") ||
+                expr.Contains("f64_from_ieee754") || expr.Contains("emu_f64("))
+                return "vec2<f32>";
+            if (expr.Contains("f64_to_f32") || expr.Contains("f32("))
+                return "f32";
+            if (expr.Contains("i32("))
+                return "i32";
+            if (expr.Contains("u32("))
+                return "u32";
+            // Default to bool (most common for unlisted patterns like comparisons)
+            return "bool";
         }
         private string GetWorkgroupSize()
         {
@@ -459,11 +550,11 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 var elementType = GetBufferElementType(param.ParameterType);
                 var wgslType = TypeGenerator[elementType];
 
-                if (Backend.Options.EnableF64Emulation && wgslType == "f64")
+                if (Backend.Options.EnableF64Emulation && wgslType == "emu_f64")
                 {
                     _emulatedF64Params.Add(param.Index);
                 }
-                else if (Backend.Options.EnableI64Emulation && (wgslType == "i64" || wgslType == "u64"))
+                else if (Backend.Options.EnableI64Emulation && (wgslType == "emu_i64" || wgslType == "emu_u64"))
                 {
                     _emulatedI64Params.Add(param.Index);
                 }
@@ -534,17 +625,17 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 else if (basicType == BasicValueType.Float16 || basicType == BasicValueType.Float32) init = " = 0.0";
                 else if (basicType == BasicValueType.Float64)
                 {
-                    // f64 is emulated as vec2<f32> when emulation is enabled
+                    // emu_f64 is emulated as vec2<f32> when emulation is enabled
                     if (Backend.Options.EnableF64Emulation)
-                        init = " = f64(0.0, 0.0)";
+                        init = " = emu_f64(0.0, 0.0)";
                     else
                         init = " = 0.0";
                 }
                 else if (basicType == BasicValueType.Int64)
                 {
-                    // i64 is emulated as vec2<u32> when emulation is enabled
+                    // emu_i64 is emulated as vec2<u32> when emulation is enabled
                     if (Backend.Options.EnableI64Emulation)
-                        init = " = i64(0u, 0u)";
+                        init = " = emu_i64(0u, 0u)";
                     else
                         init = " = 0";
                 }
@@ -647,16 +738,16 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     }
                     else
                     {
-                        // Scalar load - check for emulated f64/i64
+                        // Scalar load - check for emulated emu_f64/emu_i64
                         if (_emulatedF64Params.Contains(param.Index))
                         {
-                            // f64 emulation: read 2 u32 values and convert to emulated f64
+                            // emu_f64 emulation: read 2 u32 values and convert to emulated emu_f64
                             AppendLine($"var {variable.Name} = f64_from_ieee754_bits(param{param.Index}[0], param{param.Index}[1]);");
                         }
                         else if (_emulatedI64Params.Contains(param.Index))
                         {
-                            // i64 emulation: combine 2 u32 values into vec2<u32>
-                            AppendLine($"var {variable.Name} = i64(param{param.Index}[0], param{param.Index}[1]);");
+                            // emu_i64 emulation: combine 2 u32 values into vec2<u32>
+                            AppendLine($"var {variable.Name} = emu_i64(param{param.Index}[0], param{param.Index}[1]);");
                         }
                         else
                         {
@@ -824,15 +915,15 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 string baseIdxVar = $"{source}_base_idx";
                 if (emulInfo.IsF64)
                 {
-                    // f64: convert IEEE 754 bits to double-float
+                    // emu_f64: convert IEEE 754 bits to double-float
                     Declare(target);
                     AppendLine($"{target} = f64_from_ieee754_bits((*{source})[u32({baseIdxVar})], (*{source})[u32({baseIdxVar}) + 1u]);");
                 }
                 else
                 {
-                    // i64: just combine two u32 into vec2<u32>
+                    // emu_i64: just combine two u32 into vec2<u32>
                     Declare(target);
-                    AppendLine($"{target} = i64((*{source})[u32({baseIdxVar})], (*{source})[u32({baseIdxVar}) + 1u]);");
+                    AppendLine($"{target} = emu_i64((*{source})[u32({baseIdxVar})], (*{source})[u32({baseIdxVar}) + 1u]);");
                 }
                 return;
             }
@@ -876,14 +967,14 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 string baseIdxVar = $"{address}_base_idx";
                 if (emulInfo.IsF64)
                 {
-                    // f64: convert double-float back to IEEE 754 bits
+                    // emu_f64: convert double-float back to IEEE 754 bits
                     AppendLine($"let _bits_{address} = f64_to_ieee754_bits({val});");
                     AppendLine($"(*{address})[u32({baseIdxVar})] = _bits_{address}.x;");
                     AppendLine($"(*{address})[u32({baseIdxVar}) + 1u] = _bits_{address}.y;");
                 }
                 else
                 {
-                    // i64: split vec2<u32> into two u32 values
+                    // emu_i64: split vec2<u32> into two u32 values
                     AppendLine($"(*{address})[u32({baseIdxVar})] = {val}.x;");
                     AppendLine($"(*{address})[u32({baseIdxVar}) + 1u] = {val}.y;");
                 }
@@ -912,12 +1003,12 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             // Check if this is an emulated 64-bit operation
             var leftType = TypeGenerator[value.Left.Type];
             var rightType = TypeGenerator[value.Right.Type];
-            bool isEmulatedF64 = Backend.Options.EnableF64Emulation && (leftType == "f64" || rightType == "f64");
-            bool isEmulatedI64 = Backend.Options.EnableI64Emulation && (leftType == "i64" || leftType == "u64" || rightType == "i64" || rightType == "u64");
+            bool isEmulatedF64 = Backend.Options.EnableF64Emulation && (leftType == "emu_f64" || rightType == "emu_f64");
+            bool isEmulatedI64 = Backend.Options.EnableI64Emulation && (leftType == "emu_i64" || leftType == "emu_u64" || rightType == "emu_i64" || rightType == "emu_u64");
 
             if (isEmulatedF64)
             {
-                // Use f64 emulation functions
+                // Use emu_f64 emulation functions
                 string? emulFunc = value.Kind switch
                 {
                     BinaryArithmeticKind.Add => "f64_add",
@@ -939,8 +1030,8 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
             if (isEmulatedI64)
             {
-                // Use i64 emulation functions
-                bool isUnsigned = leftType == "u64" || rightType == "u64";
+                // Use emu_i64 emulation functions
+                bool isUnsigned = leftType == "emu_u64" || rightType == "emu_u64";
                 string? emulFunc = value.Kind switch
                 {
                     BinaryArithmeticKind.Add => "i64_add",
@@ -1056,9 +1147,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 return;
             }
 
-            // Handle emulated i64/u64 negation
+            // Handle emulated emu_i64/emu_u64 negation
             var sourceType = TypeGenerator[value.Value.Type];
-            if (Backend.Options.EnableI64Emulation && (sourceType == "i64" || sourceType == "u64") && value.Kind == UnaryArithmeticKind.Neg)
+            if (Backend.Options.EnableI64Emulation && (sourceType == "emu_i64" || sourceType == "emu_u64") && value.Kind == UnaryArithmeticKind.Neg)
             {
                 AppendLine($"{prefix}{target} = i64_neg({source});");
                 return;
@@ -1285,8 +1376,8 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             string rightType = TypeGenerator[value.Right.Type];
 
             // Check for emulated 64-bit compare
-            bool isEmulatedF64 = Backend.Options.EnableF64Emulation && (leftType == "f64" || rightType == "f64");
-            bool isEmulatedI64 = Backend.Options.EnableI64Emulation && (leftType == "i64" || leftType == "u64" || rightType == "i64" || rightType == "u64");
+            bool isEmulatedF64 = Backend.Options.EnableF64Emulation && (leftType == "emu_f64" || rightType == "emu_f64");
+            bool isEmulatedI64 = Backend.Options.EnableI64Emulation && (leftType == "emu_i64" || leftType == "emu_u64" || rightType == "emu_i64" || rightType == "emu_u64");
 
             if (isEmulatedF64)
             {
@@ -1310,7 +1401,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
             if (isEmulatedI64)
             {
-                bool isUnsigned = leftType == "u64" || rightType == "u64";
+                bool isUnsigned = leftType == "emu_u64" || rightType == "emu_u64";
                 string? emulFunc = value.Kind switch
                 {
                     CompareKind.LessThan => isUnsigned ? "u64_lt" : "i64_lt",
@@ -1363,17 +1454,17 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             bool isVectorSource = sourceType.StartsWith("vec");
             bool isScalarTarget = !targetType.StartsWith("vec") && !targetType.StartsWith("mat") && !targetType.StartsWith("array");
 
-            // CRITICAL FIX: When target is emulated f64 (vec2<f32>), we can't just do f64(i32)
+            // CRITICAL FIX: When target is emulated emu_f64 (vec2<f32>), we can't just do emu_f64(i32)
             // because vec2<f32> doesn't accept i32 as a single argument.
             // We need to convert through f32 first: f64_from_f32(f32(source))
-            bool isEmulatedF64Target = Backend.Options.EnableF64Emulation && targetType == "f64";
+            bool isEmulatedF64Target = Backend.Options.EnableF64Emulation && targetType == "emu_f64";
 
             if (isVectorSource && isScalarTarget)
             {
                 // Extract X component. 
                 if (isEmulatedF64Target)
                 {
-                    // Convert to f64 from extracted scalar
+                    // Convert to emu_f64 from extracted scalar
                     AppendLine($"{prefix}{target} = f64_from_f32(f32({source}.x));");
                 }
                 else
@@ -1383,15 +1474,15 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             }
             else if (isEmulatedF64Target)
             {
-                // Source is scalar but target is emulated f64
-                // Need to convert source to f32 first, then to f64 via f64_from_f32
+                // Source is scalar but target is emulated emu_f64
+                // Need to convert source to f32 first, then to emu_f64 via f64_from_f32
                 if (sourceType == "f32")
                 {
                     AppendLine($"{prefix}{target} = f64_from_f32({source});");
                 }
-                else if (sourceType == "f64")
+                else if (sourceType == "emu_f64")
                 {
-                    // f64 to f64 - just assign
+                    // emu_f64 to emu_f64 - just assign
                     AppendLine($"{prefix}{target} = {source};");
                 }
                 else
@@ -1402,7 +1493,27 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             }
             else
             {
-                AppendLine($"{prefix}{target} = {targetType}({source});");
+                // Check if source is emulated emu_f64 but target is NOT emu_f64
+                bool isEmulatedF64Source = Backend.Options.EnableF64Emulation && sourceType == "emu_f64";
+                if (isEmulatedF64Source && isScalarTarget)
+                {
+                    // Source is emulated emu_f64 (vec2<f32>), target is a scalar type (i32, u32, f32, etc.)
+                    // Must extract f32 value via f64_to_f32() first, then cast to target type
+                    if (targetType == "f32")
+                    {
+                        // emu_f64 -> f32: just extract
+                        AppendLine($"{prefix}{target} = f64_to_f32({source});");
+                    }
+                    else
+                    {
+                        // emu_f64 -> i32/u32/etc: extract to f32, then cast
+                        AppendLine($"{prefix}{target} = {targetType}(f64_to_f32({source}));");
+                    }
+                }
+                else
+                {
+                    AppendLine($"{prefix}{target} = {targetType}({source});");
+                }
             }
         }
 

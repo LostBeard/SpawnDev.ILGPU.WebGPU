@@ -1,0 +1,585 @@
+@page "/fractals"
+@implements IAsyncDisposable
+@using SpawnDev.ILGPU.WebGPU
+@using SpawnDev.ILGPU.WebGPU.Backend
+@using SpawnDev.BlazorJS
+@using SpawnDev.BlazorJS.JSObjects
+@using ILGPU
+@using System.Diagnostics
+@using System.Runtime.InteropServices
+@using global::ILGPU
+@using global::ILGPU.Runtime
+
+<PageTitle>Fractal Explorer</PageTitle>
+
+<h1>Fractal Explorer</h1>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="card mb-3">
+            <div class="card-header">Controls</div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Fractal Type</label>
+                    <select class="form-select" @bind="_fractalType">
+                        <option value="0">Mandelbrot</option>
+                        <option value="1">Julia Set</option>
+                        <option value="2">Burning Ship</option>
+                        <option value="3">Tricorn</option>
+                        <option value="4">Phoenix</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Max Iterations: <strong>@_maxIterations</strong></label>
+                    <input type="range" class="form-range" min="50" max="2000" step="50" @bind="_maxIterations" @bind:event="oninput" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Color Scheme</label>
+                    <select class="form-select" @bind="_colorScheme">
+                        <option value="0">Classic</option>
+                        <option value="1">Smooth</option>
+                        <option value="2">Fire</option>
+                        <option value="3">Ocean</option>
+                        <option value="4">Neon</option>
+                    </select>
+                </div>
+
+                @if (_fractalType == 1)
+                {
+                    <hr />
+                    <div class="mb-3">
+                        <label class="form-label">Julia Real: <strong>@_juliaReal.ToString("F4")</strong></label>
+                        <input type="range" class="form-range" min="-2" max="2" step="0.01" @bind="_juliaReal" @bind:event="oninput" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Julia Imag: <strong>@_juliaImag.ToString("F4")</strong></label>
+                        <input type="range" class="form-range" min="-2" max="2" step="0.01" @bind="_juliaImag" @bind:event="oninput" />
+                    </div>
+                }
+
+                @if (_fractalType == 4)
+                {
+                    <hr />
+                    <div class="mb-3">
+                        <label class="form-label">Phoenix P: <strong>@_phoenixP.ToString("F4")</strong></label>
+                        <input type="range" class="form-range" min="-2" max="2" step="0.01" @bind="_phoenixP" @bind:event="oninput" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Phoenix Q: <strong>@_phoenixQ.ToString("F4")</strong></label>
+                        <input type="range" class="form-range" min="-2" max="2" step="0.01" @bind="_phoenixQ" @bind:event="oninput" />
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header">Performance</div>
+            <div class="card-body">
+                <canvas @ref="_fpsCanvas" width="220" height="80" style="width:100%; border:1px solid #444; border-radius:4px; background:#1a1a2e;"></canvas>
+                <div class="mt-2">
+                    <small>
+                        <div><strong>FPS:</strong> @_currentFps.ToString("F1")</div>
+                        <div><strong>Render:</strong> @_lastRenderMs.ToString("F1") ms</div>
+                        <div><strong>Zoom:</strong> @FormatZoom()</div>
+                        <div><strong>Center:</strong> @FormatCoord(_centerX), @FormatCoord(_centerY)</div>
+                        <div><strong>Precision:</strong> 64-bit (f64 emulation)</div>
+                    </small>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">Instructions</div>
+            <div class="card-body">
+                <ul class="mb-0 small">
+                    <li><strong>Zoom:</strong> Mouse wheel</li>
+                    <li><strong>Pan:</strong> Click & drag</li>
+                    <li><strong>Reset:</strong> Double-click</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="text-center">
+            <canvas @ref="_mainCanvas"
+                    width="@_width"
+                    height="@_height"
+                    style="border: 1px solid #444; cursor: crosshair; border-radius: 4px; max-width: 100%;"
+                    tabindex="0"
+                    @onwheel="OnWheel"
+                    @onwheel:preventDefault
+                    @onmousedown="OnMouseDown"
+                    @onmousemove="OnMouseMove"
+                    @onmouseup="OnMouseUp"
+                    @onmouseleave="OnMouseUp"
+                    @ondblclick="OnDoubleClick"></canvas>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Inject]
+    BlazorJSRuntime JS { get; set; } = default!;
+
+    ElementReference _mainCanvas;
+    ElementReference _fpsCanvas;
+
+    // Canvas size
+    private int _width = 900;
+    private int _height = 700;
+
+    // Fractal parameters
+    private int _fractalType = 0;
+    private int _colorScheme = 0;
+    private int _maxIterations = 500;
+    private double _centerX = -0.5;
+    private double _centerY = 0.0;
+    private double _zoom = 1.0;
+
+    // Julia set parameters
+    private double _juliaReal = -0.7;
+    private double _juliaImag = 0.27015;
+
+    // Phoenix parameters
+    private double _phoenixP = 0.5667;
+    private double _phoenixQ = -0.5;
+
+    // State
+    private bool _isRunning = false;
+    private bool _disposed = false;
+    private double _lastRenderMs = 0;
+    private double _currentFps = 0;
+
+    // FPS tracking
+    private double[] _fpsHistory = new double[120];
+    private int _fpsIndex = 0;
+    private DateTime _lastFrameTime = DateTime.UtcNow;
+
+    // UI throttling
+    private DateTime _lastUiUpdate = DateTime.MinValue;
+    private const int UI_UPDATE_INTERVAL_MS = 100;
+
+    // Mouse drag
+    private bool _isDragging = false;
+    private double _lastMouseX;
+    private double _lastMouseY;
+
+    // Cached ILGPU resources
+    private Context? _ilgpuContext;
+    private Accelerator? _ilgpuAccelerator;
+    // Reduced to 8 scalar params to stay within WebGPU's maxStorageBuffersPerShaderStage (10)
+    // Total bindings: 2 (ArrayView2D) + 3 (ints) + 5 (doubles) = 10
+    // packedConfig = fractalType * 256 + colorScheme
+    // packedSize   = width * 65536 + height
+    private Action<Index2D, ArrayView2D<uint, Stride2D.DenseX>,
+        int, int, int,
+        double, double, double, double, double>? _kernel;
+    private MemoryBuffer2D<uint, Stride2D.DenseX>? _outputBuffer;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _ = RenderLoop();
+        }
+    }
+
+    private async Task RenderLoop()
+    {
+        try
+        {
+            await InitializeILGPU();
+
+            while (!_disposed)
+            {
+                if (_isRunning)
+                {
+                    await Task.Delay(10);
+                    continue;
+                }
+
+                await RenderFrame();
+                ThrottledStateHasChanged();
+                await Task.Yield();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Render loop error: {ex}");
+        }
+    }
+
+    private void ThrottledStateHasChanged()
+    {
+        var now = DateTime.UtcNow;
+        if ((now - _lastUiUpdate).TotalMilliseconds >= UI_UPDATE_INTERVAL_MS)
+        {
+            _lastUiUpdate = now;
+            StateHasChanged();
+        }
+    }
+
+    private string FormatZoom() => _zoom.ToString("G6");
+    private string FormatCoord(double val) => val.ToString("G10");
+
+    // ========== Mouse Interaction ==========
+
+    private void OnWheel(WheelEventArgs e)
+    {
+        double mouseX = e.OffsetX;
+        double mouseY = e.OffsetY;
+
+        double scale = 4.0 / _zoom;
+        double mouseRealBefore = _centerX + (mouseX - _width / 2.0) * scale / _width;
+        double mouseImagBefore = _centerY + (mouseY - _height / 2.0) * scale / _height;
+
+        double zoomFactor = e.DeltaY < 0 ? 1.2 : 1.0 / 1.2;
+        _zoom *= zoomFactor;
+        _zoom = Math.Max(0.5, Math.Min(_zoom, 1e12));
+
+        double newScale = 4.0 / _zoom;
+        _centerX = mouseRealBefore - (mouseX - _width / 2.0) * newScale / _width;
+        _centerY = mouseImagBefore - (mouseY - _height / 2.0) * newScale / _height;
+    }
+
+    private void OnMouseDown(MouseEventArgs e)
+    {
+        _isDragging = true;
+        _lastMouseX = e.OffsetX;
+        _lastMouseY = e.OffsetY;
+    }
+
+    private void OnMouseMove(MouseEventArgs e)
+    {
+        if (!_isDragging) return;
+
+        double dx = e.OffsetX - _lastMouseX;
+        double dy = e.OffsetY - _lastMouseY;
+        if (Math.Abs(dx) < 0.5 && Math.Abs(dy) < 0.5) return;
+
+        double scale = 4.0 / _zoom;
+        _centerX -= dx * scale / _width;
+        _centerY -= dy * scale / _height;
+
+        _lastMouseX = e.OffsetX;
+        _lastMouseY = e.OffsetY;
+    }
+
+    private void OnMouseUp(MouseEventArgs e)
+    {
+        _isDragging = false;
+    }
+
+    private void OnDoubleClick(MouseEventArgs e)
+    {
+        _zoom = 1.0;
+        switch (_fractalType)
+        {
+            case 0: _centerX = -0.5; _centerY = 0.0; break;
+            case 1: _centerX = 0.0; _centerY = 0.0; break;
+            case 2: _centerX = -0.4; _centerY = -0.5; break;
+            case 3: _centerX = -0.5; _centerY = 0.0; break;
+            case 4: _centerX = 0.0; _centerY = 0.0; break;
+        }
+    }
+
+    // ========== ILGPU Initialization ==========
+
+    private async Task InitializeILGPU()
+    {
+        if (_ilgpuContext != null) return;
+
+        var webGpuDevice = await WebGPUDevice.GetDefaultDeviceAsync();
+        if (webGpuDevice == null) throw new Exception("No WebGPU device found");
+
+        _ilgpuContext = Context.Create(builder => builder.Default());
+        var ilgpuDevice = new WebGPUILGPUDevice(webGpuDevice, 0);
+
+        // Always use f64 emulation for maximum precision
+        var options = new WebGPUBackendOptions { EnableF64Emulation = true };
+        _ilgpuAccelerator = await ilgpuDevice.CreateAcceleratorAsync(_ilgpuContext, options);
+
+        _kernel = _ilgpuAccelerator.LoadAutoGroupedStreamKernel<
+            Index2D, ArrayView2D<uint, Stride2D.DenseX>,
+            int, int, int,
+            double, double, double, double, double>(FractalKernel);
+        _outputBuffer = _ilgpuAccelerator.Allocate2DDenseX<uint>(new Index2D(_width, _height));
+    }
+
+    // ========== Rendering ==========
+
+    private async Task RenderFrame()
+    {
+        _isRunning = true;
+        try
+        {
+            var sw = Stopwatch.StartNew();
+
+            // Pack: fractalType*256 + colorScheme, width*65536 + height
+            int packedSize = _width * 65536 + _height;
+            int packedConfig = _fractalType * 256 + _colorScheme;
+            // Reuse extra1/extra2 for Julia or Phoenix params
+            double extra1 = _fractalType == 1 ? _juliaReal : _phoenixP;
+            double extra2 = _fractalType == 1 ? _juliaImag : _phoenixQ;
+
+            _kernel!(
+                _outputBuffer!.IntExtent, _outputBuffer.View,
+                packedSize, _maxIterations, packedConfig,
+                _centerX, _centerY, _zoom, extra1, extra2);
+
+            await _ilgpuAccelerator!.SynchronizeAsync();
+
+            var webGpuMemBuffer = (WebGPUMemoryBuffer)((IArrayView)_outputBuffer).Buffer;
+            var bytes = await webGpuMemBuffer.NativeBuffer.CopyToHostAsync();
+
+            var result = new uint[_width * _height];
+            Buffer.BlockCopy(bytes, 0, result, 0, bytes.Length);
+
+            sw.Stop();
+            _lastRenderMs = sw.Elapsed.TotalMilliseconds;
+
+            // Update FPS
+            var now = DateTime.UtcNow;
+            var dt = (now - _lastFrameTime).TotalSeconds;
+            _lastFrameTime = now;
+            if (dt > 0)
+            {
+                _fpsHistory[_fpsIndex % _fpsHistory.Length] = 1.0 / dt;
+                _fpsIndex++;
+                _currentFps = 1.0 / dt;
+            }
+
+            await DrawToCanvas(result);
+            await DrawFpsGraph();
+        }
+        finally
+        {
+            _isRunning = false;
+        }
+    }
+
+    private async Task DrawToCanvas(uint[] pixels)
+    {
+        using var canvas = new HTMLCanvasElement(_mainCanvas);
+        using var context = canvas.GetContext<CanvasRenderingContext2D>("2d");
+        using var uint32Array = new Uint32Array(pixels);
+        using var uint8ClampedArray = new Uint8ClampedArray(uint32Array.Buffer);
+        using var imageData = new ImageData(uint8ClampedArray, (ulong)_width, (ulong)_height);
+        context!.PutImageData(imageData, 0, 0);
+    }
+
+    private async Task DrawFpsGraph()
+    {
+        try
+        {
+            using var canvas = new HTMLCanvasElement(_fpsCanvas);
+            using var ctx = canvas.GetContext<CanvasRenderingContext2D>("2d");
+            if (ctx == null) return;
+
+            int w = 220, h = 80;
+            ctx.ClearRect(0, 0, w, h);
+
+            double maxFps = 10;
+            int count = Math.Min(_fpsIndex, _fpsHistory.Length);
+            for (int i = 0; i < count; i++)
+                maxFps = Math.Max(maxFps, _fpsHistory[i]);
+
+            double barWidth = (double)w / _fpsHistory.Length;
+            for (int i = 0; i < count; i++)
+            {
+                int idx = (_fpsIndex - count + i + _fpsHistory.Length) % _fpsHistory.Length;
+                double fps = _fpsHistory[idx];
+                double barHeight = (fps / maxFps) * (h - 15);
+
+                double ratio = fps / maxFps;
+                int r = (int)(255 * (1 - ratio));
+                int g = (int)(255 * ratio);
+                ctx.FillStyle = $"rgb({r},{g},80)";
+                ctx.FillRect(i * barWidth, h - barHeight - 10, Math.Max(barWidth - 1, 1), barHeight);
+            }
+
+            ctx.FillStyle = "#e0e0e0";
+            ctx.Font = "11px monospace";
+            ctx.FillText($"{_currentFps:F0} FPS  |  {maxFps:F0} max", 5, 10);
+        }
+        catch { }
+    }
+
+    // ========== Fractal Kernel ==========
+    // Uses scalar parameters (same pattern as proven Mandelbrot demo kernel)
+    // All doubles use f64 emulation for maximum precision
+
+    static void FractalKernel(
+        Index2D index,
+        ArrayView2D<uint, Stride2D.DenseX> output,
+        int packedSize, int maxIter, int packedConfig,
+        double centerX, double centerY, double zoom, double extra1, double extra2)
+    {
+        // Unpack integer parameters
+        int width = packedSize / 65536;
+        int height = packedSize - width * 65536;
+        int fractalType = packedConfig / 256;
+        int colorScheme = packedConfig - fractalType * 256;
+        // extra1/extra2 = juliaReal/juliaImag for Julia, paramP/paramQ for Phoenix
+        double juliaReal = extra1;
+        double juliaImag = extra2;
+        double paramP = extra1;
+        double paramQ = extra2;
+
+        int x = index.X;
+        int y = index.Y;
+
+        if (x >= width || y >= height)
+            return;
+
+        // Map pixel to complex plane
+        double scale = 4.0 / zoom;
+        double real = centerX + (x - width * 0.5) * scale / width;
+        double imag = centerY + (y - height * 0.5) * scale / height;
+
+        // Iteration variables
+        double zr = 0.0;
+        double zi = 0.0;
+        double cr = real;
+        double ci = imag;
+        double prevZr = 0.0;
+        double prevZi = 0.0;
+        int iterations = 0;
+
+        // Julia: z starts at pixel, c is the fixed constant
+        if (fractalType == 1)
+        {
+            zr = real;
+            zi = imag;
+            cr = juliaReal;
+            ci = juliaImag;
+        }
+        // Phoenix: z starts at pixel
+        else if (fractalType == 4)
+        {
+            zr = real;
+            zi = imag;
+        }
+
+        // Main iteration loop (unified for all types)
+        while (iterations < maxIter)
+        {
+            double zr2 = zr * zr;
+            double zi2 = zi * zi;
+            if (zr2 + zi2 >= 4.0)
+                break;
+
+            double newZr;
+            double newZi;
+
+            if (fractalType == 2)
+            {
+                // Burning Ship - absolute values
+                double azr = zr;
+                double azi = zi;
+                if (azr < 0.0) azr = -azr;
+                if (azi < 0.0) azi = -azi;
+                newZr = azr * azr - azi * azi + cr;
+                newZi = 2.0 * azr * azi + ci;
+            }
+            else if (fractalType == 3)
+            {
+                // Tricorn - conjugated imaginary
+                newZr = zr2 - zi2 + cr;
+                newZi = -2.0 * zr * zi + ci;
+            }
+            else if (fractalType == 4)
+            {
+                // Phoenix
+                newZr = zr2 - zi2 + paramP + paramQ * prevZr;
+                newZi = 2.0 * zr * zi + paramQ * prevZi;
+                prevZr = zr;
+                prevZi = zi;
+            }
+            else
+            {
+                // Mandelbrot (0) and Julia (1) - same formula z² + c
+                newZr = zr2 - zi2 + cr;
+                newZi = 2.0 * zr * zi + ci;
+            }
+
+            zr = newZr;
+            zi = newZi;
+            iterations++;
+        }
+
+        // ========== Coloring ==========
+        uint color;
+        if (iterations >= maxIter)
+        {
+            color = 0xFF000000u;
+        }
+        else
+        {
+            double t = (double)iterations / (double)maxIter;
+            uint rv;
+            uint gv;
+            uint bv;
+
+            if (colorScheme == 1)
+            {
+                // Smooth polynomial
+                rv = (uint)(9.0 * (1.0 - t) * t * t * t * 255.0);
+                gv = (uint)(15.0 * (1.0 - t) * (1.0 - t) * t * t * 255.0);
+                bv = (uint)(8.5 * (1.0 - t) * (1.0 - t) * (1.0 - t) * t * 255.0);
+            }
+            else if (colorScheme == 2)
+            {
+                // Fire
+                rv = (uint)(t * 255.0);
+                gv = (uint)(t * t * 200.0);
+                bv = (uint)(t * t * t * 100.0);
+            }
+            else if (colorScheme == 3)
+            {
+                // Ocean
+                rv = (uint)(t * t * 100.0);
+                gv = (uint)(t * 200.0);
+                bv = (uint)((0.5 + 0.5 * t) * 255.0);
+            }
+            else if (colorScheme == 4)
+            {
+                // Neon
+                rv = (uint)((0.5 + 0.5 * t) * 255.0);
+                gv = (uint)(t * t * 255.0);
+                bv = (uint)((1.0 - t) * 255.0);
+            }
+            else
+            {
+                // Classic (0)
+                rv = (uint)(iterations * 10) % 255u;
+                gv = (uint)(iterations * 5) % 255u;
+                bv = (uint)(iterations * 20) % 255u;
+            }
+
+            // Clamp
+            if (rv > 255u) rv = 255u;
+            if (gv > 255u) gv = 255u;
+            if (bv > 255u) bv = 255u;
+
+            color = (0xFFu << 24) | (bv << 16) | (gv << 8) | rv;
+        }
+
+        output[index] = color;
+    }
+
+    // ========== Disposal ==========
+
+    public async ValueTask DisposeAsync()
+    {
+        _disposed = true;
+        await Task.Delay(100);
+
+        _outputBuffer?.Dispose();
+        _ilgpuAccelerator?.Dispose();
+        _ilgpuContext?.Dispose();
+    }
+}

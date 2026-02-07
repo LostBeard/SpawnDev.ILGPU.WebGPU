@@ -42,6 +42,8 @@ namespace SpawnDev.ILGPU.WebGPU
 
             // Create shader module from WGSL source
             accelerator._lastCompiledWGSL = wgslSource;
+            // DEBUG: Store WGSL in a JS global for browser-side inspection
+            try { BlazorJS.BlazorJSRuntime.JS.Set("wgslDebug", wgslSource); } catch { }
             var shaderDescriptor = new GPUShaderModuleDescriptor
             {
                 Code = wgslSource

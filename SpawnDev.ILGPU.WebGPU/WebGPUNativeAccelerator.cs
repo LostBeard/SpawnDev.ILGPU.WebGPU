@@ -5,6 +5,7 @@
 // File: WebGPUNativeAccelerator.cs
 // ---------------------------------------------------------------------------------------
 
+using SpawnDev.BlazorJS;
 using SpawnDev.BlazorJS.JSObjects;
 using SpawnDev.ILGPU.WebGPU.Backend;
 using System.Linq;
@@ -58,8 +59,26 @@ namespace SpawnDev.ILGPU.WebGPU
 
             var adapter = Device.Adapter;
 
-            // Request device with required features
-            _gpuDevice = await adapter.RequestDevice();
+            // Request device with higher storage buffer limits.
+            // WebGPU defaults to 8 maxStorageBuffersPerShaderStage, but complex kernels
+            // with many parameters may need more. Most adapters support at least 10.
+            try
+            {
+                // Use JS interop to call requestDevice with requiredLimits directly,
+                // since the C# GPUDeviceDescriptor doesn't expose requiredLimits property.
+                _gpuDevice = await adapter.JSRef!.CallAsync<GPUDevice>("requestDevice", new
+                {
+                    requiredLimits = new
+                    {
+                        maxStorageBuffersPerShaderStage = 10
+                    }
+                });
+            }
+            catch
+            {
+                // Fall back to default limits if higher limits aren't supported
+                _gpuDevice = await adapter.RequestDevice();
+            }
             if (_gpuDevice == null)
                 throw new InvalidOperationException("Failed to request WebGPU device");
 
@@ -77,9 +96,12 @@ namespace SpawnDev.ILGPU.WebGPU
         {
             var message = e.Error?.Message ?? "Unknown GPU error";
             Console.Error.WriteLine($"[WebGPU ERROR] {message}");
-            if (_lastCompiledWGSL != null && message.Contains("parsing WGSL"))
+            if (_lastCompiledWGSL != null)
             {
-                Console.Error.WriteLine($"[WebGPU ERROR] Failed WGSL source:\n{_lastCompiledWGSL}");
+                Console.Error.WriteLine($"[WebGPU ERROR] Last WGSL source ({_lastCompiledWGSL.Length} chars):");
+                // Dump first 2000 chars to avoid flooding
+                var snippet = _lastCompiledWGSL.Length > 2000 ? _lastCompiledWGSL.Substring(0, 2000) + "\n...TRUNCATED..." : _lastCompiledWGSL;
+                Console.Error.WriteLine(snippet);
             }
         }
 

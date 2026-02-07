@@ -97,7 +97,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
         protected int varCounter = 0;
         protected int labelCounter = 0;
-        private readonly Dictionary<Value, Variable> valueVariables = new();
+        protected readonly Dictionary<Value, Variable> valueVariables = new();
         private readonly Dictionary<BasicBlock, string> blockLabels = new();
 
         // Flag to tracking if we are generating code within the state machine loop
@@ -229,12 +229,25 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             if (declaredVariables.Contains(variable.Name)) return;
             declaredVariables.Add(variable.Name);
 
-            AppendIndent();
-            Builder.Append("var ");
-            Builder.Append(variable.Name);
-            Builder.Append(" : ");
-            Builder.Append(variable.Type);
-            Builder.AppendLine(";");
+            if (IsStateMachineActive)
+            {
+                // When in state machine mode, defer declarations to function scope
+                // instead of emitting them inside case blocks where they'd be scoped.
+                VariableBuilder.Append("    var ");
+                VariableBuilder.Append(variable.Name);
+                VariableBuilder.Append(" : ");
+                VariableBuilder.Append(variable.Type);
+                VariableBuilder.AppendLine(";");
+            }
+            else
+            {
+                AppendIndent();
+                Builder.Append("var ");
+                Builder.Append(variable.Name);
+                Builder.Append(" : ");
+                Builder.Append(variable.Type);
+                Builder.AppendLine(";");
+            }
         }
 
         #endregion
@@ -370,6 +383,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 AppendLine($"var _ilgpu_return_val : {returnType} = {zeroVal};");
             }
 
+            // Save position before loop - deferred variable declarations will be inserted here
+            int deferredInsertPosition = Builder.Length;
+
             AppendLine("var current_block : i32 = 0;");
             AppendLine("loop {");
             PushIndent();
@@ -400,6 +416,84 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
             PopIndent();
             AppendLine("}"); // end loop
+
+            // CRITICAL: Post-process to hoist ALL variable declarations to function scope.
+            // Some code generators bypass Declare() and write "let v_N = expr;" directly.
+            // In WGSL, 'let' inside a 'case' block is scoped to that block, causing
+            // "unresolved value" errors when that variable is used in another block.
+            // We convert these to assignments and add var declarations at function scope.
+            {
+                string loopCode = Builder.ToString(deferredInsertPosition, Builder.Length - deferredInsertPosition);
+                var letPattern = new System.Text.RegularExpressions.Regex(@"^(\s*)let\s+(v_\d+)\s*=\s*(.+);", System.Text.RegularExpressions.RegexOptions.Multiline);
+                var hoistedVars = new Dictionary<string, string>(); // name -> inferred type
+                string processed = letPattern.Replace(loopCode, match =>
+                {
+                    string indent = match.Groups[1].Value;
+                    string varName = match.Groups[2].Value;
+                    string expr = match.Groups[3].Value;
+
+                    // Infer type from the expression for the var declaration
+                    string inferredType = "bool"; // default for comparisons
+                    if (expr.Contains("&param") || expr.Contains("&temp_"))
+                    {
+                        // Pointer aliases — keep as let (they can't be var since var can't hold references)
+                        return match.Value;
+                    }
+                    else if (expr.Contains("f64_from_f32") || expr.Contains("f64_add") || expr.Contains("f64_sub") || expr.Contains("f64_mul") || expr.Contains("f64_div"))
+                    {
+                        inferredType = "emu_f64"; // vec2<f32> alias
+                    }
+                    else if (expr.Contains("f32(") || expr.Contains("f64_to_f32"))
+                    {
+                        inferredType = "f32";
+                    }
+                    else if (expr.Contains("i32("))
+                    {
+                        inferredType = "i32";
+                    }
+                    else if (expr.Contains("u32("))
+                    {
+                        inferredType = "u32";
+                    }
+                    else
+                    {
+                        // Try to look up type from valueVariables
+                        foreach (var kvp in valueVariables)
+                        {
+                            if (kvp.Value.Name == varName)
+                            {
+                                inferredType = kvp.Value.Type;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!hoistedVars.ContainsKey(varName))
+                    {
+                        hoistedVars[varName] = inferredType;
+                    }
+
+                    // Convert "let v_N = expr;" to "v_N = expr;" (assignment only)
+                    return $"{indent}{varName} = {expr};";
+                });
+
+                // Rebuild the code: replace the loop portion with processed version
+                Builder.Remove(deferredInsertPosition, Builder.Length - deferredInsertPosition);
+                Builder.Append(processed);
+
+                // Add hoisted var declarations to VariableBuilder
+                foreach (var kvp in hoistedVars)
+                {
+                    VariableBuilder.AppendLine($"    var {kvp.Key} : {kvp.Value};");
+                }
+            }
+
+            // Insert all deferred variable declarations at the function scope
+            // (before the loop). This ensures all variables are accessible from any case block.
+            if (VariableBuilder.Length > 0)
+            {
+                Builder.Insert(deferredInsertPosition, VariableBuilder.ToString());
+            }
 
             // Emit final return
             if (hasReturnValue)
@@ -759,9 +853,9 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
             var operand = Load(value.Value);
             Declare(target);
 
-            // Handle emulated i64/u64 negation
+            // Handle emulated emu_i64/emu_u64 negation
             var operandType = TypeGenerator[value.Value.Type];
-            if (Backend.Options.EnableI64Emulation && (operandType == "i64" || operandType == "u64") && value.Kind == UnaryArithmeticKind.Neg)
+            if (Backend.Options.EnableI64Emulation && (operandType == "emu_i64" || operandType == "emu_u64") && value.Kind == UnaryArithmeticKind.Neg)
             {
                 AppendLine($"{target} = i64_neg({operand});");
                 return;
@@ -992,7 +1086,7 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
 
             if (isEmulatedI64)
             {
-                // For i64 emulation, we need to split the 64-bit value into two 32-bit parts
+                // For emu_i64 emulation, we need to split the 64-bit value into two 32-bit parts
                 long longVal = value.Int64Value;
                 uint lo = (uint)(longVal & 0xFFFFFFFF);
                 uint hi = (uint)((ulong)longVal >> 32);

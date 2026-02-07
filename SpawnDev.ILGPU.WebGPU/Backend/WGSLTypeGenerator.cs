@@ -98,10 +98,10 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 BasicValueType.Int8 => "i32", // WGSL doesn't have i8, promote to i32
                 BasicValueType.Int16 => "i32", // WGSL doesn't have i16, promote to i32
                 BasicValueType.Int32 => "i32",
-                BasicValueType.Int64 => Backend.Options.EnableI64Emulation ? "i64" : "i32",
+                BasicValueType.Int64 => Backend.Options.EnableI64Emulation ? "emu_i64" : "i32",
                 BasicValueType.Float16 => "f32", // Promoting
                 BasicValueType.Float32 => "f32",
-                BasicValueType.Float64 => Backend.Options.EnableF64Emulation ? "f64" : "f32",
+                BasicValueType.Float64 => Backend.Options.EnableF64Emulation ? "emu_f64" : "f32",
                 _ => null
             };
         }
@@ -114,14 +114,14 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 ArithmeticBasicValueType.Int8 => "i32",
                 ArithmeticBasicValueType.Int16 => "i32",
                 ArithmeticBasicValueType.Int32 => "i32",
-                ArithmeticBasicValueType.Int64 => Backend.Options.EnableI64Emulation ? "i64" : "i32",
+                ArithmeticBasicValueType.Int64 => Backend.Options.EnableI64Emulation ? "emu_i64" : "i32",
                 ArithmeticBasicValueType.UInt8 => "u32",
                 ArithmeticBasicValueType.UInt16 => "u32",
                 ArithmeticBasicValueType.UInt32 => "u32",
-                ArithmeticBasicValueType.UInt64 => Backend.Options.EnableI64Emulation ? "u64" : "u32",
+                ArithmeticBasicValueType.UInt64 => Backend.Options.EnableI64Emulation ? "emu_u64" : "u32",
                 ArithmeticBasicValueType.Float16 => "f32",
                 ArithmeticBasicValueType.Float32 => "f32",
-                ArithmeticBasicValueType.Float64 => Backend.Options.EnableF64Emulation ? "f64" : "f32",
+                ArithmeticBasicValueType.Float64 => Backend.Options.EnableF64Emulation ? "emu_f64" : "f32",
                 _ => null
             };
         }
