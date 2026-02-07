@@ -10,7 +10,6 @@ Write GPU compute shaders in C# and compile them to WGSL automatically.
 - **ILGPU-compatible** - Use familiar ILGPU APIs (`ArrayView`, `Index1D/2D/3D`, math intrinsics, etc.)
 - **WGSL transpilation** - C# kernels are automatically compiled to WebGPU Shading Language (WGSL)
 - **64-bit Emulation** - Support for `double` (f64) and `long` (i64) types via emulated WGSL logic
-- **Perturbation Theory** - Support for ultra-deep Mandelbrot zooms (~10^26) using hybrid CPU/GPU algorithms
 - **Blazor WebAssembly** - Seamless integration via [SpawnDev.BlazorJS](https://github.com/LostBeard/SpawnDev.BlazorJS)
 - **Shared memory & atomics** - Supports static/dynamic workgroup memory, barriers, and atomic operations
 - **No native dependencies** - Entirely written in C#
