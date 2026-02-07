@@ -41,6 +41,7 @@ namespace SpawnDev.ILGPU.WebGPU
                 throw new InvalidOperationException("GPU device not initialized");
 
             // Create shader module from WGSL source
+            accelerator._lastCompiledWGSL = wgslSource;
             var shaderDescriptor = new GPUShaderModuleDescriptor
             {
                 Code = wgslSource

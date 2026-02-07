@@ -63,9 +63,30 @@ namespace SpawnDev.ILGPU.WebGPU
             if (_gpuDevice == null)
                 throw new InvalidOperationException("Failed to request WebGPU device");
 
+            // Listen for uncaptured GPU errors (e.g., Invalid ComputePipeline, validation errors)
+            _gpuDevice.OnUncapturedError += OnGPUUncapturedError;
+
             _queue = _gpuDevice.Queue;
             _isInitialized = true;
         }
+
+        /// <summary>
+        /// Handles uncaptured GPU validation errors.
+        /// </summary>
+        private void OnGPUUncapturedError(GPUUncapturedErrorEvent e)
+        {
+            var message = e.Error?.Message ?? "Unknown GPU error";
+            Console.Error.WriteLine($"[WebGPU ERROR] {message}");
+            if (_lastCompiledWGSL != null && message.Contains("parsing WGSL"))
+            {
+                Console.Error.WriteLine($"[WebGPU ERROR] Failed WGSL source:\n{_lastCompiledWGSL}");
+            }
+        }
+
+        /// <summary>
+        /// The last WGSL source that was compiled, for error debugging.
+        /// </summary>
+        internal string? _lastCompiledWGSL;
 
         #endregion
 

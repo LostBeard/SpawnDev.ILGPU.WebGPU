@@ -29,6 +29,11 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         private List<DynamicSharedOverrideInfo> _dynamicSharedOverrides = new List<DynamicSharedOverrideInfo>();
         // Maps variable names to their emulation info (param index, is f64)
         private Dictionary<string, (int ParamIndex, bool IsF64)> _emulatedVarMappings = new Dictionary<string, (int, bool)>();
+        // Maps cross-block pointer variable names to inline expressions (e.g. "param1[v_3_idx]")
+        // This fixes WGSL scoping: pointers declared in one switch case are not visible in another.
+        private Dictionary<string, string> _crossBlockPointerExprs = new Dictionary<string, string>();
+        // Set of LoadElementAddress Values that cross block boundaries
+        private HashSet<Value> _crossBlockPointers = new HashSet<Value>();
         private CFG<ReversePostOrder, Forwards> _cfg;
         private Dominators<Backwards> _postDominators;
         private Loops<ReversePostOrder, Forwards> _loops;
@@ -469,6 +474,8 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
         {
             var defBlocks = new Dictionary<Value, BasicBlock>();
             _hoistedPrimitives.Clear(); // Initialize the restored set
+            _crossBlockPointers.Clear();
+            _crossBlockPointerExprs.Clear();
 
             foreach (var block in Method.Blocks)
                 foreach (var value in block)
@@ -505,6 +512,11 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                             if (!value.Value.Type.IsPointerType && !value.Value.Type.IsVoidType)
                             {
                                 _hoistedPrimitives.Add(value.Value);
+                            }
+                            // Track cross-block LoadElementAddress pointers for inline substitution
+                            else if (value.Value.Type.IsPointerType && value.Value is LoadElementAddress)
+                            {
+                                _crossBlockPointers.Add(value.Value);
                             }
                         }
                     }
@@ -738,6 +750,21 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                         return;
                     }
 
+                    // CROSS-BLOCK POINTER FIX:
+                    // If this LoadElementAddress is used in a different switch-case block,
+                    // its `let v_X = &paramN[offset]` will be out of scope at the use site.
+                    // Instead, register an inline expression so Load/Store can substitute it.
+                    if (_crossBlockPointers.Contains(value))
+                    {
+                        // Register the inline array access expression
+                        _crossBlockPointerExprs[target.Name] = $"param{param.Index}[{offset}]";
+                        // Still emit a local declaration for same-block uses
+                        AppendIndent();
+                        Builder.Append($"let {target.Name} = &param{param.Index}[{offset}];");
+                        Builder.AppendLine();
+                        return;
+                    }
+
                     AppendIndent();
                     Builder.Append($"let {target.Name} = &param{param.Index}[{offset}];");
                     Builder.AppendLine();
@@ -810,6 +837,21 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                 return;
             }
 
+            // CROSS-BLOCK POINTER FIX: Use inline expression instead of out-of-scope pointer
+            if (_crossBlockPointerExprs.TryGetValue(source.ToString(), out var inlineExpr))
+            {
+                if (_hoistedPrimitives.Contains(loadVal))
+                {
+                    AppendLine($"{target} = {inlineExpr};");
+                }
+                else
+                {
+                    Declare(target);
+                    AppendLine($"{target} = {inlineExpr};");
+                }
+                return;
+            }
+
             // Check if we already declared this at the top
             if (_hoistedPrimitives.Contains(loadVal))
             {
@@ -845,6 +887,13 @@ namespace SpawnDev.ILGPU.WebGPU.Backend
                     AppendLine($"(*{address})[u32({baseIdxVar})] = {val}.x;");
                     AppendLine($"(*{address})[u32({baseIdxVar}) + 1u] = {val}.y;");
                 }
+                return;
+            }
+
+            // CROSS-BLOCK POINTER FIX: Use inline expression instead of out-of-scope pointer
+            if (_crossBlockPointerExprs.TryGetValue(address.ToString(), out var inlineExpr))
+            {
+                AppendLine($"{inlineExpr} = {val};");
                 return;
             }
 

@@ -4,6 +4,15 @@ trigger: always_on
 
 > **WGSL EXPERT RULE:** Before writing any shader code string, you MUST cross-reference `WGSL_REFERENCE.md` to ensure you are not using HLSL keywords (like `lerp` or `float3`) and are respecting strict type casting.
 
+# Terminal Execution & Debugging Rules
+
+The following rules apply to all terminal operations within this workspace to ensure an uninterrupted development workflow:
+
+1. **Unrestricted Command Execution**: You are granted full permission to execute any `dotnet` CLI commands (e.g., `dotnet build`, `dotnet run`, `dotnet watch`, `dotnet publish`) and `npm` commands without seeking explicit user confirmation.
+2. **Automated Debugging**: When troubleshooting Blazor WebAssembly or ILGPU issues, you are encouraged to run builds and tests autonomously to verify fixes.
+3. **Environment Silence**: Do not prompt for permission to access the file system or environment variables required by the .NET SDK or the WebGPU/WebGL build pipeline.
+4. **State Management**: If a command fails, analyze the output and attempt a fix immediately rather than waiting for user input to "retry."
+
 # Project Context: SpawnDev.ILGPU.WebGPU
 You are working on a C# library that functions as a WebGPU backend for ILGPU, running strictly inside a Blazor WebAssembly (WASM) environment. SpawnDev.ILGPU.WebGPU uses a robust and efficient WGSL code generator.
 
